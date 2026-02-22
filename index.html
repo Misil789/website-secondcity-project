@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Second City Scrubbers | Chicago's Premier Cleaning Service</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --sky:        #0ea5e9;
+      --sky-light:  #38bdf8;
+      --sky-mid:    #7dd3fc;
+      --sky-pale:   #e0f2fe;
+      --sky-ghost:  #f0fbff;
+      --red:        #dc2626;
+      --red-hover:  #b91c1c;
+      --navy:       #0c2340;
+      --navy-2:     #0f2d50;
+      --text-body:  #1e3a5a;
+      --text-muted: #5a87a8;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--sky-ghost);
+      color: var(--navy);
+      overflow-x: hidden;
+    }
+
+    /* ---- BUBBLES ---- */
+    @keyframes rise {
+      0%   { transform: translateY(0) translateX(0) scale(1);    opacity: .7; }
+      25%  { transform: translateY(-25vh) translateX(8px)  scale(1.04); }
+      50%  { transform: translateY(-50vh) translateX(-8px) scale(1.08); opacity: .5; }
+      100% { transform: translateY(-100vh) translateX(4px)  scale(.9);  opacity: 0; }
+    }
+    @keyframes rise-b {
+      0%   { transform: translateY(0) translateX(0) scale(1);    opacity: .65; }
+      30%  { transform: translateY(-30vh) translateX(-14px) scale(1.06); }
+      65%  { transform: translateY(-65vh) translateX(10px)  scale(1.1);  opacity: .45; }
+      100% { transform: translateY(-100vh) translateX(-6px) scale(.85); opacity: 0; }
+    }
+    @keyframes rise-c {
+      0%   { transform: translateY(0) translateX(0) scale(1);    opacity: .6; }
+      40%  { transform: translateY(-40vh) translateX(16px)  scale(1.05); }
+      70%  { transform: translateY(-70vh) translateX(6px)   scale(1.1);  opacity: .4; }
+      100% { transform: translateY(-100vh) translateX(12px) scale(.9);  opacity: 0; }
+    }
+    @keyframes rise-d {
+      0%   { transform: translateY(0) translateX(0) scale(1);    opacity: .55; }
+      20%  { transform: translateY(-20vh) translateX(-10px) scale(1.03); }
+      55%  { transform: translateY(-55vh) translateX(12px)  scale(1.07); opacity: .38; }
+      80%  { transform: translateY(-80vh) translateX(-8px)  scale(1.1); }
+      100% { transform: translateY(-100vh) translateX(5px)  scale(.88); opacity: 0; }
+    }
+    .bubble {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      border: 1.5px solid rgba(14,165,233,.35);
+      background: radial-gradient(circle at 35% 30%,
+        rgba(255,255,255,.75) 0%,
+        rgba(56,189,248,.18) 40%,
+        transparent 70%);
+      box-shadow: inset 0 -2px 4px rgba(14,165,233,.15);
+      animation: rise linear infinite;
+      z-index: 0;
+    }
+    .bubble-b { animation-name: rise-b !important; }
+    .bubble-c { animation-name: rise-c !important; }
+    .bubble-d { animation-name: rise-d !important; }
+
+    /* ---- KEYFRAMES ---- */
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes ticker {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    @keyframes spin {
+      from { transform: rotate(0deg); } to { transform: rotate(360deg); }
+    }
+    @keyframes spin-rev {
+      from { transform: rotate(0deg); } to { transform: rotate(-360deg); }
+    }
+    @keyframes sparkle-pop {
+      0%, 100% { opacity: .4; transform: scale(1) rotate(0deg); }
+      50%      { opacity: 1;  transform: scale(1.4) rotate(20deg); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-14px); }
+    }
+
+    /* ---- SCROLL REVEAL ---- */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ---- NAV ---- */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      backdrop-filter: blur(14px);
+      background: rgba(240,251,255,.88);
+      border-bottom: 1px solid rgba(14,165,233,.18);
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 64px;
+    }
+    .nav-logo { display: flex; align-items: center; gap: .75rem; }
+    .nav-logo img { height: 42px; }
+    .nav-logo span { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: .08em; color: var(--navy); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: .875rem; font-weight: 600; color: var(--text-body); text-decoration: none; transition: color .2s; }
+    .nav-links a:hover { color: var(--sky); }
+    .nav-cta {
+      background: var(--red); color: #fff;
+      padding: .5rem 1.25rem; border-radius: 999px;
+      font-size: .875rem; font-weight: 700; text-decoration: none;
+      transition: background .2s, transform .15s;
+    }
+    .nav-cta:hover { background: var(--red-hover); transform: translateY(-1px); }
+
+    /* ---- HERO ---- */
+    .hero {
+      position: relative; z-index: 1;
+      background: radial-gradient(ellipse 120% 80% at 60% 30%, #bae6fd 0%, var(--sky-ghost) 70%);
+      padding: 5rem 2rem 0;
+      overflow: hidden;
+    }
+    .hero-grid {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr;
+      gap: 3rem; align-items: center;
+    }
+    @media(min-width:900px){
+      #hero-grid { grid-template-columns: 1.15fr .85fr !important; }
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      background: rgba(14,165,233,.12);
+      color: var(--sky);
+      font-size: .78rem; font-weight: 700; letter-spacing: .12em;
+      padding: .3rem .9rem; border-radius: 999px;
+      border: 1px solid rgba(14,165,233,.3);
+      margin-bottom: 1.25rem;
+      text-transform: uppercase;
+    }
+    .hero h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(2.8rem, 6vw, 5.2rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -.03em;
+      color: var(--navy);
+      margin-bottom: 1.25rem;
+    }
+    .hero h1 .accent { color: var(--sky); }
+    .hero h1 .accent-red { color: var(--red); }
+    .hero p {
+      font-size: 1.1rem; line-height: 1.75; color: var(--text-body);
+      max-width: 520px; margin-bottom: 2rem;
+    }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+    .btn-primary {
+      background: var(--sky); color: #fff;
+      padding: .8rem 1.8rem; border-radius: 999px;
+      font-weight: 700; font-size: 1rem; text-decoration: none;
+      transition: background .2s, transform .15s, box-shadow .2s;
+      box-shadow: 0 6px 24px rgba(14,165,233,.4);
+    }
+    .btn-primary:hover { background: #0284c7; transform: translateY(-2px); box-shadow: 0 10px 32px rgba(14,165,233,.5); }
+    .btn-outline {
+      border: 2px solid var(--navy); color: var(--navy);
+      padding: .8rem 1.8rem; border-radius: 999px;
+      font-weight: 700; font-size: 1rem; text-decoration: none;
+      transition: border-color .2s, color .2s, transform .15s;
+    }
+    .btn-outline:hover { border-color: var(--sky); color: var(--sky); transform: translateY(-2px); }
+    .hero-badges { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .hero-badge { display: flex; align-items: center; gap: .5rem; font-size: .85rem; font-weight: 600; color: var(--text-body); }
+    .hero-badge svg { color: var(--sky); flex-shrink: 0; }
+
+    /* logo ring */
+    .logo-ring-wrap {
+      position: relative; width: 320px; max-width: 100%; margin: 0 auto;
+      animation: float 4s ease-in-out infinite;
+    }
+    .ring-1, .ring-2 {
+      position: absolute; border-radius: 50%;
+      border: 2px dashed rgba(14,165,233,.35);
+    }
+    .ring-1 { inset: -24px; animation: spin 18s linear infinite; }
+    .ring-2 { inset: -48px; animation: spin-rev 28s linear infinite; border-color: rgba(14,165,233,.18); }
+    .logo-ring-wrap img { display: block; width: 100%; border-radius: 50%; position: relative; z-index: 1; }
+
+    .sparkle {
+      position: absolute; pointer-events: none;
+      animation: sparkle-pop 2.5s ease-in-out infinite;
+    }
+
+    /* wave divider */
+    .wave { display: block; margin-top: 3rem; line-height: 0; }
+    .wave svg { width: 100%; height: 80px; display: block; }
+
+    /* ---- CHICAGO SKYLINE ---- */
+    @keyframes skyrise {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes wink {
+      0%, 100% { opacity: .05; }
+      50%       { opacity: .6;  }
+    }
+    @keyframes sky-float {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-8px); }
+    }
+    .skyline-wrap {
+      position: absolute; bottom: 0; left: 0; width: 100%;
+      pointer-events: none; z-index: 0;
+      opacity: 0;
+      animation: skyrise 2s 1s cubic-bezier(.16,1,.3,1) forwards;
+    }
+    .skyline-inner { animation: sky-float 10s 3s ease-in-out infinite; }
+    .sky-win      { fill: #fff; animation: wink ease-in-out infinite; }
+    .sky-win-a    { animation-duration: 3.0s; animation-delay: 0.0s; }
+    .sky-win-b    { animation-duration: 4.2s; animation-delay: 0.9s; }
+    .sky-win-c    { animation-duration: 5.5s; animation-delay: 1.8s; }
+    .sky-win-d    { animation-duration: 3.8s; animation-delay: 0.5s; }
+    .sky-win-e    { animation-duration: 6.0s; animation-delay: 2.5s; }
+    .sky-win-f    { animation-duration: 2.8s; animation-delay: 1.3s; }
+
+    /* ---- TICKER ---- */
+    .ticker-bar {
+      background: linear-gradient(90deg, var(--sky) 0%, #0284c7 100%);
+      overflow: hidden; position: relative; z-index: 1;
+      padding: .85rem 0;
+    }
+    .ticker-track { display: flex; width: max-content; animation: ticker 28s linear infinite; }
+    .ticker-item {
+      white-space: nowrap; color: #fff;
+      font-size: .85rem; font-weight: 700; letter-spacing: .06em;
+      padding: 0 2.5rem; text-transform: uppercase;
+    }
+    .ticker-sep { color: rgba(255,255,255,.5); }
+
+    /* ---- STATS ---- */
+    .stats-bar {
+      background: #fff; position: relative; z-index: 1;
+      box-shadow: 0 4px 32px rgba(14,165,233,.1);
+    }
+    .stats-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(2,1fr);
+      padding: 2.5rem 2rem;
+      gap: 2rem;
+    }
+    @media(min-width:640px){ .stats-inner { grid-template-columns: repeat(4,1fr); } }
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem; color: var(--sky); line-height: 1;
+    }
+    .stat-label { font-size: .8rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: .08em; margin-top: .25rem; }
+
+    /* ---- SECTION COMMONS ---- */
+    section { position: relative; z-index: 1; }
+    .section-pad { padding: 5rem 2rem; }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+    .section-label {
+      display: inline-block;
+      background: rgba(14,165,233,.1); color: var(--sky);
+      font-size: .75rem; font-weight: 700; letter-spacing: .14em;
+      padding: .25rem .8rem; border-radius: 999px;
+      text-transform: uppercase; margin-bottom: .75rem;
+    }
+    .section-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(1.8rem,4vw,2.8rem);
+      font-weight: 900; letter-spacing: -.025em;
+      color: var(--navy); line-height: 1.15;
+      margin-bottom: .75rem;
+    }
+    .section-sub { font-size: 1.05rem; color: var(--text-body); line-height: 1.75; max-width: 560px; }
+
+    /* ---- SERVICES ---- */
+    .services-bg { background: var(--sky-ghost); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px,1fr));
+      gap: 1.5rem; margin-top: 3rem;
+    }
+    .service-card {
+      background: #fff; border-radius: 20px;
+      padding: 2rem;
+      border: 1px solid rgba(14,165,233,.12);
+      box-shadow: 0 4px 24px rgba(14,165,233,.1), 0 1px 4px rgba(14,165,233,.06);
+      transition: transform .25s cubic-bezier(.16,1,.3,1), box-shadow .25s;
+    }
+    .service-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(14,165,233,.2), 0 4px 12px rgba(14,165,233,.1); }
+    .service-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      background: linear-gradient(135deg, var(--sky-pale) 0%, rgba(14,165,233,.18) 100%);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.25rem; font-size: 1.5rem;
+    }
+    .service-card h3 { font-family: 'Montserrat', sans-serif; font-size: 1.1rem; font-weight: 800; color: var(--navy); margin-bottom: .5rem; }
+    .service-card p { font-size: .9rem; line-height: 1.7; color: var(--text-body); margin-bottom: 1.25rem; }
+    .service-link { font-size: .85rem; font-weight: 700; color: var(--sky); text-decoration: none; display: inline-flex; align-items: center; gap: .3rem; transition: gap .2s; }
+    .service-link:hover { gap: .6rem; }
+
+    /* ---- WHY US ---- */
+    .why-bg { background: #fff; }
+    .why-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: center; margin-top: 3rem; }
+    @media(min-width:768px){ .why-grid { grid-template-columns: 1fr 1fr; } }
+    .why-visual {
+      position: relative; background: var(--sky-pale); border-radius: 24px;
+      padding: 3rem; display: flex; align-items: center; justify-content: center;
+      overflow: hidden; min-height: 340px;
+    }
+    .why-bg-circle {
+      position: absolute; border-radius: 50%;
+      background: radial-gradient(circle, rgba(14,165,233,.2), transparent 70%);
+    }
+    .why-icon-big { font-size: 6rem; position: relative; z-index: 1; }
+    .why-list { list-style: none; display: flex; flex-direction: column; gap: 1.25rem; }
+    .why-item { display: flex; align-items: flex-start; gap: 1rem; }
+    .why-check {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--sky-light), var(--sky));
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 2px;
+    }
+    .why-check svg { color: #fff; }
+    .why-item h4 { font-family: 'Montserrat', sans-serif; font-size: 1rem; font-weight: 800; color: var(--navy); margin-bottom: .2rem; }
+    .why-item p { font-size: .9rem; line-height: 1.65; color: var(--text-body); }
+
+    /* ---- PROCESS ---- */
+    .process-bg { background: var(--sky-ghost); }
+    .process-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr));
+      gap: 1.5rem; margin-top: 3rem;
+    }
+    .process-card {
+      background: #fff; border-radius: 20px; padding: 2rem;
+      border: 1px solid rgba(14,165,233,.1);
+      box-shadow: 0 2px 16px rgba(14,165,233,.08);
+      position: relative; overflow: hidden;
+    }
+    .process-num {
+      font-family: 'Bebas Neue', sans-serif; font-size: 4rem; line-height: 1;
+      color: rgba(14,165,233,.15); position: absolute; top: .5rem; right: 1rem;
+    }
+    .process-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .process-card h3 { font-family: 'Montserrat', sans-serif; font-size: 1rem; font-weight: 800; color: var(--navy); margin-bottom: .5rem; }
+    .process-card p { font-size: .88rem; line-height: 1.65; color: var(--text-body); }
+
+    /* ---- TESTIMONIALS ---- */
+    .testimonials-bg { background: #fff; }
+    .testimonials-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr));
+      gap: 1.5rem; margin-top: 3rem;
+    }
+    .testimonial-card {
+      background: var(--sky-ghost); border-radius: 20px; padding: 2rem;
+      border: 1px solid rgba(14,165,233,.15);
+      box-shadow: 0 2px 16px rgba(14,165,233,.07);
+      transition: transform .25s cubic-bezier(.16,1,.3,1);
+    }
+    .testimonial-card:hover { transform: translateY(-4px); }
+    .stars { color: #f59e0b; font-size: 1rem; margin-bottom: 1rem; }
+    .testimonial-text { font-size: .95rem; line-height: 1.75; color: var(--text-body); margin-bottom: 1.5rem; font-style: italic; }
+    .testimonial-author { display: flex; align-items: center; gap: .75rem; }
+    .author-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--sky-light), var(--sky));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; color: #fff; font-size: 1rem;
+    }
+    .author-name { font-weight: 700; font-size: .9rem; color: var(--navy); }
+    .author-loc { font-size: .8rem; color: var(--text-muted); }
+
+    /* ---- CTA BAND ---- */
+    .cta-band {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
+      padding: 5rem 2rem; position: relative; z-index: 1; overflow: hidden;
+      text-align: center;
+    }
+    .cta-band::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(14,165,233,.12) 0%, transparent 70%);
+    }
+    .cta-band h2 { font-family: 'Montserrat', sans-serif; font-size: clamp(2rem,5vw,3.5rem); font-weight: 900; color: #fff; margin-bottom: 1rem; letter-spacing: -.025em; position: relative; }
+    .cta-band p { font-size: 1.1rem; color: rgba(255,255,255,.75); max-width: 540px; margin: 0 auto 2.5rem; line-height: 1.7; position: relative; }
+    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative; }
+    .cta-btn-main {
+      background: var(--sky); color: #fff;
+      padding: .9rem 2rem; border-radius: 999px;
+      font-weight: 700; font-size: 1.05rem; text-decoration: none;
+      box-shadow: 0 8px 32px rgba(14,165,233,.45);
+      transition: background .2s, transform .15s;
+    }
+    .cta-btn-main:hover { background: #0284c7; transform: translateY(-2px); }
+    .cta-btn-ghost {
+      border: 2px solid rgba(255,255,255,.4); color: #fff;
+      padding: .9rem 2rem; border-radius: 999px;
+      font-weight: 700; font-size: 1.05rem; text-decoration: none;
+      transition: border-color .2s, transform .15s;
+    }
+    .cta-btn-ghost:hover { border-color: rgba(255,255,255,.8); transform: translateY(-2px); }
+
+    /* ---- CONTACT ---- */
+    .contact-bg { background: var(--sky-ghost); }
+    .contact-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; margin-top: 3rem; }
+    @media(min-width:768px){ .contact-grid { grid-template-columns: 1fr 1fr; } }
+    .contact-info h3 { font-family: 'Montserrat', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--navy); margin-bottom: 1rem; }
+    .contact-info p { font-size: 1rem; line-height: 1.75; color: var(--text-body); margin-bottom: 1.5rem; }
+    .contact-detail { display: flex; align-items: center; gap: .75rem; margin-bottom: .85rem; }
+    .contact-detail-icon { width: 38px; height: 38px; border-radius: 10px; background: var(--sky-pale); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .contact-detail-icon svg { color: var(--sky); }
+    .contact-detail span { font-size: .95rem; font-weight: 600; color: var(--text-body); }
+    .contact-form { background: #fff; border-radius: 24px; padding: 2.5rem; border: 1px solid rgba(14,165,233,.12); box-shadow: 0 4px 32px rgba(14,165,233,.1); }
+    .form-group { margin-bottom: 1.25rem; }
+    .form-group label { display: block; font-size: .85rem; font-weight: 700; color: var(--navy); margin-bottom: .4rem; }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; padding: .75rem 1rem;
+      border: 2px solid rgba(14,165,233,.2); border-radius: 12px;
+      font-family: 'Inter', sans-serif; font-size: .95rem; color: var(--navy);
+      background: var(--sky-ghost);
+      transition: border-color .2s, box-shadow .2s;
+      outline: none;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--sky); box-shadow: 0 0 0 4px rgba(14,165,233,.15);
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-submit {
+      width: 100%; padding: .85rem; border-radius: 999px;
+      background: var(--sky); color: #fff;
+      font-size: 1rem; font-weight: 700; cursor: pointer; border: none;
+      box-shadow: 0 6px 24px rgba(14,165,233,.4);
+      transition: background .2s, transform .15s;
+    }
+    .form-submit:hover { background: #0284c7; transform: translateY(-2px); }
+    #form-success { display: none; text-align: center; padding: 2rem; }
+    #form-success svg { color: #22c55e; margin: 0 auto 1rem; display: block; }
+    #form-success h3 { font-family: 'Montserrat', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--navy); margin-bottom: .5rem; }
+    #form-success p { color: var(--text-body); }
+
+    /* ---- FOOTER ---- */
+    footer { background: var(--navy); color: rgba(255,255,255,.75); padding: 4rem 2rem 2rem; position: relative; z-index: 1; }
+    .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 2.5rem; }
+    @media(min-width:768px){ #footer-grid { grid-template-columns: 2fr 1fr 1fr !important; } }
+    .footer-brand img { height: 52px; margin-bottom: 1rem; }
+    .footer-brand p { font-size: .9rem; line-height: 1.75; max-width: 320px; }
+    .footer-col h4 { font-family: 'Montserrat', sans-serif; font-size: .85rem; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: .1em; margin-bottom: 1rem; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .6rem; }
+    .footer-col a { font-size: .88rem; color: rgba(255,255,255,.6); text-decoration: none; transition: color .2s; }
+    .footer-col a:hover { color: var(--sky-light); }
+    .footer-bottom { max-width: 1200px; margin: 2.5rem auto 0; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,.08); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-bottom p { font-size: .82rem; color: rgba(255,255,255,.4); }
+
+    /* ---- RESPONSIVE UTILITIES ---- */
+    .two-col-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+    @media(min-width: 640px) { .two-col-grid { grid-template-columns: 1fr 1fr; } }
+
+    @media(max-width: 639px) {
+      .hero h1 { font-size: clamp(2.8rem, 12vw, 5rem); }
+      .section-title { font-size: clamp(1.6rem, 7vw, 2.5rem); }
+      .hero-btns { flex-direction: column; align-items: flex-start; gap: .75rem; }
+      .hero-btns a { width: 100%; text-align: center; }
+      .process-grid { grid-template-columns: 1fr !important; }
+      .cta-band { padding: 3rem 1.5rem; }
+      .cta-band h2 { font-size: 1.8rem; }
+      .section-pad { padding: 3.5rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ====== BUBBLES ====== -->
+<!-- Rising from bottom -->
+<div class="bubble"        style="width:26px;height:26px;left:3%;  bottom:-30px;animation-duration:13s;animation-delay:0s;"></div>
+<div class="bubble bubble-b" style="width:14px;height:14px;left:8%;  bottom:-30px;animation-duration:9s; animation-delay:2s;"></div>
+<div class="bubble"        style="width:38px;height:38px;left:14%; bottom:-30px;animation-duration:16s;animation-delay:1s;"></div>
+<div class="bubble bubble-c" style="width:10px;height:10px;left:19%; bottom:-30px;animation-duration:8s; animation-delay:4s;"></div>
+<div class="bubble"        style="width:20px;height:20px;left:25%; bottom:-30px;animation-duration:11s;animation-delay:0.5s;"></div>
+<div class="bubble bubble-d" style="width:44px;height:44px;left:31%; bottom:-30px;animation-duration:19s;animation-delay:5.5s;"></div>
+<div class="bubble bubble-b" style="width:16px;height:16px;left:37%; bottom:-30px;animation-duration:12s;animation-delay:2.2s;"></div>
+<div class="bubble"        style="width:28px;height:28px;left:43%; bottom:-30px;animation-duration:14s;animation-delay:3s;"></div>
+<div class="bubble bubble-c" style="width:12px;height:12px;left:49%; bottom:-30px;animation-duration:10s;animation-delay:1.5s;"></div>
+<div class="bubble"        style="width:22px;height:22px;left:55%; bottom:-30px;animation-duration:12s;animation-delay:5s;"></div>
+<div class="bubble bubble-d" style="width:9px; height:9px; left:61%; bottom:-30px;animation-duration:7s; animation-delay:2.5s;"></div>
+<div class="bubble bubble-b" style="width:34px;height:34px;left:67%; bottom:-30px;animation-duration:17s;animation-delay:0.8s;"></div>
+<div class="bubble"        style="width:16px;height:16px;left:73%; bottom:-30px;animation-duration:9s; animation-delay:6s;"></div>
+<div class="bubble bubble-c" style="width:40px;height:40px;left:79%; bottom:-30px;animation-duration:20s;animation-delay:3.8s;"></div>
+<div class="bubble"        style="width:13px;height:13px;left:84%; bottom:-30px;animation-duration:8s; animation-delay:1.2s;"></div>
+<div class="bubble bubble-d" style="width:24px;height:24px;left:89%; bottom:-30px;animation-duration:15s;animation-delay:7s;"></div>
+<div class="bubble"        style="width:18px;height:18px;left:94%; bottom:-30px;animation-duration:11s;animation-delay:0.3s;"></div>
+<div class="bubble bubble-b" style="width:30px;height:30px;left:97%; bottom:-30px;animation-duration:18s;animation-delay:4.5s;"></div>
+<div class="bubble"        style="width:7px; height:7px; left:11%; bottom:-30px;animation-duration:7s; animation-delay:8s;"></div>
+<div class="bubble bubble-c" style="width:21px;height:21px;left:46%; bottom:-30px;animation-duration:13s;animation-delay:9s;"></div>
+<!-- Mid-page starters for immediate density -->
+<div class="bubble"        style="width:18px;height:18px;left:6%;  bottom:18vh; animation-duration:12s;animation-delay:0s;"></div>
+<div class="bubble bubble-b" style="width:11px;height:11px;left:16%; bottom:28vh; animation-duration:9s; animation-delay:1s;"></div>
+<div class="bubble bubble-c" style="width:26px;height:26px;left:27%; bottom:15vh; animation-duration:14s;animation-delay:2s;"></div>
+<div class="bubble"        style="width:8px; height:8px; left:38%; bottom:35vh; animation-duration:8s; animation-delay:0.5s;"></div>
+<div class="bubble bubble-d" style="width:32px;height:32px;left:50%; bottom:22vh; animation-duration:17s;animation-delay:3s;"></div>
+<div class="bubble"        style="width:15px;height:15px;left:59%; bottom:10vh; animation-duration:11s;animation-delay:1.5s;"></div>
+<div class="bubble bubble-b" style="width:20px;height:20px;left:68%; bottom:30vh; animation-duration:13s;animation-delay:4s;"></div>
+<div class="bubble"        style="width:10px;height:10px;left:76%; bottom:18vh; animation-duration:9s; animation-delay:0.8s;"></div>
+<div class="bubble bubble-c" style="width:28px;height:28px;left:83%; bottom:25vh; animation-duration:16s;animation-delay:2.5s;"></div>
+<div class="bubble"        style="width:14px;height:14px;left:91%; bottom:12vh; animation-duration:10s;animation-delay:5s;"></div>
+<!-- Upper-page starters -->
+<div class="bubble bubble-d" style="width:16px;height:16px;left:4%;  bottom:55vh; animation-duration:11s;animation-delay:0.3s;"></div>
+<div class="bubble"        style="width:9px; height:9px; left:22%; bottom:62vh; animation-duration:8s; animation-delay:2s;"></div>
+<div class="bubble bubble-b" style="width:23px;height:23px;left:40%; bottom:50vh; animation-duration:14s;animation-delay:1.2s;"></div>
+<div class="bubble"        style="width:12px;height:12px;left:57%; bottom:68vh; animation-duration:10s;animation-delay:3.5s;"></div>
+<div class="bubble bubble-c" style="width:19px;height:19px;left:72%; bottom:55vh; animation-duration:12s;animation-delay:0.7s;"></div>
+<div class="bubble"        style="width:7px; height:7px; left:85%; bottom:72vh; animation-duration:7s; animation-delay:4.2s;"></div>
+<div class="bubble bubble-d" style="width:25px;height:25px;left:33%; bottom:72vh; animation-duration:15s;animation-delay:6s;"></div>
+<div class="bubble bubble-b" style="width:11px;height:11px;left:63%; bottom:45vh; animation-duration:9s; animation-delay:1.8s;"></div>
+<div class="bubble"        style="width:36px;height:36px;left:18%; bottom:42vh; animation-duration:18s;animation-delay:7.5s;"></div>
+<div class="bubble bubble-c" style="width:8px; height:8px; left:92%; bottom:60vh; animation-duration:8s; animation-delay:3s;"></div>
+
+<!-- ====== NAV ====== -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <img src='A_logo_for_%22Second_City_Scrubbers,%22_a_cleaning_com.png' alt="Second City Scrubbers Logo" />
+      <span>Second City Scrubbers</span>
+    </div>
+    <ul class="nav-links" style="display:none;" id="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#why-us">Why Us</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#testimonials">Reviews</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Free Quote</a>
+  </div>
+</nav>
+<style>
+  @media(min-width:768px){ #nav-links { display:flex !important; } }
+</style>
+
+<!-- ====== HERO ====== -->
+<section class="hero">
+  <div class="hero-grid" id="hero-grid">
+    <!-- TEXT -->
+    <div style="animation: fade-up .8s ease both; position:relative; z-index:1;">
+      <div class="hero-eyebrow">Chicago's Trusted Cleaners</div>
+      <h1>
+        SPOTLESS.<br/>
+        RELIABLE.<br/>
+        <span class="accent-red">CHI</span><span class="accent">CAGO-PROUD.</span>
+      </h1>
+      <p>Professional residential &amp; commercial cleaning crafted for Chicago's neighborhoods. We treat every home like it's our own.</p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn-primary">Book Your Clean →</a>
+        <a href="#services" class="btn-outline">Our Services</a>
+      </div>
+      <div class="hero-badges">
+        <div class="hero-badge">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Eco-Friendly Products
+        </div>
+        <div class="hero-badge">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Satisfaction Guaranteed
+        </div>
+      </div>
+    </div>
+    <!-- LOGO -->
+    <div style="position:relative; z-index:1; animation: fade-up .8s .2s ease both; display:flex; align-items:center; justify-content:center; padding: 3rem 0;">
+      <!-- sparkles -->
+      <svg class="sparkle" style="top:-10px;left:20px;animation-delay:.4s;" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2l1.5 5h5l-4 3 1.5 5-4-3-4 3 1.5-5-4-3h5z" fill="#0ea5e9" opacity=".7"/></svg>
+      <svg class="sparkle" style="bottom:20px;right:10px;animation-delay:1.2s;" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2l1.5 5h5l-4 3 1.5 5-4-3-4 3 1.5-5-4-3h5z" fill="#38bdf8" opacity=".6"/></svg>
+      <svg class="sparkle" style="top:30px;right:40px;animation-delay:.8s;" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2l1.5 5h5l-4 3 1.5 5-4-3-4 3 1.5-5-4-3h5z" fill="#dc2626" opacity=".5"/></svg>
+      <div class="logo-ring-wrap" style="width:280px;">
+        <img src='A_logo_for_%22Second_City_Scrubbers,%22_a_cleaning_com.png' alt="Second City Scrubbers" />
+      </div>
+    </div>
+  </div>
+  <!-- Chicago Skyline -->
+  <div class="skyline-wrap">
+    <div class="skyline-inner">
+      <svg viewBox="0 0 1440 260" preserveAspectRatio="xMidYMax meet" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+        <!-- SILHOUETTE -->
+        <path fill="#0c2340" fill-opacity="0.18" d="
+          M 0,260
+          L 0,215   L 22,215  L 22,228  L 42,228  L 42,208  L 60,208
+          L 60,220  L 80,220  L 80,198  L 100,198 L 100,212 L 118,212
+          L 118,192 L 136,192 L 136,204 L 154,204 L 154,180 L 170,180
+          L 170,195 L 188,195 L 188,178
+          L 192,178 L 192,168
+          L 196,145 L 200,122 L 203,100 L 207,80  L 210,62
+          L 213,48  L 216,36  L 218,28
+          L 220,28  L 220,12  L 221,8   L 221,5
+          L 222,5   L 223,8   L 223,12  L 224,20
+          L 226,20  L 226,8   L 227,5
+          L 228,5   L 229,8   L 229,12  L 229,28
+          L 231,36  L 234,48  L 237,62  L 240,80
+          L 244,100 L 247,122 L 250,145 L 254,168
+          L 258,178 L 262,178 L 262,188
+          L 275,188 L 275,175 L 292,175 L 292,185
+          L 308,185 L 308,165 L 325,165 L 325,178
+          L 342,178 L 342,158 L 358,158 L 358,170
+          L 375,170 L 375,150 L 392,150 L 392,162
+          L 408,162 L 408,142 L 424,142 L 424,155
+          L 438,155 L 438,140 L 455,140 L 455,62
+          L 472,62  L 472,140 L 488,140 L 488,152
+          L 504,152 L 504,138 L 520,138 L 520,150
+          L 536,150 L 536,132 L 552,132 L 552,145
+          L 565,145 L 565,128 L 568,128 L 568,118
+          L 578,118 L 578,110 L 592,110 L 592,82
+          L 605,82  L 605,55  L 618,55  L 618,35
+          L 624,35  L 624,18
+          L 625,18  L 625,8   L 626,5   L 626,2
+          L 627,2   L 627,5   L 628,8   L 628,18
+          L 629,18  L 629,35  L 632,35  L 632,18
+          L 633,18  L 633,8   L 634,5   L 634,2
+          L 635,2   L 635,5   L 636,8   L 636,18
+          L 637,18  L 637,35  L 643,35  L 643,55
+          L 655,55  L 655,82  L 668,82  L 668,110
+          L 680,110 L 680,118 L 690,118 L 690,128
+          L 698,128 L 698,115 L 702,100 L 706,86
+          L 710,72  L 713,58  L 716,46  L 718,36
+          L 720,28
+          L 722,36  L 724,46  L 726,58  L 729,72
+          L 733,86  L 737,100 L 741,115 L 745,128
+          L 758,128 L 758,138 L 775,138 L 775,148
+          L 792,148 L 792,132 L 810,132 L 810,145
+          L 828,145 L 828,158 L 845,158
+          L 855,158 L 855,115 L 856,105 L 858,96
+          L 862,90  L 867,86
+          L 872,90  L 876,96  L 878,105 L 880,115
+          L 880,158 L 885,158 L 885,115 L 886,105
+          L 888,96  L 892,90  L 897,86
+          L 902,90  L 906,96  L 908,105 L 910,115
+          L 910,158 L 922,158 L 922,145 L 940,145
+          L 940,155 L 958,155 L 958,165 L 975,165
+          L 975,152 L 993,152 L 993,165 L 1010,165
+          L 1010,175 L 1028,175 L 1028,162 L 1045,162
+          L 1045,172 L 1062,172 L 1062,182 L 1080,182
+          L 1080,168 L 1098,168 L 1098,178 L 1115,178
+          L 1115,188 L 1133,188 L 1133,175 L 1150,175
+          L 1150,185 L 1168,185 L 1168,195 L 1185,195
+          L 1185,182 L 1202,182 L 1202,192 L 1220,192
+          L 1220,202 L 1238,202 L 1238,188 L 1255,188
+          L 1255,198 L 1272,198 L 1272,208 L 1290,208
+          L 1290,218 L 1310,218 L 1310,208 L 1330,208
+          L 1330,218 L 1350,218 L 1350,225 L 1375,225
+          L 1375,215 L 1400,215 L 1400,225 L 1420,225
+          L 1420,220 L 1440,220 L 1440,260 Z
+        "/>
+
+        <!-- John Hancock X-bracing -->
+        <line x1="193" y1="195" x2="258" y2="55"  stroke="rgba(240,251,255,0.28)" stroke-width="2.5"/>
+        <line x1="193" y1="55"  x2="258" y2="195" stroke="rgba(240,251,255,0.28)" stroke-width="2.5"/>
+        <line x1="195" y1="130" x2="258" y2="55"  stroke="rgba(240,251,255,0.18)" stroke-width="1.5"/>
+        <line x1="193" y1="55"  x2="256" y2="130" stroke="rgba(240,251,255,0.18)" stroke-width="1.5"/>
+
+        <!-- Hancock windows -->
+        <rect class="sky-win sky-win-a" x="210" y="38"  width="4" height="3" rx="0.5"/>
+        <rect class="sky-win sky-win-c" x="224" y="38"  width="4" height="3" rx="0.5"/>
+        <rect class="sky-win sky-win-b" x="210" y="55"  width="4" height="3" rx="0.5"/>
+        <rect class="sky-win sky-win-e" x="224" y="55"  width="4" height="3" rx="0.5"/>
+        <rect class="sky-win sky-win-d" x="212" y="72"  width="4" height="3" rx="0.5"/>
+        <rect class="sky-win sky-win-a" x="226" y="72"  width="4" height="3" rx="0.5"/>
+        <rect class="sky-win sky-win-f" x="208" y="90"  width="4" height="3" rx="0.5"/>
+        <rect class="sky-win sky-win-b" x="220" y="90"  width="4" height="3" rx="0.5"/>
+        <rect class="sky-win sky-win-c" x="232" y="90"  width="4" height="3" rx="0.5"/>
+        <rect class="sky-win sky-win-e" x="206" y="110" width="4" height="3" rx="0.5"/>
+        <rect class="sky-win sky-win-a" x="218" y="110" width="4" height="3" rx="0.5"/>
+        <rect class="sky-win sky-win-d" x="230" y="110" width="4" height="3" rx="0.5"/>
+        <rect class="sky-win sky-win-b" x="204" y="130" width="4" height="3" rx="0.5"/>
+        <rect class="sky-win sky-win-f" x="216" y="130" width="4" height="3" rx="0.5"/>
+        <rect class="sky-win sky-win-c" x="228" y="130" width="4" height="3" rx="0.5"/>
+        <rect class="sky-win sky-win-a" x="240" y="130" width="4" height="3" rx="0.5"/>
+
+        <!-- Aon Center windows -->
+        <rect class="sky-win sky-win-c" x="444" y="68"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-a" x="451" y="68"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-e" x="458" y="68"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-b" x="444" y="78"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-d" x="451" y="78"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-a" x="458" y="78"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-f" x="444" y="90"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-c" x="451" y="90"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-b" x="458" y="90"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-e" x="444" y="102" width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-a" x="451" y="102" width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-d" x="444" y="114" width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-f" x="458" y="114" width="3" height="2" rx="0.5"/>
+
+        <!-- Willis Tower windows -->
+        <rect class="sky-win sky-win-b" x="597" y="8"   width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-e" x="605" y="8"   width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-a" x="613" y="8"   width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-c" x="597" y="18"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-d" x="607" y="18"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-b" x="620" y="22"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-f" x="630" y="22"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-a" x="597" y="30"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-e" x="607" y="30"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-c" x="617" y="30"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-b" x="627" y="30"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-d" x="637" y="30"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-f" x="597" y="42"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-a" x="608" y="42"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-c" x="618" y="42"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-e" x="628" y="42"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-b" x="640" y="42"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-d" x="597" y="58"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-a" x="608" y="58"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-f" x="620" y="58"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-c" x="632" y="58"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-e" x="644" y="58"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-b" x="656" y="58"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-a" x="597" y="70"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-d" x="610" y="70"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-c" x="622" y="70"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-f" x="634" y="70"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-b" x="646" y="70"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-e" x="658" y="70"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-c" x="597" y="84"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-a" x="612" y="84"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-d" x="626" y="84"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-b" x="640" y="84"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-f" x="654" y="84"  width="3" height="2" rx="0.5"/>
+
+        <!-- Trump Tower windows -->
+        <rect class="sky-win sky-win-e" x="702" y="42"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-a" x="710" y="42"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-c" x="718" y="42"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-b" x="704" y="58"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-f" x="714" y="58"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-d" x="724" y="58"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-a" x="702" y="75"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-c" x="714" y="75"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-e" x="726" y="75"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-b" x="703" y="92"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-d" x="716" y="92"  width="3" height="2" rx="0.5"/>
+        <rect class="sky-win sky-win-f" x="729" y="92"  width="3" height="2" rx="0.5"/>
+
+        <!-- Marina City windows (honeycomb dots) -->
+        <rect class="sky-win sky-win-d" x="860" y="92"  width="4" height="3" rx="1"/>
+        <rect class="sky-win sky-win-a" x="866" y="102" width="4" height="3" rx="1"/>
+        <rect class="sky-win sky-win-c" x="860" y="112" width="4" height="3" rx="1"/>
+        <rect class="sky-win sky-win-b" x="866" y="122" width="4" height="3" rx="1"/>
+        <rect class="sky-win sky-win-e" x="860" y="132" width="4" height="3" rx="1"/>
+        <rect class="sky-win sky-win-f" x="888" y="92"  width="4" height="3" rx="1"/>
+        <rect class="sky-win sky-win-c" x="894" y="102" width="4" height="3" rx="1"/>
+        <rect class="sky-win sky-win-a" x="888" y="112" width="4" height="3" rx="1"/>
+        <rect class="sky-win sky-win-d" x="894" y="122" width="4" height="3" rx="1"/>
+        <rect class="sky-win sky-win-b" x="888" y="132" width="4" height="3" rx="1"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- wave -->
+  <div class="wave">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#0ea5e9" opacity=".12"/>
+      <path d="M0,55 C480,10 960,80 1440,55 L1440,80 L0,80 Z" fill="#0ea5e9" opacity=".08"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ====== TICKER ====== -->
+<div class="ticker-bar">
+  <div class="ticker-track">
+    <span class="ticker-item">✦ Residential Cleaning</span>
+    <span class="ticker-item ticker-sep">|</span>
+    <span class="ticker-item">✦ Commercial Spaces</span>
+    <span class="ticker-item ticker-sep">|</span>
+    <span class="ticker-item">✦ Deep Cleaning</span>
+    <span class="ticker-item ticker-sep">|</span>
+    <span class="ticker-item">✦ Move-In / Move-Out</span>
+    <span class="ticker-item ticker-sep">|</span>
+    <span class="ticker-item">✦ Post-Construction</span>
+    <span class="ticker-item ticker-sep">|</span>
+    <span class="ticker-item">✦ Window Cleaning</span>
+    <span class="ticker-item ticker-sep">|</span>
+    <span class="ticker-item">✦ Eco-Friendly Products</span>
+    <span class="ticker-item ticker-sep">|</span>
+    <span class="ticker-item">✦ Same-Day Available</span>
+    <span class="ticker-item ticker-sep">|</span>
+    <span class="ticker-item">✦ Airbnb Turnover Cleaning</span>
+    <span class="ticker-item ticker-sep">|</span>
+    <!-- repeat -->
+    <span class="ticker-item">✦ Residential Cleaning</span>
+    <span class="ticker-item ticker-sep">|</span>
+    <span class="ticker-item">✦ Commercial Spaces</span>
+    <span class="ticker-item ticker-sep">|</span>
+    <span class="ticker-item">✦ Deep Cleaning</span>
+    <span class="ticker-item ticker-sep">|</span>
+    <span class="ticker-item">✦ Move-In / Move-Out</span>
+    <span class="ticker-item ticker-sep">|</span>
+    <span class="ticker-item">✦ Post-Construction</span>
+    <span class="ticker-item ticker-sep">|</span>
+    <span class="ticker-item">✦ Window Cleaning</span>
+    <span class="ticker-item ticker-sep">|</span>
+    <span class="ticker-item">✦ Eco-Friendly Products</span>
+    <span class="ticker-item ticker-sep">|</span>
+    <span class="ticker-item">✦ Same-Day Available</span>
+    <span class="ticker-item ticker-sep">|</span>
+    <span class="ticker-item">✦ Airbnb Turnover Cleaning</span>
+    <span class="ticker-item ticker-sep">|</span>
+  </div>
+</div>
+
+<!-- ====== PRODUCTS WE USE ====== -->
+<section style="background:#fff; padding:4rem 2rem; border-top:1px solid rgba(14,165,233,.1); border-bottom:1px solid rgba(14,165,233,.1);">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div style="text-align:center; margin-bottom:2.5rem;">
+      <span class="section-label">What We Clean With</span>
+      <h2 class="section-title" style="margin-top:.5rem;">Products We Trust</h2>
+      <p class="section-sub" style="max-width:560px; margin:.75rem auto 0;">We give you the choice — eco-friendly &amp; non-toxic for sensitive households, or heavy-duty standard formulas for tough jobs. Both deliver spotless results.</p>
+    </div>
+    <div class="two-col-grid">
+
+      <!-- ECO / NATURAL -->
+      <div style="background:linear-gradient(135deg,#f0fdf4,#dcfce7); border:1.5px solid #86efac; border-radius:20px; padding:1.75rem;">
+        <div style="display:flex; align-items:center; gap:.65rem; margin-bottom:1.5rem;">
+          <div style="width:36px;height:36px;border-radius:10px;background:#16a34a;display:flex;align-items:center;justify-content:center;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M12 22V12M12 12C12 6 7 3 2 3c0 5 3 9 10 9zM12 12c0-6 5-9 10-9-0 5-3 9-10 9z"/></svg>
+          </div>
+          <div>
+            <div style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:1rem;color:#14532d;">Eco &amp; Natural</div>
+            <div style="font-size:.72rem;color:#16a34a;font-weight:600;text-transform:uppercase;letter-spacing:.07em;">Safe for kids, pets &amp; the planet</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:.75rem;">
+
+          <div style="background:#fff;border-radius:12px;padding:.75rem 1rem;display:flex;align-items:center;gap:.85rem;box-shadow:0 1px 6px rgba(22,163,74,.1);">
+            <img src="https://www.google.com/s2/favicons?domain=methodproducts.com&sz=48" width="32" height="32" style="border-radius:8px;flex-shrink:0;" alt="Method" />
+            <div>
+              <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:.88rem;color:#14532d;">Method</div>
+              <div style="font-size:.75rem;color:#4ade80;font-weight:600;">All-Purpose · Glass · Bathroom</div>
+            </div>
+          </div>
+
+          <div style="background:#fff;border-radius:12px;padding:.75rem 1rem;display:flex;align-items:center;gap:.85rem;box-shadow:0 1px 6px rgba(22,163,74,.1);">
+            <img src="https://www.google.com/s2/favicons?domain=mrsmeyers.com&sz=48" width="32" height="32" style="border-radius:8px;flex-shrink:0;" alt="Mrs. Meyer's" />
+            <div>
+              <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:.88rem;color:#14532d;">Mrs. Meyer's</div>
+              <div style="font-size:.75rem;color:#4ade80;font-weight:600;">Multi-Surface · Kitchen · Laundry</div>
+            </div>
+          </div>
+
+          <div style="background:#fff;border-radius:12px;padding:.75rem 1rem;display:flex;align-items:center;gap:.85rem;box-shadow:0 1px 6px rgba(22,163,74,.1);">
+            <img src="https://www.google.com/s2/favicons?domain=seventhgeneration.com&sz=48" width="32" height="32" style="border-radius:8px;flex-shrink:0;" alt="Seventh Generation" />
+            <div>
+              <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:.88rem;color:#14532d;">Seventh Generation</div>
+              <div style="font-size:.75rem;color:#4ade80;font-weight:600;">Disinfectant · Bathroom · Laundry</div>
+            </div>
+          </div>
+
+          <div style="background:#fff;border-radius:12px;padding:.75rem 1rem;display:flex;align-items:center;gap:.85rem;box-shadow:0 1px 6px rgba(22,163,74,.1);">
+            <img src="https://www.google.com/s2/favicons?domain=branchbasics.com&sz=48" width="32" height="32" style="border-radius:8px;flex-shrink:0;" alt="Branch Basics" />
+            <div>
+              <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:.88rem;color:#14532d;">Branch Basics</div>
+              <div style="font-size:.75rem;color:#4ade80;font-weight:600;">Concentrate · Non-Toxic · All Areas</div>
+            </div>
+          </div>
+
+          <div style="background:#fff;border-radius:12px;padding:.75rem 1rem;display:flex;align-items:center;gap:.85rem;box-shadow:0 1px 6px rgba(22,163,74,.1);">
+            <img src="https://www.google.com/s2/favicons?domain=betterlife.com&sz=48" width="32" height="32" style="border-radius:8px;flex-shrink:0;" alt="Better Life" />
+            <div>
+              <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:.88rem;color:#14532d;">Better Life</div>
+              <div style="font-size:.75rem;color:#4ade80;font-weight:600;">Kitchen · Bathroom · Floors</div>
+            </div>
+          </div>
+
+        </div>
+        <div style="margin-top:1.25rem;padding:.65rem 1rem;background:rgba(22,163,74,.08);border-radius:10px;font-size:.78rem;color:#166534;line-height:1.55;">
+          ✦ Plant-based, biodegradable, fragrance-free options available. Ideal for allergy-sensitive households, babies, and pets.
+        </div>
+      </div>
+
+      <!-- STANDARD / GENERIC -->
+      <div style="background:linear-gradient(135deg,#eff6ff,#dbeafe); border:1.5px solid #93c5fd; border-radius:20px; padding:1.75rem;">
+        <div style="display:flex; align-items:center; gap:.65rem; margin-bottom:1.5rem;">
+          <div style="width:36px;height:36px;border-radius:10px;background:#1d4ed8;display:flex;align-items:center;justify-content:center;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.44-3.14"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.44-3.14"/></svg>
+          </div>
+          <div>
+            <div style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:1rem;color:#1e3a8a;">Standard Strength</div>
+            <div style="font-size:.72rem;color:#2563eb;font-weight:600;text-transform:uppercase;letter-spacing:.07em;">Heavy-duty &amp; hospital-grade clean</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:.75rem;">
+
+          <div style="background:#fff;border-radius:12px;padding:.75rem 1rem;display:flex;align-items:center;gap:.85rem;box-shadow:0 1px 6px rgba(29,78,216,.1);">
+            <img src="https://www.google.com/s2/favicons?domain=lysol.com&sz=48" width="32" height="32" style="border-radius:8px;flex-shrink:0;" alt="Lysol" />
+            <div>
+              <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:.88rem;color:#1e3a8a;">Lysol</div>
+              <div style="font-size:.75rem;color:#60a5fa;font-weight:600;">Disinfectant · Bathroom · Kills 99.9%</div>
+            </div>
+          </div>
+
+          <div style="background:#fff;border-radius:12px;padding:.75rem 1rem;display:flex;align-items:center;gap:.85rem;box-shadow:0 1px 6px rgba(29,78,216,.1);">
+            <img src="https://www.google.com/s2/favicons?domain=mrclean.com&sz=48" width="32" height="32" style="border-radius:8px;flex-shrink:0;" alt="Mr. Clean" />
+            <div>
+              <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:.88rem;color:#1e3a8a;">Mr. Clean</div>
+              <div style="font-size:.75rem;color:#60a5fa;font-weight:600;">All-Purpose · Floors · Walls</div>
+            </div>
+          </div>
+
+          <div style="background:#fff;border-radius:12px;padding:.75rem 1rem;display:flex;align-items:center;gap:.85rem;box-shadow:0 1px 6px rgba(29,78,216,.1);">
+            <img src="https://www.google.com/s2/favicons?domain=fabuloso.com&sz=48" width="32" height="32" style="border-radius:8px;flex-shrink:0;" alt="Fabuloso" />
+            <div>
+              <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:.88rem;color:#1e3a8a;">Fabuloso</div>
+              <div style="font-size:.75rem;color:#60a5fa;font-weight:600;">Multi-Purpose · Floors · Surfaces</div>
+            </div>
+          </div>
+
+          <div style="background:#fff;border-radius:12px;padding:.75rem 1rem;display:flex;align-items:center;gap:.85rem;box-shadow:0 1px 6px rgba(29,78,216,.1);">
+            <img src="https://www.google.com/s2/favicons?domain=pinesol.com&sz=48" width="32" height="32" style="border-radius:8px;flex-shrink:0;" alt="Pine-Sol" />
+            <div>
+              <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:.88rem;color:#1e3a8a;">Pine-Sol</div>
+              <div style="font-size:.75rem;color:#60a5fa;font-weight:600;">Floors · Degreaser · Odor Eliminator</div>
+            </div>
+          </div>
+
+          <div style="background:#fff;border-radius:12px;padding:.75rem 1rem;display:flex;align-items:center;gap:.85rem;box-shadow:0 1px 6px rgba(29,78,216,.1);">
+            <img src="https://www.google.com/s2/favicons?domain=windex.com&sz=48" width="32" height="32" style="border-radius:8px;flex-shrink:0;" alt="Windex" />
+            <div>
+              <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:.88rem;color:#1e3a8a;">Windex</div>
+              <div style="font-size:.75rem;color:#60a5fa;font-weight:600;">Glass · Mirrors · Streak-Free Shine</div>
+            </div>
+          </div>
+
+        </div>
+        <div style="margin-top:1.25rem;padding:.65rem 1rem;background:rgba(29,78,216,.06);border-radius:10px;font-size:.78rem;color:#1e3a8a;line-height:1.55;">
+          ✦ Commercial-grade formulas for deep disinfection, heavy grime, and post-construction or move-out cleans.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ====== SERVICES ====== -->
+<section id="services" class="section-pad services-bg">
+  <div class="section-inner">
+    <div style="text-align:center; margin-bottom:.5rem;">
+      <span class="section-label">What We Offer</span>
+    </div>
+    <h2 class="section-title" style="text-align:center;">Our Cleaning Services</h2>
+    <p class="section-sub" style="text-align:center; margin: 0 auto 0;">From weekly tidying to full deep cleans — we've got Chicago covered.</p>
+    <div class="services-grid">
+
+      <div class="service-card reveal">
+        <div class="service-icon">🏠</div>
+        <h3>Residential Cleaning</h3>
+        <p>Regular weekly, bi-weekly, or monthly home cleaning tailored to your family's schedule and lifestyle.</p>
+        <a href="#contact" class="service-link">Get a Quote →</a>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">🧴</div>
+        <h3>Deep Cleaning</h3>
+        <p>A thorough top-to-bottom scrub — baseboards, grout, appliances, and every corner you've been avoiding.</p>
+        <a href="#contact" class="service-link">Get a Quote →</a>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">📦</div>
+        <h3>Move-In / Move-Out</h3>
+        <p>Leave your old place spotless or start fresh in a new one. We handle the cleaning so you focus on moving.</p>
+        <a href="#contact" class="service-link">Get a Quote →</a>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">🏢</div>
+        <h3>Commercial Cleaning</h3>
+        <p>Offices, retail, and commercial spaces cleaned on your schedule — early morning, evenings, or weekends.</p>
+        <a href="#contact" class="service-link">Get a Quote →</a>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">🪟</div>
+        <h3>Window Cleaning</h3>
+        <p>Streak-free interior and exterior window cleaning for residential and commercial properties across Chicago.</p>
+        <a href="#contact" class="service-link">Get a Quote →</a>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">🏗️</div>
+        <h3>Post-Construction</h3>
+        <p>Construction dust and debris cleared completely. We restore your newly renovated space to move-in ready.</p>
+        <a href="#contact" class="service-link">Get a Quote →</a>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">🏠</div>
+        <h3>Airbnb &amp; Short-Term Rental</h3>
+        <p>Fast, reliable turnover cleaning between guests. Fresh linens, restocked supplies, and a spotless space — every time, on your schedule.</p>
+        <a href="#contact" class="service-link">Get a Quote →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ====== WHY US ====== -->
+<section id="why-us" class="section-pad why-bg">
+  <div class="section-inner">
+    <div class="why-grid">
+      <div>
+        <span class="section-label">Why Choose Us</span>
+        <h2 class="section-title">The Chicago Standard<br/>for <span style="color:var(--sky);">Clean</span></h2>
+        <p class="section-sub" style="margin-bottom:2.5rem;">We're not a franchise — we're your neighbors. Every team member is background-checked, trained, and genuinely cares about the result.</p>
+        <ul class="why-list">
+          <li class="why-item reveal">
+            <div class="why-check"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></div>
+            <div>
+              <h4>Background-Checked Professionals</h4>
+              <p>Every cleaner passes a thorough screening process. Your home, your rules — no surprises.</p>
+            </div>
+          </li>
+          <li class="why-item reveal">
+            <div class="why-check"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></div>
+            <div>
+              <h4>Eco-Friendly & Non-Toxic Products</h4>
+              <p>Safe for kids, pets, and Chicago's waterways. We use only green-certified cleaning solutions.</p>
+            </div>
+          </li>
+          <li class="why-item reveal">
+            <div class="why-check"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></div>
+            <div>
+              <h4>Satisfaction Guaranteed</h4>
+              <p>If something's not right, we'll come back and fix it — no questions, no charge.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="why-visual reveal">
+        <div class="why-bg-circle" style="width:300px;height:300px;top:-50px;right:-50px;"></div>
+        <div class="why-bg-circle" style="width:200px;height:200px;bottom:-30px;left:-20px;background:radial-gradient(circle,rgba(220,38,38,.08),transparent 70%);"></div>
+        <div style="position:relative; z-index:1;">
+          <!-- Founders photo -->
+          <div style="border-radius:20px; overflow:hidden; box-shadow:0 8px 40px rgba(12,35,64,.18), 0 2px 8px rgba(14,165,233,.12); position:relative; margin-bottom:1.25rem;">
+            <img src="A3A54C34-B6CD-496B-B899-7AC91D9146F6 copy.PNG" alt="Michel Uzhca and Evelyn Loja — Founders of Second City Scrubbers" style="width:100%; display:block; object-fit:cover;" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(12,35,64,.55) 0%, transparent 55%);"></div>
+            <div style="position:absolute;bottom:1rem;left:1.25rem;">
+              <div style="font-family:'Bebas Neue',sans-serif; font-size:1.35rem; color:#fff; letter-spacing:.06em; line-height:1.1;">Michel &amp; Evelyn</div>
+              <div style="font-size:.72rem; color:rgba(255,255,255,.75); font-weight:600; text-transform:uppercase; letter-spacing:.08em;">Founders · Second City Scrubbers</div>
+            </div>
+          </div>
+          <!-- Bios -->
+          <div style="display:flex; flex-direction:column; gap:.85rem;">
+            <div style="background:#fff; border:1px solid rgba(14,165,233,.15); border-radius:14px; padding:1rem 1.15rem; box-shadow:0 2px 12px rgba(14,165,233,.07);">
+              <div style="display:flex; align-items:center; gap:.6rem; margin-bottom:.45rem;">
+                <div style="width:32px; height:32px; border-radius:50%; background:linear-gradient(135deg,var(--sky),var(--navy)); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                  <span style="font-size:.75rem; font-weight:800; color:#fff;">MU</span>
+                </div>
+                <div>
+                  <div style="font-family:'Montserrat',sans-serif; font-size:.88rem; font-weight:800; color:var(--navy);">Michel Uzhca</div>
+                  <div style="font-size:.72rem; color:var(--sky); font-weight:700; text-transform:uppercase; letter-spacing:.07em;">Co-Founder &amp; Operations Lead</div>
+                </div>
+              </div>
+              <p style="font-size:.82rem; line-height:1.65; color:var(--text-body); margin:0;">Michel is the driving force behind every clean. With a hands-on approach and an eye for the details others miss, he built Second City Scrubbers on the principle that Chicago homes deserve nothing less than flawless — every single visit.</p>
+            </div>
+            <div style="background:#fff; border:1px solid rgba(14,165,233,.15); border-radius:14px; padding:1rem 1.15rem; box-shadow:0 2px 12px rgba(14,165,233,.07);">
+              <div style="display:flex; align-items:center; gap:.6rem; margin-bottom:.45rem;">
+                <div style="width:32px; height:32px; border-radius:50%; background:linear-gradient(135deg,var(--red),var(--navy)); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                  <span style="font-size:.75rem; font-weight:800; color:#fff;">EL</span>
+                </div>
+                <div>
+                  <div style="font-family:'Montserrat',sans-serif; font-size:.88rem; font-weight:800; color:var(--navy);">Evelyn Loja</div>
+                  <div style="font-size:.72rem; color:var(--sky); font-weight:700; text-transform:uppercase; letter-spacing:.07em;">Co-Founder &amp; Client Experience</div>
+                </div>
+              </div>
+              <p style="font-size:.82rem; line-height:1.65; color:var(--text-body); margin:0;">Evelyn ensures every client feels like a priority. From first booking to final walkthrough, she sets the standard for communication, quality control, and the warmth that keeps Chicago families coming back.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== PROCESS ====== -->
+<section id="process" class="section-pad process-bg">
+  <div class="section-inner">
+    <div style="text-align:center; margin-bottom:.5rem;">
+      <span class="section-label">How It Works</span>
+    </div>
+    <h2 class="section-title" style="text-align:center;">4 Steps to Spotless</h2>
+    <p class="section-sub" style="text-align:center; margin: 0 auto 0;">Booking is simple, fast, and commitment-free.</p>
+    <div class="process-grid">
+      <div class="process-card reveal">
+        <div class="process-num">01</div>
+        <div class="process-icon">📋</div>
+        <h3>Book Your Team</h3>
+        <p>Fill out our quick quote form or call us. Tell us about your space and what you need.</p>
+      </div>
+      <div class="process-card reveal">
+        <div class="process-num">02</div>
+        <div class="process-icon">📅</div>
+        <h3>We Arrive &amp; Assess</h3>
+        <p>Our team shows up on time, reviews the space, and confirms the scope before starting.</p>
+      </div>
+      <div class="process-card reveal">
+        <div class="process-num">03</div>
+        <div class="process-icon">✨</div>
+        <h3>We Scrub It Clean</h3>
+        <p>Our crew works through our comprehensive checklist — leaving nothing overlooked.</p>
+      </div>
+      <div class="process-card reveal">
+        <div class="process-num">04</div>
+        <div class="process-icon">🏆</div>
+        <h3>Enjoy Your Space</h3>
+        <p>Walk through the results. If anything's off, we fix it before we leave. Guaranteed.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== TESTIMONIALS ====== -->
+<section id="testimonials" class="section-pad testimonials-bg">
+  <div class="section-inner">
+    <div style="text-align:center; margin-bottom:.5rem;">
+      <span class="section-label">Customer Reviews</span>
+    </div>
+    <h2 class="section-title" style="text-align:center;">Chicago Loves Us</h2>
+    <p class="section-sub" style="text-align:center; margin: 0 auto 0;">Don't take our word for it — here's what our clients say.</p>
+    <div class="testimonials-grid">
+
+      <div class="testimonial-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"Second City Scrubbers transformed our apartment before we listed it. The place looked brand new. Booked them again for our new home already."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">JM</div>
+          <div>
+            <div class="author-name">Jessica M.</div>
+            <div class="author-loc">Lincoln Park, Chicago</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"I've tried three other cleaning services and nothing compares. These guys are thorough, professional, and actually show up when they say they will."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">DR</div>
+          <div>
+            <div class="author-name">David R.</div>
+            <div class="author-loc">Wicker Park, Chicago</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"Used them for post-construction cleaning after our kitchen reno. Not a speck of dust left. Absolutely worth every penny — highly recommend!"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">SK</div>
+          <div>
+            <div class="author-name">Sarah K.</div>
+            <div class="author-loc">Lakeview, Chicago</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ====== TIPS & TRICKS BLOG ====== -->
+<section id="tips" style="background:var(--sky-ghost); padding:5rem 2rem; border-top:1px solid rgba(14,165,233,.1);">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div style="text-align:center; margin-bottom:3rem;">
+      <span class="section-label">From Our Team</span>
+      <h2 class="section-title" style="margin-top:.5rem;">Cleaning Tips &amp; Tricks</h2>
+      <p class="section-sub" style="max-width:520px; margin:.75rem auto 0;">Pro insights from Michel &amp; Evelyn — simple habits that keep your home looking freshly cleaned between visits.</p>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1.75rem;">
+
+      <!-- Card 1 -->
+      <article class="reveal" style="background:#fff; border-radius:20px; overflow:hidden; box-shadow:0 4px 24px rgba(12,35,64,.07); display:flex; flex-direction:column;">
+        <div style="background:linear-gradient(135deg,#0ea5e9,#0c2340); padding:1.75rem 1.75rem 1.25rem; position:relative;">
+          <div style="font-size:2.25rem; margin-bottom:.5rem;">🧹</div>
+          <span style="background:rgba(255,255,255,.15); color:#fff; font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; padding:.25rem .75rem; border-radius:999px;">Kitchen</span>
+        </div>
+        <div style="padding:1.5rem; flex:1; display:flex; flex-direction:column;">
+          <h3 style="font-family:'Montserrat',sans-serif; font-size:1.05rem; font-weight:800; color:var(--navy); margin-bottom:.65rem; line-height:1.35;">Clean Your Microwave in 5 Minutes — No Scrubbing</h3>
+          <p style="font-size:.875rem; color:var(--text-body); line-height:1.7; flex:1;">Fill a microwave-safe bowl with 1 cup of water and a few slices of lemon. Heat on high for 3 minutes, then let it sit for 2 more. The steam loosens every splatter — just wipe clean with a cloth. No chemicals, no elbow grease.</p>
+          <div style="margin-top:1.25rem; padding-top:1rem; border-top:1px solid rgba(14,165,233,.1); display:flex; align-items:center; gap:.6rem;">
+            <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--sky),var(--navy));display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span style="font-size:.6rem;font-weight:800;color:#fff;">MU</span></div>
+            <span style="font-size:.75rem; color:var(--text-muted); font-weight:600;">Michel Uzhca · Pro Tip</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="reveal" style="background:#fff; border-radius:20px; overflow:hidden; box-shadow:0 4px 24px rgba(12,35,64,.07); display:flex; flex-direction:column;">
+        <div style="background:linear-gradient(135deg,#16a34a,#14532d); padding:1.75rem 1.75rem 1.25rem; position:relative;">
+          <div style="font-size:2.25rem; margin-bottom:.5rem;">🚿</div>
+          <span style="background:rgba(255,255,255,.15); color:#fff; font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; padding:.25rem .75rem; border-radius:999px;">Bathroom</span>
+        </div>
+        <div style="padding:1.5rem; flex:1; display:flex; flex-direction:column;">
+          <h3 style="font-family:'Montserrat',sans-serif; font-size:1.05rem; font-weight:800; color:var(--navy); margin-bottom:.65rem; line-height:1.35;">Prevent Soap Scum Before It Starts</h3>
+          <p style="font-size:.875rem; color:var(--text-body); line-height:1.7; flex:1;">After your shower, do a quick 20-second squeegee on the glass doors and tile walls. This single habit removes 80% of the water that causes soap scum and hard water stains. Pair it with a weekly spray of white vinegar and water for a glass that stays crystal clear.</p>
+          <div style="margin-top:1.25rem; padding-top:1rem; border-top:1px solid rgba(14,165,233,.1); display:flex; align-items:center; gap:.6rem;">
+            <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--red),var(--navy));display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span style="font-size:.6rem;font-weight:800;color:#fff;">EL</span></div>
+            <span style="font-size:.75rem; color:var(--text-muted); font-weight:600;">Evelyn Loja · Pro Tip</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="reveal" style="background:#fff; border-radius:20px; overflow:hidden; box-shadow:0 4px 24px rgba(12,35,64,.07); display:flex; flex-direction:column;">
+        <div style="background:linear-gradient(135deg,#dc2626,#7f1d1d); padding:1.75rem 1.75rem 1.25rem; position:relative;">
+          <div style="font-size:2.25rem; margin-bottom:.5rem;">🛋️</div>
+          <span style="background:rgba(255,255,255,.15); color:#fff; font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; padding:.25rem .75rem; border-radius:999px;">Living Room</span>
+        </div>
+        <div style="padding:1.5rem; flex:1; display:flex; flex-direction:column;">
+          <h3 style="font-family:'Montserrat',sans-serif; font-size:1.05rem; font-weight:800; color:var(--navy); margin-bottom:.65rem; line-height:1.35;">The Top-to-Bottom Rule That Saves You Time</h3>
+          <p style="font-size:.875rem; color:var(--text-body); line-height:1.7; flex:1;">Always clean from the highest point in a room down to the floor. Dust ceiling fans and shelves first, then wipe surfaces, and vacuum last. If you vacuum before dusting, you'll just be pushing dirt back onto clean floors. This one rule cuts your cleaning time in half.</p>
+          <div style="margin-top:1.25rem; padding-top:1rem; border-top:1px solid rgba(14,165,233,.1); display:flex; align-items:center; gap:.6rem;">
+            <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--sky),var(--navy));display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span style="font-size:.6rem;font-weight:800;color:#fff;">MU</span></div>
+            <span style="font-size:.75rem; color:var(--text-muted); font-weight:600;">Michel Uzhca · Pro Tip</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 4 -->
+      <article class="reveal" style="background:#fff; border-radius:20px; overflow:hidden; box-shadow:0 4px 24px rgba(12,35,64,.07); display:flex; flex-direction:column;">
+        <div style="background:linear-gradient(135deg,#7c3aed,#3b0764); padding:1.75rem 1.75rem 1.25rem; position:relative;">
+          <div style="font-size:2.25rem; margin-bottom:.5rem;">🪟</div>
+          <span style="background:rgba(255,255,255,.15); color:#fff; font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; padding:.25rem .75rem; border-radius:999px;">Windows</span>
+        </div>
+        <div style="padding:1.5rem; flex:1; display:flex; flex-direction:column;">
+          <h3 style="font-family:'Montserrat',sans-serif; font-size:1.05rem; font-weight:800; color:var(--navy); margin-bottom:.65rem; line-height:1.35;">Streak-Free Windows Every Time</h3>
+          <p style="font-size:.875rem; color:var(--text-body); line-height:1.7; flex:1;">Skip paper towels — they leave lint and streaks. Use a microfiber cloth or a clean squeegee with a mix of 1 part white vinegar to 4 parts water. Clean windows on a cloudy day, not in direct sunlight — the sun dries the solution too fast and streaks form before you can wipe.</p>
+          <div style="margin-top:1.25rem; padding-top:1rem; border-top:1px solid rgba(14,165,233,.1); display:flex; align-items:center; gap:.6rem;">
+            <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--red),var(--navy));display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span style="font-size:.6rem;font-weight:800;color:#fff;">EL</span></div>
+            <span style="font-size:.75rem; color:var(--text-muted); font-weight:600;">Evelyn Loja · Pro Tip</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 5 -->
+      <article class="reveal" style="background:#fff; border-radius:20px; overflow:hidden; box-shadow:0 4px 24px rgba(12,35,64,.07); display:flex; flex-direction:column;">
+        <div style="background:linear-gradient(135deg,#0891b2,#0c2340); padding:1.75rem 1.75rem 1.25rem; position:relative;">
+          <div style="font-size:2.25rem; margin-bottom:.5rem;">🛏️</div>
+          <span style="background:rgba(255,255,255,.15); color:#fff; font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; padding:.25rem .75rem; border-radius:999px;">Bedroom</span>
+        </div>
+        <div style="padding:1.5rem; flex:1; display:flex; flex-direction:column;">
+          <h3 style="font-family:'Montserrat',sans-serif; font-size:1.05rem; font-weight:800; color:var(--navy); margin-bottom:.65rem; line-height:1.35;">Freshen a Mattress With Baking Soda</h3>
+          <p style="font-size:.875rem; color:var(--text-body); line-height:1.7; flex:1;">Strip the bed and sprinkle a generous layer of baking soda over the entire mattress. Let it sit for at least 1 hour — longer if possible. Vacuum it up thoroughly. The baking soda absorbs moisture, odors, and dead skin cells, leaving your mattress fresh without any sprays or chemicals.</p>
+          <div style="margin-top:1.25rem; padding-top:1rem; border-top:1px solid rgba(14,165,233,.1); display:flex; align-items:center; gap:.6rem;">
+            <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--sky),var(--navy));display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span style="font-size:.6rem;font-weight:800;color:#fff;">MU</span></div>
+            <span style="font-size:.75rem; color:var(--text-muted); font-weight:600;">Michel Uzhca · Pro Tip</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 6 -->
+      <article class="reveal" style="background:#fff; border-radius:20px; overflow:hidden; box-shadow:0 4px 24px rgba(12,35,64,.07); display:flex; flex-direction:column;">
+        <div style="background:linear-gradient(135deg,#d97706,#78350f); padding:1.75rem 1.75rem 1.25rem; position:relative;">
+          <div style="font-size:2.25rem; margin-bottom:.5rem;">🐾</div>
+          <span style="background:rgba(255,255,255,.15); color:#fff; font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; padding:.25rem .75rem; border-radius:999px;">Pet Owners</span>
+        </div>
+        <div style="padding:1.5rem; flex:1; display:flex; flex-direction:column;">
+          <h3 style="font-family:'Montserrat',sans-serif; font-size:1.05rem; font-weight:800; color:var(--navy); margin-bottom:.65rem; line-height:1.35;">Remove Pet Hair From Furniture Instantly</h3>
+          <p style="font-size:.875rem; color:var(--text-body); line-height:1.7; flex:1;">Put on a rubber glove and run your hand across upholstery in one direction — the static lifts pet hair into clumps you can grab easily. A damp rubber squeegee works on carpet too. For stubborn hair in corners, wrap duct tape (sticky side out) around a paint roller for a budget-friendly lint roller.</p>
+          <div style="margin-top:1.25rem; padding-top:1rem; border-top:1px solid rgba(14,165,233,.1); display:flex; align-items:center; gap:.6rem;">
+            <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--red),var(--navy));display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span style="font-size:.6rem;font-weight:800;color:#fff;">EL</span></div>
+            <span style="font-size:.75rem; color:var(--text-muted); font-weight:600;">Evelyn Loja · Pro Tip</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ====== CTA BAND ====== -->
+<section class="cta-band">
+  <h2>Ready for a <span style="color:var(--sky-light);">Spotless</span> Space?</h2>
+  <p>Join thousands of Chicago families and businesses who trust Second City Scrubbers for a cleaner, healthier home.</p>
+  <div class="cta-btns">
+    <a href="#contact" class="cta-btn-main">Book Now — It's Free to Quote</a>
+    <a href="tel:+18722406619" class="cta-btn-ghost">📞 Call Us Today</a>
+  </div>
+</section>
+
+<!-- ====== CONTACT ====== -->
+<section id="contact" class="section-pad contact-bg">
+  <div class="section-inner">
+    <span class="section-label">Get In Touch</span>
+    <h2 class="section-title">Get Your Free Quote</h2>
+    <p class="section-sub">No pressure. No commitment. Just an honest price for a spotless home.</p>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>We're Local. We're Reliable.</h3>
+        <p>Based in Chicago, we serve the city and surrounding suburbs. Reach out anytime — we respond within 24 hours.</p>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.09 9.81 19.79 19.79 0 01.07 1.18 2 2 0 012.06.01h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+          </div>
+          <span>(872) 240-6619</span>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <span>michel@secondcityscrubbers.com</span>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <span>Chicago, IL &amp; Surrounding Suburbs</span>
+        </div>
+        <!-- Service area suburbs -->
+        <div style="margin-top:1.5rem; background:rgba(14,165,233,.06); border:1px solid rgba(14,165,233,.18); border-radius:16px; padding:1.25rem 1.5rem;">
+          <p style="font-family:'Montserrat',sans-serif; font-size:.75rem; font-weight:800; text-transform:uppercase; letter-spacing:.1em; color:var(--sky); margin-bottom:.85rem;">Areas We Serve</p>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:.35rem .75rem;">
+            <span style="font-size:.82rem; color:var(--text-body);">✦ Evanston</span>
+            <span style="font-size:.82rem; color:var(--text-body);">✦ Skokie</span>
+            <span style="font-size:.82rem; color:var(--text-body);">✦ Oak Park</span>
+            <span style="font-size:.82rem; color:var(--text-body);">✦ Berwyn</span>
+            <span style="font-size:.82rem; color:var(--text-body);">✦ Cicero</span>
+            <span style="font-size:.82rem; color:var(--text-body);">✦ Schaumburg</span>
+            <span style="font-size:.82rem; color:var(--text-body);">✦ Naperville</span>
+            <span style="font-size:.82rem; color:var(--text-body);">✦ Elmhurst</span>
+            <span style="font-size:.82rem; color:var(--text-body);">✦ Arlington Heights</span>
+            <span style="font-size:.82rem; color:var(--text-body);">✦ Des Plaines</span>
+            <span style="font-size:.82rem; color:var(--text-body);">✦ Park Ridge</span>
+            <span style="font-size:.82rem; color:var(--text-body);">✦ Niles</span>
+            <span style="font-size:.82rem; color:var(--text-body);">✦ Mount Prospect</span>
+            <span style="font-size:.82rem; color:var(--text-body);">✦ Palatine</span>
+            <span style="font-size:.82rem; color:var(--text-body);">✦ Downers Grove</span>
+            <span style="font-size:.82rem; color:var(--text-body);">✦ Lombard</span>
+            <span style="font-size:.82rem; color:var(--text-body);">✦ Oak Lawn</span>
+            <span style="font-size:.82rem; color:var(--text-body);">✦ Orland Park</span>
+            <span style="font-size:.82rem; color:var(--text-body);">✦ Tinley Park</span>
+            <span style="font-size:.82rem; color:var(--text-body);">✦ Calumet City</span>
+            <span style="font-size:.82rem; color:var(--text-body);">✦ Hoffman Estates</span>
+            <span style="font-size:.82rem; color:var(--text-body);">✦ Elk Grove Village</span>
+          </div>
+          <p style="font-size:.78rem; color:var(--text-muted); margin-top:.85rem;">Don't see your area? <a href="#contact" style="color:var(--sky); font-weight:600;">Ask us</a> — we may still cover it.</p>
+        </div>
+      </div>
+      <div class="contact-form">
+        <form id="quote-form" onsubmit="handleSubmit(event)" action="https://formspree.io/f/mreaydgk" method="POST">
+          <div class="form-row">
+            <div class="form-group">
+              <label>First Name</label>
+              <input type="text" name="first_name" placeholder="Jane" required />
+            </div>
+            <div class="form-group">
+              <label>Last Name</label>
+              <input type="text" name="last_name" placeholder="Smith" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" name="email" placeholder="jane@example.com" required />
+          </div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" name="phone" placeholder="(312) 000-0000" />
+          </div>
+          <div class="form-group">
+            <label>Service Type</label>
+            <select name="service_type">
+              <option>Residential Cleaning</option>
+              <option>Deep Cleaning</option>
+              <option>Move-In / Move-Out</option>
+              <option>Commercial Cleaning</option>
+              <option>Airbnb / Short-Term Rental</option>
+              <option>Post-Construction</option>
+              <option>Window Cleaning</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Tell Us About Your Space</label>
+            <textarea rows="3" name="message" placeholder="Size of home, special requests, preferred dates..."></textarea>
+          </div>
+          <button type="submit" class="form-submit">Send My Free Quote Request →</button>
+        </form>
+        <div id="form-success">
+          <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
+          <h3>We got your request!</h3>
+          <p>A member of our Chicago team will be in touch within 24 hours with your free quote.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FOOTER ====== -->
+<footer>
+  <div class="footer-grid" id="footer-grid">
+    <div class="footer-brand">
+      <img src='A_logo_for_%22Second_City_Scrubbers,%22_a_cleaning_com.png' alt="Second City Scrubbers" />
+      <p>Professional cleaning services built for Chicago. Reliable, eco-friendly, and satisfaction guaranteed on every job.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">Residential</a></li>
+        <li><a href="#services">Deep Cleaning</a></li>
+        <li><a href="#services">Move-In / Move-Out</a></li>
+        <li><a href="#services">Commercial</a></li>
+        <li><a href="#services">Windows</a></li>
+        <li><a href="#services">Post-Construction</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#why-us">Why Us</a></li>
+        <li><a href="#testimonials">Reviews</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Second City Scrubbers. All rights reserved.</p>
+    <p>Made with ❤️ in Chicago, IL</p>
+  </div>
+</footer>
+
+<script>
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const form = document.getElementById('quote-form');
+    const btn = form.querySelector('.form-submit');
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+    try {
+      const res = await fetch('https://formspree.io/f/mreaydgk', {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        form.style.display = 'none';
+        document.getElementById('form-success').style.display = 'block';
+      } else {
+        btn.textContent = 'Send My Free Quote Request →';
+        btn.disabled = false;
+        alert('Something went wrong. Please try again or call us at (872) 240-6619.');
+      }
+    } catch {
+      btn.textContent = 'Send My Free Quote Request →';
+      btn.disabled = false;
+      alert('Something went wrong. Please try again or call us at (872) 240-6619.');
+    }
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if (el.isIntersecting) {
+        el.target.classList.add('visible');
+        observer.unobserve(el.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ====== SHOOTING STARS — vanilla port of ShootingStars React component ======
+  // Placed behind hero text (z-index:0, hero has overflow:hidden so clipped to hero bounds)
+  (function shootingStars() {
+    const hero = document.querySelector('.hero');
+    if (!hero) return;
+
+    // --- Canvas setup ---
+    const canvas = document.createElement('canvas');
+    canvas.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;';
+    hero.insertBefore(canvas, hero.firstChild);
+    const ctx = canvas.getContext('2d');
+
+    function resize() {
+      canvas.width  = hero.offsetWidth;
+      canvas.height = hero.offsetHeight;
+    }
+    resize();
+    new ResizeObserver(resize).observe(hero);
+
+    // --- Layer configs (3 layers matching the original demo, colours adapted for light bg) ---
+    const layers = [
+      // Layer 1 — navy streak, sky-blue transparent tail (most visible on light bg)
+      { starColor:'rgba(12,35,64,0.55)',   trailColor:'rgba(14,165,233,0)',  minSpeed:15, maxSpeed:35, minDelay:1200, maxDelay:3500, starWidth:90,  starHeight:2   },
+      // Layer 2 — sky-blue streak, white transparent tail
+      { starColor:'rgba(14,165,233,0.65)', trailColor:'rgba(255,255,255,0)', minSpeed:10, maxSpeed:28, minDelay:2000, maxDelay:5000, starWidth:75,  starHeight:1.5 },
+      // Layer 3 — brand red accent, rarest and fastest
+      { starColor:'rgba(220,38,38,0.42)',  trailColor:'rgba(14,165,233,0)',  minSpeed:22, maxSpeed:48, minDelay:3500, maxDelay:7500, starWidth:55,  starHeight:1.5 },
+    ];
+
+    // --- Identical to getRandomStartPoint() in the React component ---
+    function getRandomStart() {
+      const side   = Math.floor(Math.random() * 4);
+      const W = canvas.width, H = canvas.height;
+      switch (side) {
+        case 0: return { x: Math.random() * W, y: 0, angle: 45  };
+        case 1: return { x: W, y: Math.random() * H, angle: 135 };
+        case 2: return { x: Math.random() * W, y: H, angle: 225 };
+        case 3: return { x: 0, y: Math.random() * H, angle: 315 };
+        default: return { x: 0, y: 0, angle: 45 };
+      }
+    }
+
+    // --- State for each layer (mirrors ShootingStar interface) ---
+    const state = layers.map(cfg => ({
+      cfg,
+      x: 0, y: 0, angle: 45,
+      scale: 1, distance: 0,
+      speed: cfg.minSpeed,
+      active: false,
+      nextSpawn: Date.now() + cfg.minDelay + Math.random() * (cfg.maxDelay - cfg.minDelay),
+    }));
+
+    function spawnStar(s) {
+      const { x, y, angle } = getRandomStart();
+      s.x        = x;
+      s.y        = y;
+      s.angle    = angle;
+      s.scale    = 1;
+      s.distance = 0;
+      s.speed    = s.cfg.minSpeed + Math.random() * (s.cfg.maxSpeed - s.cfg.minSpeed);
+      s.active   = true;
+    }
+
+    // --- Draw: rect filled with linearGradient, rotated by angle — mirrors the SVG <rect> ---
+    function drawStar(s) {
+      const rad = (s.angle * Math.PI) / 180;
+      const w   = s.cfg.starWidth * s.scale;
+      const h   = s.cfg.starHeight;
+
+      ctx.save();
+      ctx.translate(s.x, s.y);
+      ctx.rotate(rad);
+
+      // gradient: trailColor (transparent tail) → starColor (solid head), matching the SVG gradient
+      const grad = ctx.createLinearGradient(0, 0, w, 0);
+      grad.addColorStop(0, s.cfg.trailColor);
+      grad.addColorStop(1, s.cfg.starColor);
+
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, -h / 2, w, h);
+      ctx.restore();
+    }
+
+    // --- Animation loop — mirrors moveStar + requestAnimationFrame pattern ---
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const now = Date.now();
+      const W = canvas.width, H = canvas.height;
+
+      state.forEach(s => {
+        if (s.active) {
+          const rad = (s.angle * Math.PI) / 180;
+          s.x        += s.speed * Math.cos(rad);
+          s.y        += s.speed * Math.sin(rad);
+          s.distance += s.speed;
+          s.scale     = 1 + s.distance / 100;
+
+          // Out-of-bounds check matches React component's boundary check
+          if (s.x < -200 || s.x > W + 200 || s.y < -200 || s.y > H + 200) {
+            s.active    = false;
+            s.nextSpawn = now + s.cfg.minDelay + Math.random() * (s.cfg.maxDelay - s.cfg.minDelay);
+          } else {
+            drawStar(s);
+          }
+        } else if (now >= s.nextSpawn) {
+          spawnStar(s);
+        }
+      });
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  })();
+</script>
+
+</body>
+</html>
