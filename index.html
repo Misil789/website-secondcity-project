@@ -600,6 +600,92 @@
       color: var(--text-body);
     }
     .addon-pill strong { color: var(--sky); font-weight: 800; }
+
+    /* ---- CHECKLIST ---- */
+    .checklist-toggle {
+      width: 100%;
+      background: var(--sky-ghost);
+      border: 1.5px solid rgba(14,165,233,.2);
+      border-radius: 14px;
+      padding: .9rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: .88rem;
+      color: var(--navy);
+      transition: background .2s;
+    }
+    .checklist-toggle:hover { background: #e0f2fe; }
+    .checklist-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+      padding: 1.5rem;
+      background: var(--sky-ghost);
+      border: 1.5px solid rgba(14,165,233,.15);
+      border-top: none;
+      border-radius: 0 0 14px 14px;
+    }
+    .checklist-cat p { font-family:'Montserrat',sans-serif; font-weight:800; font-size:.75rem; text-transform:uppercase; letter-spacing:.08em; color:var(--sky); margin-bottom:.6rem; }
+    .checklist-cat ul { list-style:none; display:flex; flex-direction:column; gap:.35rem; }
+    .checklist-cat li { font-size:.8rem; color:var(--text-body); display:flex; gap:.5rem; align-items:flex-start; }
+    .checklist-cat li::before { content:'✓'; color:var(--sky); font-weight:800; flex-shrink:0; }
+
+    /* ---- RECURRING DISCOUNTS ---- */
+    .rec-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; }
+    @media (max-width:900px) { .rec-grid { grid-template-columns:repeat(2,1fr); } }
+    @media (max-width:500px) { .rec-grid { grid-template-columns:1fr 1fr; } }
+    .rec-card {
+      background: var(--sky-ghost);
+      border: 1.5px solid rgba(14,165,233,.2);
+      border-radius: 18px;
+      padding: 1.5rem 1.25rem;
+      text-align: center;
+      position: relative;
+    }
+    .rec-card-pop {
+      background: linear-gradient(160deg,var(--navy),#0f4c7a);
+      border-color: rgba(14,165,233,.5);
+    }
+    .rec-badge-s {
+      position:absolute; top:-11px; left:50%; transform:translateX(-50%);
+      background:var(--red); color:#fff; font-size:.62rem; font-weight:800;
+      text-transform:uppercase; letter-spacing:.08em; padding:.2rem .75rem; border-radius:999px; white-space:nowrap;
+    }
+    .rec-freq { font-family:'Montserrat',sans-serif; font-weight:800; font-size:.72rem; text-transform:uppercase; letter-spacing:.1em; color:var(--sky); margin-bottom:.3rem; }
+    .rec-price { font-family:'Bebas Neue',sans-serif; font-size:2.8rem; color:var(--navy); line-height:1; }
+    .rec-price-light { color:#fff !important; }
+    .rec-save { font-size:.74rem; color:var(--text-muted); margin:.2rem 0 1rem; }
+    .rec-save-light { color:var(--sky-mid) !important; }
+    .rec-savings-tag { display:inline-block; background:rgba(16,185,129,.15); color:#065f46; font-size:.7rem; font-weight:800; padding:.2rem .7rem; border-radius:999px; margin-bottom:.85rem; border:1px solid rgba(16,185,129,.3); }
+    .rec-savings-tag-light { background:rgba(250,204,21,.15) !important; color:#fbbf24 !important; border-color:rgba(250,204,21,.3) !important; }
+    .rec-btn { display:block; background:var(--sky); color:#fff; font-family:'Montserrat',sans-serif; font-weight:700; font-size:.78rem; padding:.6rem .75rem; border-radius:10px; text-decoration:none; transition:background .2s; }
+    .rec-btn:hover { background:var(--navy); }
+    .rec-btn-light:hover { background:var(--sky-light) !important; }
+
+    /* ---- REFER A FRIEND ---- */
+    .refer-band {
+      background: linear-gradient(135deg, #7c3aed, #4f46e5);
+      border-radius: 20px;
+      padding: 2rem 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      position: relative;
+      overflow: hidden;
+    }
+    .refer-band::before {
+      content: '';
+      position: absolute;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(255,255,255,.08) 0%, transparent 70%);
+      top: -80px; right: -60px;
+      pointer-events: none;
+    }
   </style>
 </head>
 <body>
@@ -1726,6 +1812,58 @@
       </div>
     </div>
 
+    <!-- What's Included Checklist -->
+    <div class="reveal" style="margin-top:2rem;">
+      <button class="checklist-toggle" onclick="toggleChecklist(this)" aria-expanded="false">
+        <span>✓ &nbsp;View Full Service Checklist — <span id="checklist-plan-name">Standard Clean</span></span>
+        <span id="checklist-arrow" style="font-size:1.1rem; transition:transform .25s;">▾</span>
+      </button>
+      <div id="checklist-content" class="checklist-grid" style="display:none;">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+
+    <!-- Recurring Discounts -->
+    <div class="reveal" style="margin-top:2.5rem;">
+      <div style="text-align:center; margin-bottom:1.5rem;">
+        <span class="section-label">Save More</span>
+        <h3 style="font-family:'Montserrat',sans-serif; font-weight:900; color:var(--navy); font-size:1.5rem; margin-top:.35rem; letter-spacing:-.02em;">Recurring Cleaning Discounts</h3>
+        <p style="font-size:.88rem; color:var(--text-muted); margin:.5rem auto 0; max-width:500px; line-height:1.6;">Book regular cleanings and lock in lower rates. Prices below are per visit, based on your currently selected service &amp; size.</p>
+      </div>
+      <div class="rec-grid">
+        <div class="reveal rec-card">
+          <p class="rec-freq">One-Time</p>
+          <p class="rec-price" id="rec-onetime">—</p>
+          <p class="rec-save">standard rate</p>
+          <div style="height:1.4rem;"></div>
+          <a href="#booking" class="rec-btn">Book Now →</a>
+        </div>
+        <div class="reveal rec-card">
+          <p class="rec-freq">Monthly</p>
+          <p class="rec-price" id="rec-monthly">—</p>
+          <p class="rec-save">per visit</p>
+          <span class="rec-savings-tag">Save 15%</span>
+          <a href="#booking" class="rec-btn">Book Monthly →</a>
+        </div>
+        <div class="reveal rec-card rec-card-pop">
+          <span class="rec-badge-s">Best Value</span>
+          <p class="rec-freq" style="color:var(--sky-light);">Bi-Weekly</p>
+          <p class="rec-price rec-price-light" id="rec-biweekly">—</p>
+          <p class="rec-save rec-save-light">per visit</p>
+          <span class="rec-savings-tag rec-savings-tag-light">Save 20%</span>
+          <a href="#booking" class="rec-btn rec-btn-light">Book Bi-Weekly →</a>
+        </div>
+        <div class="reveal rec-card">
+          <p class="rec-freq">Weekly</p>
+          <p class="rec-price" id="rec-weekly">—</p>
+          <p class="rec-save">per visit</p>
+          <span class="rec-savings-tag">Save 25%</span>
+          <a href="#booking" class="rec-btn">Book Weekly →</a>
+        </div>
+      </div>
+      <p style="text-align:center; font-size:.75rem; color:var(--text-muted); margin-top:1rem;">Recurring rates locked in for 6 months. Cancel or pause anytime with 48 hrs notice.</p>
+    </div>
+
     <!-- Add-ons note -->
     <div class="reveal" style="margin-top:2rem; display:flex; align-items:center; gap:.75rem; background:var(--sky-ghost); border:1px solid rgba(14,165,233,.15); border-radius:14px; padding:1rem 1.5rem;">
       <span style="font-size:1.5rem; flex-shrink:0;">✦</span>
@@ -1808,7 +1946,7 @@
         <div class="form-row">
           <div class="form-group">
             <label>Service Type</label>
-            <select name="service_type" id="book-service" onchange="updateEstimate()">
+            <select name="service_type" id="book-service" onchange="updateEstimate();refreshRecurring()">
               <option value="standard">Standard Clean</option>
               <option value="deep">Deep Clean</option>
               <option value="moveinout">Move-In / Move-Out</option>
@@ -1819,7 +1957,7 @@
           </div>
           <div class="form-group">
             <label>Home Size</label>
-            <select name="home_size" id="book-size" onchange="updateEstimate()">
+            <select name="home_size" id="book-size" onchange="updateEstimate();refreshRecurring()">
               <option value="studio">Studio / 1 Bedroom</option>
               <option value="2br">2 Bedrooms</option>
               <option value="3br">3 Bedrooms</option>
@@ -1881,6 +2019,49 @@
         <svg width="52" height="52" fill="none" stroke="var(--sky)" stroke-width="2" viewBox="0 0 24 24" style="margin:0 auto 1rem;"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
         <h3 style="font-family:'Montserrat',sans-serif; font-weight:800; color:var(--navy); font-size:1.3rem; margin-bottom:.5rem;">You're booked!</h3>
         <p style="color:var(--text-body); font-size:.9rem; line-height:1.7;">We received your request. A member of our Chicago team will confirm your appointment within 2 hours. Check your email!</p>
+        <!-- Refer a friend nudge on success -->
+        <div style="margin-top:1.75rem; background:linear-gradient(135deg,#7c3aed,#4f46e5); border-radius:14px; padding:1.25rem 1.5rem; text-align:left; display:flex; align-items:center; gap:1rem; flex-wrap:wrap;">
+          <span style="font-size:2rem; flex-shrink:0;">🎁</span>
+          <div>
+            <p style="font-family:'Montserrat',sans-serif; font-weight:800; color:#fff; font-size:.92rem; margin-bottom:.2rem;">Earn 15% Off — Refer a Friend</p>
+            <p style="font-size:.8rem; color:#ddd6fe; line-height:1.5;">After your first clean, refer a friend and when they complete their first booking you'll receive <strong style="color:#fff;">15% off your next clean</strong>. Just have them mention your name!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== REFER A FRIEND ====== -->
+<section style="background:var(--sky-ghost); padding:3rem 2rem; border-top:1px solid rgba(14,165,233,.1);">
+  <div style="max-width:900px; margin:0 auto;" class="reveal">
+    <div class="refer-band">
+      <div style="flex:1; min-width:260px;">
+        <p style="font-family:'Montserrat',sans-serif; font-weight:800; color:#c4b5fd; font-size:.72rem; text-transform:uppercase; letter-spacing:.1em; margin-bottom:.5rem;">Refer a Friend Program</p>
+        <h2 style="font-family:'Montserrat',sans-serif; font-weight:900; color:#fff; font-size:1.75rem; line-height:1.2; margin-bottom:.75rem;">Give a Clean.<br>Get 15% Off.</h2>
+        <p style="font-size:.88rem; color:#ddd6fe; line-height:1.7; max-width:420px;">After your first clean with us, refer a friend to Second City Scrubbers. When they complete their first booking, <strong style="color:#fff;">you get 15% off your next clean</strong> — no codes, no hassle. Just have them mention your name when booking.</p>
+        <div style="margin-top:1.25rem; display:flex; gap:.75rem; flex-wrap:wrap;">
+          <div style="background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2); border-radius:10px; padding:.65rem 1rem; display:flex; align-items:center; gap:.5rem;">
+            <span style="font-size:1.1rem;">1️⃣</span>
+            <span style="font-size:.8rem; color:#ede9fe; font-weight:600;">Complete your first clean</span>
+          </div>
+          <div style="background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2); border-radius:10px; padding:.65rem 1rem; display:flex; align-items:center; gap:.5rem;">
+            <span style="font-size:1.1rem;">2️⃣</span>
+            <span style="font-size:.8rem; color:#ede9fe; font-weight:600;">Refer a friend</span>
+          </div>
+          <div style="background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2); border-radius:10px; padding:.65rem 1rem; display:flex; align-items:center; gap:.5rem;">
+            <span style="font-size:1.1rem;">3️⃣</span>
+            <span style="font-size:.8rem; color:#ede9fe; font-weight:600;">They book → you save 15%</span>
+          </div>
+        </div>
+      </div>
+      <div style="flex-shrink:0; text-align:center;">
+        <div style="background:rgba(255,255,255,.12); border:2px solid rgba(255,255,255,.25); border-radius:20px; padding:1.75rem 2rem; min-width:160px;">
+          <p style="font-family:'Bebas Neue',sans-serif; font-size:4rem; color:#fff; line-height:1;">15%</p>
+          <p style="font-family:'Montserrat',sans-serif; font-weight:800; color:#c4b5fd; font-size:.8rem;">OFF YOUR</p>
+          <p style="font-family:'Montserrat',sans-serif; font-weight:800; color:#c4b5fd; font-size:.8rem;">NEXT CLEAN</p>
+        </div>
+        <a href="#booking" style="display:inline-block; margin-top:1rem; background:#fff; color:#4f46e5; font-family:'Montserrat',sans-serif; font-weight:800; font-size:.82rem; padding:.7rem 1.5rem; border-radius:10px; text-decoration:none; transition:opacity .2s;" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">Book Your First Clean →</a>
       </div>
     </div>
   </div>
@@ -2030,6 +2211,91 @@
 </footer>
 
 <script>
+  // ====== SQUARE FOOTAGE (injected via data-size) ======
+  const SQ_FT = { studio:'400–750', '2br':'750–1,100', '3br':'1,100–1,600', '4br':'1,600–2,500+' };
+  document.querySelectorAll('[data-plan][data-size]').forEach(card => {
+    const sqft = SQ_FT[card.dataset.size];
+    const durEl = card.querySelector('.price-dur');
+    if (durEl && sqft) {
+      const el = document.createElement('p');
+      el.style.cssText = 'font-size:.74rem;color:var(--text-muted);margin-bottom:1.25rem;';
+      el.textContent = 'approx. ' + sqft + ' sq ft';
+      durEl.insertAdjacentElement('afterend', el);
+    }
+  });
+
+  // ====== SERVICE CHECKLIST ======
+  const CHECKLISTS = {
+    standard: {
+      'Kitchen': ['Countertops & backsplash','Stovetop exterior','Microwave exterior','Sink & fixtures polished','Cabinet fronts wiped','Appliance exteriors'],
+      'Bathrooms': ['Toilet inside & out','Sink & vanity','Tub / shower','Mirror streak-free','Fixtures polished','Floor mopped'],
+      'Bedrooms & Living': ['All surfaces dusted','Vacuuming carpets & rugs','Mopping hard floors','Beds made (if linens provided)','Trash removal'],
+      'General': ['Light switches & doorknobs','Window sills wiped','Accessible areas tidied']
+    },
+    deep: {
+      'Everything in Standard +': ['Inside oven cleaned','Inside refrigerator','Inside microwave','Behind & under appliances'],
+      'Extra Detail': ['Baseboards & door frames','Inside all cabinets & drawers','Blinds & ceiling fans','Window tracks & sills'],
+      'Bathrooms Extra': ['Grout line scrubbing','Lime & mineral deposit removal','Shower door deep scrub']
+    },
+    moveinout: {
+      'Full Property': ['Every room top to bottom','Inside all closets','Inside all cabinets & drawers','Inside all appliances'],
+      'Surfaces': ['Walls wiped (marks & scuffs)','Baseboards & trim','Blinds cleaned','Light fixtures'],
+      'Floors': ['All floors scrubbed','Grout lines cleaned','Entry & threshold areas']
+    },
+    airbnb: {
+      'Turnover': ['All beds freshly made','Complete linen change','Guest bathroom full reset','Towels replaced & folded'],
+      'Kitchen & Common Areas': ['Surfaces wiped down','Dishes washed & stored','Trash removed','Fridge checked'],
+      'Final Touches': ['Amenities restocked','Vacuuming & mopping','Inspection-ready presentation','Welcome items set up (if provided)']
+    },
+    postconstruct: {
+      'Dust & Debris': ['Construction dust from all surfaces','Floors swept & scrubbed','Debris & trash removed'],
+      'Surfaces & Fixtures': ['Window glass & frames','Window tracks & sills','Cabinet & drawer interiors','Baseboards & trim'],
+      'Detail Clean': ['Light fixtures & fans','HVAC vent covers wiped','Outlets & switch plates','Doors & handles polished']
+    }
+  };
+
+  const PLAN_NAMES = { standard:'Standard Clean', deep:'Deep Clean', moveinout:'Move-In / Move-Out', airbnb:'Airbnb / Short-Term', postconstruct:'Post-Construction' };
+  let currentPlan = 'standard';
+
+  function renderChecklist(plan) {
+    const data = CHECKLISTS[plan];
+    const container = document.getElementById('checklist-content');
+    if (!data || !container) return;
+    container.innerHTML = Object.entries(data).map(([cat, items]) =>
+      `<div class="checklist-cat"><p>${cat}</p><ul>${items.map(i => `<li>${i}</li>`).join('')}</ul></div>`
+    ).join('');
+    const nameEl = document.getElementById('checklist-plan-name');
+    if (nameEl) nameEl.textContent = PLAN_NAMES[plan] || plan;
+  }
+
+  function toggleChecklist(btn) {
+    const content = document.getElementById('checklist-content');
+    const arrow   = document.getElementById('checklist-arrow');
+    const open = content.style.display === 'none' || content.style.display === '';
+    content.style.display = open ? 'grid' : 'none';
+    arrow.style.transform  = open ? 'rotate(180deg)' : '';
+    btn.setAttribute('aria-expanded', open);
+    if (open) renderChecklist(currentPlan);
+  }
+
+  // ====== RECURRING DISCOUNTS ======
+  function refreshRecurring() {
+    const serviceEl = document.getElementById('book-service');
+    const sizeEl    = document.getElementById('book-size');
+    if (!serviceEl || !sizeEl) return;
+    const service = serviceEl.value;
+    const size    = sizeEl.value;
+    const tier    = ecoMode ? 'eco' : 'std';
+    const ids = { onetime:1, monthly:.85, biweekly:.80, weekly:.75 };
+    const base = PRICES[service] ? PRICES[service][tier][size] : null;
+    ['onetime','monthly','biweekly','weekly'].forEach(key => {
+      const el = document.getElementById('rec-' + key);
+      if (!el) return;
+      if (!base) { el.textContent = '—'; return; }
+      el.textContent = '$' + Math.round(base * ids[key]) + (size === '4br' ? '+' : '');
+    });
+  }
+
   // ====== ECO / STANDARD TOGGLE ======
   let ecoMode = false;
   function setProductMode(eco) {
@@ -2038,12 +2304,14 @@
     document.getElementById('std-btn').classList.toggle('ptab-active', !eco);
     document.getElementById('eco-note').style.display = eco ? 'block' : 'none';
     refreshPriceCards();
+    refreshRecurring();
     updateEstimate();
   }
 
   // ====== PRICING TABS ======
   const ALL_PLANS = ['standard','deep','moveinout','airbnb','postconstruct'];
   function switchPlan(plan) {
+    currentPlan = plan;
     ALL_PLANS.forEach(p => {
       const el  = document.getElementById('plan-' + p);
       const tab = document.getElementById('tab-' + p);
@@ -2051,6 +2319,12 @@
       if (tab) tab.classList.toggle('ptab-active', p === plan);
     });
     refreshPriceCards();
+    refreshRecurring();
+    // re-render checklist if it's open
+    const content = document.getElementById('checklist-content');
+    if (content && content.style.display === 'grid') renderChecklist(plan);
+    const nameEl = document.getElementById('checklist-plan-name');
+    if (nameEl) nameEl.textContent = PLAN_NAMES[plan] || plan;
   }
 
   // ====== PRICE DATA ======
@@ -2112,7 +2386,7 @@
     }
   }
 
-  // Set min date to tomorrow
+  // Set min date to tomorrow + init recurring + checklist name
   (function() {
     const d = document.getElementById('book-date');
     if (d) {
@@ -2122,6 +2396,8 @@
       d.value = tomorrow.toISOString().split('T')[0];
     }
     updateEstimate();
+    refreshRecurring();
+    renderChecklist('standard');
   })();
 
   // ====== BOOKING FORM SUBMIT ======
