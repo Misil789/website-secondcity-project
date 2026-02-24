@@ -524,6 +524,27 @@
       background: linear-gradient(160deg, var(--navy), #0f4c7a);
       border-color: rgba(14,165,233,.5);
     }
+    .price-card-selected {
+      border: 2.5px solid var(--sky) !important;
+      box-shadow: 0 0 0 4px rgba(14,165,233,.18), 0 8px 32px rgba(14,165,233,.18) !important;
+      transform: translateY(-4px);
+    }
+    .price-card-selected::after {
+      content: '✓ Selected';
+      position: absolute;
+      bottom: -13px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--sky);
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .7rem;
+      font-weight: 800;
+      letter-spacing: .06em;
+      padding: .2rem .75rem;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
     .price-badge {
       position: absolute;
       top: -12px;
@@ -2458,7 +2479,12 @@
   document.querySelectorAll('.price-cta').forEach(link => {
     link.addEventListener('click', function() {
       const card = this.closest('[data-plan][data-size]');
-      if (card) selectPackage(card.dataset.plan, card.dataset.size);
+      if (card) {
+        // Clear highlight from all cards, then highlight this one
+        document.querySelectorAll('.price-card').forEach(c => c.classList.remove('price-card-selected'));
+        card.classList.add('price-card-selected');
+        selectPackage(card.dataset.plan, card.dataset.size);
+      }
     });
   });
 
