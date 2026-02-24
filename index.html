@@ -1572,6 +1572,13 @@
           <p style="font-size:.82rem; color:#92400e; line-height:1.5;">Thank you for your service. Active duty and veterans receive 10% off every visit. Just mention it when booking.</p>
         </div>
       </div>
+      <div class="reveal" style="background:linear-gradient(135deg,#eff6ff,#dbeafe); border:1.5px solid #93c5fd; border-radius:18px; padding:1.25rem 1.5rem; display:flex; align-items:center; gap:1rem;">
+        <span style="font-size:2.25rem; flex-shrink:0;">🚒</span>
+        <div>
+          <p style="font-family:'Montserrat',sans-serif; font-weight:800; color:#1d4ed8; font-size:.95rem; margin-bottom:.2rem;">First Responders Discount — 10% Off</p>
+          <p style="font-size:.82rem; color:#1e40af; line-height:1.5;">Police, firefighters, paramedics, and EMTs receive 10% off every visit. Just mention it when booking — no code needed.</p>
+        </div>
+      </div>
     </div>
 
     <!-- Eco / Standard Toggle -->
@@ -2063,6 +2070,10 @@
               <input type="checkbox" name="discount" value="Veteran" id="disc-veteran" onchange="updateEstimate()" style="width:16px; height:16px; accent-color:var(--sky); cursor:pointer;" />
               🎖️ Veteran
             </label>
+            <label style="display:flex; align-items:center; gap:.5rem; cursor:pointer; font-weight:500; font-size:.88rem; color:var(--text-body);">
+              <input type="checkbox" name="discount" value="First Responder" id="disc-firstresponder" onchange="updateEstimate()" style="width:16px; height:16px; accent-color:var(--sky); cursor:pointer;" />
+              🚒 First Responder
+            </label>
           </div>
         </div>
 
@@ -2425,12 +2436,13 @@
   function updateEstimate() {
     const service  = document.getElementById('book-service').value;
     const size     = document.getElementById('book-size').value;
-    const pregnant = document.getElementById('disc-pregnant').checked;
-    const senior   = document.getElementById('disc-senior').checked;
-    const veteran  = document.getElementById('disc-veteran').checked;
+    const pregnant      = document.getElementById('disc-pregnant').checked;
+    const senior        = document.getElementById('disc-senior').checked;
+    const veteran       = document.getElementById('disc-veteran').checked;
+    const firstResponder = document.getElementById('disc-firstresponder').checked;
     const freqVal  = (document.getElementById('book-frequency') || {}).value || 'One-Time';
     const freqMult = FREQ_MULTIPLIERS[freqVal] || 1;
-    const hasPersonalDiscount = pregnant || senior || veteran;
+    const hasPersonalDiscount = pregnant || senior || veteran || firstResponder;
     const priceEl  = document.getElementById('est-price');
     const discEl   = document.getElementById('est-discount-badge');
     const hiddenEl = document.getElementById('book-est-hidden');
