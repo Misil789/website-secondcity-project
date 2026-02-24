@@ -1418,33 +1418,52 @@
     </div>
 
     <!-- Discount Banners -->
-    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1rem; margin:0 0 2.5rem;">
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1rem; margin:0 0 2.5rem;">
       <div class="reveal" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3); border:1.5px solid #f9a8d4; border-radius:18px; padding:1.25rem 1.5rem; display:flex; align-items:center; gap:1rem;">
         <span style="font-size:2.25rem; flex-shrink:0;">🤰</span>
         <div>
-          <p style="font-family:'Montserrat',sans-serif; font-weight:800; color:#be185d; font-size:.95rem; margin-bottom:.2rem;">Expecting Mothers — 15% Off</p>
+          <p style="font-family:'Montserrat',sans-serif; font-weight:800; color:#be185d; font-size:.95rem; margin-bottom:.2rem;">Expecting Mothers — 10% Off</p>
           <p style="font-size:.82rem; color:#9d174d; line-height:1.5;">A clean, safe home matters most right now. Mention this when booking and we'll apply your discount automatically — no code needed.</p>
         </div>
       </div>
       <div class="reveal" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7); border:1.5px solid #86efac; border-radius:18px; padding:1.25rem 1.5rem; display:flex; align-items:center; gap:1rem;">
         <span style="font-size:2.25rem; flex-shrink:0;">👴</span>
         <div>
-          <p style="font-family:'Montserrat',sans-serif; font-weight:800; color:#15803d; font-size:.95rem; margin-bottom:.2rem;">Senior Discount (65+) — 15% Off</p>
+          <p style="font-family:'Montserrat',sans-serif; font-weight:800; color:#15803d; font-size:.95rem; margin-bottom:.2rem;">Senior Discount (65+) — 10% Off</p>
           <p style="font-size:.82rem; color:#166534; line-height:1.5;">We honor our elders — always. Mention this when booking and your discount is applied, no hassle, every visit.</p>
         </div>
       </div>
+      <div class="reveal" style="background:linear-gradient(135deg,#fefce8,#fef9c3); border:1.5px solid #fde68a; border-radius:18px; padding:1.25rem 1.5rem; display:flex; align-items:center; gap:1rem;">
+        <span style="font-size:2.25rem; flex-shrink:0;">🎖️</span>
+        <div>
+          <p style="font-family:'Montserrat',sans-serif; font-weight:800; color:#b45309; font-size:.95rem; margin-bottom:.2rem;">Veterans Discount — 10% Off</p>
+          <p style="font-size:.82rem; color:#92400e; line-height:1.5;">Thank you for your service. Active duty and veterans receive 10% off every visit. Just mention it when booking.</p>
+        </div>
+      </div>
     </div>
+
+    <!-- Eco / Standard Toggle -->
+    <div style="display:flex; justify-content:center; margin-bottom:1.25rem;">
+      <div style="background:var(--sky-ghost); border:1.5px solid rgba(14,165,233,.2); border-radius:999px; padding:.3rem; display:inline-flex; gap:.25rem;">
+        <button onclick="setProductMode(false)" id="std-btn" class="ptab ptab-active" style="padding:.45rem 1.2rem; font-size:.78rem;">Standard Products</button>
+        <button onclick="setProductMode(true)" id="eco-btn" class="ptab" style="padding:.45rem 1.2rem; font-size:.78rem;">🌿 Natural / Eco Products</button>
+      </div>
+    </div>
+    <p id="eco-note" style="text-align:center; font-size:.76rem; color:var(--text-muted); margin-bottom:1.75rem; display:none;">Eco pricing reflects use of plant-based, non-toxic cleaning products — safer for families, pets &amp; the planet.</p>
 
     <!-- Plan Tabs -->
     <div style="display:flex; justify-content:center; gap:.5rem; margin-bottom:2.25rem; flex-wrap:wrap;" id="pricing-tabs">
       <button onclick="switchPlan('standard')" id="tab-standard" class="ptab ptab-active">Standard Clean</button>
       <button onclick="switchPlan('deep')" id="tab-deep" class="ptab">Deep Clean</button>
       <button onclick="switchPlan('moveinout')" id="tab-moveinout" class="ptab">Move-In / Move-Out</button>
+      <button onclick="switchPlan('airbnb')" id="tab-airbnb" class="ptab">Airbnb / Short-Term</button>
+      <button onclick="switchPlan('postconstruct')" id="tab-postconstruct" class="ptab">Post-Construction</button>
     </div>
 
     <!-- STANDARD PLAN -->
+    <!-- STANDARD PLAN -->
     <div id="plan-standard" class="price-grid">
-      <div class="reveal price-card">
+      <div class="reveal price-card" data-plan="standard" data-size="studio">
         <p class="price-label">Studio / 1BR</p>
         <p class="price-num">$110</p>
         <p class="price-dur">approx. 2–3 hrs</p>
@@ -1452,11 +1471,11 @@
           <li><span>✓</span> All rooms cleaned</li>
           <li><span>✓</span> Kitchen & 1 bathroom</li>
           <li><span>✓</span> Dusting & mopping</li>
-          <li><span>✓</span> Eco supplies included</li>
+          <li><span>✓</span> Vacuuming & floors</li>
         </ul>
         <a href="#booking" class="price-cta">Book This →</a>
       </div>
-      <div class="reveal price-card price-card-featured">
+      <div class="reveal price-card price-card-featured" data-plan="standard" data-size="2br">
         <span class="price-badge">Most Popular</span>
         <p class="price-label" style="color:var(--sky-light);">2 Bedroom</p>
         <p class="price-num" style="color:#fff;">$155</p>
@@ -1465,11 +1484,11 @@
           <li><span>✓</span> All rooms cleaned</li>
           <li><span>✓</span> Kitchen & 2 bathrooms</li>
           <li><span>✓</span> Dusting & mopping</li>
-          <li><span>✓</span> Eco supplies included</li>
+          <li><span>✓</span> Vacuuming & floors</li>
         </ul>
         <a href="#booking" class="price-cta price-cta-light">Book This →</a>
       </div>
-      <div class="reveal price-card">
+      <div class="reveal price-card" data-plan="standard" data-size="3br">
         <p class="price-label">3 Bedroom</p>
         <p class="price-num">$195</p>
         <p class="price-dur">approx. 4–5 hrs</p>
@@ -1477,11 +1496,11 @@
           <li><span>✓</span> All rooms cleaned</li>
           <li><span>✓</span> Kitchen & bathrooms</li>
           <li><span>✓</span> Dusting & mopping</li>
-          <li><span>✓</span> Eco supplies included</li>
+          <li><span>✓</span> Vacuuming & floors</li>
         </ul>
         <a href="#booking" class="price-cta">Book This →</a>
       </div>
-      <div class="reveal price-card">
+      <div class="reveal price-card" data-plan="standard" data-size="4br">
         <p class="price-label">4+ Bedroom</p>
         <p class="price-num">$240+</p>
         <p class="price-dur">approx. 5–7 hrs</p>
@@ -1489,7 +1508,7 @@
           <li><span>✓</span> All rooms cleaned</li>
           <li><span>✓</span> Kitchen & bathrooms</li>
           <li><span>✓</span> Dusting & mopping</li>
-          <li><span>✓</span> Eco supplies included</li>
+          <li><span>✓</span> Vacuuming & floors</li>
         </ul>
         <a href="#booking" class="price-cta">Book This →</a>
       </div>
@@ -1497,7 +1516,7 @@
 
     <!-- DEEP CLEAN PLAN -->
     <div id="plan-deep" class="price-grid" style="display:none;">
-      <div class="reveal price-card">
+      <div class="reveal price-card" data-plan="deep" data-size="studio">
         <p class="price-label">Studio / 1BR</p>
         <p class="price-num">$175</p>
         <p class="price-dur">approx. 3–4 hrs</p>
@@ -1505,11 +1524,11 @@
           <li><span>✓</span> Inside appliances</li>
           <li><span>✓</span> Baseboards & vents</li>
           <li><span>✓</span> Inside cabinets</li>
-          <li><span>✓</span> Eco supplies included</li>
+          <li><span>✓</span> Grout & tile scrub</li>
         </ul>
         <a href="#booking" class="price-cta">Book This →</a>
       </div>
-      <div class="reveal price-card price-card-featured">
+      <div class="reveal price-card price-card-featured" data-plan="deep" data-size="2br">
         <span class="price-badge">Most Popular</span>
         <p class="price-label" style="color:var(--sky-light);">2 Bedroom</p>
         <p class="price-num" style="color:#fff;">$245</p>
@@ -1518,11 +1537,11 @@
           <li><span>✓</span> Inside appliances</li>
           <li><span>✓</span> Baseboards & vents</li>
           <li><span>✓</span> Inside cabinets</li>
-          <li><span>✓</span> Eco supplies included</li>
+          <li><span>✓</span> Grout & tile scrub</li>
         </ul>
         <a href="#booking" class="price-cta price-cta-light">Book This →</a>
       </div>
-      <div class="reveal price-card">
+      <div class="reveal price-card" data-plan="deep" data-size="3br">
         <p class="price-label">3 Bedroom</p>
         <p class="price-num">$315</p>
         <p class="price-dur">approx. 5–7 hrs</p>
@@ -1530,11 +1549,11 @@
           <li><span>✓</span> Inside appliances</li>
           <li><span>✓</span> Baseboards & vents</li>
           <li><span>✓</span> Inside cabinets</li>
-          <li><span>✓</span> Eco supplies included</li>
+          <li><span>✓</span> Grout & tile scrub</li>
         </ul>
         <a href="#booking" class="price-cta">Book This →</a>
       </div>
-      <div class="reveal price-card">
+      <div class="reveal price-card" data-plan="deep" data-size="4br">
         <p class="price-label">4+ Bedroom</p>
         <p class="price-num">$385+</p>
         <p class="price-dur">approx. 6–8 hrs</p>
@@ -1542,7 +1561,7 @@
           <li><span>✓</span> Inside appliances</li>
           <li><span>✓</span> Baseboards & vents</li>
           <li><span>✓</span> Inside cabinets</li>
-          <li><span>✓</span> Eco supplies included</li>
+          <li><span>✓</span> Grout & tile scrub</li>
         </ul>
         <a href="#booking" class="price-cta">Book This →</a>
       </div>
@@ -1550,7 +1569,7 @@
 
     <!-- MOVE-IN/OUT PLAN -->
     <div id="plan-moveinout" class="price-grid" style="display:none;">
-      <div class="reveal price-card">
+      <div class="reveal price-card" data-plan="moveinout" data-size="studio">
         <p class="price-label">Studio / 1BR</p>
         <p class="price-num">$180</p>
         <p class="price-dur">approx. 3–4 hrs</p>
@@ -1558,11 +1577,11 @@
           <li><span>✓</span> Full empty-unit clean</li>
           <li><span>✓</span> Inside all appliances</li>
           <li><span>✓</span> Walls & baseboards</li>
-          <li><span>✓</span> Eco supplies included</li>
+          <li><span>✓</span> Closets & cabinets</li>
         </ul>
         <a href="#booking" class="price-cta">Book This →</a>
       </div>
-      <div class="reveal price-card price-card-featured">
+      <div class="reveal price-card price-card-featured" data-plan="moveinout" data-size="2br">
         <span class="price-badge">Most Popular</span>
         <p class="price-label" style="color:var(--sky-light);">2 Bedroom</p>
         <p class="price-num" style="color:#fff;">$260</p>
@@ -1571,11 +1590,11 @@
           <li><span>✓</span> Full empty-unit clean</li>
           <li><span>✓</span> Inside all appliances</li>
           <li><span>✓</span> Walls & baseboards</li>
-          <li><span>✓</span> Eco supplies included</li>
+          <li><span>✓</span> Closets & cabinets</li>
         </ul>
         <a href="#booking" class="price-cta price-cta-light">Book This →</a>
       </div>
-      <div class="reveal price-card">
+      <div class="reveal price-card" data-plan="moveinout" data-size="3br">
         <p class="price-label">3 Bedroom</p>
         <p class="price-num">$330</p>
         <p class="price-dur">approx. 5–7 hrs</p>
@@ -1583,11 +1602,11 @@
           <li><span>✓</span> Full empty-unit clean</li>
           <li><span>✓</span> Inside all appliances</li>
           <li><span>✓</span> Walls & baseboards</li>
-          <li><span>✓</span> Eco supplies included</li>
+          <li><span>✓</span> Closets & cabinets</li>
         </ul>
         <a href="#booking" class="price-cta">Book This →</a>
       </div>
-      <div class="reveal price-card">
+      <div class="reveal price-card" data-plan="moveinout" data-size="4br">
         <p class="price-label">4+ Bedroom</p>
         <p class="price-num">$420+</p>
         <p class="price-dur">approx. 7–9 hrs</p>
@@ -1595,25 +1614,135 @@
           <li><span>✓</span> Full empty-unit clean</li>
           <li><span>✓</span> Inside all appliances</li>
           <li><span>✓</span> Walls & baseboards</li>
-          <li><span>✓</span> Eco supplies included</li>
+          <li><span>✓</span> Closets & cabinets</li>
         </ul>
         <a href="#booking" class="price-cta">Book This →</a>
       </div>
     </div>
 
-    <!-- Add-ons -->
-    <div class="reveal" style="margin-top:2.5rem; background:var(--sky-ghost); border:1px solid rgba(14,165,233,.15); border-radius:20px; padding:2rem;">
-      <h3 style="font-family:'Montserrat',sans-serif; font-weight:800; color:var(--navy); font-size:1rem; margin-bottom:1.25rem; text-transform:uppercase; letter-spacing:.05em;">Add-On Services</h3>
-      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(175px,1fr)); gap:.65rem;">
-        <div class="addon-pill"><span>Fridge Interior</span><strong>+$35</strong></div>
-        <div class="addon-pill"><span>Oven Interior</span><strong>+$30</strong></div>
-        <div class="addon-pill"><span>Laundry (wash+dry)</span><strong>+$25</strong></div>
-        <div class="addon-pill"><span>Interior Windows</span><strong>+$8/ea</strong></div>
-        <div class="addon-pill"><span>Dishes</span><strong>+$20</strong></div>
-        <div class="addon-pill"><span>Garage</span><strong>+$45</strong></div>
+    <!-- AIRBNB / SHORT-TERM PLAN -->
+    <div id="plan-airbnb" class="price-grid" style="display:none;">
+      <div class="reveal price-card" data-plan="airbnb" data-size="studio">
+        <p class="price-label">Studio / 1BR</p>
+        <p class="price-num">$100</p>
+        <p class="price-dur">approx. 1.5–2.5 hrs</p>
+        <ul class="price-list">
+          <li><span>✓</span> Guest-ready turnover</li>
+          <li><span>✓</span> Linens changed</li>
+          <li><span>✓</span> Kitchen & bathroom reset</li>
+          <li><span>✓</span> Restock essentials</li>
+        </ul>
+        <a href="#booking" class="price-cta">Book This →</a>
+      </div>
+      <div class="reveal price-card price-card-featured" data-plan="airbnb" data-size="2br">
+        <span class="price-badge">Most Popular</span>
+        <p class="price-label" style="color:var(--sky-light);">2 Bedroom</p>
+        <p class="price-num" style="color:#fff;">$145</p>
+        <p class="price-dur" style="color:var(--sky-mid);">approx. 2.5–3.5 hrs</p>
+        <ul class="price-list price-list-dark">
+          <li><span>✓</span> Guest-ready turnover</li>
+          <li><span>✓</span> Linens changed</li>
+          <li><span>✓</span> Kitchen & bathroom reset</li>
+          <li><span>✓</span> Restock essentials</li>
+        </ul>
+        <a href="#booking" class="price-cta price-cta-light">Book This →</a>
+      </div>
+      <div class="reveal price-card" data-plan="airbnb" data-size="3br">
+        <p class="price-label">3 Bedroom</p>
+        <p class="price-num">$185</p>
+        <p class="price-dur">approx. 3–4.5 hrs</p>
+        <ul class="price-list">
+          <li><span>✓</span> Guest-ready turnover</li>
+          <li><span>✓</span> Linens changed</li>
+          <li><span>✓</span> Kitchen & bathroom reset</li>
+          <li><span>✓</span> Restock essentials</li>
+        </ul>
+        <a href="#booking" class="price-cta">Book This →</a>
+      </div>
+      <div class="reveal price-card" data-plan="airbnb" data-size="4br">
+        <p class="price-label">4+ Bedroom</p>
+        <p class="price-num">$230+</p>
+        <p class="price-dur">approx. 4–6 hrs</p>
+        <ul class="price-list">
+          <li><span>✓</span> Guest-ready turnover</li>
+          <li><span>✓</span> Linens changed</li>
+          <li><span>✓</span> Kitchen & bathroom reset</li>
+          <li><span>✓</span> Restock essentials</li>
+        </ul>
+        <a href="#booking" class="price-cta">Book This →</a>
       </div>
     </div>
-    <p style="text-align:center; font-size:.76rem; color:var(--text-muted); margin-top:1.25rem;">Prices based on 2026 Chicago market rates. Final quote confirmed before any charge. No credit card required to book.</p>
+
+    <!-- POST-CONSTRUCTION PLAN -->
+    <div id="plan-postconstruct" class="price-grid" style="display:none;">
+      <div class="reveal price-card" data-plan="postconstruct" data-size="studio">
+        <p class="price-label">Studio / 1BR</p>
+        <p class="price-num">$280</p>
+        <p class="price-dur">approx. 4–5 hrs</p>
+        <ul class="price-list">
+          <li><span>✓</span> Construction dust removal</li>
+          <li><span>✓</span> Window & frame wipe-down</li>
+          <li><span>✓</span> Floor debris & scrub</li>
+          <li><span>✓</span> Cabinet & surface clean</li>
+        </ul>
+        <a href="#booking" class="price-cta">Book This →</a>
+      </div>
+      <div class="reveal price-card price-card-featured" data-plan="postconstruct" data-size="2br">
+        <span class="price-badge">Most Popular</span>
+        <p class="price-label" style="color:var(--sky-light);">2 Bedroom</p>
+        <p class="price-num" style="color:#fff;">$380</p>
+        <p class="price-dur" style="color:var(--sky-mid);">approx. 5–7 hrs</p>
+        <ul class="price-list price-list-dark">
+          <li><span>✓</span> Construction dust removal</li>
+          <li><span>✓</span> Window & frame wipe-down</li>
+          <li><span>✓</span> Floor debris & scrub</li>
+          <li><span>✓</span> Cabinet & surface clean</li>
+        </ul>
+        <a href="#booking" class="price-cta price-cta-light">Book This →</a>
+      </div>
+      <div class="reveal price-card" data-plan="postconstruct" data-size="3br">
+        <p class="price-label">3 Bedroom</p>
+        <p class="price-num">$480</p>
+        <p class="price-dur">approx. 6–8 hrs</p>
+        <ul class="price-list">
+          <li><span>✓</span> Construction dust removal</li>
+          <li><span>✓</span> Window & frame wipe-down</li>
+          <li><span>✓</span> Floor debris & scrub</li>
+          <li><span>✓</span> Cabinet & surface clean</li>
+        </ul>
+        <a href="#booking" class="price-cta">Book This →</a>
+      </div>
+      <div class="reveal price-card" data-plan="postconstruct" data-size="4br">
+        <p class="price-label">4+ Bedroom</p>
+        <p class="price-num">$600+</p>
+        <p class="price-dur">approx. 7–10 hrs</p>
+        <ul class="price-list">
+          <li><span>✓</span> Construction dust removal</li>
+          <li><span>✓</span> Window & frame wipe-down</li>
+          <li><span>✓</span> Floor debris & scrub</li>
+          <li><span>✓</span> Cabinet & surface clean</li>
+        </ul>
+        <a href="#booking" class="price-cta">Book This →</a>
+      </div>
+    </div>
+
+    <!-- Add-ons note -->
+    <div class="reveal" style="margin-top:2rem; display:flex; align-items:center; gap:.75rem; background:var(--sky-ghost); border:1px solid rgba(14,165,233,.15); border-radius:14px; padding:1rem 1.5rem;">
+      <span style="font-size:1.5rem; flex-shrink:0;">✦</span>
+      <p style="font-size:.85rem; color:var(--text-body); line-height:1.6;"><strong style="color:var(--navy);">Add-on services available upon request</strong> — including fridge & oven interior, laundry, dishes, garage, and more. Just mention it when booking and we'll include a custom quote.</p>
+    </div>
+
+    <!-- Commercial -->
+    <div class="reveal" style="margin-top:1.25rem; background:linear-gradient(135deg,var(--navy),#0f4c7a); border-radius:20px; padding:2rem 2.5rem; display:flex; align-items:center; justify-content:space-between; gap:1.5rem; flex-wrap:wrap;">
+      <div>
+        <p style="font-family:'Montserrat',sans-serif; font-weight:800; color:var(--sky-light); font-size:.75rem; text-transform:uppercase; letter-spacing:.1em; margin-bottom:.4rem;">Commercial & Large Projects</p>
+        <h3 style="font-family:'Montserrat',sans-serif; font-weight:800; color:#fff; font-size:1.2rem; margin-bottom:.5rem;">Offices, Warehouses & Big Spaces</h3>
+        <p style="font-size:.85rem; color:#bfdbfe; line-height:1.6; max-width:500px;">We handle commercial cleaning for offices, warehouses, retail spaces, restaurants, and large-scale projects across Chicago. Custom pricing and volume discounts available — contact us for a tailored quote.</p>
+      </div>
+      <a href="#contact" style="flex-shrink:0; background:var(--sky); color:#fff; font-family:'Montserrat',sans-serif; font-weight:800; font-size:.88rem; padding:.85rem 1.75rem; border-radius:12px; text-decoration:none; white-space:nowrap; transition:background .2s, transform .15s;" onmouseover="this.style.background='var(--sky-light)';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='var(--sky)';this.style.transform='translateY(0)'">Get a Commercial Quote →</a>
+    </div>
+
+    <p style="text-align:center; font-size:.76rem; color:var(--text-muted); margin-top:1.5rem;">Prices based on 2026 Chicago market rates. Final quote confirmed before any charge. No credit card required to book.</p>
   </div>
 </section>
 
@@ -1684,7 +1813,8 @@
               <option value="deep">Deep Clean</option>
               <option value="moveinout">Move-In / Move-Out</option>
               <option value="airbnb">Airbnb / Short-Term Rental</option>
-              <option value="commercial">Commercial (call for quote)</option>
+              <option value="postconstruct">Post-Construction</option>
+              <option value="commercial">Commercial / Large Project</option>
             </select>
           </div>
           <div class="form-group">
@@ -1721,7 +1851,7 @@
 
         <!-- Discount eligibility -->
         <div class="form-group">
-          <label>Discount Eligibility <span style="font-weight:400; color:var(--text-muted);">(15% off — select if applicable)</span></label>
+          <label>Discount Eligibility <span style="font-weight:400; color:var(--text-muted);">(10% off — select if applicable)</span></label>
           <div style="display:flex; gap:1.25rem; flex-wrap:wrap; margin-top:.5rem;">
             <label style="display:flex; align-items:center; gap:.5rem; cursor:pointer; font-weight:500; font-size:.88rem; color:var(--text-body);">
               <input type="checkbox" name="discount" value="Expecting Mother" id="disc-pregnant" onchange="updateEstimate()" style="width:16px; height:16px; accent-color:var(--sky); cursor:pointer;" />
@@ -1730,6 +1860,10 @@
             <label style="display:flex; align-items:center; gap:.5rem; cursor:pointer; font-weight:500; font-size:.88rem; color:var(--text-body);">
               <input type="checkbox" name="discount" value="Senior (65+)" id="disc-senior" onchange="updateEstimate()" style="width:16px; height:16px; accent-color:var(--sky); cursor:pointer;" />
               👴 Senior (65+)
+            </label>
+            <label style="display:flex; align-items:center; gap:.5rem; cursor:pointer; font-weight:500; font-size:.88rem; color:var(--text-body);">
+              <input type="checkbox" name="discount" value="Veteran" id="disc-veteran" onchange="updateEstimate()" style="width:16px; height:16px; accent-color:var(--sky); cursor:pointer;" />
+              🎖️ Veteran
             </label>
           </div>
         </div>
@@ -1896,56 +2030,86 @@
 </footer>
 
 <script>
+  // ====== ECO / STANDARD TOGGLE ======
+  let ecoMode = false;
+  function setProductMode(eco) {
+    ecoMode = eco;
+    document.getElementById('eco-btn').classList.toggle('ptab-active', eco);
+    document.getElementById('std-btn').classList.toggle('ptab-active', !eco);
+    document.getElementById('eco-note').style.display = eco ? 'block' : 'none';
+    refreshPriceCards();
+    updateEstimate();
+  }
+
   // ====== PRICING TABS ======
+  const ALL_PLANS = ['standard','deep','moveinout','airbnb','postconstruct'];
   function switchPlan(plan) {
-    ['standard','deep','moveinout'].forEach(p => {
-      const el = document.getElementById('plan-' + p);
+    ALL_PLANS.forEach(p => {
+      const el  = document.getElementById('plan-' + p);
       const tab = document.getElementById('tab-' + p);
-      if (el) el.style.display = p === plan ? 'grid' : 'none';
-      if (tab) {
-        tab.classList.toggle('ptab-active', p === plan);
-      }
+      if (el)  el.style.display = p === plan ? 'grid' : 'none';
+      if (tab) tab.classList.toggle('ptab-active', p === plan);
+    });
+    refreshPriceCards();
+  }
+
+  // ====== PRICE DATA ======
+  const PRICES = {
+    standard:     { std: { studio:110, '2br':155, '3br':195, '4br':240 },
+                    eco: { studio:125, '2br':180, '3br':225, '4br':275 } },
+    deep:         { std: { studio:175, '2br':245, '3br':315, '4br':385 },
+                    eco: { studio:200, '2br':280, '3br':360, '4br':440 } },
+    moveinout:    { std: { studio:180, '2br':260, '3br':330, '4br':420 },
+                    eco: { studio:205, '2br':300, '3br':380, '4br':480 } },
+    airbnb:       { std: { studio:100, '2br':145, '3br':185, '4br':230 },
+                    eco: { studio:115, '2br':165, '3br':215, '4br':265 } },
+    postconstruct:{ std: { studio:280, '2br':380, '3br':480, '4br':600 },
+                    eco: { studio:320, '2br':435, '3br':550, '4br':690 } },
+    commercial:   null
+  };
+
+  function refreshPriceCards() {
+    const tier = ecoMode ? 'eco' : 'std';
+    document.querySelectorAll('[data-plan][data-size]').forEach(card => {
+      const plan = card.dataset.plan;
+      const size = card.dataset.size;
+      if (!PRICES[plan]) return;
+      const val = PRICES[plan][tier][size];
+      const numEl = card.querySelector('.price-num');
+      if (numEl) numEl.textContent = '$' + val + (size === '4br' ? '+' : '');
     });
   }
 
   // ====== PRICE ESTIMATOR ======
-  const PRICES = {
-    standard:   { studio: 110, '2br': 155, '3br': 195, '4br': 240 },
-    deep:       { studio: 175, '2br': 245, '3br': 315, '4br': 385 },
-    moveinout:  { studio: 180, '2br': 260, '3br': 330, '4br': 420 },
-    airbnb:     { studio: 120, '2br': 170, '3br': 215, '4br': 270 },
-    commercial: null
-  };
-
   function updateEstimate() {
-    const service = document.getElementById('book-service').value;
-    const size    = document.getElementById('book-size').value;
+    const service  = document.getElementById('book-service').value;
+    const size     = document.getElementById('book-size').value;
     const pregnant = document.getElementById('disc-pregnant').checked;
     const senior   = document.getElementById('disc-senior').checked;
-    const hasDiscount = pregnant || senior;
+    const veteran  = document.getElementById('disc-veteran').checked;
+    const hasDiscount = pregnant || senior || veteran;
     const priceEl  = document.getElementById('est-price');
     const discEl   = document.getElementById('est-discount-badge');
     const hiddenEl = document.getElementById('book-est-hidden');
 
     if (!PRICES[service]) {
-      priceEl.textContent = 'Call for quote';
+      priceEl.textContent = 'Contact for pricing';
       discEl.style.display = 'none';
-      hiddenEl.value = 'Commercial — call for quote';
+      hiddenEl.value = 'Commercial / Large Project — contact for custom quote';
       return;
     }
-    let base = PRICES[service][size];
-    let display = '';
+    const tier = ecoMode ? 'eco' : 'std';
+    const base = PRICES[service][tier][size];
     if (hasDiscount) {
-      const discounted = Math.round(base * 0.85);
-      display = '$' + discounted + ' (was $' + base + ')';
-      hiddenEl.value = '$' + discounted + ' (15% discount applied)';
+      const discounted = Math.round(base * 0.90);
+      priceEl.textContent = '$' + discounted + ' (was $' + base + ')';
+      hiddenEl.value = '$' + discounted + ' (10% discount applied)';
       discEl.style.display = 'block';
     } else {
-      display = '$' + base;
+      priceEl.textContent = '$' + base;
       hiddenEl.value = '$' + base;
       discEl.style.display = 'none';
     }
-    priceEl.textContent = display;
   }
 
   // Set min date to tomorrow
