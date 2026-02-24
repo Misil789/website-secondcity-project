@@ -2390,6 +2390,24 @@
     }
   }
 
+  // ====== SELECT PACKAGE FROM PRICING CARDS ======
+  function selectPackage(plan, size) {
+    const serviceEl = document.getElementById('book-service');
+    const sizeEl    = document.getElementById('book-size');
+    if (serviceEl) serviceEl.value = plan;
+    if (sizeEl)    sizeEl.value    = size;
+    updateEstimate();
+    refreshRecurring();
+  }
+
+  // Wire up all "Book This →" buttons on price cards
+  document.querySelectorAll('.price-cta').forEach(link => {
+    link.addEventListener('click', function() {
+      const card = this.closest('[data-plan][data-size]');
+      if (card) selectPackage(card.dataset.plan, card.dataset.size);
+    });
+  });
+
   // Set min date to tomorrow + init recurring + checklist name
   (function() {
     const d = document.getElementById('book-date');
