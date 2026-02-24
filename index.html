@@ -1909,17 +1909,6 @@
 
     <div class="reveal" style="background:#fff; border-radius:24px; padding:2.5rem; box-shadow:0 8px 40px rgba(12,35,64,.1);">
 
-      <!-- Price Estimator Badge -->
-      <div id="est-box" style="background:linear-gradient(135deg,var(--navy),#0f4c7a); border-radius:14px; padding:1.1rem 1.5rem; margin-bottom:2rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:.75rem;">
-        <div>
-          <p style="font-family:'Montserrat',sans-serif; font-weight:800; color:var(--sky-light); font-size:.7rem; text-transform:uppercase; letter-spacing:.1em; margin-bottom:.15rem;">Estimated Price</p>
-          <p id="est-price" style="font-family:'Bebas Neue',sans-serif; font-size:2.5rem; color:#fff; line-height:1;">Select options below</p>
-        </div>
-        <div id="est-discount-badge" style="display:none; background:rgba(250,204,21,.15); border:1px solid rgba(250,204,21,.4); border-radius:10px; padding:.5rem 1rem;">
-          <p style="font-family:'Montserrat',sans-serif; font-weight:800; color:#fbbf24; font-size:.78rem;">15% Discount Applied ✓</p>
-        </div>
-      </div>
-
       <form id="booking-form" onsubmit="handleBooking(event)" action="https://formspree.io/f/mreaydgk" method="POST">
         <!-- Hidden field for estimated price -->
         <input type="hidden" name="_subject" value="New Booking Request — Second City Scrubbers" />
@@ -2419,7 +2408,6 @@
       });
       if (res.ok) {
         form.style.display = 'none';
-        document.getElementById('est-box').style.display = 'none';
         document.getElementById('booking-success').style.display = 'block';
       } else {
         btn.textContent = 'Confirm Booking Request →';
