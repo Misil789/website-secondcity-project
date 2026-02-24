@@ -1842,7 +1842,7 @@
           <p class="rec-freq">Monthly</p>
           <p class="rec-price" id="rec-monthly">—</p>
           <p class="rec-save">per visit</p>
-          <span class="rec-savings-tag">Save 10%</span>
+          <span class="rec-savings-tag">Save 15%</span>
           <a href="#booking" class="rec-btn">Book Monthly →</a>
         </div>
         <div class="reveal rec-card rec-card-pop">
@@ -1850,7 +1850,7 @@
           <p class="rec-freq" style="color:var(--sky-light);">Bi-Weekly</p>
           <p class="rec-price rec-price-light" id="rec-biweekly">—</p>
           <p class="rec-save rec-save-light">per visit</p>
-          <span class="rec-savings-tag rec-savings-tag-light">Save 15%</span>
+          <span class="rec-savings-tag rec-savings-tag-light">Save 20%</span>
           <a href="#booking" class="rec-btn rec-btn-light">Book Bi-Weekly →</a>
         </div>
         <div class="reveal rec-card">
@@ -1858,6 +1858,10 @@
           <p class="rec-price" id="rec-weekly">—</p>
           <p class="rec-save">per visit</p>
           <span class="rec-savings-tag">Save 20%</span>
+          <div style="display:flex; align-items:center; gap:.4rem; justify-content:center; margin:.6rem 0 .85rem; background:rgba(14,165,233,.1); border:1px solid rgba(14,165,233,.25); border-radius:8px; padding:.4rem .75rem;">
+            <span style="font-size:.85rem;">🎁</span>
+            <span style="font-size:.74rem; font-weight:700; color:var(--sky);">1 Free Add-On Every Visit</span>
+          </div>
           <a href="#booking" class="rec-btn">Book Weekly →</a>
         </div>
       </div>
@@ -2286,7 +2290,7 @@
     const service = serviceEl.value;
     const size    = sizeEl.value;
     const tier    = ecoMode ? 'eco' : 'std';
-    const ids = { onetime:1, monthly:.90, biweekly:.85, weekly:.80 };
+    const ids = { onetime:1, monthly:.85, biweekly:.80, weekly:.80 };
     const base = PRICES[service] ? PRICES[service][tier][size] : null;
     ['onetime','monthly','biweekly','weekly'].forEach(key => {
       const el = document.getElementById('rec-' + key);
