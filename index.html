@@ -1972,7 +1972,7 @@
 
         <div class="form-group">
           <label>Booking Frequency</label>
-          <select name="booking_frequency" id="book-frequency">
+          <select name="booking_frequency" id="book-frequency" onchange="updateEstimate()">
             <option value="One-Time">One-Time</option>
             <option value="Monthly (15% off)">Monthly — Save 15%</option>
             <option value="Bi-Weekly (20% off)">Bi-Weekly — Save 20%</option>
@@ -2369,13 +2369,22 @@
   }
 
   // ====== PRICE ESTIMATOR ======
+  const FREQ_MULTIPLIERS = {
+    'One-Time':                        1,
+    'Monthly (15% off)':               0.85,
+    'Bi-Weekly (20% off)':             0.80,
+    'Weekly (20% off + free add-on)':  0.80
+  };
+
   function updateEstimate() {
     const service  = document.getElementById('book-service').value;
     const size     = document.getElementById('book-size').value;
     const pregnant = document.getElementById('disc-pregnant').checked;
     const senior   = document.getElementById('disc-senior').checked;
     const veteran  = document.getElementById('disc-veteran').checked;
-    const hasDiscount = pregnant || senior || veteran;
+    const freqVal  = (document.getElementById('book-frequency') || {}).value || 'One-Time';
+    const freqMult = FREQ_MULTIPLIERS[freqVal] || 1;
+    const hasPersonalDiscount = pregnant || senior || veteran;
     const priceEl  = document.getElementById('est-price');
     const discEl   = document.getElementById('est-discount-badge');
     const hiddenEl = document.getElementById('book-est-hidden');
@@ -2388,11 +2397,17 @@
     }
     const tier = ecoMode ? 'eco' : 'std';
     const base = PRICES[service][tier][size];
-    if (hasDiscount) {
-      const discounted = Math.round(base * 0.90);
-      priceEl.textContent = '$' + discounted + ' (was $' + base + ')';
-      hiddenEl.value = '$' + discounted + ' (10% discount applied)';
+
+    // Apply recurring discount first, then personal discount on top
+    let price = Math.round(base * freqMult);
+    if (hasPersonalDiscount) price = Math.round(price * 0.90);
+
+    const hasAnyDiscount = freqMult < 1 || hasPersonalDiscount;
+    if (hasAnyDiscount) {
+      priceEl.textContent = '$' + price + ' (was $' + base + ')';
+      hiddenEl.value = '$' + price + ' (' + freqVal + (hasPersonalDiscount ? ' + 10% personal discount' : '') + ')';
       discEl.style.display = 'block';
+      discEl.querySelector('p').textContent = freqVal !== 'One-Time' ? freqVal + (hasPersonalDiscount ? ' + 10% off' : '') : '10% Discount Applied ✓';
     } else {
       priceEl.textContent = '$' + base;
       hiddenEl.value = '$' + base;
@@ -2404,6 +2419,7 @@
   function selectFrequency(freq) {
     const freqEl = document.getElementById('book-frequency');
     if (freqEl) freqEl.value = freq;
+    updateEstimate();
   }
 
   // Wire up recurring "Book X →" buttons
