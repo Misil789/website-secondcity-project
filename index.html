@@ -1857,7 +1857,7 @@
           <p class="rec-freq">Weekly</p>
           <p class="rec-price" id="rec-weekly">—</p>
           <p class="rec-save">per visit</p>
-          <span class="rec-savings-tag">Save 20%</span>
+          <span class="rec-savings-tag">Save 25%</span>
           <a href="#booking" class="rec-btn">Book Weekly →</a>
         </div>
       </div>
@@ -1904,6 +1904,17 @@
     </div>
 
     <div class="reveal" style="background:#fff; border-radius:24px; padding:2.5rem; box-shadow:0 8px 40px rgba(12,35,64,.1);">
+
+      <!-- Price Estimator Badge -->
+      <div id="est-box" style="background:linear-gradient(135deg,var(--navy),#0f4c7a); border-radius:14px; padding:1.1rem 1.5rem; margin-bottom:2rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:.75rem;">
+        <div>
+          <p style="font-family:'Montserrat',sans-serif; font-weight:800; color:var(--sky-light); font-size:.7rem; text-transform:uppercase; letter-spacing:.1em; margin-bottom:.15rem;">Estimated Price</p>
+          <p id="est-price" style="font-family:'Bebas Neue',sans-serif; font-size:2.5rem; color:#fff; line-height:1;">Select options below</p>
+        </div>
+        <div id="est-discount-badge" style="display:none; background:rgba(250,204,21,.15); border:1px solid rgba(250,204,21,.4); border-radius:10px; padding:.5rem 1rem;">
+          <p style="font-family:'Montserrat',sans-serif; font-weight:800; color:#fbbf24; font-size:.78rem;">15% Discount Applied ✓</p>
+        </div>
+      </div>
 
       <form id="booking-form" onsubmit="handleBooking(event)" action="https://formspree.io/f/mreaydgk" method="POST">
         <!-- Hidden field for estimated price -->
@@ -2012,8 +2023,8 @@
         <div style="margin-top:1.75rem; background:linear-gradient(135deg,#7c3aed,#4f46e5); border-radius:14px; padding:1.25rem 1.5rem; text-align:left; display:flex; align-items:center; gap:1rem; flex-wrap:wrap;">
           <span style="font-size:2rem; flex-shrink:0;">🎁</span>
           <div>
-            <p style="font-family:'Montserrat',sans-serif; font-weight:800; color:#fff; font-size:.92rem; margin-bottom:.2rem;">Earn 20% Off — Refer a Friend</p>
-            <p style="font-size:.8rem; color:#ddd6fe; line-height:1.5;">After your first clean, refer a friend and when they complete their first booking you'll receive <strong style="color:#fff;">20% off your next clean</strong>. Just have them mention your name!</p>
+            <p style="font-family:'Montserrat',sans-serif; font-weight:800; color:#fff; font-size:.92rem; margin-bottom:.2rem;">Earn 15% Off — Refer a Friend</p>
+            <p style="font-size:.8rem; color:#ddd6fe; line-height:1.5;">After your first clean, refer a friend and when they complete their first booking you'll receive <strong style="color:#fff;">15% off your next clean</strong>. Just have them mention your name!</p>
           </div>
         </div>
       </div>
@@ -2027,8 +2038,8 @@
     <div class="refer-band">
       <div style="flex:1; min-width:260px;">
         <p style="font-family:'Montserrat',sans-serif; font-weight:800; color:#c4b5fd; font-size:.72rem; text-transform:uppercase; letter-spacing:.1em; margin-bottom:.5rem;">Refer a Friend Program</p>
-        <h2 style="font-family:'Montserrat',sans-serif; font-weight:900; color:#fff; font-size:1.75rem; line-height:1.2; margin-bottom:.75rem;">Give a Clean.<br>Get 20% Off.</h2>
-        <p style="font-size:.88rem; color:#ddd6fe; line-height:1.7; max-width:420px;">After your first clean with us, refer a friend to Second City Scrubbers. When they complete their first booking, <strong style="color:#fff;">you get 20% off your next clean</strong> — no codes, no hassle. Just have them mention your name when booking.</p>
+        <h2 style="font-family:'Montserrat',sans-serif; font-weight:900; color:#fff; font-size:1.75rem; line-height:1.2; margin-bottom:.75rem;">Give a Clean.<br>Get 15% Off.</h2>
+        <p style="font-size:.88rem; color:#ddd6fe; line-height:1.7; max-width:420px;">After your first clean with us, refer a friend to Second City Scrubbers. When they complete their first booking, <strong style="color:#fff;">you get 15% off your next clean</strong> — no codes, no hassle. Just have them mention your name when booking.</p>
         <div style="margin-top:1.25rem; display:flex; gap:.75rem; flex-wrap:wrap;">
           <div style="background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2); border-radius:10px; padding:.65rem 1rem; display:flex; align-items:center; gap:.5rem;">
             <span style="font-size:1.1rem;">1️⃣</span>
@@ -2040,13 +2051,13 @@
           </div>
           <div style="background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2); border-radius:10px; padding:.65rem 1rem; display:flex; align-items:center; gap:.5rem;">
             <span style="font-size:1.1rem;">3️⃣</span>
-            <span style="font-size:.8rem; color:#ede9fe; font-weight:600;">They book → you save 20%</span>
+            <span style="font-size:.8rem; color:#ede9fe; font-weight:600;">They book → you save 15%</span>
           </div>
         </div>
       </div>
       <div style="flex-shrink:0; text-align:center;">
         <div style="background:rgba(255,255,255,.12); border:2px solid rgba(255,255,255,.25); border-radius:20px; padding:1.75rem 2rem; min-width:160px;">
-          <p style="font-family:'Bebas Neue',sans-serif; font-size:4rem; color:#fff; line-height:1;">20%</p>
+          <p style="font-family:'Bebas Neue',sans-serif; font-size:4rem; color:#fff; line-height:1;">15%</p>
           <p style="font-family:'Montserrat',sans-serif; font-weight:800; color:#c4b5fd; font-size:.8rem;">OFF YOUR</p>
           <p style="font-family:'Montserrat',sans-serif; font-weight:800; color:#c4b5fd; font-size:.8rem;">NEXT CLEAN</p>
         </div>
@@ -2275,7 +2286,7 @@
     const service = serviceEl.value;
     const size    = sizeEl.value;
     const tier    = ecoMode ? 'eco' : 'std';
-    const ids = { onetime:1, monthly:.85, biweekly:.80, weekly:.80 };
+    const ids = { onetime:1, monthly:.85, biweekly:.80, weekly:.75 };
     const base = PRICES[service] ? PRICES[service][tier][size] : null;
     ['onetime','monthly','biweekly','weekly'].forEach(key => {
       const el = document.getElementById('rec-' + key);
@@ -2404,6 +2415,7 @@
       });
       if (res.ok) {
         form.style.display = 'none';
+        document.getElementById('est-box').style.display = 'none';
         document.getElementById('booking-success').style.display = 'block';
       } else {
         btn.textContent = 'Confirm Booking Request →';
