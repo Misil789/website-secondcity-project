@@ -1970,6 +1970,16 @@
           </div>
         </div>
 
+        <div class="form-group">
+          <label>Booking Frequency</label>
+          <select name="booking_frequency" id="book-frequency">
+            <option value="One-Time">One-Time</option>
+            <option value="Monthly (15% off)">Monthly — Save 15%</option>
+            <option value="Bi-Weekly (20% off)">Bi-Weekly — Save 20%</option>
+            <option value="Weekly (20% off + free add-on)">Weekly — Save 20% + Free Add-On</option>
+          </select>
+        </div>
+
         <div class="form-row">
           <div class="form-group">
             <label>Preferred Date</label>
@@ -2389,6 +2399,30 @@
       discEl.style.display = 'none';
     }
   }
+
+  // ====== SELECT FREQUENCY FROM RECURRING SECTION ======
+  function selectFrequency(freq) {
+    const freqEl = document.getElementById('book-frequency');
+    if (freqEl) freqEl.value = freq;
+  }
+
+  // Wire up recurring "Book X →" buttons
+  document.querySelectorAll('.rec-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const card = this.closest('.rec-card');
+      if (!card) return;
+      const freqEl = card.querySelector('.rec-freq');
+      if (!freqEl) return;
+      const label = freqEl.textContent.trim();
+      const map = {
+        'One-Time':  'One-Time',
+        'Monthly':   'Monthly (15% off)',
+        'Bi-Weekly': 'Bi-Weekly (20% off)',
+        'Weekly':    'Weekly (20% off + free add-on)'
+      };
+      if (map[label]) selectFrequency(map[label]);
+    });
+  });
 
   // ====== SELECT PACKAGE FROM PRICING CARDS ======
   function selectPackage(plan, size) {
