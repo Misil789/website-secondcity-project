@@ -690,6 +690,27 @@
     .rec-btn { display:block; background:var(--sky); color:#fff; font-family:'Montserrat',sans-serif; font-weight:700; font-size:.78rem; padding:.6rem .75rem; border-radius:10px; text-decoration:none; transition:background .2s; }
     .rec-btn:hover { background:var(--navy); }
     .rec-btn-light:hover { background:var(--sky-light) !important; }
+    .rec-card-selected {
+      border: 2.5px solid var(--sky) !important;
+      box-shadow: 0 0 0 4px rgba(14,165,233,.18), 0 8px 32px rgba(14,165,233,.18) !important;
+      transform: translateY(-4px);
+    }
+    .rec-card-selected::after {
+      content: '✓ Selected';
+      position: absolute;
+      bottom: -13px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--sky);
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .7rem;
+      font-weight: 800;
+      letter-spacing: .06em;
+      padding: .2rem .75rem;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
 
     /* ---- REFER A FRIEND ---- */
     .refer-band {
@@ -2461,6 +2482,9 @@
         'Bi-Weekly': 'Bi-Weekly (20% off)',
         'Weekly':    'Weekly (20% off + free add-on)'
       };
+      // Highlight selected recurring card
+      document.querySelectorAll('.rec-card').forEach(c => c.classList.remove('rec-card-selected'));
+      card.classList.add('rec-card-selected');
       if (map[label]) selectFrequency(map[label]);
     });
   });
