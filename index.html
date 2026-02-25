@@ -830,6 +830,82 @@
       top: -80px; right: -60px;
       pointer-events: none;
     }
+
+    /* ---- MOBILE HAMBURGER NAV ---- */
+    .mobile-menu-btn {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 40px; height: 40px;
+      background: none; border: none;
+      cursor: pointer; padding: 8px;
+      border-radius: 8px;
+      transition: background .2s;
+    }
+    .mobile-menu-btn:hover { background: rgba(14,165,233,.1); }
+    .mobile-menu-btn span {
+      display: block;
+      width: 22px; height: 2px;
+      background: var(--navy);
+      border-radius: 2px;
+      transition: transform .3s cubic-bezier(.16,1,.3,1), opacity .2s;
+    }
+    .mobile-menu-open .mmb-top { transform: translateY(7px) rotate(45deg); }
+    .mobile-menu-open .mmb-mid { opacity: 0; transform: scaleX(0); }
+    .mobile-menu-open .mmb-bot { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-nav-drawer {
+      display: none;
+      background: rgba(240,251,255,.97);
+      backdrop-filter: blur(14px);
+      border-bottom: 2px solid rgba(14,165,233,.18);
+      position: sticky; top: 64px; z-index: 99;
+    }
+    .mobile-nav-drawer.open { display: block; }
+    .mobile-nav-drawer a {
+      display: block;
+      padding: .85rem 2rem;
+      font-family: 'Inter', sans-serif;
+      font-size: .95rem; font-weight: 600;
+      color: var(--text-body);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(14,165,233,.08);
+      transition: color .2s, background .2s;
+    }
+    .mobile-nav-drawer a:hover { color: var(--sky); background: rgba(14,165,233,.05); }
+    .mobile-nav-drawer .mnav-book {
+      color: var(--navy) !important;
+      font-weight: 800 !important;
+      background: var(--sky-pale) !important;
+      border-bottom: none !important;
+    }
+    .mobile-nav-drawer .mnav-book:hover { background: #d0ecf8 !important; }
+
+    @media(max-width:767px) {
+      .mobile-menu-btn { display: flex; }
+      .nav-logo span { display: none; }
+      .hero { padding-top: 3rem !important; }
+      .logo-ring-wrap { width: 200px !important; }
+      #pricing-tabs {
+        flex-wrap: nowrap !important;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        justify-content: flex-start !important;
+        padding-bottom: .5rem;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+      #pricing-tabs::-webkit-scrollbar { display: none; }
+      .ptab { flex-shrink: 0; }
+      .section-pad { padding: 3rem 1.25rem; }
+    }
+    @media(max-width:420px) {
+      .price-grid { grid-template-columns: 1fr !important; }
+    }
+    @media(min-width:768px) {
+      .mobile-nav-drawer { display: none !important; }
+    }
   </style>
 </head>
 <body>
@@ -894,9 +970,24 @@
       <li><a href="#pricing">Pricing</a></li>
       <li><a href="#booking">Book Now</a></li>
     </ul>
-    <a href="#booking" class="nav-cta">Book Now</a>
+    <div style="display:flex; align-items:center; gap:.5rem;">
+      <button class="mobile-menu-btn" id="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle navigation" aria-expanded="false">
+        <span class="mmb-top"></span>
+        <span class="mmb-mid"></span>
+        <span class="mmb-bot"></span>
+      </button>
+      <a href="#booking" class="nav-cta">Book Now</a>
+    </div>
   </div>
 </nav>
+<div class="mobile-nav-drawer" id="mobile-nav-drawer">
+  <a href="#services" onclick="closeMobileMenu()">Services</a>
+  <a href="#why-us" onclick="closeMobileMenu()">Why Us</a>
+  <a href="#process" onclick="closeMobileMenu()">Process</a>
+  <a href="#testimonials" onclick="closeMobileMenu()">Reviews</a>
+  <a href="#pricing" onclick="closeMobileMenu()">Pricing</a>
+  <a href="#booking" onclick="closeMobileMenu()" class="mnav-book">📅 Book Your Clean →</a>
+</div>
 <style>
   @media(min-width:768px){ #nav-links { display:flex !important; } }
 </style>
@@ -2854,6 +2945,30 @@
 
     animate();
   })();
+
+  // ====== MOBILE MENU TOGGLE ======
+  function toggleMobileMenu() {
+    const btn = document.getElementById('mobile-menu-btn');
+    const drawer = document.getElementById('mobile-nav-drawer');
+    const isOpen = drawer.classList.contains('open');
+    drawer.classList.toggle('open', !isOpen);
+    btn.classList.toggle('mobile-menu-open', !isOpen);
+    btn.setAttribute('aria-expanded', String(!isOpen));
+  }
+  function closeMobileMenu() {
+    const btn = document.getElementById('mobile-menu-btn');
+    document.getElementById('mobile-nav-drawer').classList.remove('open');
+    btn.classList.remove('mobile-menu-open');
+    btn.setAttribute('aria-expanded', 'false');
+  }
+  // Close drawer when clicking outside
+  document.addEventListener('click', function(e) {
+    const btn = document.getElementById('mobile-menu-btn');
+    const drawer = document.getElementById('mobile-nav-drawer');
+    if (drawer.classList.contains('open') && !btn.contains(e.target) && !drawer.contains(e.target)) {
+      closeMobileMenu();
+    }
+  });
 </script>
 
 </body>
