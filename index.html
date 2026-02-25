@@ -887,16 +887,20 @@
       .nav-logo span { display: none; }
       .hero { padding-top: 3rem !important; }
       .logo-ring-wrap { width: 200px !important; }
-      #pricing-tabs {
-        flex-wrap: nowrap !important;
+      #pricing-tabs-wrap {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
-        justify-content: flex-start !important;
-        padding-bottom: .5rem;
         scrollbar-width: none;
         -ms-overflow-style: none;
+        padding-bottom: .5rem;
       }
-      #pricing-tabs::-webkit-scrollbar { display: none; }
+      #pricing-tabs-wrap::-webkit-scrollbar { display: none; }
+      #pricing-tabs {
+        flex-wrap: nowrap !important;
+        justify-content: flex-start !important;
+        width: max-content;
+        margin-bottom: 0 !important;
+      }
       .ptab { flex-shrink: 0; }
       .section-pad { padding: 3rem 1.25rem; }
     }
@@ -1804,12 +1808,14 @@
     <p id="eco-note" style="text-align:center; font-size:.76rem; color:var(--text-muted); margin-bottom:1.75rem; display:none;">Eco pricing reflects use of plant-based, non-toxic cleaning products — safer for families, pets &amp; the planet.</p>
 
     <!-- Plan Tabs -->
-    <div style="display:flex; justify-content:center; gap:.5rem; margin-bottom:2.25rem; flex-wrap:wrap;" id="pricing-tabs">
-      <button onclick="switchPlan('standard')" id="tab-standard" class="ptab ptab-active">Standard Clean</button>
-      <button onclick="switchPlan('deep')" id="tab-deep" class="ptab">Deep Clean</button>
-      <button onclick="switchPlan('moveinout')" id="tab-moveinout" class="ptab">Move-In / Move-Out</button>
-      <button onclick="switchPlan('airbnb')" id="tab-airbnb" class="ptab">Airbnb / Short-Term</button>
-      <button onclick="switchPlan('postconstruct')" id="tab-postconstruct" class="ptab">Post-Construction</button>
+    <div id="pricing-tabs-wrap" style="margin-bottom:2.25rem;">
+      <div style="display:flex; justify-content:center; gap:.5rem; flex-wrap:wrap;" id="pricing-tabs">
+        <button onclick="switchPlan('standard')" id="tab-standard" class="ptab ptab-active">Standard Clean</button>
+        <button onclick="switchPlan('deep')" id="tab-deep" class="ptab">Deep Clean</button>
+        <button onclick="switchPlan('moveinout')" id="tab-moveinout" class="ptab">Move-In / Move-Out</button>
+        <button onclick="switchPlan('airbnb')" id="tab-airbnb" class="ptab">Airbnb / Short-Term</button>
+        <button onclick="switchPlan('postconstruct')" id="tab-postconstruct" class="ptab">Post-Construction</button>
+      </div>
     </div>
 
     <!-- STANDARD PLAN -->
