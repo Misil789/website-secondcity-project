@@ -887,21 +887,14 @@
       .nav-logo span { display: none; }
       .hero { padding-top: 3rem !important; }
       .logo-ring-wrap { width: 200px !important; }
-      #pricing-tabs-wrap {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-        padding-bottom: .5rem;
-      }
-      #pricing-tabs-wrap::-webkit-scrollbar { display: none; }
       #pricing-tabs {
-        flex-wrap: nowrap !important;
-        justify-content: flex-start !important;
-        width: max-content;
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+        width: auto !important;
         margin-bottom: 0 !important;
       }
-      .ptab { flex-shrink: 0; }
+      #pricing-tabs .ptab { width: 100%; text-align: center; }
+      #tab-postconstruct { grid-column: 1 / -1; justify-self: center; min-width: 55%; width: auto !important; }
       .section-pad { padding: 3rem 1.25rem; }
     }
     @media(max-width:420px) {
