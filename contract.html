@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recurring Cleaning Agreement — Second City Scrubbers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --sky:        #0ea5e9;
+      --sky-light:  #38bdf8;
+      --sky-pale:   #e0f2fe;
+      --red:        #dc2626;
+      --navy:       #0c2340;
+      --navy-2:     #0f2d50;
+      --text-body:  #1e3a5a;
+      --text-muted: #5a87a8;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f0fbff;
+      color: var(--navy);
+      line-height: 1.7;
+    }
+
+    /* ---- TOOLBAR ---- */
+    .toolbar {
+      max-width: 820px;
+      margin: 1.75rem auto .75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0 .25rem;
+    }
+    .toolbar-hint {
+      font-size: .78rem;
+      color: var(--text-muted);
+      font-family: 'Inter', sans-serif;
+    }
+    .toolbar-hint strong {
+      color: var(--navy);
+      font-weight: 600;
+    }
+    .toolbar-actions {
+      display: flex;
+      gap: .6rem;
+    }
+    .btn-print {
+      background: var(--navy);
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: .8rem;
+      letter-spacing: .04em;
+      padding: .55rem 1.2rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: .45rem;
+      transition: background .18s, transform .12s;
+    }
+    .btn-print:hover { background: var(--sky); transform: translateY(-1px); }
+    .btn-print:active { transform: translateY(0); }
+    .btn-clear {
+      background: transparent;
+      color: var(--text-muted);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: .78rem;
+      padding: .55rem 1rem;
+      border-radius: 8px;
+      border: 1.5px solid rgba(14,165,233,.25);
+      cursor: pointer;
+      transition: border-color .18s, color .18s;
+    }
+    .btn-clear:hover { border-color: var(--sky); color: var(--sky); }
+
+    /* ---- PAGE WRAPPER ---- */
+    .page {
+      max-width: 820px;
+      margin: 0 auto 3rem;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow:
+        0 2px 8px rgba(14,165,233,.08),
+        0 12px 40px rgba(12,35,64,.1);
+      overflow: hidden;
+    }
+
+    /* ---- HEADER ---- */
+    .header {
+      background: var(--navy);
+      padding: 2.25rem 3rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+    .header-brand {
+      display: flex;
+      flex-direction: column;
+      gap: .3rem;
+    }
+    .header-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.1rem;
+      color: #fff;
+      letter-spacing: .06em;
+      line-height: 1;
+    }
+    .header-logo span { color: var(--sky-light); }
+    .header-tagline {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .7rem;
+      font-weight: 700;
+      color: var(--sky-light);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .header-doc-label { text-align: right; }
+    .header-doc-label h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -.01em;
+      text-transform: uppercase;
+    }
+    .header-meta {
+      display: flex;
+      flex-direction: column;
+      gap: .3rem;
+      margin-top: .4rem;
+    }
+    .header-field {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      justify-content: flex-end;
+    }
+    .header-field label {
+      font-size: .65rem;
+      color: rgba(255,255,255,.55);
+      white-space: nowrap;
+      font-family: 'Inter', sans-serif;
+    }
+    .header-input {
+      background: rgba(255,255,255,.1);
+      border: none;
+      border-bottom: 1px solid rgba(255,255,255,.3);
+      color: #fff;
+      font-size: .72rem;
+      font-family: 'Inter', sans-serif;
+      padding: .1rem .3rem;
+      width: 130px;
+      outline: none;
+      text-align: right;
+    }
+    .header-input::placeholder { color: rgba(255,255,255,.3); }
+    .header-input:focus { border-bottom-color: var(--sky-light); }
+
+    /* ---- ACCENT BAR ---- */
+    .accent-bar {
+      height: 4px;
+      background: linear-gradient(90deg, var(--red) 0%, var(--sky) 60%, var(--sky-light) 100%);
+    }
+
+    /* ---- BODY ---- */
+    .body { padding: 2.5rem 3rem; }
+
+    /* ---- CLIENT INFO GRID ---- */
+    .client-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem 2rem;
+      margin-bottom: 2rem;
+      padding: 1.5rem;
+      background: var(--sky-pale);
+      border-radius: 12px;
+      border: 1px solid rgba(14,165,233,.2);
+    }
+    .field-group label {
+      display: block;
+      font-size: .68rem;
+      font-weight: 700;
+      font-family: 'Montserrat', sans-serif;
+      color: var(--text-muted);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: .35rem;
+    }
+    .field-input {
+      width: 100%;
+      border: none;
+      border-bottom: 1.5px solid rgba(14,165,233,.4);
+      background: transparent;
+      font-family: 'Inter', sans-serif;
+      font-size: .875rem;
+      color: var(--navy);
+      padding: .25rem .1rem;
+      outline: none;
+      transition: border-color .15s;
+    }
+    .field-input:focus { border-bottom-color: var(--sky); }
+    .field-input::placeholder { color: rgba(14,165,233,.3); font-style: italic; font-size: .8rem; }
+    .field-group.full { grid-column: 1 / -1; }
+
+    /* ---- SECTION HEADINGS ---- */
+    .section-heading {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .7rem;
+      font-weight: 900;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-bottom: .6rem;
+      margin-top: 1.75rem;
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+    }
+    .section-heading::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(14,165,233,.2);
+    }
+
+    /* ---- DISCOUNT TIERS ---- */
+    .tiers {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    .tier {
+      border: 1.5px solid rgba(14,165,233,.2);
+      border-radius: 12px;
+      padding: 1rem;
+      text-align: center;
+      position: relative;
+      background: #fff;
+      cursor: pointer;
+      transition: border-color .18s, box-shadow .18s, background .18s;
+    }
+    .tier:hover {
+      border-color: rgba(14,165,233,.5);
+      box-shadow: 0 2px 12px rgba(14,165,233,.1);
+    }
+    .tier input[type="radio"] { display: none; }
+    .tier.selected {
+      border-color: var(--sky);
+      background: rgba(14,165,233,.04);
+      box-shadow: 0 0 0 3px rgba(14,165,233,.15);
+    }
+    .tier-name {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: .85rem;
+      color: var(--navy);
+      margin-bottom: .35rem;
+    }
+    .tier-discount {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      color: var(--sky);
+      line-height: 1;
+    }
+    .tier-desc {
+      font-size: .7rem;
+      color: var(--text-muted);
+      margin-top: .3rem;
+      line-height: 1.5;
+    }
+    .tier-badge {
+      position: absolute;
+      top: -10px;
+      right: 10px;
+      background: var(--sky);
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: .6rem;
+      letter-spacing: .05em;
+      padding: .15rem .55rem;
+      border-radius: 999px;
+    }
+    .tier-check {
+      margin-top: .75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .4rem;
+      font-size: .72rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      transition: color .15s;
+    }
+    .tier.selected .tier-check { color: var(--sky); }
+    .tier-check-icon {
+      width: 16px;
+      height: 16px;
+      border: 1.5px solid rgba(14,165,233,.4);
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .15s, border-color .15s;
+    }
+    .tier.selected .tier-check-icon {
+      background: var(--sky);
+      border-color: var(--sky);
+    }
+    .tier-check-icon::after {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #fff;
+      opacity: 0;
+      transition: opacity .15s;
+    }
+    .tier.selected .tier-check-icon::after { opacity: 1; }
+
+    /* ---- RATE FIELD ---- */
+    .rate-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem 2rem;
+      margin-top: 1rem;
+    }
+
+    /* ---- BODY TEXT / CLAUSES ---- */
+    .clause {
+      margin-bottom: 1rem;
+      font-size: .875rem;
+      color: var(--text-body);
+      line-height: 1.75;
+    }
+    .clause strong {
+      font-weight: 700;
+      color: var(--navy);
+    }
+    .clause ul {
+      padding-left: 1.4rem;
+      margin-top: .4rem;
+    }
+    .clause li { margin-bottom: .35rem; }
+
+    /* ---- CALLOUT ---- */
+    .callout {
+      background: rgba(220,38,38,.05);
+      border-left: 3px solid var(--red);
+      border-radius: 0 8px 8px 0;
+      padding: .85rem 1.1rem;
+      font-size: .82rem;
+      color: var(--navy);
+      margin: 1rem 0;
+      line-height: 1.65;
+    }
+    .callout strong { color: var(--red); }
+
+    /* ---- SIGNATURE SECTION ---- */
+    .signature-block {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 2.5rem;
+    }
+    .sig-col {}
+    .sig-label {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: .7rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--navy);
+      margin-bottom: 1.75rem;
+    }
+    .sig-row { margin-top: 1.4rem; }
+    .sig-input {
+      width: 100%;
+      border: none;
+      border-bottom: 1.5px solid #aaa;
+      background: transparent;
+      font-family: 'Inter', sans-serif;
+      font-size: .875rem;
+      color: var(--navy);
+      padding: .3rem .1rem;
+      outline: none;
+      transition: border-color .15s;
+      min-height: 2rem;
+    }
+    .sig-input:focus { border-bottom-color: var(--navy); }
+    .sig-input::placeholder { color: #ccc; font-style: italic; font-size: .75rem; }
+    .sig-line-label {
+      font-size: .65rem;
+      color: var(--text-muted);
+      letter-spacing: .03em;
+      margin-top: .25rem;
+    }
+    /* Signature draw area */
+    .sig-draw-row { margin-top: 1.4rem; }
+    .sig-draw-area {
+      width: 100%;
+      height: 70px;
+      border-bottom: 1.5px solid #aaa;
+      border-radius: 0;
+      background: rgba(248,250,252,.6);
+      cursor: crosshair;
+      display: block;
+    }
+
+    /* ---- FOOTER ---- */
+    .footer {
+      margin-top: 2.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(14,165,233,.15);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-text {
+      font-size: .65rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .footer-initials {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .initial-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .3rem;
+    }
+    .initial-input {
+      width: 56px;
+      border: none;
+      border-bottom: 1.5px solid #aaa;
+      background: transparent;
+      font-family: 'Inter', sans-serif;
+      font-size: .82rem;
+      color: var(--navy);
+      text-align: center;
+      outline: none;
+      padding: .2rem .1rem;
+    }
+    .initial-input:focus { border-bottom-color: var(--sky); }
+    .initial-label {
+      font-size: .6rem;
+      color: var(--text-muted);
+    }
+
+    /* ---- PRINT STYLES ---- */
+    @media print {
+      @page { margin: 1.4cm 1.6cm; }
+      body { background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .toolbar { display: none !important; }
+      .page {
+        margin: 0;
+        border-radius: 0;
+        box-shadow: none;
+        max-width: 100%;
+      }
+      .body { padding: 1.2rem 1.8rem; }
+      .header { padding: 1.2rem 1.8rem; }
+
+      /* Inputs look like filled text */
+      .field-input,
+      .sig-input,
+      .initial-input,
+      .header-input {
+        border-top: none !important;
+        border-left: none !important;
+        border-right: none !important;
+        font-size: .8rem;
+        padding: .15rem .1rem;
+      }
+
+      /* Tier: hide cursor style, show selected clearly */
+      .tier { cursor: default; }
+      .tier:not(.selected) { opacity: .55; }
+      .tier.selected {
+        border-color: var(--sky) !important;
+        background: rgba(14,165,233,.06) !important;
+      }
+
+      /* Signature canvas stays visible */
+      .sig-draw-area { background: transparent; }
+    }
+
+    @media (max-width: 600px) {
+      .page { margin: 0; border-radius: 0; }
+      .header { padding: 1.5rem; flex-direction: column; align-items: flex-start; }
+      .header-doc-label { text-align: left; }
+      .header-field { justify-content: flex-start; }
+      .body { padding: 1.5rem; }
+      .tiers { grid-template-columns: 1fr; }
+      .client-grid { grid-template-columns: 1fr; }
+      .signature-block { grid-template-columns: 1fr; }
+      .rate-row { grid-template-columns: 1fr; }
+      .toolbar { flex-direction: column; align-items: flex-start; padding: 0 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Toolbar -->
+<div class="toolbar">
+  <div class="toolbar-hint">
+    <strong>Fillable Contract</strong> — type into the fields below, then save as PDF.
+  </div>
+  <div class="toolbar-actions">
+    <button class="btn-clear" onclick="clearForm()">Clear Form</button>
+    <button class="btn-print" onclick="window.print()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      Save as PDF
+    </button>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-brand">
+      <div class="header-logo">Second City <span>Scrubbers</span></div>
+      <div class="header-tagline">Chicago's Premier Cleaning Service</div>
+    </div>
+    <div class="header-doc-label">
+      <h1>Recurring Service Agreement</h1>
+      <div class="header-meta">
+        <div class="header-field">
+          <label>Contract Date:</label>
+          <input type="date" class="header-input" id="h-date" />
+        </div>
+        <div class="header-field">
+          <label>Contract #:</label>
+          <input type="text" class="header-input" id="h-num" placeholder="e.g. SCS-001" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="accent-bar"></div>
+
+  <!-- Body -->
+  <div class="body">
+
+    <!-- Client Info -->
+    <div class="section-heading">Client Information</div>
+    <div class="client-grid">
+      <div class="field-group">
+        <label for="f-name">Client Full Name</label>
+        <input type="text" class="field-input" id="f-name" placeholder="Jane Smith" />
+      </div>
+      <div class="field-group">
+        <label for="f-phone">Phone Number</label>
+        <input type="tel" class="field-input" id="f-phone" placeholder="(312) 555-0000" />
+      </div>
+      <div class="field-group full">
+        <label for="f-addr">Service Address</label>
+        <input type="text" class="field-input" id="f-addr" placeholder="123 N Michigan Ave, Chicago, IL 60601" />
+      </div>
+      <div class="field-group">
+        <label for="f-email">Email Address</label>
+        <input type="email" class="field-input" id="f-email" placeholder="jane@email.com" />
+      </div>
+      <div class="field-group">
+        <label for="f-start">Service Start Date</label>
+        <input type="date" class="field-input" id="f-start" />
+      </div>
+    </div>
+
+    <!-- Discount Tiers -->
+    <div class="section-heading">Selected Recurring Plan</div>
+    <p class="clause">Click to select the agreed plan. Discount applies to the base rate per visit for the duration of this agreement.</p>
+
+    <div class="tiers">
+      <label class="tier" id="tier-monthly" onclick="selectTier('monthly')">
+        <input type="radio" name="plan" value="monthly" />
+        <div class="tier-name">Monthly</div>
+        <div class="tier-discount">15% OFF</div>
+        <div class="tier-desc">1 cleaning per month<br>Billed per visit</div>
+        <div class="tier-check">
+          <div class="tier-check-icon"></div>
+          Select plan
+        </div>
+      </label>
+      <label class="tier" id="tier-biweekly" onclick="selectTier('biweekly')">
+        <input type="radio" name="plan" value="biweekly" />
+        <div class="tier-badge">Popular</div>
+        <div class="tier-name">Bi-Weekly</div>
+        <div class="tier-discount">20% OFF</div>
+        <div class="tier-desc">Every 2 weeks<br>Billed per visit</div>
+        <div class="tier-check">
+          <div class="tier-check-icon"></div>
+          Select plan
+        </div>
+      </label>
+      <label class="tier" id="tier-weekly" onclick="selectTier('weekly')">
+        <input type="radio" name="plan" value="weekly" />
+        <div class="tier-name">Weekly</div>
+        <div class="tier-discount">20% OFF</div>
+        <div class="tier-desc">Every week + free add-on<br>Billed per visit</div>
+        <div class="tier-check">
+          <div class="tier-check-icon"></div>
+          Select plan
+        </div>
+      </label>
+    </div>
+
+    <div class="rate-row">
+      <div class="field-group">
+        <label for="f-rate">Agreed Rate Per Visit (after discount)</label>
+        <input type="text" class="field-input" id="f-rate" placeholder="e.g. $120.00" />
+      </div>
+      <div class="field-group">
+        <label for="f-service">Service Type</label>
+        <input type="text" class="field-input" id="f-service" placeholder="e.g. Standard 3br/2ba" />
+      </div>
+    </div>
+
+    <!-- Terms -->
+    <div class="section-heading">Terms &amp; Conditions</div>
+
+    <p class="clause"><strong>1. Minimum Commitment Period</strong><br>
+      This agreement requires a minimum commitment of <strong>3 consecutive months</strong> from the service start date listed above. Discounted pricing is contingent on completing this minimum term. If the client cancels or fails to schedule within the agreed frequency before the 3-month minimum is fulfilled, the standard one-time rate will be retroactively applied to all completed visits and the difference will be invoiced.</p>
+
+    <p class="clause"><strong>2. Discount Terms</strong><br>
+      The recurring discount applies to the standard base rate for the selected service type and home size at the time of booking. Discounts are not stackable with other promotions (e.g., senior discount, referral credit) unless explicitly approved in writing by Second City Scrubbers.</p>
+
+    <p class="clause"><strong>3. Scheduling</strong><br>
+      The client agrees to maintain the selected cleaning frequency throughout the commitment period. Second City Scrubbers will work with the client to schedule a consistent recurring appointment. Missed or skipped visits (without proper notice — see Section 4) count toward the minimum commitment and do not receive a discount credit.</p>
+
+    <p class="clause"><strong>4. Cancellation &amp; Rescheduling Policy</strong>
+      <ul>
+        <li><strong>Rescheduling:</strong> Individual appointments may be rescheduled with at least <strong>48 hours' notice</strong> at no charge. Rescheduling with less than 48 hours' notice may incur a $40 late-reschedule fee.</li>
+        <li><strong>Cancellation within commitment period:</strong> If the client terminates this agreement before the 3-month minimum, standard (non-discounted) rates apply to all past visits. Second City Scrubbers will issue an adjusted invoice for the difference.</li>
+        <li><strong>Cancellation after commitment period:</strong> Either party may terminate this agreement with <strong>14 days' written notice</strong> (text or email is acceptable). No penalty applies after the minimum term is fulfilled.</li>
+      </ul>
+    </p>
+
+    <p class="clause"><strong>5. Service Pause Policy</strong><br>
+      Clients may pause their recurring schedule <strong>once per agreement term</strong> for up to 4 weeks, provided at least <strong>7 days' written notice</strong> is given. The pause period does not count toward the 3-month minimum, which will be extended accordingly. More than one pause within a term may result in forfeiture of the discounted rate at Second City Scrubbers' discretion.</p>
+
+    <p class="clause"><strong>6. Payment</strong><br>
+      Payment is due within <strong>3 business days</strong> of each completed cleaning visit. Accepted methods: cash, Venmo, Zelle, or check. Accounts overdue by more than 14 days may result in suspension of service and loss of discounted pricing.</p>
+
+    <p class="clause"><strong>7. Access &amp; Home Conditions</strong><br>
+      The client agrees to provide access to the property at the scheduled time. If a cleaner arrives and cannot gain entry (no-call lockout), a <strong>$50 lockout fee</strong> applies. Second City Scrubbers reserves the right to decline or modify service if home conditions present a safety concern.</p>
+
+    <div class="callout">
+      <strong>Important:</strong> The recurring discount is a loyalty benefit — not a contractual guarantee in future pricing periods. Second City Scrubbers reserves the right to adjust base rates with <strong>30 days' notice</strong>. Your discount percentage will remain the same; it will be applied to the updated base rate.
+    </div>
+
+    <p class="clause"><strong>8. Agreement Renewal</strong><br>
+      After the minimum commitment period, this agreement automatically continues on a month-to-month basis at the same discounted rate until either party provides written notice of cancellation (see Section 4).</p>
+
+    <!-- Signatures -->
+    <div class="section-heading">Signatures</div>
+    <p class="clause" style="margin-bottom:1.5rem;">By signing below, both parties agree to the terms outlined in this Recurring Cleaning Service Agreement.</p>
+
+    <div class="signature-block">
+      <div class="sig-col">
+        <div class="sig-label">Client</div>
+        <div class="sig-draw-row">
+          <canvas class="sig-draw-area" id="sig-client" width="340" height="70"></canvas>
+          <div class="sig-line-label">Signature (draw above)</div>
+        </div>
+        <div class="sig-row">
+          <input type="text" class="sig-input" id="sig-client-name" placeholder="Printed name" />
+          <div class="sig-line-label">Printed Name</div>
+        </div>
+        <div class="sig-row">
+          <input type="date" class="sig-input" id="sig-client-date" />
+          <div class="sig-line-label">Date</div>
+        </div>
+      </div>
+      <div class="sig-col">
+        <div class="sig-label">Second City Scrubbers</div>
+        <div class="sig-draw-row">
+          <canvas class="sig-draw-area" id="sig-scs" width="340" height="70"></canvas>
+          <div class="sig-line-label">Signature (draw above)</div>
+        </div>
+        <div class="sig-row">
+          <input type="text" class="sig-input" id="sig-scs-name" placeholder="Printed name &amp; title" />
+          <div class="sig-line-label">Printed Name &amp; Title</div>
+        </div>
+        <div class="sig-row">
+          <input type="date" class="sig-input" id="sig-scs-date" />
+          <div class="sig-line-label">Date</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="footer-text">
+        Second City Scrubbers · Chicago, IL<br>
+        Questions? Contact us before signing.
+      </div>
+      <div class="footer-initials">
+        <div class="initial-box">
+          <input type="text" class="initial-input" id="init-client" maxlength="4" placeholder="__" />
+          <div class="initial-label">Client Initials</div>
+        </div>
+        <div class="initial-box">
+          <input type="text" class="initial-input" id="init-scs" maxlength="4" placeholder="__" />
+          <div class="initial-label">SCS Initials</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /body -->
+</div><!-- /page -->
+
+<script>
+  /* ---- Tier selection ---- */
+  function selectTier(id) {
+    ['monthly','biweekly','weekly'].forEach(t => {
+      document.getElementById('tier-' + t).classList.remove('selected');
+    });
+    document.getElementById('tier-' + id).classList.add('selected');
+    document.querySelector('#tier-' + id + ' input[type=radio]').checked = true;
+  }
+
+  /* ---- Clear form ---- */
+  function clearForm() {
+    if (!confirm('Clear all filled-in fields? This cannot be undone.')) return;
+    document.querySelectorAll('input[type=text], input[type=email], input[type=tel], input[type=date]').forEach(el => el.value = '');
+    ['monthly','biweekly','weekly'].forEach(t => document.getElementById('tier-' + t).classList.remove('selected'));
+    ['sig-client','sig-scs'].forEach(id => {
+      const c = document.getElementById(id);
+      c.getContext('2d').clearRect(0,0,c.width,c.height);
+    });
+  }
+
+  /* ---- Signature canvas drawing ---- */
+  function initCanvas(id) {
+    const canvas = document.getElementById(id);
+    const ctx = canvas.getContext('2d');
+    ctx.strokeStyle = '#0c2340';
+    ctx.lineWidth = 1.8;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    let drawing = false, lastX = 0, lastY = 0;
+
+    function getPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      const src = e.touches ? e.touches[0] : e;
+      return [src.clientX - rect.left, src.clientY - rect.top];
+    }
+    function start(e) {
+      drawing = true;
+      [lastX, lastY] = getPos(e);
+      e.preventDefault();
+    }
+    function draw(e) {
+      if (!drawing) return;
+      const [x, y] = getPos(e);
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(x, y);
+      ctx.stroke();
+      [lastX, lastY] = [x, y];
+      e.preventDefault();
+    }
+    function stop() { drawing = false; }
+
+    canvas.addEventListener('mousedown', start);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', stop);
+    canvas.addEventListener('mouseleave', stop);
+    canvas.addEventListener('touchstart', start, { passive: false });
+    canvas.addEventListener('touchmove', draw, { passive: false });
+    canvas.addEventListener('touchend', stop);
+  }
+
+  initCanvas('sig-client');
+  initCanvas('sig-scs');
+</script>
+
+</body>
+</html>
