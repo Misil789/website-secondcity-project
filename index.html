@@ -132,9 +132,21 @@
     /* ---- HERO ---- */
     .hero {
       position: relative; z-index: 1;
-      background: radial-gradient(ellipse 120% 80% at 60% 30%, #bae6fd 0%, var(--sky-ghost) 70%);
+      background: linear-gradient(135deg, #0c2340 0%, #0a3a58 45%, #005070 100%);
       padding: 5rem 2rem 0;
       overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(ellipse 70% 90% at 75% 50%, rgba(0,176,221,.18) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 55% at 15% 25%, rgba(0,176,221,.1) 0%, transparent 55%),
+        radial-gradient(ellipse 35% 40% at 88% 85%, rgba(204,37,41,.1) 0%, transparent 50%);
+    }
+    .chi-star {
+      position: absolute; pointer-events: none; z-index: 0;
+      animation: sparkle-pop 3s ease-in-out infinite;
     }
     .hero-grid {
       max-width: 1200px; margin: 0 auto;
@@ -146,11 +158,11 @@
     }
     .hero-eyebrow {
       display: inline-block;
-      background: rgba(14,165,233,.12);
-      color: var(--sky);
+      background: rgba(0,176,221,.2);
+      color: #7fd3f0;
       font-size: .78rem; font-weight: 700; letter-spacing: .12em;
       padding: .3rem .9rem; border-radius: 999px;
-      border: 1px solid rgba(14,165,233,.3);
+      border: 1px solid rgba(0,176,221,.45);
       margin-bottom: 1.25rem;
       text-transform: uppercase;
     }
@@ -160,47 +172,85 @@
       font-weight: 900;
       line-height: 1.05;
       letter-spacing: -.03em;
-      color: var(--navy);
+      color: #fff;
       margin-bottom: 1.25rem;
     }
-    .hero h1 .accent { color: var(--sky); }
-    .hero h1 .accent-red { color: var(--red); }
+    .hero h1 .accent { color: #00C8F0; }
+    .hero h1 .accent-red { color: #f87171; }
     .hero p {
-      font-size: 1.1rem; line-height: 1.75; color: var(--text-body);
-      max-width: 520px; margin-bottom: 2rem;
+      font-size: 1.1rem; line-height: 1.75; color: rgba(255,255,255,.75);
+      max-width: 520px; margin-bottom: 1.25rem;
     }
-    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; }
     .btn-primary {
-      background: var(--sky); color: #fff;
-      padding: .8rem 1.8rem; border-radius: 999px;
+      background: #00B0DD; color: #fff;
+      padding: .85rem 2rem; border-radius: 999px;
       font-weight: 700; font-size: 1rem; text-decoration: none;
       transition: background .2s, transform .15s, box-shadow .2s;
-      box-shadow: 0 6px 24px rgba(14,165,233,.4);
+      box-shadow: 0 6px 32px rgba(0,176,221,.55);
     }
-    .btn-primary:hover { background: #0284c7; transform: translateY(-2px); box-shadow: 0 10px 32px rgba(14,165,233,.5); }
+    .btn-primary:hover { background: #0097c2; transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,176,221,.65); }
     .btn-outline {
-      border: 2px solid var(--navy); color: var(--navy);
-      padding: .8rem 1.8rem; border-radius: 999px;
+      border: 2px solid rgba(255,255,255,.45); color: #fff;
+      padding: .85rem 2rem; border-radius: 999px;
       font-weight: 700; font-size: 1rem; text-decoration: none;
-      transition: border-color .2s, color .2s, transform .15s;
+      transition: border-color .2s, background .2s, transform .15s;
     }
-    .btn-outline:hover { border-color: var(--sky); color: var(--sky); transform: translateY(-2px); }
+    .btn-outline:hover { border-color: rgba(255,255,255,.85); background: rgba(255,255,255,.08); transform: translateY(-2px); }
     .hero-badges { display: flex; gap: 1.5rem; flex-wrap: wrap; }
-    .hero-badge { display: flex; align-items: center; gap: .5rem; font-size: .85rem; font-weight: 600; color: var(--text-body); }
-    .hero-badge svg { color: var(--sky); flex-shrink: 0; }
+    .hero-badge { display: flex; align-items: center; gap: .5rem; font-size: .85rem; font-weight: 600; color: rgba(255,255,255,.65); }
+    .hero-badge svg { color: #00B0DD; flex-shrink: 0; }
 
     /* logo ring */
     .logo-ring-wrap {
       position: relative; width: 320px; max-width: 100%; margin: 0 auto;
       animation: float 4s ease-in-out infinite;
     }
+    .logo-ring-wrap::before {
+      content: '';
+      position: absolute; border-radius: 50%;
+      inset: -30px;
+      background: transparent;
+      border: 2px solid rgba(0,176,221,.7);
+      pointer-events: none; z-index: 0;
+      animation: ripple-ring 2.8s ease-out infinite;
+    }
+    .logo-ring-wrap::after {
+      content: '';
+      position: absolute; border-radius: 50%;
+      inset: -30px;
+      background: transparent;
+      border: 2px solid rgba(0,176,221,.5);
+      pointer-events: none; z-index: 0;
+      animation: ripple-ring 2.8s ease-out infinite 1.4s;
+    }
+    @keyframes ripple-ring {
+      0%   { transform: scale(0.9); opacity: .8; }
+      100% { transform: scale(1.7); opacity: 0; }
+    }
     .ring-1, .ring-2 {
       position: absolute; border-radius: 50%;
-      border: 2px dashed rgba(14,165,233,.35);
+      border: 2px dashed rgba(0,176,221,.45);
     }
     .ring-1 { inset: -24px; animation: spin 18s linear infinite; }
-    .ring-2 { inset: -48px; animation: spin-rev 28s linear infinite; border-color: rgba(14,165,233,.18); }
+    .ring-2 { inset: -48px; animation: spin-rev 28s linear infinite; border-color: rgba(0,176,221,.22); }
     .logo-ring-wrap img { display: block; width: 100%; border-radius: 50%; position: relative; z-index: 1; }
+    .hero-trust-badge {
+      position: absolute;
+      background: #fff;
+      border: 1.5px solid rgba(0,176,221,.3);
+      border-radius: 14px;
+      padding: .6rem 1rem;
+      display: flex; align-items: center; gap: .6rem;
+      box-shadow: 0 4px 20px rgba(12,35,64,.1), 0 1px 4px rgba(14,165,233,.1);
+      white-space: nowrap;
+      animation: fade-up .6s ease both;
+      opacity: 0;
+      animation-fill-mode: both;
+    }
+    .hero-trust-badge-label { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: .8rem; color: #0c2340; line-height: 1.2; }
+    .hero-trust-badge-sub { font-size: .65rem; color: #6b7280; font-weight: 600; }
+    @media(max-width:899px){ .hero-float-badges { display: none; } }
 
     .sparkle {
       position: absolute; pointer-events: none;
@@ -231,7 +281,7 @@
       animation: skyrise 2s 1s cubic-bezier(.16,1,.3,1) forwards;
     }
     .skyline-inner { animation: sky-float 10s 3s ease-in-out infinite; }
-    .sky-win      { fill: #fff; animation: wink ease-in-out infinite; }
+    .sky-win      { fill: rgba(0,200,240,.8); animation: wink ease-in-out infinite; }
     .sky-win-a    { animation-duration: 3.0s; animation-delay: 0.0s; }
     .sky-win-b    { animation-duration: 4.2s; animation-delay: 0.9s; }
     .sky-win-c    { animation-duration: 5.5s; animation-delay: 1.8s; }
@@ -712,6 +762,54 @@
       white-space: nowrap;
     }
 
+    /* ======= CHICAGO-THEMED SECTION COLORS ======= */
+
+    /* Products We Use — Navy night skyline */
+    #products-section .section-label { background: rgba(0,176,221,.22); color: #7fd3f0; }
+    #products-section .section-title { color: #fff !important; }
+    #products-section .section-sub { color: rgba(255,255,255,.75) !important; }
+
+    /* Services — Chicago lake blue wash */
+    .services-bg { background: linear-gradient(160deg, #e0f5fc 0%, #c8edf8 100%) !important; }
+
+    /* Why Us — Deep navy */
+    .why-bg { background: #0c2340 !important; }
+    #why-us .section-label { background: rgba(0,176,221,.22); color: #7fd3f0; }
+    #why-us .section-title { color: #fff !important; }
+    #why-us .why-title-word { color: #00B0DD !important; }
+    #why-us .section-sub { color: rgba(255,255,255,.72) !important; }
+    #why-us .why-visual { background: rgba(0,176,221,.1); border: 1px solid rgba(0,176,221,.18); }
+    #why-us .why-bg-circle { background: radial-gradient(circle, rgba(0,176,221,.12), transparent 70%) !important; }
+    #why-us .why-item h4 { color: #fff; }
+    #why-us .why-item p { color: rgba(255,255,255,.72); }
+    #why-us .why-check { background: linear-gradient(135deg, #00B0DD, #007da8); }
+
+    /* Process — Vibrant Chicago blue */
+    .process-bg { background: linear-gradient(135deg, #00B0DD 0%, #0097c2 55%, #007da8 100%) !important; }
+    #process .section-label { background: rgba(255,255,255,.2); color: #fff; }
+    #process .section-title { color: #fff !important; }
+    #process .section-sub { color: rgba(255,255,255,.88) !important; }
+    #process .process-num { color: rgba(255,255,255,.15) !important; }
+
+    /* Testimonials — Navy */
+    .testimonials-bg { background: #0c2340 !important; }
+    #testimonials .section-label { background: rgba(0,176,221,.22); color: #7fd3f0; }
+    #testimonials .section-title { color: #fff !important; }
+    #testimonials .section-sub { color: rgba(255,255,255,.72) !important; }
+    #testimonials .testimonial-card { background: rgba(255,255,255,.06) !important; border-color: rgba(0,176,221,.2) !important; }
+    #testimonials .testimonial-text { color: rgba(255,255,255,.82); }
+    #testimonials .author-name { color: #fff; }
+    #testimonials .author-loc { color: rgba(0,176,221,.85); }
+
+    /* CTA Band — Chicago Red */
+    .cta-band { background: linear-gradient(135deg, #CC2529 0%, #a01d20 100%) !important; }
+    .cta-band::before { background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(255,255,255,.07) 0%, transparent 70%) !important; }
+    .cta-btn-main { background: #fff !important; color: #CC2529 !important; box-shadow: 0 8px 32px rgba(0,0,0,.3) !important; }
+    .cta-btn-main:hover { background: rgba(255,255,255,.92) !important; }
+
+    /* Refer a Friend band — Chicago navy + teal */
+    .refer-band { background: linear-gradient(135deg, #0c2340 0%, #004f72 100%) !important; }
+
     /* ---- REFER A FRIEND ---- */
     .refer-band {
       background: linear-gradient(135deg, #7c3aed, #4f46e5);
@@ -831,22 +929,37 @@
       </div>
     </div>
     <!-- LOGO -->
-    <div style="position:relative; z-index:1; animation: fade-up .8s .2s ease both; display:flex; align-items:center; justify-content:center; padding: 3rem 0;">
+    <div style="position:relative; z-index:1; animation: fade-up .8s .2s ease both; display:flex; align-items:center; justify-content:center; padding: 2rem 0;">
       <!-- sparkles -->
       <svg class="sparkle" style="top:-10px;left:20px;animation-delay:.4s;" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2l1.5 5h5l-4 3 1.5 5-4-3-4 3 1.5-5-4-3h5z" fill="#0ea5e9" opacity=".7"/></svg>
       <svg class="sparkle" style="bottom:20px;right:10px;animation-delay:1.2s;" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2l1.5 5h5l-4 3 1.5 5-4-3-4 3 1.5-5-4-3h5z" fill="#38bdf8" opacity=".6"/></svg>
       <svg class="sparkle" style="top:30px;right:40px;animation-delay:.8s;" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2l1.5 5h5l-4 3 1.5 5-4-3-4 3 1.5-5-4-3h5z" fill="#dc2626" opacity=".5"/></svg>
-      <div class="logo-ring-wrap" style="width:280px;">
+      <div class="logo-ring-wrap" style="width:420px;">
         <img src='A_logo_for_%22Second_City_Scrubbers,%22_a_cleaning_com.png' alt="Second City Scrubbers" />
       </div>
     </div>
   </div>
   <!-- Chicago Skyline -->
+  <!-- Chicago flag: 4 red six-pointed stars -->
+  <svg class="chi-star" style="left:8%;top:73%;animation-delay:0s;"    width="36" height="36" viewBox="0 0 24 24"><path d="M12,2 L14.75,7.24 L20.66,7 L17.5,12 L20.66,17 L14.75,16.76 L12,22 L9.25,16.76 L3.34,17 L6.5,12 L3.34,7 L9.25,7.24 Z" fill="#CC2529" opacity=".80"/></svg>
+  <svg class="chi-star" style="left:32%;top:75%;animation-delay:.8s;"   width="30" height="30" viewBox="0 0 24 24"><path d="M12,2 L14.75,7.24 L20.66,7 L17.5,12 L20.66,17 L14.75,16.76 L12,22 L9.25,16.76 L3.34,17 L6.5,12 L3.34,7 L9.25,7.24 Z" fill="#CC2529" opacity=".70"/></svg>
+  <svg class="chi-star" style="left:60%;top:73%;animation-delay:1.4s;"  width="30" height="30" viewBox="0 0 24 24"><path d="M12,2 L14.75,7.24 L20.66,7 L17.5,12 L20.66,17 L14.75,16.76 L12,22 L9.25,16.76 L3.34,17 L6.5,12 L3.34,7 L9.25,7.24 Z" fill="#CC2529" opacity=".70"/></svg>
+  <svg class="chi-star" style="left:84%;top:75%;animation-delay:2.1s;"  width="34" height="34" viewBox="0 0 24 24"><path d="M12,2 L14.75,7.24 L20.66,7 L17.5,12 L20.66,17 L14.75,16.76 L12,22 L9.25,16.76 L3.34,17 L6.5,12 L3.34,7 L9.25,7.24 Z" fill="#CC2529" opacity=".75"/></svg>
   <div class="skyline-wrap">
     <div class="skyline-inner">
-      <svg viewBox="0 0 1440 260" preserveAspectRatio="xMidYMax meet" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+      <svg viewBox="0 0 1440 340" preserveAspectRatio="xMidYMax meet" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+        <defs>
+          <linearGradient id="lake-grad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stop-color="#00B0DD" stop-opacity="0.30"/>
+            <stop offset="60%"  stop-color="#a8d8ea" stop-opacity="0.18"/>
+            <stop offset="100%" stop-color="#e0f2fe" stop-opacity="0.08"/>
+          </linearGradient>
+          <clipPath id="lake-clip">
+            <rect x="0" y="260" width="1440" height="80"/>
+          </clipPath>
+        </defs>
         <!-- SILHOUETTE -->
-        <path fill="#0c2340" fill-opacity="0.18" d="
+        <path id="sky-sil" fill="#ffffff" fill-opacity="0.14" d="
           M 0,260
           L 0,215   L 22,215  L 22,228  L 42,228  L 42,208  L 60,208
           L 60,220  L 80,220  L 80,198  L 100,198 L 100,212 L 118,212
@@ -915,10 +1028,10 @@
         "/>
 
         <!-- John Hancock X-bracing -->
-        <line x1="193" y1="195" x2="258" y2="55"  stroke="rgba(240,251,255,0.28)" stroke-width="2.5"/>
-        <line x1="193" y1="55"  x2="258" y2="195" stroke="rgba(240,251,255,0.28)" stroke-width="2.5"/>
-        <line x1="195" y1="130" x2="258" y2="55"  stroke="rgba(240,251,255,0.18)" stroke-width="1.5"/>
-        <line x1="193" y1="55"  x2="256" y2="130" stroke="rgba(240,251,255,0.18)" stroke-width="1.5"/>
+        <line x1="193" y1="195" x2="258" y2="55"  stroke="rgba(255,255,255,0.35)" stroke-width="2.5"/>
+        <line x1="193" y1="55"  x2="258" y2="195" stroke="rgba(255,255,255,0.35)" stroke-width="2.5"/>
+        <line x1="195" y1="130" x2="258" y2="55"  stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+        <line x1="193" y1="55"  x2="256" y2="130" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
 
         <!-- Hancock windows -->
         <rect class="sky-win sky-win-a" x="210" y="38"  width="4" height="3" rx="0.5"/>
@@ -1014,6 +1127,15 @@
         <rect class="sky-win sky-win-a" x="888" y="112" width="4" height="3" rx="1"/>
         <rect class="sky-win sky-win-d" x="894" y="122" width="4" height="3" rx="1"/>
         <rect class="sky-win sky-win-b" x="888" y="132" width="4" height="3" rx="1"/>
+
+        <!-- Lake Michigan reflection -->
+        <rect x="0" y="260" width="1440" height="80" fill="url(#lake-grad)"/>
+        <!-- Reflected skyline — very faint -->
+        <use href="#sky-sil" fill="#0c2340" fill-opacity="0.07" transform="translate(0,520) scale(1,-1)" clip-path="url(#lake-clip)"/>
+        <!-- Subtle wave lines on water surface -->
+        <path d="M0,268 Q180,263 360,268 Q540,273 720,268 Q900,263 1080,268 Q1260,273 1440,268" fill="none" stroke="#00B0DD" stroke-opacity="0.30" stroke-width="1.5"/>
+        <path d="M0,280 Q240,275 480,280 Q720,285 960,280 Q1200,275 1440,280" fill="none" stroke="#00B0DD" stroke-opacity="0.18" stroke-width="1"/>
+        <path d="M0,294 Q200,290 400,294 Q600,298 800,294 Q1000,290 1200,294 Q1350,297 1440,294" fill="none" stroke="#00B0DD" stroke-opacity="0.12" stroke-width="1"/>
       </svg>
     </div>
   </div>
@@ -1071,7 +1193,7 @@
 </div>
 
 <!-- ====== PRODUCTS WE USE ====== -->
-<section style="background:#fff; padding:4rem 2rem; border-top:1px solid rgba(14,165,233,.1); border-bottom:1px solid rgba(14,165,233,.1);">
+<section id="products-section" style="background:#0c2340; padding:4rem 2rem; border-top:1px solid rgba(0,176,221,.15); border-bottom:1px solid rgba(0,176,221,.15);">
   <div style="max-width:1200px; margin:0 auto;">
     <div style="text-align:center; margin-bottom:2.5rem;">
       <span class="section-label">What We Clean With</span>
@@ -1431,7 +1553,7 @@
 </section>
 
 <!-- ====== TIPS & TRICKS BLOG ====== -->
-<section id="tips" style="background:var(--sky-ghost); padding:5rem 2rem; border-top:1px solid rgba(14,165,233,.1);">
+<section id="tips" style="background:linear-gradient(180deg,#fff5f5 0%,#fff 60%); padding:5rem 2rem; border-top:4px solid #CC2529;">
   <div style="max-width:1200px; margin:0 auto;">
     <div style="text-align:center; margin-bottom:3rem;">
       <span class="section-label">From Our Team</span>
@@ -1541,7 +1663,7 @@
 </section>
 
 <!-- ====== PRICING ====== -->
-<section id="pricing" style="background:#fff; padding:5rem 2rem; border-top:1px solid rgba(14,165,233,.12);">
+<section id="pricing" style="background:#fff; padding:5rem 2rem; border-top:4px solid #0c2340;">
   <div style="max-width:1200px; margin:0 auto;">
     <div class="reveal" style="text-align:center; margin-bottom:2rem;">
       <span class="section-label">Transparent Pricing</span>
@@ -2077,6 +2199,10 @@
           </div>
         </div>
 
+        <div class="form-group">
+          <label>Referred By <span style="font-weight:400; color:var(--text-muted);">(optional)</span></label>
+          <input type="text" name="referred_by" placeholder="Name of person who referred you" />
+        </div>
         <div class="form-group">
           <label>Special Requests or Notes</label>
           <textarea rows="3" name="notes" placeholder="Pets, parking instructions, areas to focus on, access details..."></textarea>
@@ -2624,26 +2750,35 @@
     resize();
     new ResizeObserver(resize).observe(hero);
 
-    // --- Layer configs (3 layers matching the original demo, colours adapted for light bg) ---
+    // --- Layer configs — 6 layers tuned for dark navy background ---
     const layers = [
-      // Layer 1 — navy streak, sky-blue transparent tail (most visible on light bg)
-      { starColor:'rgba(12,35,64,0.55)',   trailColor:'rgba(14,165,233,0)',  minSpeed:15, maxSpeed:35, minDelay:1200, maxDelay:3500, starWidth:90,  starHeight:2   },
-      // Layer 2 — sky-blue streak, white transparent tail
-      { starColor:'rgba(14,165,233,0.65)', trailColor:'rgba(255,255,255,0)', minSpeed:10, maxSpeed:28, minDelay:2000, maxDelay:5000, starWidth:75,  starHeight:1.5 },
-      // Layer 3 — brand red accent, rarest and fastest
-      { starColor:'rgba(220,38,38,0.42)',  trailColor:'rgba(14,165,233,0)',  minSpeed:22, maxSpeed:48, minDelay:3500, maxDelay:7500, starWidth:55,  starHeight:1.5 },
+      // Layer 1 — bright white, medium speed, frequent
+      { starColor:'rgba(255,255,255,0.92)',  trailColor:'rgba(255,255,255,0)',  minSpeed:18, maxSpeed:42, minDelay:700,  maxDelay:2200, starWidth:115, starHeight:2   },
+      // Layer 2 — Chicago blue, frequent
+      { starColor:'rgba(0,200,240,0.88)',    trailColor:'rgba(0,200,240,0)',    minSpeed:13, maxSpeed:32, minDelay:900,  maxDelay:2800, starWidth:95,  starHeight:1.5 },
+      // Layer 3 — light cyan, subtle thinner streak
+      { starColor:'rgba(125,211,252,0.75)',  trailColor:'rgba(125,211,252,0)',  minSpeed:16, maxSpeed:36, minDelay:1200, maxDelay:3500, starWidth:80,  starHeight:1.5 },
+      // Layer 4 — red accent, rarest and fastest
+      { starColor:'rgba(248,113,113,0.72)',  trailColor:'rgba(248,113,113,0)',  minSpeed:28, maxSpeed:58, minDelay:2800, maxDelay:6500, starWidth:65,  starHeight:1.5 },
+      // Layer 5 — white thin, very frequent small streaks
+      { starColor:'rgba(255,255,255,0.65)',  trailColor:'rgba(255,255,255,0)',  minSpeed:22, maxSpeed:50, minDelay:500,  maxDelay:1800, starWidth:72,  starHeight:1   },
+      // Layer 6 — gold warm accent, slow and rare
+      { starColor:'rgba(251,191,36,0.65)',   trailColor:'rgba(251,191,36,0)',   minSpeed:12, maxSpeed:28, minDelay:2500, maxDelay:6000, starWidth:70,  starHeight:1.5 },
     ];
 
-    // --- Identical to getRandomStartPoint() in the React component ---
+    // --- Shooting stars mostly streak top-left → bottom-right (natural sky direction) ---
     function getRandomStart() {
-      const side   = Math.floor(Math.random() * 4);
       const W = canvas.width, H = canvas.height;
-      switch (side) {
-        case 0: return { x: Math.random() * W, y: 0, angle: 45  };
-        case 1: return { x: W, y: Math.random() * H, angle: 135 };
-        case 2: return { x: Math.random() * W, y: H, angle: 225 };
-        case 3: return { x: 0, y: Math.random() * H, angle: 315 };
-        default: return { x: 0, y: 0, angle: 45 };
+      const r = Math.random();
+      if (r < 0.5) {
+        // top edge → down-right
+        return { x: Math.random() * W * 0.75, y: 0, angle: 30 + Math.random() * 35 };
+      } else if (r < 0.8) {
+        // left edge → right-down
+        return { x: 0, y: Math.random() * H * 0.55, angle: 15 + Math.random() * 30 };
+      } else {
+        // top-right → down-left
+        return { x: W * 0.35 + Math.random() * W * 0.65, y: 0, angle: 125 + Math.random() * 30 };
       }
     }
 
