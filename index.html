@@ -1039,6 +1039,24 @@
             <stop offset="0%"   stop-color="#a09070"/>
             <stop offset="100%" stop-color="#706050"/>
           </linearGradient>
+          <!-- Window tile pattern — warm amber (offices) -->
+          <pattern id="wp-warm" x="0" y="0" width="7" height="9" patternUnits="userSpaceOnUse">
+            <rect x="0.5" y="0.5" width="5" height="6.5" rx="0.4" fill="rgba(255,195,50,.78)"/>
+          </pattern>
+          <!-- Window tile pattern — cool blue (glass towers) -->
+          <pattern id="wp-cool" x="0" y="0" width="7" height="9" patternUnits="userSpaceOnUse">
+            <rect x="0.5" y="0.5" width="5" height="6.5" rx="0.4" fill="rgba(160,215,255,.60)"/>
+          </pattern>
+          <!-- Track crosstie pattern -->
+          <pattern id="crosstie-pat" x="0" y="0" width="12" height="4" patternUnits="userSpaceOnUse">
+            <rect x="0" y="0" width="10" height="4" rx="0.5" fill="rgba(55,42,28,0.82)"/>
+          </pattern>
+          <!-- Improved train body gradient -->
+          <linearGradient id="train-side" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stop-color="#e8f2f8"/>
+            <stop offset="40%"  stop-color="#c2d8e8"/>
+            <stop offset="100%" stop-color="#8ea8bc"/>
+          </linearGradient>
         </defs>
 
         <!-- Moon (crescent) -->
@@ -1055,6 +1073,24 @@
 
         <!-- City ambient glow at horizon -->
         <rect x="0" y="190" width="1440" height="70" fill="url(#city-glow-h)"/>
+
+        <!-- ── DEPTH LAYER: distant background buildings ── -->
+        <g fill="rgba(10,42,72,0.56)">
+          <rect x="140" y="202" width="44" height="58"/>
+          <rect x="280" y="178" width="52" height="82"/>
+          <rect x="345" y="192" width="26" height="68"/>
+          <rect x="395" y="168" width="36" height="92"/>
+          <rect x="500" y="160" width="40" height="100"/>
+          <rect x="548" y="175" width="28" height="85"/>
+          <rect x="672" y="186" width="20" height="74"/>
+          <rect x="762" y="176" width="52" height="84"/>
+          <rect x="832" y="184" width="38" height="76"/>
+          <rect x="938" y="178" width="48" height="82"/>
+          <rect x="1022" y="190" width="40" height="70"/>
+          <rect x="1092" y="186" width="34" height="74"/>
+          <rect x="1168" y="196" width="46" height="64"/>
+          <rect x="1252" y="202" width="40" height="58"/>
+        </g>
 
         <!-- SILHOUETTE — dark navy, high opacity -->
         <path id="sky-sil" fill="url(#bld-grad)" d="
@@ -1124,6 +1160,31 @@
           L 1375,215 L 1400,215 L 1400,225 L 1420,225
           L 1420,220 L 1440,220 L 1440,260 Z
         "/>
+
+        <!-- ── WINDOW DENSITY GRIDS on building faces ── -->
+        <!-- John Hancock — warm amber -->
+        <rect x="194" y="50"  width="62"  height="140" fill="url(#wp-warm)" opacity="0.42"/>
+        <!-- Aon Center — cool glass -->
+        <rect x="440" y="64"  width="46"  height="160" fill="url(#wp-cool)" opacity="0.38"/>
+        <!-- Willis Tower — three stepped sections, cool glass -->
+        <rect x="594" y="110" width="72"  height="148" fill="url(#wp-cool)" opacity="0.40"/>
+        <rect x="607" y="57"  width="48"  height="53"  fill="url(#wp-cool)" opacity="0.38"/>
+        <rect x="620" y="37"  width="22"  height="20"  fill="url(#wp-cool)" opacity="0.35"/>
+        <!-- Willis Tower: horizontal setback lines (stepped silhouette accent) -->
+        <rect x="592" y="109" width="76" height="1.5" fill="rgba(0,180,230,0.22)"/>
+        <rect x="605" y="82"  width="50" height="1.5" fill="rgba(0,180,230,0.20)"/>
+        <rect x="618" y="55"  width="25" height="1.5" fill="rgba(0,180,230,0.18)"/>
+        <!-- Trump Tower — cool glass -->
+        <rect x="702" y="30"  width="42"  height="126" fill="url(#wp-cool)" opacity="0.36"/>
+        <!-- Marina City — warm (residential) -->
+        <rect x="857" y="90"  width="22"  height="68"  fill="url(#wp-warm)" opacity="0.35"/>
+        <rect x="884" y="90"  width="22"  height="68"  fill="url(#wp-warm)" opacity="0.35"/>
+        <!-- Mid buildings between Hancock and Aon — warm -->
+        <rect x="308" y="165" width="16"  height="80"  fill="url(#wp-warm)" opacity="0.30"/>
+        <rect x="375" y="150" width="16"  height="95"  fill="url(#wp-warm)" opacity="0.30"/>
+        <!-- Mid buildings right side -->
+        <rect x="940" y="145" width="55"  height="90"  fill="url(#wp-warm)" opacity="0.28"/>
+        <rect x="1080" y="168" width="35" height="70"  fill="url(#wp-warm)" opacity="0.28"/>
 
         <!-- Building edge highlight (glass shimmer) -->
         <use href="#sky-sil" fill="none" stroke="rgba(0,176,221,0.28)" stroke-width="1.2"/>
@@ -1244,68 +1305,89 @@
 
         <!-- ===== CTA ELEVATED "L" TRAIN ===== -->
 
-        <!-- Support columns (static) — inverted-U shape every ~130px -->
-        <g fill="rgba(75,60,45,0.72)">
-          <rect x="116" y="232" width="9"  height="2"/>  <rect x="117" y="234" width="3" height="22"/> <rect x="122" y="234" width="3" height="22"/>
-          <rect x="246" y="232" width="9"  height="2"/>  <rect x="247" y="234" width="3" height="22"/> <rect x="252" y="234" width="3" height="22"/>
-          <rect x="376" y="232" width="9"  height="2"/>  <rect x="377" y="234" width="3" height="22"/> <rect x="382" y="234" width="3" height="22"/>
-          <rect x="506" y="232" width="9"  height="2"/>  <rect x="507" y="234" width="3" height="22"/> <rect x="512" y="234" width="3" height="22"/>
-          <rect x="636" y="232" width="9"  height="2"/>  <rect x="637" y="234" width="3" height="22"/> <rect x="642" y="234" width="3" height="22"/>
-          <rect x="766" y="232" width="9"  height="2"/>  <rect x="767" y="234" width="3" height="22"/> <rect x="772" y="234" width="3" height="22"/>
-          <rect x="896" y="232" width="9"  height="2"/>  <rect x="897" y="234" width="3" height="22"/> <rect x="902" y="234" width="3" height="22"/>
-          <rect x="1026" y="232" width="9" height="2"/>  <rect x="1027" y="234" width="3" height="22"/> <rect x="1032" y="234" width="3" height="22"/>
-          <rect x="1156" y="232" width="9" height="2"/>  <rect x="1157" y="234" width="3" height="22"/> <rect x="1162" y="234" width="3" height="22"/>
-          <rect x="1296" y="232" width="9" height="2"/>  <rect x="1297" y="234" width="3" height="22"/> <rect x="1302" y="234" width="3" height="22"/>
+        <!-- Support columns — cross-braced inverted-U shape every ~130px -->
+        <g fill="rgba(72,58,42,0.75)">
+          <!-- cap + legs + cross brace at each column -->
+          <!-- x=116 --><rect x="112" y="236" width="12" height="2.5"/><rect x="113" y="238" width="3" height="20"/><rect x="118" y="238" width="3" height="20"/><line x1="113" y1="238" x2="121" y2="258" stroke="rgba(72,58,42,0.55)" stroke-width="1"/><line x1="121" y1="238" x2="113" y2="258" stroke="rgba(72,58,42,0.55)" stroke-width="1"/>
+          <!-- x=246 --><rect x="242" y="236" width="12" height="2.5"/><rect x="243" y="238" width="3" height="20"/><rect x="248" y="238" width="3" height="20"/><line x1="243" y1="238" x2="251" y2="258" stroke="rgba(72,58,42,0.55)" stroke-width="1"/><line x1="251" y1="238" x2="243" y2="258" stroke="rgba(72,58,42,0.55)" stroke-width="1"/>
+          <!-- x=376 --><rect x="372" y="236" width="12" height="2.5"/><rect x="373" y="238" width="3" height="20"/><rect x="378" y="238" width="3" height="20"/><line x1="373" y1="238" x2="381" y2="258" stroke="rgba(72,58,42,0.55)" stroke-width="1"/><line x1="381" y1="238" x2="373" y2="258" stroke="rgba(72,58,42,0.55)" stroke-width="1"/>
+          <!-- x=506 --><rect x="502" y="236" width="12" height="2.5"/><rect x="503" y="238" width="3" height="20"/><rect x="508" y="238" width="3" height="20"/><line x1="503" y1="238" x2="511" y2="258" stroke="rgba(72,58,42,0.55)" stroke-width="1"/><line x1="511" y1="238" x2="503" y2="258" stroke="rgba(72,58,42,0.55)" stroke-width="1"/>
+          <!-- x=636 --><rect x="632" y="236" width="12" height="2.5"/><rect x="633" y="238" width="3" height="20"/><rect x="638" y="238" width="3" height="20"/><line x1="633" y1="238" x2="641" y2="258" stroke="rgba(72,58,42,0.55)" stroke-width="1"/><line x1="641" y1="238" x2="633" y2="258" stroke="rgba(72,58,42,0.55)" stroke-width="1"/>
+          <!-- x=766 --><rect x="762" y="236" width="12" height="2.5"/><rect x="763" y="238" width="3" height="20"/><rect x="768" y="238" width="3" height="20"/><line x1="763" y1="238" x2="771" y2="258" stroke="rgba(72,58,42,0.55)" stroke-width="1"/><line x1="771" y1="238" x2="763" y2="258" stroke="rgba(72,58,42,0.55)" stroke-width="1"/>
+          <!-- x=896 --><rect x="892" y="236" width="12" height="2.5"/><rect x="893" y="238" width="3" height="20"/><rect x="898" y="238" width="3" height="20"/><line x1="893" y1="238" x2="901" y2="258" stroke="rgba(72,58,42,0.55)" stroke-width="1"/><line x1="901" y1="238" x2="893" y2="258" stroke="rgba(72,58,42,0.55)" stroke-width="1"/>
+          <!-- x=1026 --><rect x="1022" y="236" width="12" height="2.5"/><rect x="1023" y="238" width="3" height="20"/><rect x="1028" y="238" width="3" height="20"/><line x1="1023" y1="238" x2="1031" y2="258" stroke="rgba(72,58,42,0.55)" stroke-width="1"/><line x1="1031" y1="238" x2="1023" y2="258" stroke="rgba(72,58,42,0.55)" stroke-width="1"/>
+          <!-- x=1156 --><rect x="1152" y="236" width="12" height="2.5"/><rect x="1153" y="238" width="3" height="20"/><rect x="1158" y="238" width="3" height="20"/><line x1="1153" y1="238" x2="1161" y2="258" stroke="rgba(72,58,42,0.55)" stroke-width="1"/><line x1="1161" y1="238" x2="1153" y2="258" stroke="rgba(72,58,42,0.55)" stroke-width="1"/>
+          <!-- x=1300 --><rect x="1296" y="236" width="12" height="2.5"/><rect x="1297" y="238" width="3" height="20"/><rect x="1302" y="238" width="3" height="20"/><line x1="1297" y1="238" x2="1305" y2="258" stroke="rgba(72,58,42,0.55)" stroke-width="1"/><line x1="1305" y1="238" x2="1297" y2="258" stroke="rgba(72,58,42,0.55)" stroke-width="1"/>
         </g>
 
-        <!-- Track rails (static, full width) -->
-        <rect x="0" y="230" width="1440" height="2" fill="url(#track-g)" opacity="0.88"/>
-        <rect x="0" y="234" width="1440" height="2" fill="url(#track-g)" opacity="0.88"/>
+        <!-- Track crossties (tiled pattern) -->
+        <rect x="0" y="233" width="1440" height="4" fill="url(#crosstie-pat)" opacity="0.90"/>
+        <!-- Upper rail -->
+        <rect x="0" y="233" width="1440" height="2" fill="url(#track-g)" opacity="0.95"/>
+        <!-- Lower rail -->
+        <rect x="0" y="237" width="1440" height="2" fill="url(#track-g)" opacity="0.95"/>
 
-        <!-- Animated 3-car CTA train (right → left) -->
+        <!-- Animated 3-car CTA Orange Line train (right → left) — 20px tall -->
         <g>
-          <!-- CAR 1 -->
-          <rect x="0"   y="218" width="70" height="12" rx="2" fill="url(#train-body-g)"/>
-          <rect x="1"   y="218" width="68" height="2"  rx="1" fill="rgba(255,255,255,0.60)"/>
-          <rect x="5"   y="220" width="8"  height="5"  rx="1" fill="rgba(195,230,255,0.88)"/>
-          <rect x="17"  y="220" width="8"  height="5"  rx="1" fill="rgba(195,230,255,0.88)"/>
-          <rect x="29"  y="220" width="8"  height="5"  rx="1" fill="rgba(195,230,255,0.88)"/>
-          <rect x="41"  y="220" width="8"  height="5"  rx="1" fill="rgba(195,230,255,0.88)"/>
-          <rect x="55"  y="220" width="8"  height="5"  rx="1" fill="rgba(195,230,255,0.88)"/>
-          <line x1="35" y1="218" x2="35" y2="230" stroke="rgba(0,0,0,0.22)" stroke-width="0.8"/>
-          <rect x="0"   y="226" width="70" height="3"  fill="#f26522"/>
-          <rect x="6"   y="230" width="14" height="3"  rx="1" fill="rgba(35,25,15,0.82)"/>
-          <rect x="50"  y="230" width="14" height="3"  rx="1" fill="rgba(35,25,15,0.82)"/>
-          <rect x="70"  y="224" width="4"  height="5"  rx="0.5" fill="rgba(55,45,35,0.72)"/>
+          <!-- ── CAR 1 (front / lead car) ── -->
+          <rect x="0"   y="213" width="76" height="20" rx="2.5" fill="url(#train-side)"/>
+          <!-- Roof ridge -->
+          <rect x="2"   y="213" width="72" height="2.5" rx="1" fill="rgba(255,255,255,0.65)"/>
+          <!-- Cab window / destination board -->
+          <rect x="2"   y="216" width="18" height="7"  rx="1" fill="rgba(20,30,50,0.85)"/>
+          <!-- Headlights (front = left end) -->
+          <circle cx="2"  cy="216" r="2.2" fill="rgba(255,245,180,0.95)"/>
+          <circle cx="2"  cy="225" r="2.2" fill="rgba(255,245,180,0.95)"/>
+          <!-- Passenger windows -->
+          <rect x="24"  y="215" width="10" height="7"  rx="1" fill="rgba(190,228,255,0.90)"/>
+          <rect x="36"  y="215" width="10" height="7"  rx="1" fill="rgba(190,228,255,0.90)"/>
+          <rect x="48"  y="215" width="10" height="7"  rx="1" fill="rgba(190,228,255,0.90)"/>
+          <rect x="62"  y="215" width="10" height="7"  rx="1" fill="rgba(190,228,255,0.90)"/>
+          <!-- Door line -->
+          <line x1="46" y1="213" x2="46" y2="233" stroke="rgba(0,0,0,0.20)" stroke-width="0.8"/>
+          <!-- Orange stripe -->
+          <rect x="0"   y="224" width="76" height="5"  fill="#f26522"/>
+          <!-- Lower body panel -->
+          <rect x="0"   y="229" width="76" height="4"  fill="rgba(80,65,55,0.70)"/>
+          <!-- Bogies -->
+          <rect x="8"   y="233" width="16" height="4"  rx="1.5" fill="rgba(30,22,14,0.88)"/>
+          <rect x="52"  y="233" width="16" height="4"  rx="1.5" fill="rgba(30,22,14,0.88)"/>
+          <!-- Coupler -->
+          <rect x="76"  y="221" width="5"  height="7"  rx="1" fill="rgba(50,40,30,0.78)"/>
 
-          <!-- CAR 2 -->
-          <rect x="74"  y="218" width="70" height="12" rx="2" fill="url(#train-body-g)"/>
-          <rect x="75"  y="218" width="68" height="2"  rx="1" fill="rgba(255,255,255,0.60)"/>
-          <rect x="79"  y="220" width="8"  height="5"  rx="1" fill="rgba(195,230,255,0.88)"/>
-          <rect x="91"  y="220" width="8"  height="5"  rx="1" fill="rgba(195,230,255,0.88)"/>
-          <rect x="103" y="220" width="8"  height="5"  rx="1" fill="rgba(195,230,255,0.88)"/>
-          <rect x="115" y="220" width="8"  height="5"  rx="1" fill="rgba(195,230,255,0.88)"/>
-          <rect x="129" y="220" width="8"  height="5"  rx="1" fill="rgba(195,230,255,0.88)"/>
-          <line x1="109" y1="218" x2="109" y2="230" stroke="rgba(0,0,0,0.22)" stroke-width="0.8"/>
-          <rect x="74"  y="226" width="70" height="3"  fill="#f26522"/>
-          <rect x="80"  y="230" width="14" height="3"  rx="1" fill="rgba(35,25,15,0.82)"/>
-          <rect x="124" y="230" width="14" height="3"  rx="1" fill="rgba(35,25,15,0.82)"/>
-          <rect x="144" y="224" width="4"  height="5"  rx="0.5" fill="rgba(55,45,35,0.72)"/>
+          <!-- ── CAR 2 (middle) ── -->
+          <rect x="81"  y="213" width="76" height="20" rx="2.5" fill="url(#train-side)"/>
+          <rect x="83"  y="213" width="72" height="2.5" rx="1" fill="rgba(255,255,255,0.65)"/>
+          <rect x="85"  y="215" width="10" height="7"  rx="1" fill="rgba(190,228,255,0.90)"/>
+          <rect x="97"  y="215" width="10" height="7"  rx="1" fill="rgba(190,228,255,0.90)"/>
+          <rect x="109" y="215" width="10" height="7"  rx="1" fill="rgba(190,228,255,0.90)"/>
+          <rect x="121" y="215" width="10" height="7"  rx="1" fill="rgba(190,228,255,0.90)"/>
+          <rect x="135" y="215" width="10" height="7"  rx="1" fill="rgba(190,228,255,0.90)"/>
+          <line x1="127" y1="213" x2="127" y2="233" stroke="rgba(0,0,0,0.20)" stroke-width="0.8"/>
+          <rect x="81"  y="224" width="76" height="5"  fill="#f26522"/>
+          <rect x="81"  y="229" width="76" height="4"  fill="rgba(80,65,55,0.70)"/>
+          <rect x="89"  y="233" width="16" height="4"  rx="1.5" fill="rgba(30,22,14,0.88)"/>
+          <rect x="133" y="233" width="16" height="4"  rx="1.5" fill="rgba(30,22,14,0.88)"/>
+          <rect x="157" y="221" width="5"  height="7"  rx="1" fill="rgba(50,40,30,0.78)"/>
 
-          <!-- CAR 3 -->
-          <rect x="148" y="218" width="70" height="12" rx="2" fill="url(#train-body-g)"/>
-          <rect x="149" y="218" width="68" height="2"  rx="1" fill="rgba(255,255,255,0.60)"/>
-          <rect x="153" y="220" width="8"  height="5"  rx="1" fill="rgba(195,230,255,0.88)"/>
-          <rect x="165" y="220" width="8"  height="5"  rx="1" fill="rgba(195,230,255,0.88)"/>
-          <rect x="177" y="220" width="8"  height="5"  rx="1" fill="rgba(195,230,255,0.88)"/>
-          <rect x="189" y="220" width="8"  height="5"  rx="1" fill="rgba(195,230,255,0.88)"/>
-          <rect x="203" y="220" width="8"  height="5"  rx="1" fill="rgba(195,230,255,0.88)"/>
-          <line x1="183" y1="218" x2="183" y2="230" stroke="rgba(0,0,0,0.22)" stroke-width="0.8"/>
-          <rect x="148" y="226" width="70" height="3"  fill="#f26522"/>
-          <rect x="154" y="230" width="14" height="3"  rx="1" fill="rgba(35,25,15,0.82)"/>
-          <rect x="198" y="230" width="14" height="3"  rx="1" fill="rgba(35,25,15,0.82)"/>
+          <!-- ── CAR 3 (rear) ── -->
+          <rect x="162" y="213" width="76" height="20" rx="2.5" fill="url(#train-side)"/>
+          <rect x="164" y="213" width="72" height="2.5" rx="1" fill="rgba(255,255,255,0.65)"/>
+          <rect x="166" y="215" width="10" height="7"  rx="1" fill="rgba(190,228,255,0.90)"/>
+          <rect x="178" y="215" width="10" height="7"  rx="1" fill="rgba(190,228,255,0.90)"/>
+          <rect x="190" y="215" width="10" height="7"  rx="1" fill="rgba(190,228,255,0.90)"/>
+          <rect x="202" y="215" width="10" height="7"  rx="1" fill="rgba(190,228,255,0.90)"/>
+          <rect x="216" y="215" width="10" height="7"  rx="1" fill="rgba(190,228,255,0.90)"/>
+          <line x1="208" y1="213" x2="208" y2="233" stroke="rgba(0,0,0,0.20)" stroke-width="0.8"/>
+          <rect x="162" y="224" width="76" height="5"  fill="#f26522"/>
+          <rect x="162" y="229" width="76" height="4"  fill="rgba(80,65,55,0.70)"/>
+          <rect x="170" y="233" width="16" height="4"  rx="1.5" fill="rgba(30,22,14,0.88)"/>
+          <rect x="214" y="233" width="16" height="4"  rx="1.5" fill="rgba(30,22,14,0.88)"/>
+          <!-- Tail lights (rear = right end of Car 3) -->
+          <circle cx="237" cy="216" r="2.2" fill="rgba(220,30,30,0.92)"/>
+          <circle cx="237" cy="225" r="2.2" fill="rgba(220,30,30,0.92)"/>
 
-          <animateTransform attributeName="transform" type="translate" from="1650 0" to="-230 0" dur="22s" repeatCount="indefinite"/>
+          <animateTransform attributeName="transform" type="translate" from="1680 0" to="-242 0" dur="20s" repeatCount="indefinite"/>
         </g>
 
         <!-- Lake Michigan reflection -->
