@@ -983,10 +983,26 @@
     .mobile-nav-drawer .mnav-book:hover { background: #d0ecf8 !important; }
 
     @media(max-width:767px) {
+      /* ── Nav ── */
       .mobile-menu-btn { display: flex; }
       .nav-logo span { display: none; }
-      .hero { padding-top: 3rem !important; }
+
+      /* ── Hero ── */
+      .hero { padding-top: 2rem !important; overflow-x: hidden; }
       .logo-ring-wrap { width: 200px !important; }
+      /* Hide orbital particles — they're 660px wide and overflow on mobile */
+      .lo-orbit { display: none !important; }
+      /* Reduce pulse rings to 1 */
+      .lo-pulse + .lo-pulse { display: none; }
+
+      /* ── Why Us ── */
+      .why-visual { min-height: 180px !important; padding: 1.5rem !important; }
+      .why-icon-big { font-size: 3.5rem; }
+
+      /* ── Testimonials ── */
+      .testimonials-grid { grid-template-columns: 1fr !important; }
+
+      /* ── Pricing tabs ── */
       #pricing-tabs {
         display: grid !important;
         grid-template-columns: 1fr 1fr;
@@ -995,7 +1011,22 @@
       }
       #pricing-tabs .ptab { width: 100%; text-align: center; }
       #tab-postconstruct { grid-column: 1 / -1; justify-self: center; min-width: 55%; width: auto !important; }
+
+      /* ── Sections ── */
       .section-pad { padding: 3rem 1.25rem; }
+
+      /* ── Prevent any horizontal overflow ── */
+      body { overflow-x: hidden; }
+      .cta-skyline-wrap, .cta-skyline-wrap svg { overflow: hidden; }
+
+      /* ── Footer ── */
+      .footer-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
+
+      /* ── Refer a Friend ── */
+      .refer-band { flex-direction: column !important; padding: 1.75rem !important; }
+
+      /* ── Contact ── */
+      .contact-grid { grid-template-columns: 1fr !important; }
     }
     @media(max-width:420px) {
       .price-grid { grid-template-columns: 1fr !important; }
