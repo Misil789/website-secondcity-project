@@ -281,13 +281,19 @@
       animation: skyrise 2s 1s cubic-bezier(.16,1,.3,1) forwards;
     }
     .skyline-inner { animation: sky-float 10s 3s ease-in-out infinite; }
-    .sky-win      { fill: rgba(0,200,240,.8); animation: wink ease-in-out infinite; }
+    .sky-win      { fill: rgba(255,200,55,.92); animation: wink ease-in-out infinite; }
     .sky-win-a    { animation-duration: 3.0s; animation-delay: 0.0s; }
     .sky-win-b    { animation-duration: 4.2s; animation-delay: 0.9s; }
     .sky-win-c    { animation-duration: 5.5s; animation-delay: 1.8s; }
     .sky-win-d    { animation-duration: 3.8s; animation-delay: 0.5s; }
     .sky-win-e    { animation-duration: 6.0s; animation-delay: 2.5s; }
     .sky-win-f    { animation-duration: 2.8s; animation-delay: 1.3s; }
+    .nav-light    { fill: #ff3a3a; animation: nav-blink 2s ease-in-out infinite; }
+    .nav-light-b  { animation-delay: 0.8s; animation-duration: 2.6s; }
+    @keyframes nav-blink {
+      0%,42%,100% { opacity: 1; }
+      50%,90%     { opacity: 0.05; }
+    }
 
     /* ---- TICKER ---- */
     .ticker-bar {
@@ -1013,9 +1019,45 @@
           <clipPath id="lake-clip">
             <rect x="0" y="260" width="1440" height="80"/>
           </clipPath>
+          <linearGradient id="bld-grad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stop-color="#0d2540" stop-opacity="0.96"/>
+            <stop offset="100%" stop-color="#061220" stop-opacity="1.0"/>
+          </linearGradient>
+          <linearGradient id="city-glow-h" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%"   stop-color="#f97316" stop-opacity="0"/>
+            <stop offset="30%"  stop-color="#f97316" stop-opacity="0.06"/>
+            <stop offset="50%"  stop-color="#fbbf24" stop-opacity="0.10"/>
+            <stop offset="70%"  stop-color="#f97316" stop-opacity="0.06"/>
+            <stop offset="100%" stop-color="#f97316" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="train-body-g" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stop-color="#dce8f0"/>
+            <stop offset="55%"  stop-color="#b4c8d6"/>
+            <stop offset="100%" stop-color="#8fa4b4"/>
+          </linearGradient>
+          <linearGradient id="track-g" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stop-color="#a09070"/>
+            <stop offset="100%" stop-color="#706050"/>
+          </linearGradient>
         </defs>
-        <!-- SILHOUETTE -->
-        <path id="sky-sil" fill="#ffffff" fill-opacity="0.14" d="
+
+        <!-- Moon (crescent) -->
+        <circle cx="1358" cy="26" r="15" fill="rgba(255,245,195,0.88)"/>
+        <circle cx="1367" cy="20" r="11" fill="rgba(6,18,38,0.92)"/>
+
+        <!-- Stars -->
+        <circle cx="80"   cy="20" r="1.2" fill="rgba(255,255,255,0.70)"/>
+        <circle cx="310"  cy="13" r="1.0" fill="rgba(255,255,255,0.60)"/>
+        <circle cx="780"  cy="17" r="1.4" fill="rgba(255,255,255,0.65)"/>
+        <circle cx="1100" cy="10" r="1.0" fill="rgba(255,255,255,0.55)"/>
+        <circle cx="1240" cy="22" r="1.2" fill="rgba(255,255,255,0.60)"/>
+        <circle cx="500"  cy="8"  r="0.9" fill="rgba(255,255,255,0.50)"/>
+
+        <!-- City ambient glow at horizon -->
+        <rect x="0" y="190" width="1440" height="70" fill="url(#city-glow-h)"/>
+
+        <!-- SILHOUETTE — dark navy, high opacity -->
+        <path id="sky-sil" fill="url(#bld-grad)" d="
           M 0,260
           L 0,215   L 22,215  L 22,228  L 42,228  L 42,208  L 60,208
           L 60,220  L 80,220  L 80,198  L 100,198 L 100,212 L 118,212
@@ -1083,11 +1125,19 @@
           L 1420,220 L 1440,220 L 1440,260 Z
         "/>
 
-        <!-- John Hancock X-bracing -->
-        <line x1="193" y1="195" x2="258" y2="55"  stroke="rgba(255,255,255,0.35)" stroke-width="2.5"/>
-        <line x1="193" y1="55"  x2="258" y2="195" stroke="rgba(255,255,255,0.35)" stroke-width="2.5"/>
-        <line x1="195" y1="130" x2="258" y2="55"  stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
-        <line x1="193" y1="55"  x2="256" y2="130" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+        <!-- Building edge highlight (glass shimmer) -->
+        <use href="#sky-sil" fill="none" stroke="rgba(0,176,221,0.28)" stroke-width="1.2"/>
+
+        <!-- Glass accent strips on landmark faces -->
+        <rect x="192" y="50"  width="3"  height="120" fill="rgba(0,180,230,0.10)"/>
+        <rect x="618" y="28"  width="2"  height="82"  fill="rgba(0,180,230,0.08)"/>
+        <rect x="702" y="34"  width="2"  height="92"  fill="rgba(0,180,230,0.08)"/>
+
+        <!-- John Hancock X-bracing (enhanced) -->
+        <line x1="193" y1="195" x2="258" y2="55"  stroke="rgba(255,255,255,0.42)" stroke-width="2.5"/>
+        <line x1="193" y1="55"  x2="258" y2="195" stroke="rgba(255,255,255,0.42)" stroke-width="2.5"/>
+        <line x1="195" y1="130" x2="258" y2="55"  stroke="rgba(255,255,255,0.24)" stroke-width="1.5"/>
+        <line x1="193" y1="55"  x2="256" y2="130" stroke="rgba(255,255,255,0.24)" stroke-width="1.5"/>
 
         <!-- Hancock windows -->
         <rect class="sky-win sky-win-a" x="210" y="38"  width="4" height="3" rx="0.5"/>
@@ -1183,6 +1233,80 @@
         <rect class="sky-win sky-win-a" x="888" y="112" width="4" height="3" rx="1"/>
         <rect class="sky-win sky-win-d" x="894" y="122" width="4" height="3" rx="1"/>
         <rect class="sky-win sky-win-b" x="888" y="132" width="4" height="3" rx="1"/>
+
+        <!-- Navigation beacon lights (blinking red) -->
+        <!-- Willis Tower dual antennas -->
+        <circle class="nav-light"          cx="626" cy="1"  r="2.5"/>
+        <circle class="nav-light nav-light-b" cx="634" cy="1"  r="2.5"/>
+        <!-- John Hancock dual antennas -->
+        <circle class="nav-light nav-light-b" cx="221" cy="3"  r="2.0"/>
+        <circle class="nav-light"          cx="228" cy="3"  r="2.0"/>
+
+        <!-- ===== CTA ELEVATED "L" TRAIN ===== -->
+
+        <!-- Support columns (static) — inverted-U shape every ~130px -->
+        <g fill="rgba(75,60,45,0.72)">
+          <rect x="116" y="232" width="9"  height="2"/>  <rect x="117" y="234" width="3" height="22"/> <rect x="122" y="234" width="3" height="22"/>
+          <rect x="246" y="232" width="9"  height="2"/>  <rect x="247" y="234" width="3" height="22"/> <rect x="252" y="234" width="3" height="22"/>
+          <rect x="376" y="232" width="9"  height="2"/>  <rect x="377" y="234" width="3" height="22"/> <rect x="382" y="234" width="3" height="22"/>
+          <rect x="506" y="232" width="9"  height="2"/>  <rect x="507" y="234" width="3" height="22"/> <rect x="512" y="234" width="3" height="22"/>
+          <rect x="636" y="232" width="9"  height="2"/>  <rect x="637" y="234" width="3" height="22"/> <rect x="642" y="234" width="3" height="22"/>
+          <rect x="766" y="232" width="9"  height="2"/>  <rect x="767" y="234" width="3" height="22"/> <rect x="772" y="234" width="3" height="22"/>
+          <rect x="896" y="232" width="9"  height="2"/>  <rect x="897" y="234" width="3" height="22"/> <rect x="902" y="234" width="3" height="22"/>
+          <rect x="1026" y="232" width="9" height="2"/>  <rect x="1027" y="234" width="3" height="22"/> <rect x="1032" y="234" width="3" height="22"/>
+          <rect x="1156" y="232" width="9" height="2"/>  <rect x="1157" y="234" width="3" height="22"/> <rect x="1162" y="234" width="3" height="22"/>
+          <rect x="1296" y="232" width="9" height="2"/>  <rect x="1297" y="234" width="3" height="22"/> <rect x="1302" y="234" width="3" height="22"/>
+        </g>
+
+        <!-- Track rails (static, full width) -->
+        <rect x="0" y="230" width="1440" height="2" fill="url(#track-g)" opacity="0.88"/>
+        <rect x="0" y="234" width="1440" height="2" fill="url(#track-g)" opacity="0.88"/>
+
+        <!-- Animated 3-car CTA train (right → left) -->
+        <g>
+          <!-- CAR 1 -->
+          <rect x="0"   y="218" width="70" height="12" rx="2" fill="url(#train-body-g)"/>
+          <rect x="1"   y="218" width="68" height="2"  rx="1" fill="rgba(255,255,255,0.60)"/>
+          <rect x="5"   y="220" width="8"  height="5"  rx="1" fill="rgba(195,230,255,0.88)"/>
+          <rect x="17"  y="220" width="8"  height="5"  rx="1" fill="rgba(195,230,255,0.88)"/>
+          <rect x="29"  y="220" width="8"  height="5"  rx="1" fill="rgba(195,230,255,0.88)"/>
+          <rect x="41"  y="220" width="8"  height="5"  rx="1" fill="rgba(195,230,255,0.88)"/>
+          <rect x="55"  y="220" width="8"  height="5"  rx="1" fill="rgba(195,230,255,0.88)"/>
+          <line x1="35" y1="218" x2="35" y2="230" stroke="rgba(0,0,0,0.22)" stroke-width="0.8"/>
+          <rect x="0"   y="226" width="70" height="3"  fill="#f26522"/>
+          <rect x="6"   y="230" width="14" height="3"  rx="1" fill="rgba(35,25,15,0.82)"/>
+          <rect x="50"  y="230" width="14" height="3"  rx="1" fill="rgba(35,25,15,0.82)"/>
+          <rect x="70"  y="224" width="4"  height="5"  rx="0.5" fill="rgba(55,45,35,0.72)"/>
+
+          <!-- CAR 2 -->
+          <rect x="74"  y="218" width="70" height="12" rx="2" fill="url(#train-body-g)"/>
+          <rect x="75"  y="218" width="68" height="2"  rx="1" fill="rgba(255,255,255,0.60)"/>
+          <rect x="79"  y="220" width="8"  height="5"  rx="1" fill="rgba(195,230,255,0.88)"/>
+          <rect x="91"  y="220" width="8"  height="5"  rx="1" fill="rgba(195,230,255,0.88)"/>
+          <rect x="103" y="220" width="8"  height="5"  rx="1" fill="rgba(195,230,255,0.88)"/>
+          <rect x="115" y="220" width="8"  height="5"  rx="1" fill="rgba(195,230,255,0.88)"/>
+          <rect x="129" y="220" width="8"  height="5"  rx="1" fill="rgba(195,230,255,0.88)"/>
+          <line x1="109" y1="218" x2="109" y2="230" stroke="rgba(0,0,0,0.22)" stroke-width="0.8"/>
+          <rect x="74"  y="226" width="70" height="3"  fill="#f26522"/>
+          <rect x="80"  y="230" width="14" height="3"  rx="1" fill="rgba(35,25,15,0.82)"/>
+          <rect x="124" y="230" width="14" height="3"  rx="1" fill="rgba(35,25,15,0.82)"/>
+          <rect x="144" y="224" width="4"  height="5"  rx="0.5" fill="rgba(55,45,35,0.72)"/>
+
+          <!-- CAR 3 -->
+          <rect x="148" y="218" width="70" height="12" rx="2" fill="url(#train-body-g)"/>
+          <rect x="149" y="218" width="68" height="2"  rx="1" fill="rgba(255,255,255,0.60)"/>
+          <rect x="153" y="220" width="8"  height="5"  rx="1" fill="rgba(195,230,255,0.88)"/>
+          <rect x="165" y="220" width="8"  height="5"  rx="1" fill="rgba(195,230,255,0.88)"/>
+          <rect x="177" y="220" width="8"  height="5"  rx="1" fill="rgba(195,230,255,0.88)"/>
+          <rect x="189" y="220" width="8"  height="5"  rx="1" fill="rgba(195,230,255,0.88)"/>
+          <rect x="203" y="220" width="8"  height="5"  rx="1" fill="rgba(195,230,255,0.88)"/>
+          <line x1="183" y1="218" x2="183" y2="230" stroke="rgba(0,0,0,0.22)" stroke-width="0.8"/>
+          <rect x="148" y="226" width="70" height="3"  fill="#f26522"/>
+          <rect x="154" y="230" width="14" height="3"  rx="1" fill="rgba(35,25,15,0.82)"/>
+          <rect x="198" y="230" width="14" height="3"  rx="1" fill="rgba(35,25,15,0.82)"/>
+
+          <animateTransform attributeName="transform" type="translate" from="1650 0" to="-230 0" dur="22s" repeatCount="indefinite"/>
+        </g>
 
         <!-- Lake Michigan reflection -->
         <rect x="0" y="260" width="1440" height="80" fill="url(#lake-grad)"/>
