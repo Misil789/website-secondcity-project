@@ -222,6 +222,12 @@
       border: 1px solid rgba(0,176,221,.45);
       margin-bottom: 1.25rem;
       text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .eyebrow-ext { display: inline; }
+    @media(max-width: 639px) {
+      .eyebrow-ext { display: none; }
+      .hero-badge-franchise { display: none; }
     }
     .hero h1 {
       font-family: 'Montserrat', sans-serif;
@@ -1492,7 +1498,7 @@
   <div class="hero-grid" id="hero-grid">
     <!-- TEXT -->
     <div style="animation: fade-up .8s ease both; position:relative; z-index:1;">
-      <div class="hero-eyebrow">Locally Owned · Chicago's Trusted Cleaners</div>
+      <div class="hero-eyebrow">Locally Owned<span class="eyebrow-ext"> · Chicago's Trusted Cleaners</span></div>
       <h1 id="hero-h1" style="min-height:clamp(9rem,19vw,17rem);">
         <span id="h1-l1"></span><br/>
         <span id="h1-l2"></span><br/>
@@ -1512,7 +1518,7 @@
           <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
           Satisfaction Guaranteed
         </div>
-        <div class="hero-badge">
+        <div class="hero-badge hero-badge-franchise">
           <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
           Not a Franchise
         </div>
