@@ -719,7 +719,7 @@
       .cta-band { padding: 3rem 1.5rem; }
       .cta-band h2 { font-size: 1.8rem; }
       .section-pad { padding: 3.5rem 1.25rem; }
-      .price-grid { grid-template-columns: 1fr 1fr !important; }
+      .price-grid { grid-template-columns: 1fr 1fr !important; overflow: hidden; }
       /* Booking form — stack all two-column rows to single column */
       .form-row { grid-template-columns: 1fr !important; }
       /* Pricing tabs — wrap cleanly */
@@ -1078,7 +1078,8 @@
       .hero-logo-col {
         position: absolute !important;
         bottom: 100px !important;
-        right: 1rem !important;
+        left: 1rem !important;
+        right: auto !important;
         padding: 0 !important;
         z-index: 2;
       }
@@ -1105,7 +1106,7 @@
         margin-bottom: 0 !important;
       }
       #pricing-tabs .ptab { width: 100%; text-align: center; }
-      #tab-postconstruct { grid-column: 1 / -1; justify-self: center; min-width: 55%; width: auto !important; }
+      #tab-postconstruct { grid-column: 1 / -1; justify-self: stretch; width: 100% !important; }
 
       /* ── Services grid / flip cards ── */
       .services-grid { grid-template-columns: 1fr !important; }
@@ -1127,12 +1128,16 @@
 
       /* ── Footer ── */
       .footer-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
+      /* ── Neighborhoods grid ── */
+      .nbhd-grid-wrap { grid-template-columns: 1fr 1fr !important; }
 
       /* ── Refer a Friend ── */
       .refer-band { flex-direction: column !important; padding: 1.75rem !important; }
 
       /* ── Contact ── */
       .contact-grid { grid-template-columns: 1fr !important; }
+      /* ── Form submit button ── */
+      .form-submit { font-size: .85rem !important; }
     }
     @media(max-width:420px) {
       .price-grid { grid-template-columns: 1fr !important; }
@@ -2303,7 +2308,7 @@
           <!-- Founders photo -->
           <div style="border-radius:20px; overflow:hidden; box-shadow:0 8px 40px rgba(12,35,64,.18), 0 2px 8px rgba(14,165,233,.12); position:relative; margin-bottom:1.25rem;">
             <img src="team-photo.png" alt="Michel Uzhca and Evelyn Loja — Founders of Second City Scrubbers" style="width:100%; display:block; object-fit:cover;" />
-            <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(12,35,64,.55) 0%, transparent 55%);"></div>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(12,35,64,.28) 0%, transparent 45%);"></div>
             <div style="position:absolute;bottom:1rem;left:1.25rem;">
               <div style="font-family:'Bebas Neue',sans-serif; font-size:1.35rem; color:#fff; letter-spacing:.06em; line-height:1.1;">Michel &amp; Evelyn</div>
               <div style="font-size:.72rem; color:rgba(255,255,255,.75); font-weight:600; text-transform:uppercase; letter-spacing:.08em;">Founders · Second City Scrubbers</div>
@@ -4172,7 +4177,7 @@
       <p class="section-sub" style="max-width:520px; margin:.75rem auto 0;">From the lakefront to the neighborhoods — if you're in Chicagoland, we've got you covered.</p>
     </div>
 
-    <div class="reveal" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:.65rem; margin-bottom:2rem;">
+    <div class="reveal nbhd-grid-wrap" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:.65rem; margin-bottom:2rem;">
       <!-- North Side -->
       <div class="nbhd-group">
         <div class="nbhd-region">North Side</div>
@@ -4273,7 +4278,7 @@
       <h2 class="section-title" style="margin-top:.5rem;">Cleaning Tips &amp; Tricks</h2>
       <p class="section-sub" style="max-width:520px; margin:.75rem auto 0;">Pro insights from Michel &amp; Evelyn — simple habits that keep your home looking freshly cleaned between visits.</p>
     </div>
-    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1.75rem;">
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1.75rem; align-items:stretch;">
 
       <!-- Card 1 -->
       <article class="reveal" style="background:#fff; border-radius:20px; overflow:hidden; box-shadow:0 4px 24px rgba(12,35,64,.07); display:flex; flex-direction:column;">
