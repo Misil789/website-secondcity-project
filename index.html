@@ -382,8 +382,7 @@
     .skyline-wrap {
       position: absolute; bottom: 0; left: 0; width: 100%;
       pointer-events: none; z-index: 0;
-      opacity: 0;
-      animation: skyrise 2s 1s cubic-bezier(.16,1,.3,1) forwards;
+      animation: skyrise 2s 1s cubic-bezier(.16,1,.3,1) both;
     }
     .skyline-inner { animation: sky-float 10s 3s ease-in-out infinite; }
     .sky-win      { fill: rgba(255,200,55,.92); animation: wink ease-in-out infinite; }
@@ -1076,8 +1075,16 @@
 
       /* ── Hero ── */
       .hero { padding-top: 2rem !important; overflow-x: hidden; }
-      .hero-logo-col { display: none !important; }
-      .logo-ring-wrap { width: 200px !important; }
+      .hero-logo-col {
+        position: absolute !important;
+        bottom: 100px !important;
+        right: 1rem !important;
+        padding: 0 !important;
+        z-index: 2;
+      }
+      .hero-logo-col .sparkle { display: none !important; }
+      .logo-ring-wrap { width: 90px !important; }
+      .logo-ring-wrap::before, .logo-ring-wrap::after { display: none !important; }
       /* Hide orbital particles — they're 660px wide and overflow on mobile */
       .lo-orbit { display: none !important; }
       /* Reduce pulse rings to 1 */
@@ -5250,12 +5257,14 @@ function pickTile(tile, gridId, selectId) {
     sw.style.opacity = '1';
     sw.style.transform = 'translateY(0)';
     sw.style.animation = 'none';
-    window.addEventListener('scroll', function() {
-      var sy = window.scrollY;
-      if (sy < hero.offsetHeight) {
-        sw.style.transform = 'translateY(' + (sy * 0.28) + 'px)';
-      }
-    }, { passive: true });
+    if (window.innerWidth > 767) {
+      window.addEventListener('scroll', function() {
+        var sy = window.scrollY;
+        if (sy < hero.offsetHeight) {
+          sw.style.transform = 'translateY(-' + (sy * 0.18) + 'px)';
+        }
+      }, { passive: true });
+    }
   }, 3300);
 })();
 </script>
