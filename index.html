@@ -1075,21 +1075,19 @@
 
       /* ── Hero ── */
       .hero { padding-top: 2rem !important; overflow-x: hidden; }
-      #hero-grid { grid-template-columns: 1fr 90px !important; gap: 0.5rem !important; align-items: start !important; }
       .hero-logo-col {
-        position: relative !important;
-        top: auto !important; bottom: auto !important;
-        right: auto !important; left: auto !important;
-        padding: 0.5rem 0 0 0 !important;
+        position: absolute !important;
+        bottom: 130px !important;
+        right: 1rem !important;
+        left: auto !important;
+        top: auto !important;
+        padding: 0 !important;
         z-index: 2;
-        display: flex !important;
-        align-items: flex-start !important;
-        justify-content: center !important;
       }
       .hero-logo-col .sparkle { display: none !important; }
-      .logo-ring-wrap { width: 82px !important; }
-      .logo-ring-wrap::before { inset: -7px !important; }
-      .logo-ring-wrap::after { inset: -16px !important; }
+      .logo-ring-wrap { width: 100px !important; }
+      .logo-ring-wrap::before { inset: -8px !important; }
+      .logo-ring-wrap::after { inset: -18px !important; }
       /* Hide orbital particles — they're 660px wide and overflow on mobile */
       .lo-orbit { display: none !important; }
       /* Reduce pulse rings to 1 */
