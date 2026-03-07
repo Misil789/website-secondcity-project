@@ -1,8 +1,7 @@
 {
   "version": 2,
   "builds": [
-    { "src": "index.html", "use": "@vercel/static" },
-    { "src": "brand_assets/**", "use": "@vercel/static" }
+    { "src": "**/*.{html,png,jpg,jpeg,PNG,JPG,svg,ico,webp,css,js}", "use": "@vercel/static" }
   ],
   "routes": [
     { "src": "/(.*)", "dest": "/$1" }
