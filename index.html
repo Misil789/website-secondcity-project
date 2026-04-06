@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Second City Scrubbers | Chicago's Premier Cleaning Service</title>
+  <meta name="description" content="Professional home and office cleaning in Chicago & suburbs. Standard, deep clean, move-in/out, Airbnb, and post-construction. Locally owned. Book online in 2 minutes." />
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -30,7 +31,7 @@
       "longitude": -87.6298
     },
     "priceRange": "$$",
-    "openingHours": "Mo-Sa 08:00-18:00",
+    "openingHours": "Mo-Su 00:00-23:59",
     "areaServed": [
       "Chicago, IL","Evanston, IL","Skokie, IL","Oak Park, IL","Berwyn, IL",
       "Cicero, IL","Schaumburg, IL","Naperville, IL","Elmhurst, IL",
@@ -52,6 +53,88 @@
         {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Window Cleaning"}}
       ]
     }
+  }
+  </script>
+
+  <!-- Schema Markup: FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Do I need to be home during the cleaning?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Nope — most of our clients aren't home. You can leave a key, use a lockbox, or provide a door code. We'll send you a notification when we arrive and again when we're done. Everything is covered by our insurance."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you bring your own cleaning supplies and equipment?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, we bring everything — vacuums, mops, microfiber cloths, and all cleaning products. If you'd prefer we use your supplies (allergies, specific products), just let us know in the notes when booking. We also offer a natural/eco product option at a small upcharge."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I pay?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Payment is due after each completed clean. We accept cash, Venmo, Zelle, and check. No payment is collected at booking — we confirm your appointment first, clean your home, and then you pay."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What if I'm not satisfied with the clean?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We stand behind our work 100%. If something doesn't meet your expectations, contact us within 24 hours and we'll come back to fix it — free of charge, no questions asked."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Are your cleaners background-checked?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Every member of our team goes through a thorough background check before their first day. Your home and belongings are safe with us."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you clean on weekends?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes — we're available 24/7, 365 days a year including weekends and holidays. Early morning and late-night slots can book up fast, so scheduling a day in advance is recommended."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What's your cancellation policy?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We ask for at least 48 hours' notice to cancel or reschedule at no charge. Cancellations with less than 48 hours' notice may incur a $40 late-cancel fee."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What areas in Chicago do you serve?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We serve all of Chicago and surrounding neighborhoods including Lincoln Park, Wicker Park, Logan Square, Lakeview, River North, Bucktown, Hyde Park, Pilsen, Andersonville, Evanston, Skokie, Oak Park, Naperville, Schaumburg, and more."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you offer same-day or next-day service?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sometimes! Same-day and next-day availability depends on our current schedule. Call us at (872) 240-6619 and we'll do our best to fit you in. Advance booking is always recommended to guarantee your preferred date and time."
+        }
+      }
+    ]
   }
   </script>
 
@@ -3971,6 +4054,10 @@
               <input type="tel" name="phone" placeholder="(312) 000-0000" required />
             </div>
           </div>
+          <div class="form-group">
+            <label>Service Address</label>
+            <input type="text" name="service_address" placeholder="123 Main St, Chicago, IL 60601" required />
+          </div>
           <div class="form-row">
             <div class="form-group">
               <label>Preferred Date</label>
@@ -3979,15 +4066,30 @@
             <div class="form-group">
               <label>Preferred Time</label>
               <select name="preferred_time">
+                <option>12:00 AM (Midnight)</option>
+                <option>1:00 AM</option>
+                <option>2:00 AM</option>
+                <option>3:00 AM</option>
+                <option>4:00 AM</option>
+                <option>5:00 AM</option>
+                <option>6:00 AM</option>
+                <option>7:00 AM</option>
                 <option>8:00 AM</option>
                 <option>9:00 AM</option>
                 <option>10:00 AM</option>
                 <option>11:00 AM</option>
-                <option>12:00 PM</option>
+                <option>12:00 PM (Noon)</option>
                 <option>1:00 PM</option>
                 <option>2:00 PM</option>
                 <option>3:00 PM</option>
                 <option>4:00 PM</option>
+                <option>5:00 PM</option>
+                <option>6:00 PM</option>
+                <option>7:00 PM</option>
+                <option>8:00 PM</option>
+                <option>9:00 PM</option>
+                <option>10:00 PM</option>
+                <option>11:00 PM</option>
               </select>
             </div>
           </div>
@@ -4445,6 +4547,41 @@
       Tap to Text CLEAN Now
     </a>
     <p style="font-size:.72rem; color:rgba(255,255,255,.45); margin-top:1.1rem;">Standard messaging rates may apply. Reply STOP to unsubscribe.</p>
+  </div>
+</section>
+
+<!-- ====== AREAS WE SERVE ====== -->
+<section style="background:var(--sky-ghost); padding:4rem 2rem; border-top:1px solid rgba(14,165,233,.1);">
+  <div style="max-width:1100px; margin:0 auto; text-align:center;">
+    <span class="section-label">Coverage</span>
+    <h2 class="section-title" style="margin:.5rem auto 1rem;">Areas We Serve</h2>
+    <p class="section-sub" style="margin:0 auto 2.5rem;">We cover Chicago and the surrounding suburbs. Don't see your city? Call us — we likely serve it.</p>
+    <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:.65rem;">
+      <span style="background:#fff; border:1px solid rgba(14,165,233,.25); color:var(--text-body); font-size:.82rem; font-weight:600; padding:.4rem 1rem; border-radius:999px;">Chicago, IL</span>
+      <span style="background:#fff; border:1px solid rgba(14,165,233,.25); color:var(--text-body); font-size:.82rem; font-weight:600; padding:.4rem 1rem; border-radius:999px;">Evanston, IL</span>
+      <span style="background:#fff; border:1px solid rgba(14,165,233,.25); color:var(--text-body); font-size:.82rem; font-weight:600; padding:.4rem 1rem; border-radius:999px;">Skokie, IL</span>
+      <span style="background:#fff; border:1px solid rgba(14,165,233,.25); color:var(--text-body); font-size:.82rem; font-weight:600; padding:.4rem 1rem; border-radius:999px;">Oak Park, IL</span>
+      <span style="background:#fff; border:1px solid rgba(14,165,233,.25); color:var(--text-body); font-size:.82rem; font-weight:600; padding:.4rem 1rem; border-radius:999px;">Berwyn, IL</span>
+      <span style="background:#fff; border:1px solid rgba(14,165,233,.25); color:var(--text-body); font-size:.82rem; font-weight:600; padding:.4rem 1rem; border-radius:999px;">Cicero, IL</span>
+      <span style="background:#fff; border:1px solid rgba(14,165,233,.25); color:var(--text-body); font-size:.82rem; font-weight:600; padding:.4rem 1rem; border-radius:999px;">Schaumburg, IL</span>
+      <span style="background:#fff; border:1px solid rgba(14,165,233,.25); color:var(--text-body); font-size:.82rem; font-weight:600; padding:.4rem 1rem; border-radius:999px;">Naperville, IL</span>
+      <span style="background:#fff; border:1px solid rgba(14,165,233,.25); color:var(--text-body); font-size:.82rem; font-weight:600; padding:.4rem 1rem; border-radius:999px;">Elmhurst, IL</span>
+      <span style="background:#fff; border:1px solid rgba(14,165,233,.25); color:var(--text-body); font-size:.82rem; font-weight:600; padding:.4rem 1rem; border-radius:999px;">Arlington Heights, IL</span>
+      <span style="background:#fff; border:1px solid rgba(14,165,233,.25); color:var(--text-body); font-size:.82rem; font-weight:600; padding:.4rem 1rem; border-radius:999px;">Des Plaines, IL</span>
+      <span style="background:#fff; border:1px solid rgba(14,165,233,.25); color:var(--text-body); font-size:.82rem; font-weight:600; padding:.4rem 1rem; border-radius:999px;">Park Ridge, IL</span>
+      <span style="background:#fff; border:1px solid rgba(14,165,233,.25); color:var(--text-body); font-size:.82rem; font-weight:600; padding:.4rem 1rem; border-radius:999px;">Niles, IL</span>
+      <span style="background:#fff; border:1px solid rgba(14,165,233,.25); color:var(--text-body); font-size:.82rem; font-weight:600; padding:.4rem 1rem; border-radius:999px;">Mount Prospect, IL</span>
+      <span style="background:#fff; border:1px solid rgba(14,165,233,.25); color:var(--text-body); font-size:.82rem; font-weight:600; padding:.4rem 1rem; border-radius:999px;">Palatine, IL</span>
+      <span style="background:#fff; border:1px solid rgba(14,165,233,.25); color:var(--text-body); font-size:.82rem; font-weight:600; padding:.4rem 1rem; border-radius:999px;">Downers Grove, IL</span>
+      <span style="background:#fff; border:1px solid rgba(14,165,233,.25); color:var(--text-body); font-size:.82rem; font-weight:600; padding:.4rem 1rem; border-radius:999px;">Lombard, IL</span>
+      <span style="background:#fff; border:1px solid rgba(14,165,233,.25); color:var(--text-body); font-size:.82rem; font-weight:600; padding:.4rem 1rem; border-radius:999px;">Oak Lawn, IL</span>
+      <span style="background:#fff; border:1px solid rgba(14,165,233,.25); color:var(--text-body); font-size:.82rem; font-weight:600; padding:.4rem 1rem; border-radius:999px;">Orland Park, IL</span>
+      <span style="background:#fff; border:1px solid rgba(14,165,233,.25); color:var(--text-body); font-size:.82rem; font-weight:600; padding:.4rem 1rem; border-radius:999px;">Tinley Park, IL</span>
+      <span style="background:#fff; border:1px solid rgba(14,165,233,.25); color:var(--text-body); font-size:.82rem; font-weight:600; padding:.4rem 1rem; border-radius:999px;">Calumet City, IL</span>
+      <span style="background:#fff; border:1px solid rgba(14,165,233,.25); color:var(--text-body); font-size:.82rem; font-weight:600; padding:.4rem 1rem; border-radius:999px;">Hoffman Estates, IL</span>
+      <span style="background:#fff; border:1px solid rgba(14,165,233,.25); color:var(--text-body); font-size:.82rem; font-weight:600; padding:.4rem 1rem; border-radius:999px;">Elk Grove Village, IL</span>
+    </div>
+    <p style="margin-top:2rem; font-size:.85rem; color:var(--text-muted);">Not sure if we cover your zip code? <a href="tel:+18722406619" style="color:var(--sky); font-weight:700; text-decoration:none;">Call (872) 240-6619</a> — we'll let you know right away.</p>
   </div>
 </section>
 
