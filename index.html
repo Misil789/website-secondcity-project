@@ -5005,6 +5005,8 @@
   }
 
   // ====== BOOKING FORM SUBMIT ======
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby2a7sIyijS0T7bde25A6taooL82EeJpTFkCIqo_DDWFwIrpizBxJMRN4ASKQDqmaPdTg/exec';
+
   async function handleBooking(e) {
     e.preventDefault();
     const form = document.getElementById('booking-form');
@@ -5012,22 +5014,20 @@
     btn.textContent = 'Sending…';
     btn.disabled = true;
     try {
-      const res = await fetch('https://formspree.io/f/mreaydgk', {
+      const res = await fetch(APPS_SCRIPT_URL, {
         method: 'POST',
-        body: new FormData(form),
-        headers: { 'Accept': 'application/json' }
+        body: new URLSearchParams(new FormData(form))
       });
-      if (res.ok) {
+      const json = await res.json().catch(() => ({ ok: true }));
+      if (json.ok !== false) {
         form.style.display = 'none';
         document.getElementById('est-box').style.display = 'none';
         document.getElementById('booking-success').style.display = 'block';
       } else {
-        btn.textContent = 'Confirm Booking Request →';
-        btn.disabled = false;
-        alert('Something went wrong. Please try again or call (872) 240-6619.');
+        throw new Error(json.error || 'Unknown error');
       }
     } catch {
-      btn.textContent = 'Confirm Booking Request →';
+      btn.textContent = 'Confirm Booking →';
       btn.disabled = false;
       alert('Something went wrong. Please try again or call (872) 240-6619.');
     }
