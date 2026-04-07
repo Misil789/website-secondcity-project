@@ -13,10 +13,19 @@
 // 8. Click Deploy and copy the Web App URL
 // 9. Paste that URL into index.html where it says APPS_SCRIPT_URL
 // 10. On first deploy, Google will ask you to authorize — click through
+//
+// GOOGLE SHEETS CRM SETUP:
+// 1. Go to sheets.google.com and create a new blank spreadsheet
+// 2. Name it "SCS CRM" (or anything you like)
+// 3. Copy the ID from the URL:
+//    https://docs.google.com/spreadsheets/d/COPY_THIS_PART/edit
+// 4. Paste it below as SHEET_ID
+// 5. The script will auto-create Bookings, Quotes, and Leads tabs
 // ============================================================
 
 const OWNER_EMAIL = 'michel@secondcityscrubbers.com';
 const REVIEW_LINK = 'https://g.page/r/CUm8G8bTKu2kEBM/review';
+const SHEET_ID    = '1HHc4UBaHbR_HyQ3WWjkO52od9wFD0F4BaAcbdaG0Seo';
 
 // ── Entry point ──────────────────────────────────────────────
 function doPost(e) {
@@ -51,9 +60,11 @@ function doPost(e) {
     scheduleRecurringEvents(fullName, email, phone, address, service, size, frequency, notes, estPrice, startDT);
     sendConfirmationEmail(email, firstName, service, size, dateStr, timeStr, address, estPrice);
     sendOwnerNotification(fullName, email, phone, address, service, size, frequency, dateStr, timeStr, notes, discount, referredBy, estPrice);
+    sendInvoiceEmail(email, firstName, fullName, service, size, dateStr, timeStr, address, estPrice);
     scheduleReminder(email, firstName, service, address, dateStr, timeStr, startDT);
     scheduleReviewRequest(email, firstName, endDT);
     cancelQuoteFollowup(email);
+    logBooking(fullName, email, phone, address, service, size, frequency, dateStr, timeStr, estPrice, discount, referredBy, notes);
 
     return ContentService
       .createTextOutput(JSON.stringify({ ok: true }))
@@ -91,6 +102,7 @@ function handleQuote(d) {
   });
 
   scheduleQuoteFollowup(email, firstName, service);
+  logQuote(fullName, email, phone, service, message);
 
   if (email) {
     MailApp.sendEmail({
@@ -129,6 +141,7 @@ function handleLead(d) {
     subject: 'New $20 Off Lead — ' + email,
     body:    'New discount lead captured from popup.\n\nEmail: ' + email
   });
+  logLead(email);
 
   if (email) {
     MailApp.sendEmail({
@@ -156,6 +169,105 @@ secondcityscrubbers.com`,
   return ContentService
     .createTextOutput(JSON.stringify({ ok: true }))
     .setMimeType(ContentService.MimeType.JSON);
+}
+
+// ── Invoice email ─────────────────────────────────────────────
+function sendInvoiceEmail(toEmail, firstName, fullName, service, size, dateStr, timeStr, address, estPrice) {
+  if (!toEmail || !estPrice) return;
+  const invoiceNum = 'SCS-' + Date.now().toString().slice(-6);
+  const today      = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+  MailApp.sendEmail({
+    to:      toEmail,
+    subject: 'Invoice ' + invoiceNum + ' — Second City Scrubbers',
+    body:
+`INVOICE
+────────────────────────────────────
+Second City Scrubbers
+(872) 240-6619 | secondcityscrubbers.com
+michel@secondcityscrubbers.com
+
+Invoice #:  ${invoiceNum}
+Date:       ${today}
+────────────────────────────────────
+
+BILL TO
+${fullName}
+${address}
+
+SERVICE DETAILS
+Service:    ${serviceLabel(service)}
+Home Size:  ${sizeLabel(size)}
+Date:       ${dateStr}
+Time:       ${timeStr}
+
+────────────────────────────────────
+TOTAL DUE:  ${estPrice}
+────────────────────────────────────
+
+PAYMENT OPTIONS
+• Zelle:   (872) 240-6619
+• Cash:    Accepted at time of service
+
+Payment is due at time of service. Thank you for choosing Second City Scrubbers!
+
+Questions? Reply to this email or call (872) 240-6619.
+
+Michel
+Second City Scrubbers`,
+    name:    'Second City Scrubbers',
+    replyTo: OWNER_EMAIL
+  });
+}
+
+// ── Google Sheets CRM ─────────────────────────────────────────
+function getOrCreateSheet(name, headers) {
+  if (SHEET_ID === 'PASTE_YOUR_SHEET_ID_HERE') return null;
+  try {
+    const ss    = SpreadsheetApp.openById(SHEET_ID);
+    let sheet   = ss.getSheetByName(name);
+    if (!sheet) {
+      sheet = ss.insertSheet(name);
+      sheet.appendRow(headers);
+      sheet.getRange(1, 1, 1, headers.length)
+           .setFontWeight('bold')
+           .setBackground('#0ea5e9')
+           .setFontColor('#ffffff');
+      sheet.setFrozenRows(1);
+    }
+    return sheet;
+  } catch(err) {
+    Logger.log('Sheet error: ' + err.message);
+    return null;
+  }
+}
+
+function logBooking(fullName, email, phone, address, service, size, frequency, dateStr, timeStr, estPrice, discount, referredBy, notes) {
+  const sheet = getOrCreateSheet('Bookings', [
+    'Date Logged', 'Name', 'Email', 'Phone', 'Address',
+    'Service', 'Size', 'Frequency', 'Job Date', 'Job Time',
+    'Estimate', 'Discount', 'Referred By', 'Notes'
+  ]);
+  if (!sheet) return;
+  sheet.appendRow([
+    new Date(), fullName, email, phone, address,
+    serviceLabel(service), sizeLabel(size), frequency, dateStr, timeStr,
+    estPrice, discount, referredBy, notes
+  ]);
+}
+
+function logQuote(fullName, email, phone, service, message) {
+  const sheet = getOrCreateSheet('Quotes', [
+    'Date Logged', 'Name', 'Email', 'Phone', 'Service', 'Message'
+  ]);
+  if (!sheet) return;
+  sheet.appendRow([new Date(), fullName, email, phone, service, message]);
+}
+
+function logLead(email) {
+  const sheet = getOrCreateSheet('Leads', ['Date Logged', 'Email', 'Source']);
+  if (!sheet) return;
+  sheet.appendRow([new Date(), email, '$20 Off Popup']);
 }
 
 // ── Recurring events ─────────────────────────────────────────
