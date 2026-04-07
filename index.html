@@ -3935,7 +3935,7 @@
         <span class="step-lbl" id="slbl-3" style="text-align:right;">Confirm</span>
       </div>
 
-      <form id="booking-form" onsubmit="handleBooking(event)" action="https://formspree.io/f/mreaydgk" method="POST">
+      <form id="booking-form" onsubmit="handleBooking(event)">
         <input type="hidden" name="_subject" value="New Booking Request — Second City Scrubbers" />
         <input type="hidden" id="book-est-hidden" name="estimated_price" value="" />
 
@@ -4249,7 +4249,7 @@
         </div>
       </div>
       <div class="contact-form">
-        <form id="quote-form" onsubmit="handleSubmit(event)" action="https://formspree.io/f/mreaydgk" method="POST">
+        <form id="quote-form" onsubmit="handleSubmit(event)">
           <div class="form-row">
             <div class="form-group">
               <label>First Name</label>
@@ -4967,10 +4967,9 @@
     btn.disabled = true;
     btn.textContent = 'Sending…';
     try {
-      await fetch('https://formspree.io/f/mreaydgk', {
+      await fetch(APPS_SCRIPT_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({ email, _subject: 'New $20 Discount Lead — Second City Scrubbers' })
+        body: new URLSearchParams({ form_type: 'lead', email })
       });
     } catch(_) {}
     document.getElementById('fc-form').style.display = 'none';
@@ -5005,7 +5004,7 @@
   }
 
   // ====== BOOKING FORM SUBMIT ======
-  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxJORiDFk8zscxtz2i4tBLSIulw3Uw81G9p59_TVnXOUve_bF65G1m6XNZ4BshrslaeIw/exec';
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxteJUZjwCBBZBez869wcU6eyQ8iKh0lvGJy94JjmF-Hy3gUNzCWBLXGGJ_056DRj9slA/exec';
 
   async function handleBooking(e) {
     e.preventDefault();
@@ -5040,18 +5039,15 @@
     btn.textContent = 'Sending…';
     btn.disabled = true;
     try {
-      const res = await fetch('https://formspree.io/f/mreaydgk', {
-        method: 'POST',
-        body: new FormData(form),
-        headers: { 'Accept': 'application/json' }
-      });
-      if (res.ok) {
+      const params = new URLSearchParams(new FormData(form));
+      params.set('form_type', 'quote');
+      const res = await fetch(APPS_SCRIPT_URL, { method: 'POST', body: params });
+      const json = await res.json().catch(() => ({ ok: true }));
+      if (json.ok !== false) {
         form.style.display = 'none';
         document.getElementById('form-success').style.display = 'block';
       } else {
-        btn.textContent = 'Send My Free Quote Request →';
-        btn.disabled = false;
-        alert('Something went wrong. Please try again or call us at (872) 240-6619.');
+        throw new Error(json.error || 'Unknown error');
       }
     } catch {
       btn.textContent = 'Send My Free Quote Request →';

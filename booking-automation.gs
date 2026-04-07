@@ -22,7 +22,12 @@ const REVIEW_LINK = 'https://g.page/r/CUm8G8bTKu2kEBM/review';
 function doPost(e) {
   try {
     const d = e.parameter;
+    const formType = d.form_type || 'booking';
 
+    if (formType === 'quote') return handleQuote(d);
+    if (formType === 'lead')  return handleLead(d);
+
+    // Default: full booking
     const firstName  = d.first_name        || '';
     const lastName   = d.last_name         || '';
     const email      = d.email             || '';
@@ -43,10 +48,12 @@ function doPost(e) {
     const endDT        = new Date(startDT.getTime() + 3 * 60 * 60 * 1000); // +3 hours
 
     createCalendarEvent(fullName, email, phone, address, service, size, frequency, notes, estPrice, startDT, endDT);
+    scheduleRecurringEvents(fullName, email, phone, address, service, size, frequency, notes, estPrice, startDT);
     sendConfirmationEmail(email, firstName, service, size, dateStr, timeStr, address, estPrice);
     sendOwnerNotification(fullName, email, phone, address, service, size, frequency, dateStr, timeStr, notes, discount, referredBy, estPrice);
     scheduleReminder(email, firstName, service, address, dateStr, timeStr, startDT);
     scheduleReviewRequest(email, firstName, endDT);
+    cancelQuoteFollowup(email);
 
     return ContentService
       .createTextOutput(JSON.stringify({ ok: true }))
@@ -57,6 +64,186 @@ function doPost(e) {
       .createTextOutput(JSON.stringify({ ok: false, error: err.message }))
       .setMimeType(ContentService.MimeType.JSON);
   }
+}
+
+// ── Quote request ─────────────────────────────────────────────
+function handleQuote(d) {
+  const firstName = d.first_name   || '';
+  const lastName  = d.last_name    || '';
+  const email     = d.email        || '';
+  const phone     = d.phone        || '';
+  const service   = d.service_type || '';
+  const message   = d.message      || '';
+  const fullName  = (firstName + ' ' + lastName).trim();
+
+  MailApp.sendEmail({
+    to:      OWNER_EMAIL,
+    subject: 'New Quote Request — ' + fullName,
+    body:    [
+      'NEW QUOTE REQUEST',
+      '─────────────────',
+      'Name:    ' + fullName,
+      'Email:   ' + email,
+      'Phone:   ' + phone,
+      'Service: ' + service,
+      message ? '\nDetails:\n' + message : '',
+    ].filter(Boolean).join('\n')
+  });
+
+  scheduleQuoteFollowup(email, firstName, service);
+
+  if (email) {
+    MailApp.sendEmail({
+      to:      email,
+      subject: 'We got your quote request — Second City Scrubbers',
+      body:
+`Hi ${firstName},
+
+Thanks for reaching out! We received your free quote request and will get back to you within 24 hours.
+
+Service: ${service}
+${message ? 'Details: ' + message + '\n' : ''}
+Questions in the meantime? Call us at (872) 240-6619.
+
+Talk soon,
+Michel
+Second City Scrubbers
+(872) 240-6619
+secondcityscrubbers.com`,
+      name:    'Second City Scrubbers',
+      replyTo: OWNER_EMAIL
+    });
+  }
+
+  return ContentService
+    .createTextOutput(JSON.stringify({ ok: true }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+// ── Lead capture (popup $20 off) ──────────────────────────────
+function handleLead(d) {
+  const email = d.email || '';
+
+  MailApp.sendEmail({
+    to:      OWNER_EMAIL,
+    subject: 'New $20 Off Lead — ' + email,
+    body:    'New discount lead captured from popup.\n\nEmail: ' + email
+  });
+
+  if (email) {
+    MailApp.sendEmail({
+      to:      email,
+      subject: 'Your $20 Off Coupon — Second City Scrubbers',
+      body:
+`Hi there,
+
+Welcome! Here's your $20 off your first clean — just mention this email when you book.
+
+Book online: https://secondcityscrubbers.com/#booking
+Or call: (872) 240-6619
+
+We can't wait to make your home shine.
+
+Michel
+Second City Scrubbers
+(872) 240-6619
+secondcityscrubbers.com`,
+      name:    'Second City Scrubbers',
+      replyTo: OWNER_EMAIL
+    });
+  }
+
+  return ContentService
+    .createTextOutput(JSON.stringify({ ok: true }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+// ── Recurring events ─────────────────────────────────────────
+function scheduleRecurringEvents(fullName, email, phone, address, service, size, frequency, notes, estPrice, firstStart) {
+  const f = (frequency || '').toLowerCase();
+  let intervalDays = 0, occurrences = 0;
+
+  if      (f.includes('week') && !f.includes('bi') && !f.includes('every 2')) { intervalDays = 7;  occurrences = 11; } // weekly → 12 total
+  else if (f.includes('bi') || f.includes('every 2') || f.includes('2 week')) { intervalDays = 14; occurrences = 5;  } // biweekly → 6 total
+  else if (f.includes('month'))                                                { intervalDays = 30; occurrences = 2;  } // monthly → 3 total
+
+  if (!intervalDays) return; // one-time or unrecognized — nothing to schedule
+
+  const duration = 3 * 60 * 60 * 1000;
+  for (let i = 1; i <= occurrences; i++) {
+    const start = new Date(firstStart.getTime() + i * intervalDays * 24 * 60 * 60 * 1000);
+    const end   = new Date(start.getTime() + duration);
+    createCalendarEvent(fullName, email, phone, address, service, size, frequency, notes, estPrice, start, end);
+  }
+}
+
+// ── Quote follow-up ───────────────────────────────────────────
+function scheduleQuoteFollowup(email, firstName, service) {
+  if (!email) return;
+  const props  = PropertiesService.getScriptProperties();
+  const fireAt = new Date(Date.now() + 48 * 60 * 60 * 1000);
+  const key    = 'qf_' + Date.now();
+
+  props.setProperty(key, JSON.stringify({ type: 'quote_followup', toEmail: email, firstName, service }));
+  const trigger = ScriptApp.newTrigger('runScheduledEmail').timeBased().at(fireAt).create();
+  props.setProperty('tid_' + trigger.getUniqueId(), key);
+  // Store email → key so we can cancel if they book
+  props.setProperty('qf_email_' + email.trim().toLowerCase(), key);
+}
+
+function cancelQuoteFollowup(email) {
+  if (!email) return;
+  const props    = PropertiesService.getScriptProperties();
+  const emailKey = 'qf_email_' + email.trim().toLowerCase();
+  const dataKey  = props.getProperty(emailKey);
+  if (!dataKey) return;
+
+  // Find and delete the matching trigger
+  const allProps = props.getProperties();
+  Object.keys(allProps).forEach(k => {
+    if (k.startsWith('tid_') && allProps[k] === dataKey) {
+      const tid = k.slice(4);
+      ScriptApp.getProjectTriggers().forEach(t => {
+        if (t.getUniqueId() === tid) ScriptApp.deleteTrigger(t);
+      });
+      props.deleteProperty(k);
+    }
+  });
+  props.deleteProperty(dataKey);
+  props.deleteProperty(emailKey);
+}
+
+// ── Weekly summary report ─────────────────────────────────────
+// Call this once manually or set a weekly time-based trigger pointing to it.
+// Summarizes the upcoming 7 days of calendar events tagged with 🧹
+function sendWeeklySummary() {
+  const now   = new Date();
+  const end   = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+  const cal   = CalendarApp.getDefaultCalendar();
+  const events = cal.getEvents(now, end).filter(ev => ev.getTitle().startsWith('🧹'));
+
+  const lines = [
+    'WEEKLY SUMMARY — ' + now.toDateString(),
+    '─────────────────────────────────',
+    'Upcoming jobs this week: ' + events.length,
+    '',
+  ];
+
+  events.forEach(ev => {
+    lines.push(ev.getStartTime().toDateString() + ' ' + ev.getStartTime().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+    lines.push('  ' + ev.getTitle().replace('🧹 ', ''));
+    lines.push('  ' + (ev.getLocation() || 'No address'));
+    lines.push('');
+  });
+
+  if (events.length === 0) lines.push('No jobs scheduled for the upcoming week.');
+
+  MailApp.sendEmail({
+    to:      OWNER_EMAIL,
+    subject: 'Weekly Job Summary — Second City Scrubbers',
+    body:    lines.join('\n'),
+    name:    'Second City Scrubbers'
+  });
 }
 
 // ── Helpers ──────────────────────────────────────────────────
@@ -233,6 +420,33 @@ Second City Scrubbers`,
       name:    'Second City Scrubbers',
       replyTo: OWNER_EMAIL
     });
+  }
+
+  if (data.type === 'quote_followup') {
+    MailApp.sendEmail({
+      to:      data.toEmail,
+      subject: 'Still thinking it over? — Second City Scrubbers',
+      body:
+`Hi ${data.firstName},
+
+Just checking in — we sent over some info about ${data.service} a couple days ago and wanted to make sure you got it.
+
+If you have any questions about pricing, scheduling, or what's included, just reply to this email or give us a call at (872) 240-6619. We're happy to help.
+
+Ready to book? You can do it online in 2 minutes:
+https://secondcityscrubbers.com/#booking
+
+No pressure at all — just want to make sure you have everything you need.
+
+Michel
+Second City Scrubbers
+(872) 240-6619`,
+      name:    'Second City Scrubbers',
+      replyTo: OWNER_EMAIL
+    });
+    // Clean up the email → key mapping too
+    const props = PropertiesService.getScriptProperties();
+    props.deleteProperty('qf_email_' + (data.toEmail || '').trim().toLowerCase());
   }
 
   if (data.type === 'review') {
