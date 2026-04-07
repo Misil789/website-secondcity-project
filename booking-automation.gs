@@ -17,6 +17,7 @@
 
 const OWNER_EMAIL = 'michel@secondcityscrubbers.com';
 const REVIEW_LINK = 'https://g.page/r/CUm8G8bTKu2kEBM/review';
+const SHEET_ID    = '1-6dBANyYIWMMcMVAUzrd5kMWNWMCyFORn46zk-0Amww';
 
 // ── Entry point ──────────────────────────────────────────────
 function doPost(e) {
@@ -47,6 +48,7 @@ function doPost(e) {
     sendOwnerNotification(fullName, email, phone, address, service, size, frequency, dateStr, timeStr, notes, discount, referredBy, estPrice);
     scheduleReminder(email, firstName, service, address, dateStr, timeStr, startDT);
     scheduleReviewRequest(email, firstName, endDT);
+    logToSheet(fullName, email, phone, address, service, size, frequency, dateStr, timeStr, estPrice, discount, referredBy, notes);
 
     return ContentService
       .createTextOutput(JSON.stringify({ ok: true }))
@@ -266,4 +268,45 @@ Second City Scrubbers
   ScriptApp.getProjectTriggers().forEach(t => {
     if (t.getUniqueId() === tid) ScriptApp.deleteTrigger(t);
   });
+}
+
+// ── CRM Sheet ────────────────────────────────────────────────
+function logToSheet(fullName, email, phone, address, service, size, frequency, dateStr, timeStr, estPrice, discount, referredBy, notes) {
+  try {
+    const ss    = SpreadsheetApp.openById(SHEET_ID);
+    let sheet   = ss.getSheetByName('Bookings');
+
+    // Create sheet + headers on first use
+    if (!sheet) {
+      sheet = ss.insertSheet('Bookings');
+      sheet.appendRow([
+        'Date Submitted', 'Name', 'Email', 'Phone', 'Address',
+        'Service', 'Size', 'Frequency', 'Preferred Date', 'Preferred Time',
+        'Estimate', 'Discount', 'Referred By', 'Notes', 'Status'
+      ]);
+      sheet.getRange(1, 1, 1, 15).setFontWeight('bold');
+      sheet.setFrozenRows(1);
+    }
+
+    sheet.appendRow([
+      new Date(),
+      fullName,
+      email,
+      phone,
+      address,
+      serviceLabel(service),
+      sizeLabel(size),
+      frequency,
+      dateStr,
+      timeStr,
+      estPrice,
+      discount,
+      referredBy,
+      notes,
+      'Pending' // You can manually update this to Confirmed / Completed / Cancelled
+    ]);
+  } catch (err) {
+    // Sheet logging failure should not break the booking
+    MailApp.sendEmail(OWNER_EMAIL, 'Sheet Log Error', err.message);
+  }
 }
