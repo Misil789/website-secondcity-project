@@ -77,6 +77,13 @@ function doPost(e) {
   }
 }
 
+// ── GET handler (health check) ───────────────────────────────
+function doGet(e) {
+  return ContentService
+    .createTextOutput(JSON.stringify({ status: 'Apps Script is live' }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
 // ── Quote request ─────────────────────────────────────────────
 function handleQuote(d) {
   const firstName = d.first_name   || '';
