@@ -32,6 +32,9 @@ function doPost(e) {
   try {
     const d = e.parameter;
     const formType = d.form_type || 'booking';
+    Logger.log('form_type: ' + formType);
+    Logger.log('email: ' + d.email);
+    Logger.log('first_name: ' + d.first_name);
 
     if (formType === 'quote') return handleQuote(d);
     if (formType === 'lead')  return handleLead(d);
@@ -56,15 +59,21 @@ function doPost(e) {
     const startDT      = parseDateTime(dateStr, timeStr);
     const endDT        = new Date(startDT.getTime() + 3 * 60 * 60 * 1000); // +3 hours
 
-    createCalendarEvent(fullName, email, phone, address, service, size, frequency, notes, estPrice, startDT, endDT);
-    scheduleRecurringEvents(fullName, email, phone, address, service, size, frequency, notes, estPrice, startDT);
+    Logger.log('fullName: ' + fullName + ' | email: ' + email + ' | estPrice: ' + estPrice);
+
+    // Send emails first — these must not be blocked by calendar/sheet failures
+    Logger.log('Sending confirmation to: ' + email);
     sendConfirmationEmail(email, firstName, service, size, dateStr, timeStr, address, estPrice);
     sendOwnerNotification(fullName, email, phone, address, service, size, frequency, dateStr, timeStr, notes, discount, referredBy, estPrice);
     sendInvoiceEmail(email, firstName, fullName, service, size, dateStr, timeStr, address, estPrice);
-    scheduleReminder(email, firstName, service, address, dateStr, timeStr, startDT);
-    scheduleReviewRequest(email, firstName, endDT);
-    cancelQuoteFollowup(email);
-    logBooking(fullName, email, phone, address, service, size, frequency, dateStr, timeStr, estPrice, discount, referredBy, notes);
+
+    // Calendar, triggers, and CRM — wrapped so failures don't affect emails above
+    try { createCalendarEvent(fullName, email, phone, address, service, size, frequency, notes, estPrice, startDT, endDT); } catch(err) { Logger.log('Calendar error: ' + err.message); }
+    try { scheduleRecurringEvents(fullName, email, phone, address, service, size, frequency, notes, estPrice, startDT); } catch(err) { Logger.log('Recurring error: ' + err.message); }
+    try { scheduleReminder(email, firstName, service, address, dateStr, timeStr, startDT); } catch(err) { Logger.log('Reminder error: ' + err.message); }
+    try { scheduleReviewRequest(email, firstName, endDT); } catch(err) { Logger.log('Review trigger error: ' + err.message); }
+    try { cancelQuoteFollowup(email); } catch(err) { Logger.log('Cancel followup error: ' + err.message); }
+    try { logBooking(fullName, email, phone, address, service, size, frequency, dateStr, timeStr, estPrice, discount, referredBy, notes); } catch(err) { Logger.log('Sheet error: ' + err.message); }
 
     return ContentService
       .createTextOutput(JSON.stringify({ ok: true }))
