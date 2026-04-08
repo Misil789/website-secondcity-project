@@ -4967,7 +4967,10 @@
     btn.disabled = true;
     btn.textContent = 'Sending…';
     try {
-      await postToScript(new URLSearchParams({ form_type: 'lead', email }));
+      await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        body: new URLSearchParams({ form_type: 'lead', email })
+      });
     } catch(_) {}
     document.getElementById('fc-form').style.display = 'none';
     document.getElementById('fc-success').style.display = 'block';
@@ -5001,16 +5004,7 @@
   }
 
   // ====== BOOKING FORM SUBMIT ======
-  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwj5v5dOWqMKxLkZ5ZKXy7qxOgQDcphoIyVPRNzXnP2lSDSDpK_FOqkIcsRtjOS2ENOBA/exec';
-
-  async function postToScript(params) {
-    // Must use text/plain to avoid CORS preflight which Apps Script doesn't support
-    return fetch(APPS_SCRIPT_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
-      body: params.toString()
-    });
-  }
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwd3BuIwxXz305_qfgNO7AjJL-sSKdt1L-FW0FiVqJMjB30VBEHWR1aHMwA-kwimil-ew/exec';
 
   async function handleBooking(e) {
     e.preventDefault();
@@ -5019,7 +5013,10 @@
     btn.textContent = 'Sending…';
     btn.disabled = true;
     try {
-      const res = await postToScript(new URLSearchParams(new FormData(form)));
+      const res = await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        body: new URLSearchParams(new FormData(form))
+      });
       const json = await res.json().catch(() => ({ ok: true }));
       if (json.ok !== false) {
         form.style.display = 'none';
@@ -5044,7 +5041,7 @@
     try {
       const params = new URLSearchParams(new FormData(form));
       params.set('form_type', 'quote');
-      const res = await postToScript(params);
+      const res = await fetch(APPS_SCRIPT_URL, { method: 'POST', body: params });
       const json = await res.json().catch(() => ({ ok: true }));
       if (json.ok !== false) {
         form.style.display = 'none';
