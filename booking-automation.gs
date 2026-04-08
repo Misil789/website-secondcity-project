@@ -30,6 +30,10 @@ const SHEET_ID    = '1HHc4UBaHbR_HyQ3WWjkO52od9wFD0F4BaAcbdaG0Seo';
 // ── Entry point ──────────────────────────────────────────────
 function doPost(e) {
   try {
+    // Log everything arriving so we can diagnose missing fields
+    Logger.log('RAW postData: ' + (e.postData ? e.postData.contents : 'none'));
+    Logger.log('ALL parameters: ' + JSON.stringify(e.parameter));
+
     const d = e.parameter;
     const formType = d.form_type || 'booking';
     Logger.log('form_type: ' + formType);
@@ -432,6 +436,7 @@ function createCalendarEvent(fullName, email, phone, address, service, size, fre
 
 // ── Emails ───────────────────────────────────────────────────
 function sendConfirmationEmail(toEmail, firstName, service, size, dateStr, timeStr, address, estPrice) {
+  if (!toEmail) { Logger.log('sendConfirmationEmail: toEmail is empty, skipping'); return; }
   MailApp.sendEmail({
     to:      toEmail,
     subject: 'Booking Confirmed — Second City Scrubbers',
