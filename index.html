@@ -5690,6 +5690,23 @@ function pickTile(tile, gridId, selectId) {
   tile.classList.add('active');
   var sel = document.getElementById(selectId);
   sel.value = tile.dataset.val;
+
+  // Hide add-ons for deep clean (already included), show for everything else
+  if (selectId === 'book-service') {
+    var addonSection = document.getElementById('addon-grid');
+    if (addonSection) {
+      var wrap = addonSection.closest('.form-group');
+      if (wrap) {
+        var isDeep = tile.dataset.val === 'deep';
+        wrap.style.display = isDeep ? 'none' : '';
+        if (isDeep) {
+          // Uncheck all add-ons so they don't get submitted or affect price
+          addonSection.querySelectorAll('input[type="checkbox"]').forEach(function(cb){ cb.checked = false; });
+        }
+      }
+    }
+  }
+
   if (typeof updateEstimate === 'function') updateEstimate();
   if (typeof refreshRecurring === 'function') refreshRecurring();
 }
