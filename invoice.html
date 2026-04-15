@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Invoice — Second City Scrubbers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --sky:        #0ea5e9;
+      --sky-light:  #38bdf8;
+      --sky-pale:   #e0f2fe;
+      --red:        #dc2626;
+      --navy:       #0c2340;
+      --text-body:  #1e3a5a;
+      --text-muted: #5a87a8;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #f0fbff; color: var(--navy); line-height: 1.7; }
+
+    /* ── TOOLBAR ── */
+    .toolbar {
+      max-width: 820px; margin: 1.75rem auto .75rem;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1rem; padding: 0 .25rem;
+    }
+    .toolbar-hint { font-size: .78rem; color: var(--text-muted); }
+    .toolbar-hint strong { color: var(--navy); font-weight: 600; }
+    .toolbar-actions { display: flex; gap: .6rem; }
+    .btn-print {
+      background: var(--navy); color: #fff;
+      font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: .8rem;
+      letter-spacing: .04em; padding: .55rem 1.2rem; border-radius: 8px;
+      border: none; cursor: pointer; display: flex; align-items: center; gap: .45rem;
+      transition: background .18s, transform .12s;
+    }
+    .btn-print:hover { background: var(--sky); transform: translateY(-1px); }
+    .btn-clear {
+      background: transparent; color: var(--text-muted);
+      font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: .78rem;
+      padding: .55rem 1rem; border-radius: 8px; border: 1.5px solid rgba(14,165,233,.25);
+      cursor: pointer; transition: border-color .18s, color .18s;
+    }
+    .btn-clear:hover { border-color: var(--sky); color: var(--sky); }
+
+    /* ── PAGE ── */
+    .page {
+      max-width: 820px; margin: 0 auto 3rem; background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 2px 8px rgba(14,165,233,.08), 0 12px 40px rgba(12,35,64,.1);
+      overflow: hidden;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background: var(--navy); padding: 2.25rem 3rem 2rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+    }
+    .header-brand { display: flex; align-items: center; gap: 1rem; }
+    .header-logo-img { height: 64px; width: 64px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,.15); }
+    .header-brand-text { display: flex; flex-direction: column; gap: .25rem; }
+    .header-company {
+      font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: #fff;
+      letter-spacing: .06em; line-height: 1;
+    }
+    .header-company span { color: var(--sky-light); }
+    .header-tagline {
+      font-family: 'Montserrat', sans-serif; font-size: .65rem; font-weight: 700;
+      color: var(--sky-light); letter-spacing: .12em; text-transform: uppercase;
+    }
+    .header-right { text-align: right; }
+    .header-invoice-label {
+      font-family: 'Montserrat', sans-serif; font-size: 1.6rem; font-weight: 900;
+      color: #fff; letter-spacing: .06em; text-transform: uppercase; line-height: 1;
+      margin-bottom: .75rem;
+    }
+    .header-meta { display: flex; flex-direction: column; gap: .35rem; }
+    .header-field { display: flex; align-items: center; gap: .5rem; justify-content: flex-end; }
+    .header-field label { font-size: .65rem; color: rgba(255,255,255,.55); white-space: nowrap; }
+    .header-input {
+      background: rgba(255,255,255,.1); border: none;
+      border-bottom: 1px solid rgba(255,255,255,.3);
+      color: #fff; font-size: .78rem; font-family: 'Inter', sans-serif;
+      padding: .15rem .35rem; width: 150px; outline: none; text-align: right;
+    }
+    .header-input::placeholder { color: rgba(255,255,255,.3); font-style: italic; }
+    .header-input:focus { border-bottom-color: var(--sky-light); }
+
+    /* ── ACCENT BAR ── */
+    .accent-bar { height: 4px; background: linear-gradient(90deg, var(--red) 0%, var(--sky) 60%, var(--sky-light) 100%); }
+
+    /* ── BODY ── */
+    .body { padding: 2.5rem 3rem; }
+
+    /* ── BILL TO / FROM ── */
+    .parties { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
+    .party-block { display: flex; flex-direction: column; gap: .15rem; }
+    .party-label {
+      font-family: 'Montserrat', sans-serif; font-size: .65rem; font-weight: 900;
+      letter-spacing: .14em; text-transform: uppercase; color: var(--sky);
+      margin-bottom: .5rem; display: flex; align-items: center; gap: .6rem;
+    }
+    .party-label::after { content: ''; flex: 1; height: 1px; background: rgba(14,165,233,.2); }
+    .party-static { font-size: .875rem; color: var(--text-body); line-height: 1.6; }
+    .party-static strong { font-weight: 700; color: var(--navy); }
+
+    /* ── FIELD GROUPS ── */
+    .field-group { margin-bottom: .6rem; }
+    .field-group label {
+      display: block; font-size: .65rem; font-weight: 700; font-family: 'Montserrat', sans-serif;
+      color: var(--text-muted); letter-spacing: .08em; text-transform: uppercase; margin-bottom: .25rem;
+    }
+    .field-input {
+      width: 100%; border: none; border-bottom: 1.5px solid rgba(14,165,233,.3);
+      background: transparent; font-family: 'Inter', sans-serif; font-size: .875rem;
+      color: var(--navy); padding: .2rem .1rem; outline: none; transition: border-color .15s;
+    }
+    .field-input:focus { border-bottom-color: var(--sky); }
+    .field-input::placeholder { color: rgba(14,165,233,.35); font-style: italic; font-size: .8rem; }
+
+    /* ── SECTION HEADING ── */
+    .section-heading {
+      font-family: 'Montserrat', sans-serif; font-size: .65rem; font-weight: 900;
+      letter-spacing: .14em; text-transform: uppercase; color: var(--sky);
+      margin: 2rem 0 .75rem; display: flex; align-items: center; gap: .6rem;
+    }
+    .section-heading::after { content: ''; flex: 1; height: 1px; background: rgba(14,165,233,.2); }
+
+    /* ── LINE ITEMS TABLE ── */
+    .line-items { width: 100%; border-collapse: collapse; margin-bottom: 1rem; }
+    .line-items thead tr { border-bottom: 2px solid var(--navy); }
+    .line-items th {
+      font-family: 'Montserrat', sans-serif; font-size: .65rem; font-weight: 900;
+      letter-spacing: .1em; text-transform: uppercase; color: var(--navy);
+      padding: .5rem .5rem .5rem 0; text-align: left;
+    }
+    .line-items th.right { text-align: right; padding-right: 0; }
+    .line-items tbody tr { border-bottom: 1px solid rgba(14,165,233,.12); }
+    .line-items tbody tr:last-child { border-bottom: none; }
+    .line-items td { padding: .65rem .5rem .65rem 0; vertical-align: top; }
+    .line-items td.right { text-align: right; }
+    .li-input {
+      width: 100%; border: none; border-bottom: 1px dashed rgba(14,165,233,.25);
+      background: transparent; font-family: 'Inter', sans-serif; font-size: .875rem;
+      color: var(--navy); padding: .1rem 0; outline: none; transition: border-color .15s;
+    }
+    .li-input:focus { border-bottom-color: var(--sky); }
+    .li-input::placeholder { color: rgba(14,165,233,.3); font-style: italic; font-size: .8rem; }
+    .li-input.right { text-align: right; }
+    .add-row-btn {
+      background: none; border: 1.5px dashed rgba(14,165,233,.35); color: var(--sky);
+      font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: .72rem;
+      letter-spacing: .06em; padding: .45rem 1rem; border-radius: 8px; cursor: pointer;
+      transition: border-color .15s, background .15s; margin-top: .35rem;
+    }
+    .add-row-btn:hover { border-color: var(--sky); background: var(--sky-pale); }
+
+    /* ── TOTALS ── */
+    .totals { display: flex; justify-content: flex-end; margin-top: 1.5rem; }
+    .totals-box { width: 280px; }
+    .totals-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: .4rem 0; border-bottom: 1px solid rgba(14,165,233,.1);
+      font-size: .875rem; color: var(--text-body);
+    }
+    .totals-row:last-child { border-bottom: none; }
+    .totals-row label { font-size: .78rem; color: var(--text-muted); }
+    .totals-row .tot-input {
+      border: none; border-bottom: 1px dashed rgba(14,165,233,.25);
+      background: transparent; font-family: 'Inter', sans-serif; font-size: .875rem;
+      color: var(--navy); padding: .1rem 0; outline: none; text-align: right; width: 100px;
+      transition: border-color .15s;
+    }
+    .totals-row .tot-input:focus { border-bottom-color: var(--sky); }
+    .totals-row .tot-input::placeholder { color: rgba(14,165,233,.3); font-style: italic; }
+    .totals-total {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: .85rem 1rem; margin-top: .5rem;
+      background: var(--navy); border-radius: 10px;
+    }
+    .totals-total-label {
+      font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: .8rem;
+      letter-spacing: .08em; text-transform: uppercase; color: var(--sky-light);
+    }
+    .total-due {
+      font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: #fff; line-height: 1;
+    }
+
+    /* ── PAYMENT + NOTES ── */
+    .bottom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem; }
+    .payment-methods { display: flex; flex-direction: column; gap: .5rem; margin-top: .25rem; }
+    .pay-method {
+      display: flex; align-items: center; gap: .6rem;
+      font-size: .85rem; color: var(--text-body);
+    }
+    .pay-dot {
+      width: 8px; height: 8px; border-radius: 50%; background: var(--sky); flex-shrink: 0;
+    }
+    .notes-input {
+      width: 100%; min-height: 80px; border: 1.5px solid rgba(14,165,233,.2);
+      border-radius: 8px; padding: .6rem .75rem; font-family: 'Inter', sans-serif;
+      font-size: .85rem; color: var(--navy); outline: none; resize: vertical;
+      transition: border-color .15s; background: #fafcff;
+    }
+    .notes-input:focus { border-color: var(--sky); }
+    .notes-input::placeholder { color: rgba(14,165,233,.35); font-style: italic; }
+
+    /* ── SIGNATURE ── */
+    .sig-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+      margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(14,165,233,.15);
+    }
+    .sig-block label {
+      font-family: 'Montserrat', sans-serif; font-size: .65rem; font-weight: 900;
+      letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted);
+      display: block; margin-bottom: .5rem;
+    }
+    .sig-line {
+      width: 100%; border-bottom: 1.5px solid var(--navy); height: 36px; display: block;
+    }
+    .sig-sub { font-size: .72rem; color: var(--text-muted); margin-top: .3rem; }
+
+    /* ── FOOTER ── */
+    .invoice-footer {
+      background: var(--sky-pale); padding: 1.25rem 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid rgba(14,165,233,.2); flex-wrap: wrap; gap: .75rem;
+    }
+    .invoice-footer p { font-size: .78rem; color: var(--text-muted); line-height: 1.6; }
+    .invoice-footer strong { color: var(--navy); }
+    .paid-stamp {
+      display: none; /* shown via JS */
+      font-family: 'Bebas Neue', sans-serif; font-size: 3rem; color: #16a34a;
+      border: 4px solid #16a34a; border-radius: 8px; padding: .1rem 1rem;
+      opacity: .7; transform: rotate(-8deg); letter-spacing: .1em;
+    }
+
+    /* ── PRINT ── */
+    @media print {
+      body { background: #fff; }
+      .toolbar { display: none; }
+      .page { box-shadow: none; border-radius: 0; margin: 0; max-width: 100%; }
+      .btn-print, .btn-clear, .add-row-btn { display: none; }
+      input, textarea { border-color: transparent !important; }
+      .li-input { border-bottom-color: transparent !important; }
+      .tot-input { border-bottom-color: transparent !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── TOOLBAR ── -->
+<div class="toolbar">
+  <p class="toolbar-hint">Fill in the fields, then <strong>Save as PDF</strong> or print.</p>
+  <div class="toolbar-actions">
+    <button class="btn-clear" onclick="clearForm()">Clear Form</button>
+    <button class="btn-print" onclick="window.print()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      Save as PDF / Print
+    </button>
+  </div>
+</div>
+
+<!-- ── PAGE ── -->
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-brand">
+      <img src="/logo.png" alt="Second City Scrubbers" class="header-logo-img" />
+      <div class="header-brand-text">
+        <div class="header-company">Second City <span>Scrubbers</span></div>
+        <div class="header-tagline">Chicago's Cleaning Professionals</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="header-invoice-label">Invoice</div>
+      <div class="header-meta">
+        <div class="header-field">
+          <label>Invoice #</label>
+          <input class="header-input" id="inv-number" placeholder="SCS-001" />
+        </div>
+        <div class="header-field">
+          <label>Invoice Date</label>
+          <input class="header-input" id="inv-date" type="date" />
+        </div>
+        <div class="header-field">
+          <label>Due Date</label>
+          <input class="header-input" id="inv-due" type="date" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="accent-bar"></div>
+
+  <!-- Body -->
+  <div class="body">
+
+    <!-- Bill From / To -->
+    <div class="parties">
+      <div class="party-block">
+        <div class="party-label">From</div>
+        <div class="party-static">
+          <strong>Second City Scrubbers</strong><br>
+          Chicago, IL<br>
+          (872) 240-6619<br>
+          michel@secondcityscrubbers.com<br>
+          secondcityscrubbers.com
+        </div>
+      </div>
+      <div class="party-block">
+        <div class="party-label">Bill To</div>
+        <div class="field-group">
+          <label>Client Name</label>
+          <input class="field-input" id="client-name" placeholder="Jane Smith" />
+        </div>
+        <div class="field-group">
+          <label>Address</label>
+          <input class="field-input" id="client-address" placeholder="123 Main St, Chicago, IL 60601" />
+        </div>
+        <div class="field-group">
+          <label>Email</label>
+          <input class="field-input" id="client-email" placeholder="jane@example.com" />
+        </div>
+        <div class="field-group">
+          <label>Phone</label>
+          <input class="field-input" id="client-phone" placeholder="(312) 000-0000" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Service Details -->
+    <div class="section-heading">Service Details</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-bottom:1.5rem;">
+      <div class="field-group">
+        <label>Service Type</label>
+        <input class="field-input" id="svc-type" placeholder="Standard Clean" />
+      </div>
+      <div class="field-group">
+        <label>Service Date</label>
+        <input class="field-input" id="svc-date" type="date" />
+      </div>
+      <div class="field-group">
+        <label>Property Size</label>
+        <input class="field-input" id="svc-size" placeholder="2 Bedrooms / 1 Bath" />
+      </div>
+    </div>
+
+    <!-- Line Items -->
+    <div class="section-heading">Line Items</div>
+    <table class="line-items" id="line-table">
+      <thead>
+        <tr>
+          <th style="width:50%;">Description</th>
+          <th style="width:15%;">Qty</th>
+          <th style="width:17%;" class="right">Unit Price</th>
+          <th style="width:18%;" class="right">Amount</th>
+        </tr>
+      </thead>
+      <tbody id="line-body">
+        <!-- rows injected by JS -->
+      </tbody>
+    </table>
+    <button class="add-row-btn" onclick="addRow()">+ Add Line Item</button>
+
+    <!-- Totals -->
+    <div class="totals">
+      <div class="totals-box">
+        <div class="totals-row">
+          <span>Subtotal</span>
+          <span id="subtotal-display">$0.00</span>
+        </div>
+        <div class="totals-row">
+          <label>Discount</label>
+          <input class="tot-input" id="discount-val" placeholder="$0.00" oninput="recalc()" />
+        </div>
+        <div class="totals-row">
+          <label>Tax (if applicable)</label>
+          <input class="tot-input" id="tax-val" placeholder="$0.00" oninput="recalc()" />
+        </div>
+        <div class="totals-total">
+          <span class="totals-total-label">Total Due</span>
+          <span class="total-due" id="total-due-display">$0.00</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Payment + Notes -->
+    <div class="bottom-grid">
+      <div>
+        <div class="section-heading" style="margin-top:1rem;">Payment Methods</div>
+        <div class="payment-methods">
+          <div class="pay-method"><div class="pay-dot"></div> Zelle — (872) 240-6619</div>
+          <div class="pay-method"><div class="pay-dot"></div> Venmo — @SecondCityScrubbers</div>
+          <div class="pay-method"><div class="pay-dot"></div> Cash — Accepted at time of service</div>
+          <div class="pay-method"><div class="pay-dot"></div> Check — Payable to Second City Scrubbers</div>
+        </div>
+      </div>
+      <div>
+        <div class="section-heading" style="margin-top:1rem;">Notes</div>
+        <textarea class="notes-input" id="notes-val" placeholder="Thank you for choosing Second City Scrubbers! Payment is due at time of service. If you have any questions, please call (872) 240-6619."></textarea>
+      </div>
+    </div>
+
+    <!-- Signature -->
+    <div class="sig-row">
+      <div class="sig-block">
+        <label>Client Signature</label>
+        <span class="sig-line"></span>
+        <p class="sig-sub">Signature confirms services were completed to satisfaction.</p>
+      </div>
+      <div class="sig-block">
+        <label>Date</label>
+        <span class="sig-line"></span>
+      </div>
+    </div>
+
+  </div><!-- /body -->
+
+  <!-- Footer -->
+  <div class="invoice-footer">
+    <p>
+      <strong>Second City Scrubbers</strong> &nbsp;·&nbsp; Chicago, IL &nbsp;·&nbsp;
+      (872) 240-6619 &nbsp;·&nbsp; michel@secondcityscrubbers.com &nbsp;·&nbsp;
+      secondcityscrubbers.com
+    </p>
+    <p>Thank you for your business! 🧹</p>
+  </div>
+
+</div><!-- /page -->
+
+<script>
+  // ── Auto invoice number and dates ──
+  (function() {
+    const stored = localStorage.getItem('scs-inv-counter');
+    const num = stored ? parseInt(stored) + 1 : 1;
+    localStorage.setItem('scs-inv-counter', num);
+    document.getElementById('inv-number').value = 'SCS-' + String(num).padStart(3, '0');
+
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('inv-date').value = today;
+    document.getElementById('inv-due').value = today; // due same day (pay at service)
+  })();
+
+  // ── Line item rows ──
+  let rows = [];
+
+  function addRow(desc='', qty='1', price='') {
+    const tbody = document.getElementById('line-body');
+    const id = Date.now();
+    rows.push(id);
+    const tr = document.createElement('tr');
+    tr.id = 'row-' + id;
+    tr.innerHTML = `
+      <td><input class="li-input" placeholder="e.g. Standard Clean — 2BR" oninput="recalc()" data-field="desc" /></td>
+      <td><input class="li-input" type="number" value="${qty}" min="1" style="width:60px;" oninput="recalc()" data-field="qty" /></td>
+      <td class="right"><input class="li-input right" placeholder="0.00" oninput="recalc()" data-field="price" /></td>
+      <td class="right" style="font-weight:600; min-width:80px;" id="amt-${id}">$0.00</td>
+    `;
+    // pre-fill if args passed
+    tr.querySelectorAll('input')[0].value = desc;
+    tr.querySelectorAll('input')[2].value = price;
+    tbody.appendChild(tr);
+    recalc();
+  }
+
+  function recalc() {
+    let sub = 0;
+    rows.forEach(id => {
+      const row = document.getElementById('row-' + id);
+      if (!row) return;
+      const qty   = parseFloat(row.querySelector('[data-field="qty"]').value)   || 0;
+      const price = parseFloat(row.querySelector('[data-field="price"]').value) || 0;
+      const amt   = qty * price;
+      sub += amt;
+      document.getElementById('amt-' + id).textContent = '$' + amt.toFixed(2);
+    });
+
+    const discount = parseFloat((document.getElementById('discount-val').value || '0').replace(/[^0-9.]/g,'')) || 0;
+    const tax      = parseFloat((document.getElementById('tax-val').value      || '0').replace(/[^0-9.]/g,'')) || 0;
+    const total    = Math.max(0, sub - discount + tax);
+
+    document.getElementById('subtotal-display').textContent = '$' + sub.toFixed(2);
+    document.getElementById('total-due-display').textContent = '$' + total.toFixed(2);
+  }
+
+  function clearForm() {
+    if (!confirm('Clear all fields and start a new invoice?')) return;
+    document.querySelectorAll('input:not([type="radio"]), textarea').forEach(el => {
+      if (el.type === 'date') el.value = '';
+      else el.value = '';
+    });
+    document.getElementById('line-body').innerHTML = '';
+    rows = [];
+    recalc();
+    // Reset invoice number
+    const stored = localStorage.getItem('scs-inv-counter');
+    const num = stored ? parseInt(stored) + 1 : 1;
+    localStorage.setItem('scs-inv-counter', num);
+    document.getElementById('inv-number').value = 'SCS-' + String(num).padStart(3, '0');
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('inv-date').value = today;
+    document.getElementById('inv-due').value = today;
+    addRow();
+  }
+
+  // Start with one blank row
+  addRow();
+</script>
+</body>
+</html>
