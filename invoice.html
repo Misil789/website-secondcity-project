@@ -217,10 +217,24 @@
       letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted);
       display: block; margin-bottom: .5rem;
     }
-    .sig-line {
-      width: 100%; border-bottom: 1.5px solid var(--navy); height: 36px; display: block;
+    .sig-canvas-wrap { position: relative; }
+    .sig-canvas {
+      width: 100%; height: 90px; border-bottom: 1.5px solid var(--navy);
+      border-top: none; border-left: none; border-right: none;
+      background: #fafcff; cursor: crosshair; display: block; touch-action: none;
     }
+    .sig-canvas.signed { background: transparent; }
+    .sig-clear-btn {
+      position: absolute; top: 4px; right: 0;
+      background: none; border: none; font-size: .65rem; color: var(--text-muted);
+      cursor: pointer; font-family: 'Inter', sans-serif; padding: 0;
+    }
+    .sig-clear-btn:hover { color: var(--red); }
     .sig-sub { font-size: .72rem; color: var(--text-muted); margin-top: .3rem; }
+    @media print {
+      .sig-clear-btn { display: none; }
+      .sig-canvas { background: transparent !important; border-bottom-color: #000; }
+    }
 
     /* ── FOOTER ── */
     .invoice-footer {
@@ -393,9 +407,7 @@
         <div class="section-heading" style="margin-top:1rem;">Payment Methods</div>
         <div class="payment-methods">
           <div class="pay-method"><div class="pay-dot"></div> Zelle — (872) 240-6619</div>
-          <div class="pay-method"><div class="pay-dot"></div> Venmo — @SecondCityScrubbers</div>
           <div class="pay-method"><div class="pay-dot"></div> Cash — Accepted at time of service</div>
-          <div class="pay-method"><div class="pay-dot"></div> Check — Payable to Second City Scrubbers</div>
         </div>
       </div>
       <div>
@@ -408,12 +420,16 @@
     <div class="sig-row">
       <div class="sig-block">
         <label>Client Signature</label>
-        <span class="sig-line"></span>
-        <p class="sig-sub">Signature confirms services were completed to satisfaction.</p>
+        <div class="sig-canvas-wrap">
+          <canvas class="sig-canvas" id="sig-canvas" width="500" height="90"></canvas>
+          <button class="sig-clear-btn" onclick="clearSig()" type="button">Clear</button>
+        </div>
+        <p class="sig-sub">Sign above — confirms services were completed to satisfaction.</p>
       </div>
       <div class="sig-block">
-        <label>Date</label>
-        <span class="sig-line"></span>
+        <label>Date Signed</label>
+        <input class="field-input" id="sig-date" type="date" style="margin-top:.5rem;" />
+        <p class="sig-sub" style="margin-top:.5rem;">Michel Uzcha — Second City Scrubbers</p>
       </div>
     </div>
 
@@ -508,6 +524,70 @@
 
   // Start with one blank row
   addRow();
+
+  // ── Signature pad ──
+  (function() {
+    const canvas = document.getElementById('sig-canvas');
+    const ctx = canvas.getContext('2d');
+    let drawing = false;
+    let lastX = 0, lastY = 0;
+
+    function getPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      if (e.touches) {
+        return {
+          x: (e.touches[0].clientX - rect.left) * scaleX,
+          y: (e.touches[0].clientY - rect.top) * scaleY
+        };
+      }
+      return {
+        x: (e.clientX - rect.left) * scaleX,
+        y: (e.clientY - rect.top) * scaleY
+      };
+    }
+
+    function startDraw(e) {
+      e.preventDefault();
+      drawing = true;
+      const pos = getPos(e);
+      lastX = pos.x; lastY = pos.y;
+      canvas.classList.add('signed');
+    }
+    function draw(e) {
+      if (!drawing) return;
+      e.preventDefault();
+      const pos = getPos(e);
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(pos.x, pos.y);
+      ctx.strokeStyle = '#0c2340';
+      ctx.lineWidth = 2;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.stroke();
+      lastX = pos.x; lastY = pos.y;
+    }
+    function stopDraw() { drawing = false; }
+
+    canvas.addEventListener('mousedown', startDraw);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', stopDraw);
+    canvas.addEventListener('mouseleave', stopDraw);
+    canvas.addEventListener('touchstart', startDraw, { passive: false });
+    canvas.addEventListener('touchmove', draw, { passive: false });
+    canvas.addEventListener('touchend', stopDraw);
+
+    // Set today as sig date
+    document.getElementById('sig-date').value = new Date().toISOString().split('T')[0];
+  })();
+
+  function clearSig() {
+    const canvas = document.getElementById('sig-canvas');
+    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+    canvas.classList.remove('signed');
+  }
 </script>
 </body>
 </html>
