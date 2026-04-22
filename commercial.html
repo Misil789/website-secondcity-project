@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Commercial & Property Management Cleaning | Second City Scrubbers Chicago</title>
+  <meta name="description" content="Reliable commercial cleaning for property managers, offices, and multi-unit buildings in Chicago. Recurring contracts, flat rates, same-day availability. Call (872) 240-6619." />
+
+  <link rel="canonical" href="https://www.secondcityscrubbers.com/commercial" />
+  <meta property="og:title" content="Commercial Cleaning for Property Managers | Second City Scrubbers" />
+  <meta property="og:description" content="Reliable recurring cleaning for Chicago property managers, offices, and multi-unit buildings. Flat rates, no contracts, same-day available." />
+  <meta property="og:url" content="https://www.secondcityscrubbers.com/commercial" />
+  <meta property="og:image" content="https://www.secondcityscrubbers.com/logo.png" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --sky:       #0ea5e9;
+      --sky-light: #38bdf8;
+      --sky-pale:  #e0f2fe;
+      --sky-ghost: #f0fbff;
+      --red:       #dc2626;
+      --red-hover: #b91c1c;
+      --navy:      #0c2340;
+      --navy-2:    #0f2d50;
+      --text-body: #1e3a5a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: var(--sky-ghost); color: var(--navy); overflow-x: hidden; }
+
+    /* NAV */
+    nav { background: #fff; border-bottom: 1px solid rgba(14,165,233,.15); padding: .9rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 16px rgba(12,35,64,.07); }
+    .nav-logo { display: flex; align-items: center; gap: .6rem; text-decoration: none; }
+    .nav-logo img { height: 42px; }
+    .nav-logo span { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: .08em; color: var(--navy); }
+    .nav-cta { background: var(--red); color: #fff; padding: .5rem 1.25rem; border-radius: 999px; font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: .8rem; letter-spacing: .04em; text-decoration: none; transition: background .2s, transform .15s; }
+    .nav-cta:hover { background: var(--red-hover); transform: translateY(-1px); }
+    .nav-back { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: .8rem; color: var(--text-body); text-decoration: none; letter-spacing: .02em; }
+    .nav-back:hover { color: var(--sky); }
+
+    /* HERO */
+    .hero { background: linear-gradient(135deg, #0c2340 0%, #0e3a6e 55%, #0c2340 100%); padding: 6rem 2rem 5rem; position: relative; overflow: hidden; }
+    .hero::before { content:''; position:absolute; top:-100px; right:-100px; width:500px; height:500px; background:radial-gradient(circle, rgba(14,165,233,.2) 0%, transparent 70%); border-radius:50%; pointer-events:none; }
+    .hero::after { content:''; position:absolute; bottom:-80px; left:-80px; width:380px; height:380px; background:radial-gradient(circle, rgba(0,176,221,.15) 0%, transparent 70%); border-radius:50%; pointer-events:none; }
+    .hero-inner { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
+    .hero-tag { display: inline-block; background: rgba(14,165,233,.18); border: 1px solid rgba(14,165,233,.35); color: var(--sky-light); font-family: 'Montserrat', sans-serif; font-size: .72rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; padding: .35rem .9rem; border-radius: 999px; margin-bottom: 1.5rem; }
+    .hero h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 7vw, 5.5rem); color: #fff; line-height: 1; letter-spacing: .03em; margin-bottom: 1.25rem; }
+    .hero h1 span { color: var(--sky-light); }
+    .hero p { font-size: clamp(1rem, 2vw, 1.2rem); color: rgba(255,255,255,.8); line-height: 1.7; max-width: 620px; margin-bottom: 2.5rem; }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary { background: var(--red); color: #fff; padding: .9rem 2rem; border-radius: 12px; font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: .9rem; text-decoration: none; letter-spacing: .03em; transition: background .2s, transform .15s, box-shadow .2s; box-shadow: 0 6px 24px rgba(220,38,38,.35); }
+    .btn-primary:hover { background: var(--red-hover); transform: translateY(-2px); box-shadow: 0 10px 32px rgba(220,38,38,.4); }
+    .btn-secondary { background: rgba(255,255,255,.1); border: 1.5px solid rgba(255,255,255,.3); color: #fff; padding: .9rem 2rem; border-radius: 12px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: .9rem; text-decoration: none; transition: background .2s, border-color .2s; }
+    .btn-secondary:hover { background: rgba(255,255,255,.18); border-color: rgba(255,255,255,.5); }
+
+    /* TRUST BAR */
+    .trust-bar { background: #fff; border-bottom: 1px solid rgba(14,165,233,.12); padding: 1.25rem 2rem; }
+    .trust-bar-inner { max-width: 960px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem 3rem; }
+    .trust-item { display: flex; align-items: center; gap: .5rem; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: .78rem; color: var(--text-body); letter-spacing: .02em; }
+    .trust-item span:first-child { font-size: 1.1rem; }
+
+    /* SECTIONS */
+    section { padding: 5rem 2rem; }
+    .section-inner { max-width: 960px; margin: 0 auto; }
+    .section-tag { display: inline-block; background: rgba(14,165,233,.1); border: 1px solid rgba(14,165,233,.25); color: var(--sky); font-family: 'Montserrat', sans-serif; font-size: .7rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; padding: .3rem .85rem; border-radius: 999px; margin-bottom: 1rem; }
+    h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.4rem, 5vw, 3.8rem); color: var(--navy); letter-spacing: .04em; line-height: 1.05; margin-bottom: .75rem; }
+    h2.light { color: #fff; }
+    .section-sub { font-size: 1.05rem; color: #4a7096; line-height: 1.7; max-width: 600px; margin-bottom: 3rem; }
+    .section-sub.light { color: rgba(255,255,255,.75); }
+
+    /* WHO WE SERVE */
+    .serve-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+    .serve-card { background: #fff; border-radius: 18px; padding: 1.75rem; border: 1.5px solid rgba(14,165,233,.12); box-shadow: 0 4px 20px rgba(12,35,64,.06); transition: transform .2s, box-shadow .2s, border-color .2s; }
+    .serve-card:hover { transform: translateY(-4px); box-shadow: 0 10px 36px rgba(12,35,64,.1); border-color: rgba(14,165,233,.3); }
+    .serve-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .serve-card h3 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1rem; color: var(--navy); margin-bottom: .5rem; }
+    .serve-card p { font-size: .88rem; color: #4a7096; line-height: 1.6; }
+
+    /* WHY US */
+    .why-section { background: linear-gradient(135deg, #0c2340 0%, #0e3a6e 55%, #0c2340 100%); }
+    .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
+    .why-card { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); border-radius: 18px; padding: 1.75rem; }
+    .why-card .why-num { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; color: var(--sky-light); line-height: 1; margin-bottom: .5rem; }
+    .why-card h3 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: .95rem; color: #fff; margin-bottom: .4rem; }
+    .why-card p { font-size: .85rem; color: rgba(255,255,255,.7); line-height: 1.6; }
+
+    /* SERVICES */
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; }
+    .svc-item { display: flex; align-items: flex-start; gap: 1rem; background: #fff; border-radius: 14px; padding: 1.4rem; border: 1.5px solid rgba(14,165,233,.1); box-shadow: 0 2px 12px rgba(12,35,64,.05); }
+    .svc-icon { font-size: 1.6rem; flex-shrink: 0; margin-top: .1rem; }
+    .svc-item h3 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: .9rem; color: var(--navy); margin-bottom: .3rem; }
+    .svc-item p { font-size: .82rem; color: #4a7096; line-height: 1.55; }
+
+    /* PROCESS */
+    .process-section { background: #fff; }
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; position: relative; }
+    .step { text-align: center; }
+    .step-num { width: 52px; height: 52px; background: linear-gradient(135deg, var(--sky) 0%, #0284c7 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; color: #fff; margin: 0 auto 1rem; box-shadow: 0 6px 20px rgba(14,165,233,.35); }
+    .step h3 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: .9rem; color: var(--navy); margin-bottom: .4rem; }
+    .step p { font-size: .82rem; color: #4a7096; line-height: 1.6; }
+
+    /* CONTACT FORM */
+    .form-section { background: linear-gradient(160deg, #e8f7fd 0%, #f0fbff 50%, #e0f5fc 100%); }
+    .form-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    @media(max-width: 767px) { .form-wrap { grid-template-columns: 1fr; gap: 2.5rem; } }
+    .form-left h2 { margin-bottom: .75rem; }
+    .form-left p { font-size: .95rem; color: #4a7096; line-height: 1.7; margin-bottom: 1.5rem; }
+    .contact-list { list-style: none; display: flex; flex-direction: column; gap: .75rem; }
+    .contact-list li { display: flex; align-items: center; gap: .75rem; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: .85rem; color: var(--text-body); }
+    .contact-list li span:first-child { font-size: 1.2rem; }
+    .contact-list a { color: var(--sky); text-decoration: none; }
+    .contact-list a:hover { text-decoration: underline; }
+
+    form { background: #fff; border-radius: 20px; padding: 2.25rem; box-shadow: 0 8px 40px rgba(12,35,64,.1); border: 1.5px solid rgba(14,165,233,.12); display: flex; flex-direction: column; gap: 1.1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media(max-width: 520px) { .form-row { grid-template-columns: 1fr; } }
+    label { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: .75rem; color: var(--navy); letter-spacing: .04em; text-transform: uppercase; display: block; margin-bottom: .35rem; }
+    input, select, textarea { width: 100%; padding: .75rem 1rem; border: 1.5px solid rgba(14,165,233,.2); border-radius: 10px; font-family: 'Inter', sans-serif; font-size: .9rem; color: var(--navy); background: var(--sky-ghost); outline: none; transition: border-color .2s, box-shadow .2s; }
+    input:focus, select:focus, textarea:focus { border-color: var(--sky); box-shadow: 0 0 0 3px rgba(14,165,233,.12); }
+    textarea { resize: vertical; min-height: 110px; }
+    .form-submit { background: var(--red); color: #fff; border: none; padding: 1rem; border-radius: 12px; font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: .9rem; letter-spacing: .04em; cursor: pointer; transition: background .2s, transform .15s, box-shadow .2s; box-shadow: 0 6px 24px rgba(220,38,38,.3); }
+    .form-submit:hover { background: var(--red-hover); transform: translateY(-2px); box-shadow: 0 10px 32px rgba(220,38,38,.38); }
+    .form-note { font-size: .75rem; color: #4a7096; text-align: center; }
+
+    /* FOOTER */
+    footer { background: var(--navy); padding: 2.5rem 2rem; text-align: center; }
+    footer p { font-family: 'Montserrat', sans-serif; font-size: .8rem; color: rgba(255,255,255,.5); }
+    footer a { color: var(--sky-light); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">
+    <img src="logo.png" alt="Second City Scrubbers logo" />
+    <span>Second City Scrubbers</span>
+  </a>
+  <div style="display:flex;align-items:center;gap:1.5rem;">
+    <a href="/" class="nav-back">← Back to Home</a>
+    <a href="tel:8722406619" class="nav-back">📞 (872) 240-6619</a>
+    <a href="#contact" class="nav-cta">Get a Quote</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">Chicago Commercial Cleaning</div>
+    <h1>WE KEEP YOUR<br><span>PROPERTIES SPOTLESS</span><br>SO YOU DON'T HAVE TO</h1>
+    <p>Reliable, recurring cleaning for property managers, offices, and multi-unit buildings across Chicago. One call — we handle the rest.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">Get a Free Quote →</a>
+      <a href="tel:8722406619" class="btn-secondary">📞 Call (872) 240-6619</a>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-bar-inner">
+    <div class="trust-item"><span>📍</span><span>Chicago Owned & Operated</span></div>
+    <div class="trust-item"><span>💰</span><span>Flat Rates — No Surprises</span></div>
+    <div class="trust-item"><span>📅</span><span>Flexible Scheduling</span></div>
+    <div class="trust-item"><span>✅</span><span>No Long-Term Contracts</span></div>
+    <div class="trust-item"><span>⚡</span><span>Same-Day Available</span></div>
+  </div>
+</div>
+
+<!-- WHO WE SERVE -->
+<section style="background:var(--sky-ghost);">
+  <div class="section-inner">
+    <div class="section-tag">Who We Work With</div>
+    <h2>BUILT FOR PEOPLE WHO<br>MANAGE MULTIPLE SPACES</h2>
+    <p class="section-sub">Whether you manage 5 units or 50, we can build a recurring schedule that fits your portfolio.</p>
+    <div class="serve-grid">
+      <div class="serve-card">
+        <div class="serve-icon">🏢</div>
+        <h3>Property Managers</h3>
+        <p>Unit turnovers between tenants, common area maintenance, and scheduled deep cleans. We work around your move-in/out dates.</p>
+      </div>
+      <div class="serve-card">
+        <div class="serve-icon">🏠</div>
+        <h3>Airbnb & Short-Term Rental Hosts</h3>
+        <p>Same-day turnovers, linen reset, restocking checklist. We sync to your booking calendar so you never have to chase us.</p>
+      </div>
+      <div class="serve-card">
+        <div class="serve-icon">🖥️</div>
+        <h3>Office & Co-Working Spaces</h3>
+        <p>Daily, weekly, or after-hours office cleaning. Desks, bathrooms, kitchens, and common areas — handled consistently.</p>
+      </div>
+      <div class="serve-card">
+        <div class="serve-icon">🏗️</div>
+        <h3>Contractors & Developers</h3>
+        <p>Post-construction cleanup before handoff. We remove dust, debris, and construction residue — space move-in ready.</p>
+      </div>
+      <div class="serve-card">
+        <div class="serve-icon">🏪</div>
+        <h3>Retail & Small Business</h3>
+        <p>Before open or after close — we clean on your schedule so your space is always customer-ready.</p>
+      </div>
+      <div class="serve-card">
+        <div class="serve-icon">🏘️</div>
+        <h3>HOA & Common Areas</h3>
+        <p>Lobbies, hallways, laundry rooms, and shared spaces kept clean on a recurring schedule your residents will notice.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why-section">
+  <div class="section-inner">
+    <div class="section-tag" style="background:rgba(14,165,233,.18);border-color:rgba(14,165,233,.35);color:var(--sky-light);">Why Choose Us</div>
+    <h2 class="light">WHAT MAKES US DIFFERENT</h2>
+    <p class="section-sub light">We're not a franchise. We're Chicago locals who show up, do the work, and keep it simple.</p>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-num">01</div>
+        <h3>Flat Rates — Always</h3>
+        <p>We quote a flat price upfront. No hourly surprises, no add-on fees. You know exactly what you're paying before we start.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-num">02</div>
+        <h3>Confirmed Within 2 Hours</h3>
+        <p>Send us a request and we confirm your booking within 2 hours. No chasing, no waiting days for a reply.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-num">03</div>
+        <h3>No Long-Term Contracts</h3>
+        <p>Month-to-month. If we're not delivering, you walk. We keep your business by doing great work — not by locking you in.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-num">04</div>
+        <h3>Chicago Local</h3>
+        <p>We know Chicago properties — the layouts, the seasons, the standards. Not a national franchise, not a call center. Just us.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section style="background:#fff;">
+  <div class="section-inner">
+    <div class="section-tag">What We Handle</div>
+    <h2>EVERYTHING YOUR<br>PROPERTY NEEDS</h2>
+    <p class="section-sub">We handle all types of commercial and multi-unit cleaning so you don't need multiple vendors.</p>
+    <div class="services-grid">
+      <div class="svc-item">
+        <span class="svc-icon">🔄</span>
+        <div>
+          <h3>Recurring Unit Turnovers</h3>
+          <p>Fast, thorough cleanings between tenants. Move-out sweep, move-in reset — priced per unit.</p>
+        </div>
+      </div>
+      <div class="svc-item">
+        <span class="svc-icon">🧹</span>
+        <div>
+          <h3>Common Area Maintenance</h3>
+          <p>Lobbies, hallways, elevators, laundry rooms, and shared bathrooms — scheduled weekly or bi-weekly.</p>
+        </div>
+      </div>
+      <div class="svc-item">
+        <span class="svc-icon">💼</span>
+        <div>
+          <h3>Office Deep Cleans</h3>
+          <p>Full office reset: desks, chairs, floors, kitchenette, and bathrooms. Great for quarterly refreshes.</p>
+        </div>
+      </div>
+      <div class="svc-item">
+        <span class="svc-icon">🏗️</span>
+        <div>
+          <h3>Post-Construction Cleanup</h3>
+          <p>Dust, drywall debris, and construction residue removed. Space ready for photos or occupancy.</p>
+        </div>
+      </div>
+      <div class="svc-item">
+        <span class="svc-icon">🪟</span>
+        <div>
+          <h3>Window Cleaning</h3>
+          <p>Interior and exterior. Streak-free on every pane — available as a standalone or add-on service.</p>
+        </div>
+      </div>
+      <div class="svc-item">
+        <span class="svc-icon">📋</span>
+        <div>
+          <h3>Custom Recurring Plans</h3>
+          <p>We build a schedule around your portfolio size, budget, and cleaning frequency. Invoiced monthly.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process-section">
+  <div class="section-inner">
+    <div class="section-tag">How It Works</div>
+    <h2>SIMPLE FROM DAY ONE</h2>
+    <p class="section-sub">No complicated onboarding. We get you set up fast and stay consistent.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Tell Us About Your Property</h3>
+        <p>Fill out the form below or call us. We'll ask a few questions about your spaces and frequency.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Get a Flat Quote</h3>
+        <p>We send you a clear, itemized quote within 24 hours. No estimates — a real number you can budget around.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>We Build Your Schedule</h3>
+        <p>We set up a recurring plan around your calendar. Move-in dates, busy seasons — we work around you.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h3>Sit Back & Invoice Monthly</h3>
+        <p>We show up, we clean, you get invoiced at the end of the month. Simple as that.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT FORM -->
+<section class="form-section" id="contact">
+  <div class="section-inner">
+    <div class="form-wrap">
+      <div class="form-left">
+        <div class="section-tag">Get a Quote</div>
+        <h2>LET'S TALK ABOUT<br>YOUR PROPERTY</h2>
+        <p>Fill out the form and we'll get back to you within a few hours with a flat quote. No commitment, no pressure.</p>
+        <ul class="contact-list">
+          <li><span>📞</span><a href="tel:8722406619">(872) 240-6619</a></li>
+          <li><span>📧</span><a href="mailto:michel@secondcityscrubbers.com">michel@secondcityscrubbers.com</a></li>
+          <li><span>🌐</span><a href="https://secondcityscrubbers.com">secondcityscrubbers.com</a></li>
+          <li><span>📍</span><span>Serving all Chicago neighborhoods & suburbs</span></li>
+        </ul>
+      </div>
+
+      <form action="https://formsubmit.co/michel.uzhca@icloud.com" method="POST">
+        <input type="hidden" name="_subject" value="New Commercial Cleaning Inquiry — Second City Scrubbers" />
+        <input type="hidden" name="_next" value="https://secondcityscrubbers.com/commercial?sent=true" />
+        <input type="hidden" name="_captcha" value="false" />
+
+        <div class="form-row">
+          <div>
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" placeholder="Jane Smith" required />
+          </div>
+          <div>
+            <label for="company">Company / Property Name</label>
+            <input type="text" id="company" name="company" placeholder="Lincoln Park Realty" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="jane@company.com" required />
+          </div>
+          <div>
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone" placeholder="(312) 555-0100" />
+          </div>
+        </div>
+
+        <div>
+          <label for="type">Type of Property</label>
+          <select id="type" name="property_type" required>
+            <option value="" disabled selected>Select one...</option>
+            <option>Multi-unit residential building</option>
+            <option>Airbnb / Short-term rental</option>
+            <option>Office / Co-working space</option>
+            <option>Retail / Small business</option>
+            <option>HOA / Common areas</option>
+            <option>Post-construction site</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="units">Number of Units / Square Footage</label>
+          <input type="text" id="units" name="units_sqft" placeholder="e.g. 12 units, ~800 sq ft each" />
+        </div>
+
+        <div>
+          <label for="freq">How Often Do You Need Cleaning?</label>
+          <select id="freq" name="frequency">
+            <option value="" disabled selected>Select one...</option>
+            <option>One-time / As needed</option>
+            <option>Weekly</option>
+            <option>Bi-weekly</option>
+            <option>Monthly</option>
+            <option>After every tenant turnover</option>
+            <option>Other / Not sure</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="message">Anything else we should know?</label>
+          <textarea id="message" name="message" placeholder="Tell us about your property, any special requirements, or questions..."></textarea>
+        </div>
+
+        <button type="submit" class="form-submit">Send My Quote Request →</button>
+        <p class="form-note">We respond within a few hours. No spam, no sales calls — just a straight quote.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 Second City Scrubbers · Chicago, IL · <a href="tel:8722406619">(872) 240-6619</a> · <a href="/">Back to Home</a></p>
+</footer>
+
+<script>
+  // Show thank you message if redirected back after form submit
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('sent') === 'true') {
+    const form = document.querySelector('form');
+    form.innerHTML = '<div style="text-align:center;padding:3rem 1rem;"><div style="font-size:3rem;margin-bottom:1rem;">✅</div><h3 style="font-family:Bebas Neue,sans-serif;font-size:2rem;color:#0c2340;margin-bottom:.5rem;">GOT IT!</h3><p style="font-family:Inter,sans-serif;color:#4a7096;line-height:1.7;">Thanks for reaching out. We\'ll have a quote ready for you within a few hours.</p></div>';
+  }
+</script>
+
+</body>
+</html>
