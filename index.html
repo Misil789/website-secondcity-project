@@ -2892,12 +2892,10 @@
           <div class="wwc-item addon">Dishes washed & put away</div>
           <div class="wwc-item addon">Exterior window cleaning</div>
           <div class="wwc-item addon">Wall washing</div>
-          <div class="wwc-item addon">Garage sweep & wipe-down</div>
           <div class="wwc-item addon">Patio / balcony sweep</div>
           <div class="wwc-item addon">Post-party cleanup</div>
           <div class="wwc-item addon">Carpet steam cleaning</div>
           <div class="wwc-item addon">Green / eco product upgrade</div>
-          <div class="wwc-item addon">Basement cleaning</div>
           <div class="wwc-item addon">Move-in / move-out deep package</div>
         </div>
         <p style="font-size:.75rem;color:var(--text-muted);margin-top:1.25rem;line-height:1.7;">Add-ons are priced per service. Mention them in the <strong style="color:var(--navy);">Special Requests</strong> field when booking and we'll include a quote.</p>
@@ -3746,7 +3744,7 @@
     <!-- Add-ons note -->
     <div class="reveal" style="margin-top:2rem; display:flex; align-items:center; gap:.75rem; background:var(--sky-ghost); border:1px solid rgba(14,165,233,.15); border-radius:14px; padding:1rem 1.5rem;">
       <span style="font-size:1.5rem; flex-shrink:0;">✦</span>
-      <p style="font-size:.85rem; color:var(--text-body); line-height:1.6;"><strong style="color:var(--navy);">Add-on services available upon request</strong> — including fridge & oven interior, laundry, dishes, garage, and more. Just mention it when booking and we'll include a custom quote.</p>
+      <p style="font-size:.85rem; color:var(--text-body); line-height:1.6;"><strong style="color:var(--navy);">Add-on services available upon request</strong> — including fridge & oven interior, laundry, dishes, and more. Just mention it when booking and we'll include a custom quote.</p>
     </div>
 
     <!-- Commercial -->
@@ -4194,12 +4192,6 @@
               </label>
               <label class="addon-tile">
                 <input type="checkbox" name="addon" value="Inside Cabinets (+$45)" onchange="updateAddonTotal()"> <span class="addon-icon">🗄️</span> <span class="addon-name">Inside Cabinets</span> <span class="addon-price">+$45</span>
-              </label>
-              <label class="addon-tile">
-                <input type="checkbox" name="addon" value="Garage Sweep (+$60)" onchange="updateAddonTotal()"> <span class="addon-icon">🚗</span> <span class="addon-name">Garage Sweep</span> <span class="addon-price">+$60</span>
-              </label>
-              <label class="addon-tile">
-                <input type="checkbox" name="addon" value="Basement (+$65)" onchange="updateAddonTotal()"> <span class="addon-icon">🏚️</span> <span class="addon-name">Basement</span> <span class="addon-price">+$65</span>
               </label>
             </div>
           </div>
@@ -5245,8 +5237,6 @@
     'Interior Windows (+$55)': 55,
     'Laundry Fold (+$40)': 40,
     'Inside Cabinets (+$45)': 45,
-    'Garage Sweep (+$60)': 60,
-    'Basement (+$65)': 65,
   };
   function getAddonTotal() {
     let total = 0;
