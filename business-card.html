@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Business Cards — Second City Scrubbers</title>
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --sky: #0ea5e9; --sky-light: #38bdf8; --red: #dc2626; --navy: #0c2340;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #f0f4f8; color: var(--navy); }
+
+    .toolbar {
+      max-width: 900px; margin: 2rem auto 1rem; padding: 0 1rem;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    }
+    .toolbar h1 { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: .06em; color: var(--navy); }
+    .toolbar p { font-size: .82rem; color: #4a7096; margin-top: .2rem; }
+    .btn-print {
+      background: var(--navy); color: #fff; font-family: 'Montserrat', sans-serif;
+      font-weight: 800; font-size: .82rem; letter-spacing: .04em; padding: .65rem 1.5rem;
+      border-radius: 10px; border: none; cursor: pointer; display: flex; align-items: center; gap: .5rem;
+      transition: background .18s, transform .12s;
+    }
+    .btn-print:hover { background: var(--sky); transform: translateY(-1px); }
+
+    /* Sheet */
+    .sheet {
+      max-width: 900px; margin: 0 auto 3rem; background: #fff;
+      border-radius: 16px; box-shadow: 0 4px 32px rgba(12,35,64,.1);
+      padding: 2.5rem; display: flex; flex-direction: column; gap: 2.5rem;
+    }
+    .sheet-label {
+      font-family: 'Montserrat', sans-serif; font-size: .7rem; font-weight: 800;
+      letter-spacing: .12em; text-transform: uppercase; color: #4a7096; margin-bottom: 1rem;
+    }
+
+    /* Card grid — 2 per row */
+    .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+
+    /* Card dimensions: 3.5" x 2" → at 96dpi = 336 x 192px. Using 2x scale = 672 x 384 */
+    .card {
+      width: 100%; aspect-ratio: 3.5 / 2; border-radius: 12px; overflow: hidden;
+      position: relative; box-shadow: 0 4px 20px rgba(12,35,64,.15);
+    }
+
+    /* ── FRONT ── */
+    .card-front {
+      background: linear-gradient(135deg, #0c2340 0%, #0e3a6e 55%, #0c2340 100%);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.5rem 2rem; height: 100%; position: relative; overflow: hidden;
+    }
+    .card-front::before {
+      content: ''; position: absolute; top: -40%; right: -15%;
+      width: 70%; height: 180%; border-radius: 50%;
+      background: radial-gradient(circle, rgba(14,165,233,.18) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .card-front-left { position: relative; z-index: 1; }
+    .card-company {
+      font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; color: #fff;
+      letter-spacing: .06em; line-height: 1; margin-bottom: .2rem;
+    }
+    .card-company span { color: var(--sky-light); }
+    .card-tagline {
+      font-family: 'Montserrat', sans-serif; font-size: .42rem; font-weight: 700;
+      color: var(--sky-light); letter-spacing: .12em; text-transform: uppercase;
+      margin-bottom: .7rem;
+    }
+    .card-divider { width: 28px; height: 2px; background: var(--red); margin-bottom: .7rem; border-radius: 2px; }
+    .card-front-contact { display: flex; flex-direction: column; gap: .2rem; }
+    .card-front-contact span {
+      font-size: .45rem; color: rgba(255,255,255,.8); font-family: 'Montserrat', sans-serif; font-weight: 600;
+    }
+    .card-logo {
+      position: relative; z-index: 1;
+      width: 28%; aspect-ratio: 1;
+      border-radius: 50%; object-fit: cover;
+      border: 2px solid rgba(255,255,255,.15);
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,.3));
+    }
+
+    /* ── BACK ── */
+    .card-back {
+      background: #fff; border: 2px solid #e0f2fe;
+      display: flex; align-items: stretch; height: 100%;
+    }
+    .card-back-accent { width: 6px; background: linear-gradient(180deg, var(--red) 0%, var(--sky) 100%); flex-shrink: 0; }
+    .card-back-body { flex: 1; padding: 1rem 1.25rem; display: flex; flex-direction: column; justify-content: space-between; }
+    .card-back-top { display: flex; align-items: center; gap: .6rem; margin-bottom: .5rem; }
+    .card-back-logo { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
+    .card-back-name {
+      font-family: 'Bebas Neue', sans-serif; font-size: .9rem; color: var(--navy); letter-spacing: .05em;
+    }
+    .card-services { display: flex; flex-wrap: wrap; gap: .25rem; margin-bottom: .5rem; }
+    .card-svc-tag {
+      font-family: 'Montserrat', sans-serif; font-size: .38rem; font-weight: 700;
+      background: #e0f2fe; color: var(--sky); padding: .15rem .45rem;
+      border-radius: 999px; letter-spacing: .05em; text-transform: uppercase;
+    }
+    .card-back-contacts { display: flex; flex-direction: column; gap: .18rem; }
+    .card-back-contacts span {
+      font-size: .42rem; color: #4a7096; font-family: 'Inter', sans-serif; display: flex; align-items: center; gap: .3rem;
+    }
+    .card-back-contacts strong { color: var(--navy); font-weight: 600; }
+    .card-back-website {
+      font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: .45rem;
+      color: var(--sky); letter-spacing: .04em;
+    }
+
+    /* Print styles */
+    @media print {
+      body { background: #fff; }
+      .toolbar { display: none; }
+      .sheet { box-shadow: none; border-radius: 0; padding: 1cm; margin: 0; max-width: 100%; }
+      .card { box-shadow: 0 0 0 1px #ccc; }
+      .card-grid { gap: .5cm; }
+      .sheet-section + .sheet-section { margin-top: .75cm; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="toolbar">
+  <div>
+    <h1>Business Cards</h1>
+    <p>Print on cardstock — cut along edges. Standard 3.5" × 2".</p>
+  </div>
+  <button class="btn-print" onclick="window.print()">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+    Print / Save as PDF
+  </button>
+</div>
+
+<div class="sheet">
+
+  <!-- FRONT CARDS -->
+  <div class="sheet-section">
+    <p class="sheet-label">Front Side — Print 2 per row, 4 total on one sheet</p>
+    <div class="card-grid">
+      <!-- Card Front x4 -->
+      <div class="card">
+        <div class="card-front">
+          <div class="card-front-left">
+            <div class="card-company">Second City <span>Scrubbers</span></div>
+            <div class="card-tagline">Chicago's Cleaning Professionals</div>
+            <div class="card-divider"></div>
+            <div class="card-front-contact">
+              <span>📞 (872) 240-6619</span>
+              <span>✉ michel@secondcityscrubbers.com</span>
+              <span>🌐 secondcityscrubbers.com</span>
+              <span>📍 Serving All Chicago Neighborhoods</span>
+            </div>
+          </div>
+          <img src="logo.png" alt="Logo" class="card-logo" />
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-front">
+          <div class="card-front-left">
+            <div class="card-company">Second City <span>Scrubbers</span></div>
+            <div class="card-tagline">Chicago's Cleaning Professionals</div>
+            <div class="card-divider"></div>
+            <div class="card-front-contact">
+              <span>📞 (872) 240-6619</span>
+              <span>✉ michel@secondcityscrubbers.com</span>
+              <span>🌐 secondcityscrubbers.com</span>
+              <span>📍 Serving All Chicago Neighborhoods</span>
+            </div>
+          </div>
+          <img src="logo.png" alt="Logo" class="card-logo" />
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-front">
+          <div class="card-front-left">
+            <div class="card-company">Second City <span>Scrubbers</span></div>
+            <div class="card-tagline">Chicago's Cleaning Professionals</div>
+            <div class="card-divider"></div>
+            <div class="card-front-contact">
+              <span>📞 (872) 240-6619</span>
+              <span>✉ michel@secondcityscrubbers.com</span>
+              <span>🌐 secondcityscrubbers.com</span>
+              <span>📍 Serving All Chicago Neighborhoods</span>
+            </div>
+          </div>
+          <img src="logo.png" alt="Logo" class="card-logo" />
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-front">
+          <div class="card-front-left">
+            <div class="card-company">Second City <span>Scrubbers</span></div>
+            <div class="card-tagline">Chicago's Cleaning Professionals</div>
+            <div class="card-divider"></div>
+            <div class="card-front-contact">
+              <span>📞 (872) 240-6619</span>
+              <span>✉ michel@secondcityscrubbers.com</span>
+              <span>🌐 secondcityscrubbers.com</span>
+              <span>📍 Serving All Chicago Neighborhoods</span>
+            </div>
+          </div>
+          <img src="logo.png" alt="Logo" class="card-logo" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BACK CARDS -->
+  <div class="sheet-section">
+    <p class="sheet-label">Back Side — Print on reverse of same sheet</p>
+    <div class="card-grid">
+      <!-- Card Back x4 -->
+      <div class="card">
+        <div class="card-back">
+          <div class="card-back-accent"></div>
+          <div class="card-back-body">
+            <div>
+              <div class="card-back-top">
+                <img src="logo.png" alt="Logo" class="card-back-logo" />
+                <div class="card-back-name">Second City Scrubbers</div>
+              </div>
+              <div class="card-services">
+                <span class="card-svc-tag">Standard Clean</span>
+                <span class="card-svc-tag">Deep Clean</span>
+                <span class="card-svc-tag">Move In/Out</span>
+                <span class="card-svc-tag">Airbnb</span>
+                <span class="card-svc-tag">Commercial</span>
+                <span class="card-svc-tag">Post-Construction</span>
+              </div>
+            </div>
+            <div>
+              <div class="card-back-contacts">
+                <span><strong>Pay after the clean</strong> · No payment upfront</span>
+                <span><strong>Same-day booking</strong> · Confirmed in 2 hrs</span>
+                <span><strong>Flat rates</strong> · No hidden fees</span>
+              </div>
+              <div class="card-back-website" style="margin-top:.5rem;">secondcityscrubbers.com</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-back">
+          <div class="card-back-accent"></div>
+          <div class="card-back-body">
+            <div>
+              <div class="card-back-top">
+                <img src="logo.png" alt="Logo" class="card-back-logo" />
+                <div class="card-back-name">Second City Scrubbers</div>
+              </div>
+              <div class="card-services">
+                <span class="card-svc-tag">Standard Clean</span>
+                <span class="card-svc-tag">Deep Clean</span>
+                <span class="card-svc-tag">Move In/Out</span>
+                <span class="card-svc-tag">Airbnb</span>
+                <span class="card-svc-tag">Commercial</span>
+                <span class="card-svc-tag">Post-Construction</span>
+              </div>
+            </div>
+            <div>
+              <div class="card-back-contacts">
+                <span><strong>Pay after the clean</strong> · No payment upfront</span>
+                <span><strong>Same-day booking</strong> · Confirmed in 2 hrs</span>
+                <span><strong>Flat rates</strong> · No hidden fees</span>
+              </div>
+              <div class="card-back-website" style="margin-top:.5rem;">secondcityscrubbers.com</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-back">
+          <div class="card-back-accent"></div>
+          <div class="card-back-body">
+            <div>
+              <div class="card-back-top">
+                <img src="logo.png" alt="Logo" class="card-back-logo" />
+                <div class="card-back-name">Second City Scrubbers</div>
+              </div>
+              <div class="card-services">
+                <span class="card-svc-tag">Standard Clean</span>
+                <span class="card-svc-tag">Deep Clean</span>
+                <span class="card-svc-tag">Move In/Out</span>
+                <span class="card-svc-tag">Airbnb</span>
+                <span class="card-svc-tag">Commercial</span>
+                <span class="card-svc-tag">Post-Construction</span>
+              </div>
+            </div>
+            <div>
+              <div class="card-back-contacts">
+                <span><strong>Pay after the clean</strong> · No payment upfront</span>
+                <span><strong>Same-day booking</strong> · Confirmed in 2 hrs</span>
+                <span><strong>Flat rates</strong> · No hidden fees</span>
+              </div>
+              <div class="card-back-website" style="margin-top:.5rem;">secondcityscrubbers.com</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-back">
+          <div class="card-back-accent"></div>
+          <div class="card-back-body">
+            <div>
+              <div class="card-back-top">
+                <img src="logo.png" alt="Logo" class="card-back-logo" />
+                <div class="card-back-name">Second City Scrubbers</div>
+              </div>
+              <div class="card-services">
+                <span class="card-svc-tag">Standard Clean</span>
+                <span class="card-svc-tag">Deep Clean</span>
+                <span class="card-svc-tag">Move In/Out</span>
+                <span class="card-svc-tag">Airbnb</span>
+                <span class="card-svc-tag">Commercial</span>
+                <span class="card-svc-tag">Post-Construction</span>
+              </div>
+            </div>
+            <div>
+              <div class="card-back-contacts">
+                <span><strong>Pay after the clean</strong> · No payment upfront</span>
+                <span><strong>Same-day booking</strong> · Confirmed in 2 hrs</span>
+                <span><strong>Flat rates</strong> · No hidden fees</span>
+              </div>
+              <div class="card-back-website" style="margin-top:.5rem;">secondcityscrubbers.com</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quote / Estimate — Second City Scrubbers</title>
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --sky: #0ea5e9; --sky-light: #38bdf8; --sky-pale: #e0f2fe; --sky-ghost: #f0fbff;
+      --red: #dc2626; --navy: #0c2340; --text-body: #1e3a5a; --text-muted: #5a87a8;
+      --green: #16a34a;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #f0fbff; color: var(--navy); line-height: 1.7; }
+
+    .toolbar { max-width: 820px; margin: 1.75rem auto .75rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0 .25rem; flex-wrap: wrap; }
+    .toolbar-hint { font-size: .78rem; color: var(--text-muted); }
+    .toolbar-hint strong { color: var(--navy); font-weight: 600; }
+    .toolbar-actions { display: flex; gap: .6rem; }
+    .btn-print { background: var(--navy); color: #fff; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: .8rem; letter-spacing: .04em; padding: .55rem 1.2rem; border-radius: 8px; border: none; cursor: pointer; display: flex; align-items: center; gap: .45rem; transition: background .18s, transform .12s; }
+    .btn-print:hover { background: var(--sky); transform: translateY(-1px); }
+    .btn-clear { background: transparent; color: var(--text-muted); font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: .78rem; padding: .55rem 1rem; border-radius: 8px; border: 1.5px solid rgba(14,165,233,.25); cursor: pointer; transition: border-color .18s, color .18s; }
+    .btn-clear:hover { border-color: var(--sky); color: var(--sky); }
+
+    .page { max-width: 820px; margin: 0 auto 3rem; background: #fff; border-radius: 16px; box-shadow: 0 2px 8px rgba(14,165,233,.08), 0 12px 40px rgba(12,35,64,.1); overflow: hidden; }
+
+    /* Header */
+    .header { background: linear-gradient(135deg, #0c2340 0%, #0e3a6e 55%, #0c2340 100%); padding: 2.25rem 3rem 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
+    .header-brand { display: flex; align-items: center; gap: 1rem; }
+    .header-logo-img { height: 64px; width: 64px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,.15); }
+    .header-company { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: #fff; letter-spacing: .06em; line-height: 1; }
+    .header-company span { color: var(--sky-light); }
+    .header-tagline { font-family: 'Montserrat', sans-serif; font-size: .65rem; font-weight: 700; color: var(--sky-light); letter-spacing: .12em; text-transform: uppercase; }
+    .header-right { text-align: right; }
+    .header-doc-label { font-family: 'Montserrat', sans-serif; font-size: 1.6rem; font-weight: 900; color: #fff; letter-spacing: .06em; text-transform: uppercase; line-height: 1; margin-bottom: .75rem; }
+    .header-doc-label span { color: var(--sky-light); font-size: 1rem; display: block; margin-bottom: .35rem; }
+    .header-meta { display: flex; flex-direction: column; gap: .35rem; }
+    .header-field { display: flex; align-items: center; gap: .5rem; justify-content: flex-end; }
+    .header-field label { font-size: .65rem; color: rgba(255,255,255,.55); white-space: nowrap; }
+    .header-input { background: rgba(255,255,255,.1); border: none; border-bottom: 1px solid rgba(255,255,255,.3); color: #fff; font-size: .78rem; font-family: 'Inter', sans-serif; padding: .15rem .35rem; width: 150px; outline: none; text-align: right; }
+    .header-input::placeholder { color: rgba(255,255,255,.3); font-style: italic; }
+    .header-input:focus { border-bottom-color: var(--sky-light); }
+
+    .accent-bar { height: 4px; background: linear-gradient(90deg, var(--green) 0%, var(--sky) 60%, var(--sky-light) 100%); }
+
+    .body { padding: 2.5rem 3rem; }
+
+    /* Validity banner */
+    .validity-banner { background: linear-gradient(135deg, rgba(22,163,74,.08) 0%, rgba(14,165,233,.06) 100%); border: 1.5px solid rgba(22,163,74,.2); border-radius: 12px; padding: 1rem 1.5rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+    .validity-banner p { font-size: .82rem; color: #166534; font-family: 'Montserrat', sans-serif; font-weight: 700; }
+    .validity-banner input { border: none; border-bottom: 1.5px solid rgba(22,163,74,.4); background: transparent; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: .82rem; color: #166534; outline: none; width: 140px; text-align: center; padding: .1rem; }
+
+    .party-label { font-family: 'Montserrat', sans-serif; font-size: .65rem; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; color: var(--sky); margin-bottom: .5rem; display: flex; align-items: center; gap: .6rem; }
+    .party-label::after { content: ''; flex: 1; height: 1px; background: rgba(14,165,233,.2); }
+    .party-static { font-size: .875rem; color: var(--text-body); line-height: 1.6; }
+    .party-static strong { font-weight: 700; color: var(--navy); }
+    .parties { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
+
+    .field-group { margin-bottom: .6rem; }
+    .field-group label { display: block; font-size: .65rem; font-weight: 700; font-family: 'Montserrat', sans-serif; color: var(--text-muted); letter-spacing: .08em; text-transform: uppercase; margin-bottom: .25rem; }
+    .field-input { width: 100%; border: none; border-bottom: 1.5px solid rgba(14,165,233,.3); background: transparent; font-family: 'Inter', sans-serif; font-size: .875rem; color: var(--navy); padding: .2rem .1rem; outline: none; transition: border-color .15s; }
+    .field-input:focus { border-bottom-color: var(--sky); }
+    .field-input::placeholder { color: rgba(14,165,233,.35); font-style: italic; font-size: .8rem; }
+
+    .section-heading { font-family: 'Montserrat', sans-serif; font-size: .65rem; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; color: var(--sky); margin: 2rem 0 .75rem; display: flex; align-items: center; gap: .6rem; }
+    .section-heading::after { content: ''; flex: 1; height: 1px; background: rgba(14,165,233,.2); }
+
+    /* Services checklist */
+    .services-check { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; margin-bottom: 1.5rem; }
+    .svc-check-item { display: flex; align-items: center; gap: .6rem; font-size: .85rem; color: var(--text-body); }
+    .svc-check-item input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--sky); cursor: pointer; flex-shrink: 0; }
+
+    /* Line items */
+    .line-items { width: 100%; border-collapse: collapse; margin-bottom: 1rem; }
+    .line-items thead tr { border-bottom: 2px solid var(--navy); }
+    .line-items th { font-family: 'Montserrat', sans-serif; font-size: .65rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: var(--navy); padding: .5rem .5rem .5rem 0; text-align: left; }
+    .line-items th.right { text-align: right; padding-right: 0; }
+    .line-items tbody tr { border-bottom: 1px solid rgba(14,165,233,.12); }
+    .line-items tbody tr:last-child { border-bottom: none; }
+    .line-items td { padding: .65rem .5rem .65rem 0; vertical-align: top; }
+    .line-items td.right { text-align: right; }
+    .li-input { width: 100%; border: none; border-bottom: 1px dashed rgba(14,165,233,.25); background: transparent; font-family: 'Inter', sans-serif; font-size: .875rem; color: var(--navy); padding: .1rem 0; outline: none; transition: border-color .15s; }
+    .li-input:focus { border-bottom-color: var(--sky); }
+    .li-input::placeholder { color: rgba(14,165,233,.3); font-style: italic; font-size: .8rem; }
+    .li-input.right { text-align: right; }
+    .add-row-btn { background: none; border: 1.5px dashed rgba(14,165,233,.35); color: var(--sky); font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: .72rem; letter-spacing: .06em; padding: .45rem 1rem; border-radius: 8px; cursor: pointer; transition: border-color .15s, background .15s; margin-top: .35rem; }
+    .add-row-btn:hover { border-color: var(--sky); background: var(--sky-pale); }
+
+    /* Totals */
+    .totals { display: flex; justify-content: flex-end; margin-top: 1.5rem; }
+    .totals-box { width: 280px; }
+    .totals-row { display: flex; justify-content: space-between; align-items: center; padding: .4rem 0; border-bottom: 1px solid rgba(14,165,233,.1); font-size: .875rem; color: var(--text-body); }
+    .totals-row:last-child { border-bottom: none; }
+    .totals-row label { font-size: .78rem; color: var(--text-muted); }
+    .tot-input { border: none; border-bottom: 1px dashed rgba(14,165,233,.25); background: transparent; font-family: 'Inter', sans-serif; font-size: .875rem; color: var(--navy); padding: .1rem 0; outline: none; text-align: right; width: 100px; transition: border-color .15s; }
+    .tot-input:focus { border-bottom-color: var(--sky); }
+    .totals-total { display: flex; justify-content: space-between; align-items: center; padding: .85rem 1rem; margin-top: .5rem; background: linear-gradient(135deg, var(--green) 0%, #15803d 100%); border-radius: 10px; }
+    .totals-total-label { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.85); }
+    .total-due { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: #fff; line-height: 1; }
+    .estimate-note { font-size: .72rem; color: var(--text-muted); text-align: right; margin-top: .4rem; font-style: italic; }
+
+    /* Terms + Notes */
+    .bottom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem; }
+    .notes-input { width: 100%; min-height: 80px; border: 1.5px solid rgba(14,165,233,.2); border-radius: 8px; padding: .6rem .75rem; font-family: 'Inter', sans-serif; font-size: .85rem; color: var(--navy); outline: none; resize: vertical; transition: border-color .15s; background: #fafcff; }
+    .notes-input:focus { border-color: var(--sky); }
+    .notes-input::placeholder { color: rgba(14,165,233,.35); font-style: italic; }
+    .terms-list { font-size: .78rem; color: var(--text-muted); line-height: 1.8; list-style: none; }
+    .terms-list li::before { content: '• '; color: var(--sky); font-weight: 700; }
+
+    /* Acceptance */
+    .acceptance { margin-top: 2rem; padding: 1.5rem; background: linear-gradient(135deg, rgba(22,163,74,.05) 0%, rgba(14,165,233,.04) 100%); border: 1.5px solid rgba(22,163,74,.15); border-radius: 12px; }
+    .acceptance h3 { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--navy); margin-bottom: .5rem; }
+    .acceptance p { font-size: .8rem; color: var(--text-muted); margin-bottom: 1.25rem; line-height: 1.6; }
+    .sig-row { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .sig-block label { font-family: 'Montserrat', sans-serif; font-size: .65rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: .5rem; }
+    .sig-canvas { width: 100%; height: 80px; border-bottom: 1.5px solid var(--navy); background: #fafcff; cursor: crosshair; display: block; touch-action: none; }
+    .sig-canvas-wrap { position: relative; }
+    .sig-clear-btn { position: absolute; top: 4px; right: 0; background: none; border: none; font-size: .65rem; color: var(--text-muted); cursor: pointer; padding: 0; }
+    .sig-clear-btn:hover { color: var(--red); }
+    .sig-sub { font-size: .72rem; color: var(--text-muted); margin-top: .3rem; }
+
+    /* Footer */
+    .invoice-footer { background: var(--sky-pale); padding: 1.25rem 3rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(14,165,233,.2); flex-wrap: wrap; gap: .75rem; }
+    .invoice-footer p { font-size: .78rem; color: var(--text-muted); line-height: 1.6; }
+    .invoice-footer strong { color: var(--navy); }
+    .not-valid-badge { font-family: 'Montserrat', sans-serif; font-size: .65rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; background: rgba(14,165,233,.12); color: var(--sky); border: 1px solid rgba(14,165,233,.25); padding: .3rem .75rem; border-radius: 999px; }
+
+    @media print {
+      body { background: #fff; }
+      .toolbar { display: none; }
+      .page { box-shadow: none; border-radius: 0; margin: 0; max-width: 100%; }
+      .btn-print, .btn-clear, .add-row-btn { display: none; }
+      input, textarea { border-color: transparent !important; }
+      .li-input { border-bottom-color: transparent !important; }
+      .sig-clear-btn { display: none; }
+      .sig-canvas { background: transparent !important; border-bottom-color: #000; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="toolbar">
+  <div>
+    <p class="toolbar-hint">Fill in the fields, then <strong>Save as PDF</strong> to send to the client.</p>
+  </div>
+  <div class="toolbar-actions">
+    <button class="btn-clear" onclick="clearForm()">Clear Form</button>
+    <button class="btn-print" onclick="window.print()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      Save as PDF / Print
+    </button>
+  </div>
+</div>
+
+<div class="page">
+
+  <div class="header">
+    <div class="header-brand">
+      <img src="logo.png" alt="Second City Scrubbers" class="header-logo-img" />
+      <div>
+        <div class="header-company">Second City <span>Scrubbers</span></div>
+        <div class="header-tagline">Chicago's Cleaning Professionals</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="header-doc-label">
+        <span>Cleaning</span>Estimate
+      </div>
+      <div class="header-meta">
+        <div class="header-field">
+          <label>Quote #</label>
+          <input class="header-input" id="quote-number" placeholder="SCS-Q001" />
+        </div>
+        <div class="header-field">
+          <label>Date Issued</label>
+          <input class="header-input" id="quote-date" type="date" />
+        </div>
+        <div class="header-field">
+          <label>Valid Until</label>
+          <input class="header-input" id="quote-valid" type="date" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="accent-bar"></div>
+
+  <div class="body">
+
+    <div class="validity-banner">
+      <p>⏳ This estimate is valid until</p>
+      <input type="date" id="valid-date-display" />
+      <p>— prices may change after this date.</p>
+    </div>
+
+    <!-- Parties -->
+    <div class="parties">
+      <div>
+        <div class="party-label">From</div>
+        <div class="party-static">
+          <strong>Second City Scrubbers</strong><br>
+          Chicago, IL<br>
+          (872) 240-6619<br>
+          michel@secondcityscrubbers.com<br>
+          secondcityscrubbers.com
+        </div>
+      </div>
+      <div>
+        <div class="party-label">Prepared For</div>
+        <div class="field-group">
+          <label>Client Name</label>
+          <input class="field-input" id="client-name" placeholder="Jane Smith" />
+        </div>
+        <div class="field-group">
+          <label>Property Address</label>
+          <input class="field-input" id="client-address" placeholder="123 Main St, Chicago, IL 60601" />
+        </div>
+        <div class="field-group">
+          <label>Email</label>
+          <input class="field-input" id="client-email" placeholder="jane@example.com" />
+        </div>
+        <div class="field-group">
+          <label>Phone</label>
+          <input class="field-input" id="client-phone" placeholder="(312) 000-0000" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Service Details -->
+    <div class="section-heading">Property Details</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-bottom:1.5rem;">
+      <div class="field-group">
+        <label>Property Size</label>
+        <input class="field-input" id="svc-size" placeholder="2BR / 1BA" />
+      </div>
+      <div class="field-group">
+        <label>Approx. Sq Footage</label>
+        <input class="field-input" id="svc-sqft" placeholder="900 sq ft" />
+      </div>
+      <div class="field-group">
+        <label>Requested Date</label>
+        <input class="field-input" id="svc-date" type="date" />
+      </div>
+    </div>
+
+    <!-- Services Included -->
+    <div class="section-heading">Services Included</div>
+    <div class="services-check">
+      <label class="svc-check-item"><input type="checkbox" /> Standard Clean</label>
+      <label class="svc-check-item"><input type="checkbox" /> Deep Clean</label>
+      <label class="svc-check-item"><input type="checkbox" /> Move-In / Move-Out</label>
+      <label class="svc-check-item"><input type="checkbox" /> Airbnb Turnover</label>
+      <label class="svc-check-item"><input type="checkbox" /> Post-Construction</label>
+      <label class="svc-check-item"><input type="checkbox" /> Window Cleaning</label>
+      <label class="svc-check-item"><input type="checkbox" /> Inside Oven (+$45)</label>
+      <label class="svc-check-item"><input type="checkbox" /> Inside Fridge (+$35)</label>
+      <label class="svc-check-item"><input type="checkbox" /> Interior Windows (+$55)</label>
+      <label class="svc-check-item"><input type="checkbox" /> Laundry Fold (+$40)</label>
+      <label class="svc-check-item"><input type="checkbox" /> Inside Cabinets (+$45)</label>
+      <label class="svc-check-item"><input type="checkbox" /> Patio / Balcony Sweep</label>
+    </div>
+
+    <!-- Line Items -->
+    <div class="section-heading">Pricing Breakdown</div>
+    <table class="line-items" id="line-table">
+      <thead>
+        <tr>
+          <th style="width:50%;">Description</th>
+          <th style="width:15%;">Qty</th>
+          <th style="width:17%;" class="right">Unit Price</th>
+          <th style="width:18%;" class="right">Amount</th>
+        </tr>
+      </thead>
+      <tbody id="line-body"></tbody>
+    </table>
+    <button class="add-row-btn" onclick="addRow()">+ Add Line Item</button>
+
+    <!-- Totals -->
+    <div class="totals">
+      <div class="totals-box">
+        <div class="totals-row">
+          <span>Subtotal</span>
+          <span id="subtotal-display">$0.00</span>
+        </div>
+        <div class="totals-row">
+          <label>Discount</label>
+          <input class="tot-input" id="discount-val" placeholder="$0.00" oninput="recalc()" />
+        </div>
+        <div class="totals-total">
+          <span class="totals-total-label">Estimated Total</span>
+          <span class="total-due" id="total-due-display">$0.00</span>
+        </div>
+        <p class="estimate-note">* Final price confirmed before service begins</p>
+      </div>
+    </div>
+
+    <!-- Notes + Terms -->
+    <div class="bottom-grid">
+      <div>
+        <div class="section-heading" style="margin-top:1rem;">Notes for Client</div>
+        <textarea class="notes-input" id="notes-val" placeholder="Any special instructions, access details, or notes about the property..."></textarea>
+      </div>
+      <div>
+        <div class="section-heading" style="margin-top:1rem;">Terms</div>
+        <ul class="terms-list">
+          <li>This is an estimate — final price confirmed on-site</li>
+          <li>Payment due after the clean is complete</li>
+          <li>We accept Zelle and cash</li>
+          <li>Cancellations with less than 24hrs notice may incur a fee</li>
+          <li>Quote valid until the date shown above</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Acceptance -->
+    <div class="acceptance">
+      <h3>Client Acceptance</h3>
+      <p>By signing below, the client agrees to the services and estimated pricing outlined in this quote. This does not constitute final payment — a final invoice will be issued after service completion.</p>
+      <div class="sig-row">
+        <div class="sig-block">
+          <label>Client Signature</label>
+          <div class="sig-canvas-wrap">
+            <canvas class="sig-canvas" id="sig-canvas" width="500" height="80"></canvas>
+            <button class="sig-clear-btn" onclick="clearSig()" type="button">Clear</button>
+          </div>
+          <p class="sig-sub">Signing accepts this estimate.</p>
+        </div>
+        <div class="sig-block">
+          <label>Date Accepted</label>
+          <input class="field-input" id="sig-date" type="date" style="margin-top:.5rem;" />
+          <p class="sig-sub" style="margin-top:.75rem;">Michel — Second City Scrubbers</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="invoice-footer">
+    <p><strong>Second City Scrubbers</strong> · Chicago, IL · (872) 240-6619 · michel@secondcityscrubbers.com · secondcityscrubbers.com</p>
+    <span class="not-valid-badge">Estimate Only — Not an Invoice</span>
+  </div>
+
+</div>
+
+<script>
+  (function() {
+    const stored = localStorage.getItem('scs-quote-counter');
+    const num = stored ? parseInt(stored) + 1 : 1;
+    localStorage.setItem('scs-quote-counter', num);
+    document.getElementById('quote-number').value = 'SCS-Q' + String(num).padStart(3, '0');
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('quote-date').value = today;
+    document.getElementById('quote-valid').value = today;
+    document.getElementById('valid-date-display').value = today;
+    // Sync valid date inputs
+    document.getElementById('quote-valid').addEventListener('change', e => {
+      document.getElementById('valid-date-display').value = e.target.value;
+    });
+    document.getElementById('valid-date-display').addEventListener('change', e => {
+      document.getElementById('quote-valid').value = e.target.value;
+    });
+    // Default valid until 14 days from now
+    const validDate = new Date(); validDate.setDate(validDate.getDate() + 14);
+    const validStr = validDate.toISOString().split('T')[0];
+    document.getElementById('quote-valid').value = validStr;
+    document.getElementById('valid-date-display').value = validStr;
+  })();
+
+  let rows = [];
+  function addRow(desc='', qty='1', price='') {
+    const tbody = document.getElementById('line-body');
+    const id = Date.now();
+    rows.push(id);
+    const tr = document.createElement('tr');
+    tr.id = 'row-' + id;
+    tr.innerHTML = `
+      <td><input class="li-input" placeholder="e.g. Deep Clean — 2BR" oninput="recalc()" /></td>
+      <td><input class="li-input" type="number" value="${qty}" min="1" style="width:60px;" oninput="recalc()" /></td>
+      <td class="right"><input class="li-input right" placeholder="0.00" oninput="recalc()" /></td>
+      <td class="right" style="font-weight:600;min-width:80px;" id="amt-${id}">$0.00</td>
+    `;
+    tr.querySelectorAll('input')[0].value = desc;
+    if (price) tr.querySelectorAll('input')[2].value = price;
+    tbody.appendChild(tr);
+    recalc();
+  }
+
+  function recalc() {
+    let subtotal = 0;
+    document.querySelectorAll('#line-body tr').forEach(tr => {
+      const inputs = tr.querySelectorAll('input');
+      const qty   = parseFloat(inputs[1]?.value) || 0;
+      const price = parseFloat(inputs[2]?.value) || 0;
+      const amt   = qty * price;
+      const id    = tr.id.replace('row-', '');
+      const amtEl = document.getElementById('amt-' + id);
+      if (amtEl) amtEl.textContent = '$' + amt.toFixed(2);
+      subtotal += amt;
+    });
+    document.getElementById('subtotal-display').textContent = '$' + subtotal.toFixed(2);
+    const disc = parseFloat((document.getElementById('discount-val').value || '0').replace('$','')) || 0;
+    const total = Math.max(0, subtotal - disc);
+    document.getElementById('total-due-display').textContent = '$' + total.toFixed(2);
+  }
+
+  // Signature pad
+  (function() {
+    const canvas = document.getElementById('sig-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let drawing = false;
+    ctx.strokeStyle = '#0c2340'; ctx.lineWidth = 2; ctx.lineCap = 'round';
+    const pos = e => { const r = canvas.getBoundingClientRect(); const t = e.touches?.[0] || e; return { x: (t.clientX - r.left) * (canvas.width / r.width), y: (t.clientY - r.top) * (canvas.height / r.height) }; };
+    canvas.addEventListener('mousedown',  e => { drawing = true; ctx.beginPath(); const p = pos(e); ctx.moveTo(p.x, p.y); });
+    canvas.addEventListener('mousemove',  e => { if (!drawing) return; const p = pos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); });
+    canvas.addEventListener('mouseup',    () => { drawing = false; });
+    canvas.addEventListener('mouseleave', () => { drawing = false; });
+    canvas.addEventListener('touchstart', e => { e.preventDefault(); drawing = true; ctx.beginPath(); const p = pos(e); ctx.moveTo(p.x, p.y); }, {passive:false});
+    canvas.addEventListener('touchmove',  e => { e.preventDefault(); if (!drawing) return; const p = pos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); }, {passive:false});
+    canvas.addEventListener('touchend',   () => { drawing = false; });
+  })();
+
+  function clearSig() {
+    const canvas = document.getElementById('sig-canvas');
+    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+  }
+
+  function clearForm() {
+    document.querySelectorAll('input:not([type=checkbox]), textarea').forEach(el => { el.value = ''; });
+    document.querySelectorAll('input[type=checkbox]').forEach(el => { el.checked = false; });
+    document.getElementById('line-body').innerHTML = '';
+    rows = [];
+    recalc();
+    clearSig();
+  }
+
+  // Init with one empty row
+  addRow();
+</script>
+</body>
+</html>

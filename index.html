@@ -3220,6 +3220,24 @@
       </div>
 
     </div>
+
+    <!-- Google Review Button -->
+    <div style="text-align:center; margin-top:2.5rem; padding-top:2rem; border-top:1px solid rgba(14,165,233,.15);">
+      <p style="font-family:'Montserrat',sans-serif; font-size:.82rem; font-weight:700; color:rgba(255,255,255,.6); margin-bottom:1rem; letter-spacing:.02em;">Had a great experience? Let us know!</p>
+      <a href="https://g.page/r/CUm8G8bTKu2kEBM/review" target="_blank" rel="noopener"
+        style="display:inline-flex; align-items:center; gap:.75rem; background:#fff; color:#0c2340; font-family:'Montserrat',sans-serif; font-weight:800; font-size:.9rem; letter-spacing:.03em; padding:.85rem 1.75rem; border-radius:999px; text-decoration:none; box-shadow:0 8px 28px rgba(0,0,0,.25); transition:transform .2s, box-shadow .2s;"
+        onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 14px 36px rgba(0,0,0,.3)'"
+        onmouseout="this.style.transform='none';this.style.boxShadow='0 8px 28px rgba(0,0,0,.25)'">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+        </svg>
+        Leave Us a Google Review ⭐
+      </a>
+    </div>
+
   </div>
 </section>
 
@@ -5250,6 +5268,69 @@
     return total;
   }
   function updateAddonTotal() { updateEstimate(); }
+
+  // ====== HERO 3D EFFECTS ======
+  (function hero3D() {
+    const hero       = document.querySelector('.hero');
+    const logoWrap   = document.querySelector('.logo-ring-wrap');
+    const heroText   = document.querySelector('.hero-grid > div:first-child');
+    const skyline    = document.querySelector('.skyline-inner');
+    if (!hero || !logoWrap) return;
+
+    // Cursor glow blob
+    const glow = document.createElement('div');
+    glow.style.cssText = `
+      position:absolute; width:500px; height:500px; border-radius:50%;
+      background:radial-gradient(circle, rgba(14,165,233,.13) 0%, transparent 70%);
+      pointer-events:none; z-index:0; transform:translate(-50%,-50%);
+      transition:left .12s ease, top .12s ease; left:50%; top:50%;
+    `;
+    hero.appendChild(glow);
+
+    let targetX = 0, targetY = 0, currentX = 0, currentY = 0;
+    let rafId;
+
+    hero.addEventListener('mousemove', e => {
+      const rect   = hero.getBoundingClientRect();
+      const mx     = e.clientX - rect.left;
+      const my     = e.clientY - rect.top;
+      targetX = mx;
+      targetY = my;
+
+      // Normalized -1 to 1 from center
+      const nx = (mx / rect.width  - 0.5) * 2;
+      const ny = (my / rect.height - 0.5) * 2;
+
+      // 3D tilt on logo — max 18deg
+      const tiltY =  nx * 18;
+      const tiltX = -ny * 18;
+      logoWrap.style.transform = `perspective(900px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.04)`;
+      logoWrap.style.filter    = `drop-shadow(0 ${-tiltX*1.5}px ${20 + Math.abs(tiltX)*1.2}px rgba(14,165,233,${0.3 + Math.abs(nx)*0.25}))`;
+
+      // Parallax on text — subtle opposite drift
+      if (heroText) heroText.style.transform = `translate(${-nx * 8}px, ${-ny * 5}px)`;
+
+      // Skyline parallax — very slow
+      if (skyline) skyline.style.transform = `translateX(${nx * 14}px)`;
+
+      // Move glow to cursor
+      glow.style.left = mx + 'px';
+      glow.style.top  = my + 'px';
+    });
+
+    hero.addEventListener('mouseleave', () => {
+      logoWrap.style.transform = '';
+      logoWrap.style.filter    = '';
+      if (heroText) heroText.style.transform = '';
+      if (skyline)  skyline.style.transform  = '';
+      glow.style.left = '50%';
+      glow.style.top  = '50%';
+    });
+
+    // Smooth transitions
+    logoWrap.style.transition = 'transform .12s ease, filter .12s ease';
+    if (heroText) heroText.style.transition = 'transform .18s ease';
+  })();
 
   // Scroll reveal
   const observer = new IntersectionObserver((entries) => {

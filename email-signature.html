@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Email Signature — Second City Scrubbers</title>
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #f0f4f8; color: #0c2340; padding: 2rem; }
+
+    .page { max-width: 700px; margin: 0 auto; }
+    h1 { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.5rem; color: #0c2340; margin-bottom: .25rem; }
+    .subtitle { font-size: .85rem; color: #4a7096; margin-bottom: 2rem; line-height: 1.6; }
+
+    .steps { background: #fff; border-radius: 14px; padding: 1.75rem; box-shadow: 0 2px 16px rgba(12,35,64,.08); margin-bottom: 2rem; }
+    .steps h2 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: .9rem; color: #0c2340; margin-bottom: 1rem; letter-spacing: .02em; }
+    .step-list { display: flex; flex-direction: column; gap: .75rem; }
+    .step-item { display: flex; gap: .75rem; font-size: .85rem; color: #4a7096; line-height: 1.6; }
+    .step-num { width: 22px; height: 22px; border-radius: 50%; background: #0ea5e9; color: #fff; font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: .72rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: .1rem; }
+
+    .sig-preview { background: #fff; border-radius: 14px; padding: 1.75rem; box-shadow: 0 2px 16px rgba(12,35,64,.08); margin-bottom: 1rem; }
+    .sig-preview h2 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: .9rem; color: #0c2340; margin-bottom: 1.25rem; }
+
+    .copy-btn {
+      background: #0c2340; color: #fff; font-family: 'Montserrat', sans-serif;
+      font-weight: 800; font-size: .8rem; letter-spacing: .04em; padding: .65rem 1.5rem;
+      border-radius: 10px; border: none; cursor: pointer; margin-bottom: 1.5rem;
+      transition: background .18s; display: flex; align-items: center; gap: .5rem;
+    }
+    .copy-btn:hover { background: #0ea5e9; }
+    .copy-note { font-size: .75rem; color: #4a7096; margin-top: .5rem; }
+
+    /* ──────────────────────────────────────
+       THE ACTUAL SIGNATURE — table-based so
+       it renders correctly in Gmail/Outlook
+    ────────────────────────────────────── */
+    #signature-html {
+      border: 1.5px dashed rgba(14,165,233,.3); border-radius: 10px;
+      padding: 1.25rem; background: #fafcff; overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <h1>Email Signature</h1>
+  <p class="subtitle">Copy the signature below and paste it into Gmail, Outlook, or Apple Mail settings.</p>
+
+  <div class="steps">
+    <h2>How to add to Gmail</h2>
+    <div class="step-list">
+      <div class="step-item"><div class="step-num">1</div><span>Click the <strong>Copy Signature</strong> button below</span></div>
+      <div class="step-item"><div class="step-num">2</div><span>Open Gmail → Click the gear ⚙️ icon → <strong>See all settings</strong></span></div>
+      <div class="step-item"><div class="step-num">3</div><span>Scroll down to <strong>Signature</strong> → Click <strong>Create new</strong></span></div>
+      <div class="step-item"><div class="step-num">4</div><span>Paste (<strong>Ctrl+V</strong> or <strong>Cmd+V</strong>) into the signature box</span></div>
+      <div class="step-item"><div class="step-num">5</div><span>Scroll to bottom → Click <strong>Save Changes</strong></span></div>
+    </div>
+  </div>
+
+  <div class="sig-preview">
+    <h2>Your Signature Preview</h2>
+
+    <button class="copy-btn" onclick="copySignature()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+      Copy Signature
+    </button>
+
+    <!-- SIGNATURE HTML — this is what gets copied -->
+    <div id="signature-html">
+      <!--[signature-start]-->
+      <table cellpadding="0" cellspacing="0" border="0" style="font-family:Arial,sans-serif;font-size:13px;color:#1e3a5a;line-height:1.5;">
+        <tr>
+          <td style="padding-right:16px;vertical-align:top;border-right:3px solid #0ea5e9;">
+            <img src="https://secondcityscrubbers.com/logo.png" width="72" height="72" alt="Second City Scrubbers" style="border-radius:50%;display:block;" />
+          </td>
+          <td style="padding-left:16px;vertical-align:top;">
+            <div style="font-family:Arial,sans-serif;font-weight:900;font-size:15px;color:#0c2340;letter-spacing:0.5px;margin-bottom:2px;">Michel — Second City Scrubbers</div>
+            <div style="font-size:11px;color:#0ea5e9;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">Chicago's Cleaning Professionals</div>
+            <table cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td style="padding-bottom:3px;padding-right:8px;font-size:12px;color:#4a7096;">📞</td>
+                <td style="padding-bottom:3px;font-size:12px;"><a href="tel:8722406619" style="color:#0c2340;text-decoration:none;">(872) 240-6619</a></td>
+              </tr>
+              <tr>
+                <td style="padding-bottom:3px;padding-right:8px;font-size:12px;color:#4a7096;">✉</td>
+                <td style="padding-bottom:3px;font-size:12px;"><a href="mailto:michel@secondcityscrubbers.com" style="color:#0ea5e9;text-decoration:none;">michel@secondcityscrubbers.com</a></td>
+              </tr>
+              <tr>
+                <td style="padding-bottom:3px;padding-right:8px;font-size:12px;color:#4a7096;">🌐</td>
+                <td style="padding-bottom:3px;font-size:12px;"><a href="https://secondcityscrubbers.com" style="color:#0ea5e9;text-decoration:none;">secondcityscrubbers.com</a></td>
+              </tr>
+              <tr>
+                <td style="padding-right:8px;font-size:12px;color:#4a7096;">📍</td>
+                <td style="font-size:12px;color:#4a7096;">Chicago, IL — All Neighborhoods</td>
+              </tr>
+            </table>
+            <div style="margin-top:10px;font-size:10px;color:#4a7096;border-top:1px solid #e0f2fe;padding-top:8px;">
+              ✅ Pay after the clean &nbsp;·&nbsp; 📅 Confirmed in 2 hrs &nbsp;·&nbsp; 💰 Flat rates, no hidden fees
+            </div>
+          </td>
+        </tr>
+      </table>
+      <!--[signature-end]-->
+    </div>
+    <p class="copy-note">Tip: Use <strong>Ctrl+V / Cmd+V</strong> to paste — don't type it manually. The formatting must be pasted as HTML.</p>
+  </div>
+
+</div>
+
+<script>
+  function copySignature() {
+    const sigEl = document.getElementById('signature-html');
+    const html = sigEl.innerHTML;
+    // Use clipboard API with HTML type
+    const blob = new Blob([html], {type: 'text/html'});
+    const item = new ClipboardItem({'text/html': blob});
+    navigator.clipboard.write([item]).then(() => {
+      const btn = document.querySelector('.copy-btn');
+      btn.textContent = '✓ Copied!';
+      btn.style.background = '#16a34a';
+      setTimeout(() => {
+        btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copy Signature';
+        btn.style.background = '#0c2340';
+      }, 2500);
+    }).catch(() => {
+      // Fallback: select the element
+      const range = document.createRange();
+      range.selectNode(sigEl);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+      document.execCommand('copy');
+      alert('Signature selected & copied! Now paste into Gmail signature settings.');
+    });
+  }
+</script>
+</body>
+</html>

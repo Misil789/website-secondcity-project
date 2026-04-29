@@ -245,11 +245,30 @@
     .invoice-footer p { font-size: .78rem; color: var(--text-muted); line-height: 1.6; }
     .invoice-footer strong { color: var(--navy); }
     .paid-stamp {
-      display: none; /* shown via JS */
+      display: none;
       font-family: 'Bebas Neue', sans-serif; font-size: 3rem; color: #16a34a;
       border: 4px solid #16a34a; border-radius: 8px; padding: .1rem 1rem;
       opacity: .7; transform: rotate(-8deg); letter-spacing: .1em;
     }
+    .status-badge {
+      display: inline-flex; align-items: center; gap: .4rem;
+      font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: .72rem;
+      letter-spacing: .08em; text-transform: uppercase; padding: .35rem .9rem;
+      border-radius: 999px; border: 2px solid;
+    }
+    .status-draft    { background: rgba(14,165,233,.12); color: #0ea5e9; border-color: #0ea5e9; }
+    .status-sent     { background: rgba(251,191,36,.12); color: #d97706; border-color: #d97706; }
+    .status-paid     { background: rgba(22,163,74,.12);  color: #16a34a; border-color: #16a34a; }
+    .status-overdue  { background: rgba(220,38,38,.12);  color: #dc2626; border-color: #dc2626; }
+    .btn-paid {
+      background: #16a34a; color: #fff; font-family: 'Montserrat', sans-serif;
+      font-weight: 800; font-size: .78rem; letter-spacing: .04em; padding: .5rem 1.1rem;
+      border-radius: 8px; border: none; cursor: pointer;
+      display: flex; align-items: center; gap: .4rem; transition: background .18s, transform .12s;
+    }
+    .btn-paid:hover { background: #15803d; transform: translateY(-1px); }
+    .btn-paid.unpaid { background: var(--text-muted); }
+    .btn-paid.unpaid:hover { background: #4a7096; }
 
     /* ── PRINT ── */
     @media print {
@@ -267,8 +286,21 @@
 
 <!-- ── TOOLBAR ── -->
 <div class="toolbar">
-  <p class="toolbar-hint">Fill in the fields, then <strong>Save as PDF</strong> or print.</p>
+  <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+    <p class="toolbar-hint">Fill in the fields, then <strong>Save as PDF</strong> or print.</p>
+    <div style="display:flex;align-items:center;gap:.5rem;">
+      <span style="font-size:.72rem;color:var(--text-muted);font-family:'Montserrat',sans-serif;font-weight:700;">STATUS:</span>
+      <select id="status-select" onchange="updateStatus()" style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:.75rem;border:1.5px solid rgba(14,165,233,.25);border-radius:8px;padding:.3rem .6rem;outline:none;color:var(--navy);background:#fff;cursor:pointer;">
+        <option value="draft">Draft</option>
+        <option value="sent">Sent</option>
+        <option value="paid">Paid</option>
+        <option value="overdue">Overdue</option>
+      </select>
+      <span id="status-badge" class="status-badge status-draft">● Draft</span>
+    </div>
+  </div>
   <div class="toolbar-actions">
+    <button class="btn-paid" id="btn-paid" onclick="togglePaid()">✓ Mark as Paid</button>
     <button class="btn-clear" onclick="clearForm()">Clear Form</button>
     <button class="btn-print" onclick="window.print()">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
@@ -408,6 +440,7 @@
         <div class="payment-methods">
           <div class="pay-method"><div class="pay-dot"></div> Zelle — (872) 240-6619</div>
           <div class="pay-method"><div class="pay-dot"></div> Cash — Accepted at time of service</div>
+          <div class="pay-method"><div class="pay-dot" style="background:#6366f1;"></div> Credit / Debit Card — Ask for link</div>
         </div>
       </div>
       <div>
@@ -437,12 +470,14 @@
 
   <!-- Footer -->
   <div class="invoice-footer">
-    <p>
-      <strong>Second City Scrubbers</strong> &nbsp;·&nbsp; Chicago, IL &nbsp;·&nbsp;
-      (872) 240-6619 &nbsp;·&nbsp; michel@secondcityscrubbers.com &nbsp;·&nbsp;
-      secondcityscrubbers.com
-    </p>
-    <p>Thank you for your business! 🧹</p>
+    <div>
+      <p><strong>Second City Scrubbers</strong> &nbsp;·&nbsp; Chicago, IL &nbsp;·&nbsp; (872) 240-6619 &nbsp;·&nbsp; michel@secondcityscrubbers.com &nbsp;·&nbsp; secondcityscrubbers.com</p>
+      <p style="margin-top:.3rem;">Thank you for choosing Second City Scrubbers — we appreciate your business! 🧹</p>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:.5rem;">
+      <div class="paid-stamp" id="paid-stamp">PAID</div>
+      <a href="https://g.page/r/CUm8G8bTKu2kEBM/review" target="_blank" style="font-family:'Montserrat',sans-serif;font-size:.72rem;font-weight:700;color:var(--sky);text-decoration:none;letter-spacing:.02em;" rel="noopener">⭐ Leave us a Google Review</a>
+    </div>
   </div>
 
 </div><!-- /page -->
@@ -500,6 +535,29 @@
 
     document.getElementById('subtotal-display').textContent = '$' + sub.toFixed(2);
     document.getElementById('total-due-display').textContent = '$' + total.toFixed(2);
+  }
+
+  // ── Status badge ──
+  const STATUS_LABELS = { draft:'● Draft', sent:'● Sent', paid:'✓ Paid', overdue:'⚠ Overdue' };
+  const STATUS_CLASSES = { draft:'status-draft', sent:'status-sent', paid:'status-paid', overdue:'status-overdue' };
+  function updateStatus() {
+    const val = document.getElementById('status-select').value;
+    const badge = document.getElementById('status-badge');
+    badge.className = 'status-badge ' + STATUS_CLASSES[val];
+    badge.textContent = STATUS_LABELS[val];
+    if (val === 'paid') {
+      document.getElementById('paid-stamp').style.display = 'block';
+      document.getElementById('btn-paid').textContent = '✓ Marked as Paid';
+      document.getElementById('btn-paid').classList.remove('unpaid');
+    } else {
+      document.getElementById('paid-stamp').style.display = 'none';
+      document.getElementById('btn-paid').textContent = '✓ Mark as Paid';
+    }
+  }
+  function togglePaid() {
+    const sel = document.getElementById('status-select');
+    sel.value = sel.value === 'paid' ? 'sent' : 'paid';
+    updateStatus();
   }
 
   function clearForm() {
