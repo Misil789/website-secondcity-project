@@ -10,36 +10,46 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Inter', sans-serif; background: #f0f4f8; color: #0c2340; padding: 2rem; }
+    .page { max-width: 680px; margin: 0 auto; }
 
-    .page { max-width: 700px; margin: 0 auto; }
     h1 { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.5rem; color: #0c2340; margin-bottom: .25rem; }
     .subtitle { font-size: .85rem; color: #4a7096; margin-bottom: 2rem; line-height: 1.6; }
 
-    .steps { background: #fff; border-radius: 14px; padding: 1.75rem; box-shadow: 0 2px 16px rgba(12,35,64,.08); margin-bottom: 2rem; }
-    .steps h2 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: .9rem; color: #0c2340; margin-bottom: 1rem; letter-spacing: .02em; }
+    .card { background: #fff; border-radius: 14px; padding: 1.75rem; box-shadow: 0 2px 16px rgba(12,35,64,.08); margin-bottom: 1.5rem; }
+    .card h2 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: .9rem; color: #0c2340; margin-bottom: 1.1rem; }
+
     .step-list { display: flex; flex-direction: column; gap: .75rem; }
-    .step-item { display: flex; gap: .75rem; font-size: .85rem; color: #4a7096; line-height: 1.6; }
-    .step-num { width: 22px; height: 22px; border-radius: 50%; background: #0ea5e9; color: #fff; font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: .72rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: .1rem; }
+    .step-item { display: flex; gap: .75rem; font-size: .85rem; color: #4a7096; line-height: 1.6; align-items: flex-start; }
+    .step-num { width: 24px; height: 24px; border-radius: 50%; background: #0ea5e9; color: #fff; font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: .72rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: .1rem; }
+    .step-item strong { color: #0c2340; }
+    .step-item kbd { background: #f0f4f8; border: 1px solid #cbd5e1; border-radius: 4px; padding: .1rem .4rem; font-size: .78rem; font-family: monospace; color: #0c2340; }
 
-    .sig-preview { background: #fff; border-radius: 14px; padding: 1.75rem; box-shadow: 0 2px 16px rgba(12,35,64,.08); margin-bottom: 1rem; }
-    .sig-preview h2 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: .9rem; color: #0c2340; margin-bottom: 1.25rem; }
-
-    .copy-btn {
+    .select-btn {
       background: #0c2340; color: #fff; font-family: 'Montserrat', sans-serif;
-      font-weight: 800; font-size: .8rem; letter-spacing: .04em; padding: .65rem 1.5rem;
-      border-radius: 10px; border: none; cursor: pointer; margin-bottom: 1.5rem;
-      transition: background .18s; display: flex; align-items: center; gap: .5rem;
+      font-weight: 800; font-size: .85rem; letter-spacing: .04em; padding: .75rem 1.75rem;
+      border-radius: 10px; border: none; cursor: pointer; width: 100%; margin-bottom: 1rem;
+      transition: background .18s; display: flex; align-items: center; justify-content: center; gap: .6rem;
+      font-size: .85rem;
     }
-    .copy-btn:hover { background: #0ea5e9; }
-    .copy-note { font-size: .75rem; color: #4a7096; margin-top: .5rem; }
+    .select-btn:hover { background: #0ea5e9; }
+    .select-btn.selected { background: #16a34a; }
 
-    /* ──────────────────────────────────────
-       THE ACTUAL SIGNATURE — table-based so
-       it renders correctly in Gmail/Outlook
-    ────────────────────────────────────── */
-    #signature-html {
-      border: 1.5px dashed rgba(14,165,233,.3); border-radius: 10px;
-      padding: 1.25rem; background: #fafcff; overflow-x: auto;
+    .copy-hint {
+      text-align: center; font-size: .8rem; color: #4a7096;
+      background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px;
+      padding: .6rem 1rem; margin-bottom: 1rem;
+    }
+    .copy-hint strong { color: #0c2340; }
+
+    /* Signature preview box */
+    #sig-box {
+      border: 2px dashed rgba(14,165,233,.35); border-radius: 10px;
+      padding: 1.25rem; background: #fff; cursor: text;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    #sig-box.highlighted {
+      border-color: #0ea5e9;
+      box-shadow: 0 0 0 3px rgba(14,165,233,.15);
     }
   </style>
 </head>
@@ -47,33 +57,55 @@
 <div class="page">
 
   <h1>Email Signature</h1>
-  <p class="subtitle">Copy the signature below and paste it into Gmail, Outlook, or Apple Mail settings.</p>
+  <p class="subtitle">Use this page to add your branded signature to Gmail in under 2 minutes.</p>
 
-  <div class="steps">
+  <!-- Steps -->
+  <div class="card">
     <h2>How to add to Gmail</h2>
     <div class="step-list">
-      <div class="step-item"><div class="step-num">1</div><span>Click the <strong>Copy Signature</strong> button below</span></div>
-      <div class="step-item"><div class="step-num">2</div><span>Open Gmail → Click the gear ⚙️ icon → <strong>See all settings</strong></span></div>
-      <div class="step-item"><div class="step-num">3</div><span>Scroll down to <strong>Signature</strong> → Click <strong>Create new</strong></span></div>
-      <div class="step-item"><div class="step-num">4</div><span>Paste (<strong>Ctrl+V</strong> or <strong>Cmd+V</strong>) into the signature box</span></div>
-      <div class="step-item"><div class="step-num">5</div><span>Scroll to bottom → Click <strong>Save Changes</strong></span></div>
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <span>Click <strong>Select Signature</strong> below — it highlights your signature</span>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <span>Press <kbd>Ctrl+C</kbd> (Windows) or <kbd>Cmd+C</kbd> (Mac) to copy it</span>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <span>Go to <strong>Gmail</strong> → click the <strong>⚙️ gear icon</strong> → <strong>See all settings</strong></span>
+      </div>
+      <div class="step-item">
+        <div class="step-num">4</div>
+        <span>Scroll to <strong>Signature</strong> → click <strong>Create new</strong> → name it "Second City Scrubbers"</span>
+      </div>
+      <div class="step-item">
+        <div class="step-num">5</div>
+        <span>Click inside the signature text box, then press <kbd>Ctrl+V</kbd> or <kbd>Cmd+V</kbd> to paste</span>
+      </div>
+      <div class="step-item">
+        <div class="step-num">6</div>
+        <span>Scroll down and click <strong>Save Changes</strong></span>
+      </div>
     </div>
   </div>
 
-  <div class="sig-preview">
-    <h2>Your Signature Preview</h2>
+  <!-- Signature -->
+  <div class="card">
+    <h2>Your Signature</h2>
 
-    <button class="copy-btn" onclick="copySignature()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-      Copy Signature
+    <button class="select-btn" id="select-btn" onclick="selectSignature()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+      Step 1 — Select Signature
     </button>
 
-    <!-- SIGNATURE HTML — this is what gets copied -->
-    <div id="signature-html">
-      <!--[signature-start]-->
+    <div class="copy-hint">After clicking above, press <strong>Ctrl+C</strong> (Windows) or <strong>Cmd+C</strong> (Mac) to copy</div>
+
+    <!-- THE RENDERED SIGNATURE — select this, copy, paste into Gmail -->
+    <div id="sig-box">
       <table cellpadding="0" cellspacing="0" border="0" style="font-family:Arial,sans-serif;font-size:13px;color:#1e3a5a;line-height:1.5;">
         <tr>
-          <td style="padding-right:16px;vertical-align:top;border-right:3px solid #0ea5e9;">
+          <td style="padding-right:16px;vertical-align:middle;border-right:3px solid #0ea5e9;">
             <img src="https://secondcityscrubbers.com/logo.png" width="72" height="72" alt="Second City Scrubbers" style="border-radius:50%;display:block;" />
           </td>
           <td style="padding-left:16px;vertical-align:top;">
@@ -81,19 +113,19 @@
             <div style="font-size:11px;color:#0ea5e9;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">Chicago's Cleaning Professionals</div>
             <table cellpadding="0" cellspacing="0" border="0">
               <tr>
-                <td style="padding-bottom:3px;padding-right:8px;font-size:12px;color:#4a7096;">📞</td>
+                <td style="padding-bottom:3px;padding-right:8px;font-size:12px;">📞</td>
                 <td style="padding-bottom:3px;font-size:12px;"><a href="tel:8722406619" style="color:#0c2340;text-decoration:none;">(872) 240-6619</a></td>
               </tr>
               <tr>
-                <td style="padding-bottom:3px;padding-right:8px;font-size:12px;color:#4a7096;">✉</td>
+                <td style="padding-bottom:3px;padding-right:8px;font-size:12px;">✉</td>
                 <td style="padding-bottom:3px;font-size:12px;"><a href="mailto:michel@secondcityscrubbers.com" style="color:#0ea5e9;text-decoration:none;">michel@secondcityscrubbers.com</a></td>
               </tr>
               <tr>
-                <td style="padding-bottom:3px;padding-right:8px;font-size:12px;color:#4a7096;">🌐</td>
+                <td style="padding-bottom:3px;padding-right:8px;font-size:12px;">🌐</td>
                 <td style="padding-bottom:3px;font-size:12px;"><a href="https://secondcityscrubbers.com" style="color:#0ea5e9;text-decoration:none;">secondcityscrubbers.com</a></td>
               </tr>
               <tr>
-                <td style="padding-right:8px;font-size:12px;color:#4a7096;">📍</td>
+                <td style="padding-right:8px;font-size:12px;">📍</td>
                 <td style="font-size:12px;color:#4a7096;">Chicago, IL — All Neighborhoods</td>
               </tr>
             </table>
@@ -103,37 +135,38 @@
           </td>
         </tr>
       </table>
-      <!--[signature-end]-->
     </div>
-    <p class="copy-note">Tip: Use <strong>Ctrl+V / Cmd+V</strong> to paste — don't type it manually. The formatting must be pasted as HTML.</p>
   </div>
 
 </div>
 
 <script>
-  function copySignature() {
-    const sigEl = document.getElementById('signature-html');
-    const html = sigEl.innerHTML;
-    // Use clipboard API with HTML type
-    const blob = new Blob([html], {type: 'text/html'});
-    const item = new ClipboardItem({'text/html': blob});
-    navigator.clipboard.write([item]).then(() => {
-      const btn = document.querySelector('.copy-btn');
-      btn.textContent = '✓ Copied!';
-      btn.style.background = '#16a34a';
-      setTimeout(() => {
-        btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copy Signature';
-        btn.style.background = '#0c2340';
-      }, 2500);
-    }).catch(() => {
-      // Fallback: select the element
-      const range = document.createRange();
-      range.selectNode(sigEl);
-      window.getSelection().removeAllRanges();
-      window.getSelection().addRange(range);
-      document.execCommand('copy');
-      alert('Signature selected & copied! Now paste into Gmail signature settings.');
-    });
+  function selectSignature() {
+    const box = document.getElementById('sig-box');
+    const btn = document.getElementById('select-btn');
+
+    // Select all content inside the sig box
+    const range = document.createRange();
+    range.selectNodeContents(box);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+
+    // Visual feedback
+    box.classList.add('highlighted');
+    btn.classList.add('selected');
+    btn.innerHTML = '✓ Selected! Now press Ctrl+C (or Cmd+C) to copy';
+
+    // Try clipboard API as bonus
+    try {
+      const html = box.innerHTML;
+      const blob = new Blob([html], {type: 'text/html'});
+      navigator.clipboard.write([new ClipboardItem({'text/html': blob})]).then(() => {
+        btn.innerHTML = '✓ Copied to clipboard! Now paste into Gmail';
+      }).catch(() => {
+        // Clipboard API failed — selection is still active so Ctrl+C works
+      });
+    } catch(e) {}
   }
 </script>
 </body>
