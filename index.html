@@ -3373,16 +3373,99 @@
   </div>
 </section>
 
-<section id="pricing" style="background:#fff; padding:5rem 2rem; border-top:4px solid #0c2340;">
-  <div style="max-width:1200px; margin:0 auto;">
-    <div class="reveal" style="text-align:center; margin-bottom:2rem;">
-      <span class="section-label">Transparent Pricing</span>
-      <h2 class="section-title" style="margin-top:.5rem;">Simple, Honest Rates</h2>
-      <p class="section-sub" style="max-width:560px; margin:.75rem auto 0;">2026 Chicago market rates — prices shown are estimates. Final price confirmed before any charge based on home conditions, size, and add-ons.</p>
+<style>
+@media(max-width:700px){
+  .hiw-grid { grid-template-columns:1fr !important; }
+  .svc-grid  { grid-template-columns:1fr !important; }
+  .disc-grid { grid-template-columns:1fr !important; }
+  .qform-row { grid-template-columns:1fr !important; }
+}
+@media(min-width:701px) and (max-width:980px){
+  .svc-grid  { grid-template-columns:repeat(2,1fr) !important; }
+  .disc-grid { grid-template-columns:repeat(2,1fr) !important; }
+}
+</style>
+
+<section id="pricing" style="background:#fff; padding:4rem 1.5rem; border-top:4px solid #0c2340;">
+  <div style="max-width:1100px; margin:0 auto;">
+    <div class="reveal" style="text-align:center; margin-bottom:2.5rem;">
+      <span class="section-label">Free Quote</span>
+      <h2 class="section-title" style="margin-top:.5rem;">Get Your Free Quote</h2>
+      <p class="section-sub" style="max-width:540px; margin:.75rem auto 0;">No hidden fees, no surprises. Tell us about your space and we'll send you a custom quote within 2 hours.</p>
+    </div>
+
+    <!-- How It Works -->
+    <div class="reveal hiw-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; margin-bottom:3rem; position:relative;">
+      <div style="text-align:center; padding:1.5rem 1.25rem; background:var(--sky-ghost); border-radius:16px; border:1.5px solid rgba(14,165,233,.15);">
+        <div style="width:44px; height:44px; background:linear-gradient(135deg,var(--sky),#0284c7); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto .85rem; font-family:'Bebas Neue',sans-serif; font-size:1.3rem; color:#fff; box-shadow:0 4px 14px rgba(14,165,233,.35);">1</div>
+        <h3 style="font-family:'Montserrat',sans-serif; font-weight:800; font-size:.9rem; color:var(--navy); margin-bottom:.4rem;">Tell Us About Your Space</h3>
+        <p style="font-size:.82rem; color:#4a7096; line-height:1.55; margin:0;">Fill out the quick form below — service type, bedrooms, and your preferred date.</p>
+      </div>
+      <div style="text-align:center; padding:1.5rem 1.25rem; background:var(--sky-ghost); border-radius:16px; border:1.5px solid rgba(14,165,233,.15);">
+        <div style="width:44px; height:44px; background:linear-gradient(135deg,var(--sky),#0284c7); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto .85rem; font-family:'Bebas Neue',sans-serif; font-size:1.3rem; color:#fff; box-shadow:0 4px 14px rgba(14,165,233,.35);">2</div>
+        <h3 style="font-family:'Montserrat',sans-serif; font-weight:800; font-size:.9rem; color:var(--navy); margin-bottom:.4rem;">Get a Custom Quote in 2 Hrs</h3>
+        <p style="font-size:.82rem; color:#4a7096; line-height:1.55; margin:0;">We review your details and send a flat, honest quote — no guessing, no range.</p>
+      </div>
+      <div style="text-align:center; padding:1.5rem 1.25rem; background:var(--sky-ghost); border-radius:16px; border:1.5px solid rgba(14,165,233,.15);">
+        <div style="width:44px; height:44px; background:linear-gradient(135deg,var(--sky),#0284c7); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto .85rem; font-family:'Bebas Neue',sans-serif; font-size:1.3rem; color:#fff; box-shadow:0 4px 14px rgba(14,165,233,.35);">3</div>
+        <h3 style="font-family:'Montserrat',sans-serif; font-weight:800; font-size:.9rem; color:var(--navy); margin-bottom:.4rem;">Book &amp; Pay After the Clean</h3>
+        <p style="font-size:.82rem; color:#4a7096; line-height:1.55; margin:0;">Confirm your date, we show up and do the work. You pay only after you're satisfied.</p>
+      </div>
+    </div>
+
+    <!-- Service Cards -->
+    <div class="reveal" style="text-align:center; margin-bottom:1.5rem;">
+      <span class="section-label">What We Offer</span>
+      <h2 class="section-title" style="margin-top:.5rem; font-size:clamp(1.8rem,3.5vw,2.8rem);">Our Services</h2>
+    </div>
+    <div class="reveal svc-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-bottom:2.5rem;">
+
+      <div style="background:#fff; border:1.5px solid rgba(14,165,233,.15); border-radius:16px; padding:1.25rem 1.35rem; box-shadow:0 2px 14px rgba(12,35,64,.05); transition:transform .2s,box-shadow .2s,border-color .2s;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 28px rgba(12,35,64,.1)';this.style.borderColor='rgba(14,165,233,.3)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 2px 14px rgba(12,35,64,.05)';this.style.borderColor='rgba(14,165,233,.15)'">
+        <div style="font-size:2rem; margin-bottom:.75rem;">🧹</div>
+        <h3 style="font-family:'Montserrat',sans-serif; font-weight:800; font-size:1rem; color:var(--navy); margin-bottom:.5rem;">Standard Clean</h3>
+        <p style="font-size:.85rem; color:#4a7096; line-height:1.6; margin-bottom:1.25rem;">Weekly, bi-weekly, or monthly recurring cleans. All rooms, floors, bathrooms, and kitchen — consistent every time.</p>
+        <a href="#quote-form" style="font-family:'Montserrat',sans-serif; font-weight:800; font-size:.78rem; color:var(--sky); text-decoration:none; letter-spacing:.04em;">Get a Quote →</a>
+      </div>
+
+      <div style="background:#fff; border:1.5px solid rgba(14,165,233,.15); border-radius:16px; padding:1.25rem 1.35rem; box-shadow:0 2px 14px rgba(12,35,64,.05); transition:transform .2s,box-shadow .2s,border-color .2s;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 28px rgba(12,35,64,.1)';this.style.borderColor='rgba(14,165,233,.3)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 2px 14px rgba(12,35,64,.05)';this.style.borderColor='rgba(14,165,233,.15)'">
+        <div style="font-size:2rem; margin-bottom:.75rem;">🧴</div>
+        <h3 style="font-family:'Montserrat',sans-serif; font-weight:800; font-size:1rem; color:var(--navy); margin-bottom:.5rem;">Deep Clean</h3>
+        <p style="font-size:.85rem; color:#4a7096; line-height:1.6; margin-bottom:1.25rem;">Top to bottom — baseboards, inside cabinets, grout scrubbing, appliances. Every corner covered, nothing skipped.</p>
+        <a href="#quote-form" style="font-family:'Montserrat',sans-serif; font-weight:800; font-size:.78rem; color:var(--sky); text-decoration:none; letter-spacing:.04em;">Get a Quote →</a>
+      </div>
+
+      <div style="background:#fff; border:1.5px solid rgba(14,165,233,.15); border-radius:16px; padding:1.25rem 1.35rem; box-shadow:0 2px 14px rgba(12,35,64,.05); transition:transform .2s,box-shadow .2s,border-color .2s;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 28px rgba(12,35,64,.1)';this.style.borderColor='rgba(14,165,233,.3)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 2px 14px rgba(12,35,64,.05)';this.style.borderColor='rgba(14,165,233,.15)'">
+        <div style="font-size:2rem; margin-bottom:.75rem;">📦</div>
+        <h3 style="font-family:'Montserrat',sans-serif; font-weight:800; font-size:1rem; color:var(--navy); margin-bottom:.5rem;">Move-In / Move-Out</h3>
+        <p style="font-size:.85rem; color:#4a7096; line-height:1.6; margin-bottom:1.25rem;">Fresh start for new tenants or a spotless handoff when leaving. Walls, closets, cabinets — move-ready from top to bottom.</p>
+        <a href="#quote-form" style="font-family:'Montserrat',sans-serif; font-weight:800; font-size:.78rem; color:var(--sky); text-decoration:none; letter-spacing:.04em;">Get a Quote →</a>
+      </div>
+
+      <div style="background:#fff; border:1.5px solid rgba(14,165,233,.15); border-radius:16px; padding:1.25rem 1.35rem; box-shadow:0 2px 14px rgba(12,35,64,.05); transition:transform .2s,box-shadow .2s,border-color .2s;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 28px rgba(12,35,64,.1)';this.style.borderColor='rgba(14,165,233,.3)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 2px 14px rgba(12,35,64,.05)';this.style.borderColor='rgba(14,165,233,.15)'">
+        <div style="font-size:2rem; margin-bottom:.75rem;">🏠</div>
+        <h3 style="font-family:'Montserrat',sans-serif; font-weight:800; font-size:1rem; color:var(--navy); margin-bottom:.5rem;">Airbnb & Short-Term Rental</h3>
+        <p style="font-size:.85rem; color:#4a7096; line-height:1.6; margin-bottom:1.25rem;">Same-day turnovers, linen reset, restock checklist. We sync to your booking calendar — fresh for every guest.</p>
+        <a href="#quote-form" style="font-family:'Montserrat',sans-serif; font-weight:800; font-size:.78rem; color:var(--sky); text-decoration:none; letter-spacing:.04em;">Get a Quote →</a>
+      </div>
+
+      <div style="background:#fff; border:1.5px solid rgba(14,165,233,.15); border-radius:16px; padding:1.25rem 1.35rem; box-shadow:0 2px 14px rgba(12,35,64,.05); transition:transform .2s,box-shadow .2s,border-color .2s;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 28px rgba(12,35,64,.1)';this.style.borderColor='rgba(14,165,233,.3)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 2px 14px rgba(12,35,64,.05)';this.style.borderColor='rgba(14,165,233,.15)'">
+        <div style="font-size:2rem; margin-bottom:.75rem;">🏗️</div>
+        <h3 style="font-family:'Montserrat',sans-serif; font-weight:800; font-size:1rem; color:var(--navy); margin-bottom:.5rem;">Post-Construction</h3>
+        <p style="font-size:.85rem; color:#4a7096; line-height:1.6; margin-bottom:1.25rem;">Dust, debris, and construction residue removed. Space cleaned and move-in ready after any renovation or build.</p>
+        <a href="#quote-form" style="font-family:'Montserrat',sans-serif; font-weight:800; font-size:.78rem; color:var(--sky); text-decoration:none; letter-spacing:.04em;">Get a Quote →</a>
+      </div>
+
+      <div style="background:#fff; border:1.5px solid rgba(14,165,233,.15); border-radius:16px; padding:1.25rem 1.35rem; box-shadow:0 2px 14px rgba(12,35,64,.05); transition:transform .2s,box-shadow .2s,border-color .2s;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 28px rgba(12,35,64,.1)';this.style.borderColor='rgba(14,165,233,.3)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 2px 14px rgba(12,35,64,.05)';this.style.borderColor='rgba(14,165,233,.15)'">
+        <div style="font-size:2rem; margin-bottom:.75rem;">🏢</div>
+        <h3 style="font-family:'Montserrat',sans-serif; font-weight:800; font-size:1rem; color:var(--navy); margin-bottom:.5rem;">Commercial & Office</h3>
+        <p style="font-size:.85rem; color:#4a7096; line-height:1.6; margin-bottom:1.25rem;">Offices, retail, and commercial spaces. Before open or after close — we work around your hours on a recurring schedule.</p>
+        <a href="#quote-form" style="font-family:'Montserrat',sans-serif; font-weight:800; font-size:.78rem; color:var(--sky); text-decoration:none; letter-spacing:.04em;">Get a Quote →</a>
+      </div>
+
     </div>
 
     <!-- Discount Banners -->
-    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1rem; margin:0 0 2.5rem;">
+    <div class="disc-grid" style="display:grid; grid-template-columns:repeat(2,1fr); gap:1rem; margin:0 0 2.5rem;">
       <div class="reveal" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3); border:1.5px solid #f9a8d4; border-radius:18px; padding:1.25rem 1.5rem; display:flex; align-items:center; gap:1rem;">
         <span style="font-size:2.25rem; flex-shrink:0;">🤰</span>
         <div>
@@ -3413,375 +3496,158 @@
       </div>
     </div>
 
-    <!-- Eco / Standard Toggle -->
-    <div style="display:flex; justify-content:center; margin-bottom:1.25rem;">
-      <div style="background:var(--sky-ghost); border:1.5px solid rgba(14,165,233,.2); border-radius:999px; padding:.3rem; display:inline-flex; gap:.25rem;">
-        <button onclick="setProductMode(false)" id="std-btn" class="ptab ptab-active" style="padding:.45rem 1.2rem; font-size:.78rem;">Standard Products</button>
-        <button onclick="setProductMode(true)" id="eco-btn" class="ptab" style="padding:.45rem 1.2rem; font-size:.78rem;">🌿 Natural / Eco Products</button>
-      </div>
-    </div>
-    <p id="eco-note" style="text-align:center; font-size:.76rem; color:var(--text-muted); margin-bottom:1.75rem; display:none;">Eco pricing reflects use of plant-based, non-toxic cleaning products — safer for families, pets &amp; the planet.</p>
-
-    <!-- Plan Tabs -->
-    <div id="pricing-tabs-wrap" style="margin-bottom:2.25rem;">
-      <div style="display:flex; justify-content:center; gap:.5rem; flex-wrap:wrap;" id="pricing-tabs">
-        <button onclick="switchPlan('standard')" id="tab-standard" class="ptab ptab-active">Standard Clean</button>
-        <button onclick="switchPlan('deep')" id="tab-deep" class="ptab">Deep Clean</button>
-        <button onclick="switchPlan('moveinout')" id="tab-moveinout" class="ptab">Move-In / Move-Out</button>
-        <button onclick="switchPlan('airbnb')" id="tab-airbnb" class="ptab">Airbnb / Short-Term</button>
-        <button onclick="switchPlan('postconstruct')" id="tab-postconstruct" class="ptab">Post-Construction</button>
-      </div>
-    </div>
-
-    <!-- Sqft helper note -->
-    <div class="reveal" style="text-align:center; margin-bottom:2rem;">
-      <p style="display:inline-flex; align-items:center; gap:.6rem; background:var(--sky-pale); border:1.5px solid rgba(14,165,233,.25); border-radius:12px; padding:.7rem 1.2rem; font-size:.82rem; color:var(--text-body); line-height:1.6; max-width:620px;">
-        <span style="font-size:1.2rem; flex-shrink:0;">📐</span>
-        <span><strong style="color:var(--navy); font-weight:700;">Not sure of your home's square footage?</strong> No problem — give us a call or email and we'll come check it out for free, no obligation.&nbsp;
-          <a href="tel:+18722406619" style="color:var(--sky); font-weight:700; text-decoration:none; white-space:nowrap;">(872) 240-6619</a>
-          &nbsp;·&nbsp;
-          <a href="mailto:michel@secondcityscrubbers.com" style="color:var(--sky); font-weight:700; text-decoration:none; white-space:nowrap;">michel@secondcityscrubbers.com</a>
-        </span>
-      </p>
-    </div>
-
-    <!-- STANDARD PLAN -->
-    <!-- STANDARD PLAN -->
-    <div id="plan-standard" class="price-grid">
-      <div class="reveal price-card" data-plan="standard" data-size="studio">
-        <p class="price-label">Studio / 1BR</p>
-        <p class="price-num">$140</p>
-        <p class="price-dur">approx. 2–3 hrs</p>
-        <ul class="price-list">
-          <li><span>✓</span> All rooms cleaned</li>
-          <li><span>✓</span> Kitchen & 1 bathroom</li>
-          <li><span>✓</span> Dusting & mopping</li>
-          <li><span>✓</span> Vacuuming & floors</li>
-        </ul>
-        <a href="#booking" class="price-cta">Book This →</a>
-      </div>
-      <div class="reveal price-card price-card-featured" data-plan="standard" data-size="2br">
-        <span class="price-badge">Most Popular</span>
-        <p class="price-label" style="color:var(--sky-light);">2 Bedroom</p>
-        <p class="price-num" style="color:#fff;">$190</p>
-        <p class="price-dur" style="color:var(--sky-mid);">approx. 3–4 hrs</p>
-        <ul class="price-list price-list-dark">
-          <li><span>✓</span> All rooms cleaned</li>
-          <li><span>✓</span> Kitchen & 2 bathrooms</li>
-          <li><span>✓</span> Dusting & mopping</li>
-          <li><span>✓</span> Vacuuming & floors</li>
-        </ul>
-        <a href="#booking" class="price-cta price-cta-light">Book This →</a>
-      </div>
-      <div class="reveal price-card" data-plan="standard" data-size="3br">
-        <p class="price-label">3 Bedroom</p>
-        <p class="price-num">$240</p>
-        <p class="price-dur">approx. 4–5 hrs</p>
-        <ul class="price-list">
-          <li><span>✓</span> All rooms cleaned</li>
-          <li><span>✓</span> Kitchen & bathrooms</li>
-          <li><span>✓</span> Dusting & mopping</li>
-          <li><span>✓</span> Vacuuming & floors</li>
-        </ul>
-        <a href="#booking" class="price-cta">Book This →</a>
-      </div>
-      <div class="reveal price-card" data-plan="standard" data-size="4br">
-        <p class="price-label">4+ Bedroom</p>
-        <p class="price-num">$295+</p>
-        <p class="price-dur">approx. 5–7 hrs</p>
-        <ul class="price-list">
-          <li><span>✓</span> All rooms cleaned</li>
-          <li><span>✓</span> Kitchen & bathrooms</li>
-          <li><span>✓</span> Dusting & mopping</li>
-          <li><span>✓</span> Vacuuming & floors</li>
-        </ul>
-        <a href="#booking" class="price-cta">Book This →</a>
-      </div>
-    </div>
-
-    <!-- DEEP CLEAN PLAN -->
-    <div id="plan-deep" class="price-grid" style="display:none;">
-      <div class="reveal price-card" data-plan="deep" data-size="studio">
-        <p class="price-label">Studio / 1BR</p>
-        <p class="price-num">$220</p>
-        <p class="price-dur">approx. 3–4 hrs</p>
-        <ul class="price-list">
-          <li><span>✓</span> Inside appliances</li>
-          <li><span>✓</span> Baseboards & vents</li>
-          <li><span>✓</span> Inside cabinets</li>
-          <li><span>✓</span> Grout & tile scrub</li>
-        </ul>
-        <a href="#booking" class="price-cta">Book This →</a>
-      </div>
-      <div class="reveal price-card price-card-featured" data-plan="deep" data-size="2br">
-        <span class="price-badge">Most Popular</span>
-        <p class="price-label" style="color:var(--sky-light);">2 Bedroom</p>
-        <p class="price-num" style="color:#fff;">$300</p>
-        <p class="price-dur" style="color:var(--sky-mid);">approx. 4–5 hrs</p>
-        <ul class="price-list price-list-dark">
-          <li><span>✓</span> Inside appliances</li>
-          <li><span>✓</span> Baseboards & vents</li>
-          <li><span>✓</span> Inside cabinets</li>
-          <li><span>✓</span> Grout & tile scrub</li>
-        </ul>
-        <a href="#booking" class="price-cta price-cta-light">Book This →</a>
-      </div>
-      <div class="reveal price-card" data-plan="deep" data-size="3br">
-        <p class="price-label">3 Bedroom</p>
-        <p class="price-num">$380</p>
-        <p class="price-dur">approx. 5–7 hrs</p>
-        <ul class="price-list">
-          <li><span>✓</span> Inside appliances</li>
-          <li><span>✓</span> Baseboards & vents</li>
-          <li><span>✓</span> Inside cabinets</li>
-          <li><span>✓</span> Grout & tile scrub</li>
-        </ul>
-        <a href="#booking" class="price-cta">Book This →</a>
-      </div>
-      <div class="reveal price-card" data-plan="deep" data-size="4br">
-        <p class="price-label">4+ Bedroom</p>
-        <p class="price-num">$500+</p>
-        <p class="price-dur">approx. 6–8 hrs</p>
-        <ul class="price-list">
-          <li><span>✓</span> Inside appliances</li>
-          <li><span>✓</span> Baseboards & vents</li>
-          <li><span>✓</span> Inside cabinets</li>
-          <li><span>✓</span> Grout & tile scrub</li>
-        </ul>
-        <a href="#booking" class="price-cta">Book This →</a>
-      </div>
-    </div>
-
-    <!-- MOVE-IN/OUT PLAN -->
-    <div id="plan-moveinout" class="price-grid" style="display:none;">
-      <div class="reveal price-card" data-plan="moveinout" data-size="studio">
-        <p class="price-label">Studio / 1BR</p>
-        <p class="price-num">$235</p>
-        <p class="price-dur">approx. 3–4 hrs</p>
-        <ul class="price-list">
-          <li><span>✓</span> Full empty-unit clean</li>
-          <li><span>✓</span> Inside all appliances</li>
-          <li><span>✓</span> Walls & baseboards</li>
-          <li><span>✓</span> Closets & cabinets</li>
-        </ul>
-        <a href="#booking" class="price-cta">Book This →</a>
-      </div>
-      <div class="reveal price-card price-card-featured" data-plan="moveinout" data-size="2br">
-        <span class="price-badge">Most Popular</span>
-        <p class="price-label" style="color:var(--sky-light);">2 Bedroom</p>
-        <p class="price-num" style="color:#fff;">$325</p>
-        <p class="price-dur" style="color:var(--sky-mid);">approx. 4–6 hrs</p>
-        <ul class="price-list price-list-dark">
-          <li><span>✓</span> Full empty-unit clean</li>
-          <li><span>✓</span> Inside all appliances</li>
-          <li><span>✓</span> Walls & baseboards</li>
-          <li><span>✓</span> Closets & cabinets</li>
-        </ul>
-        <a href="#booking" class="price-cta price-cta-light">Book This →</a>
-      </div>
-      <div class="reveal price-card" data-plan="moveinout" data-size="3br">
-        <p class="price-label">3 Bedroom</p>
-        <p class="price-num">$400</p>
-        <p class="price-dur">approx. 5–7 hrs</p>
-        <ul class="price-list">
-          <li><span>✓</span> Full empty-unit clean</li>
-          <li><span>✓</span> Inside all appliances</li>
-          <li><span>✓</span> Walls & baseboards</li>
-          <li><span>✓</span> Closets & cabinets</li>
-        </ul>
-        <a href="#booking" class="price-cta">Book This →</a>
-      </div>
-      <div class="reveal price-card" data-plan="moveinout" data-size="4br">
-        <p class="price-label">4+ Bedroom</p>
-        <p class="price-num">$505+</p>
-        <p class="price-dur">approx. 7–9 hrs</p>
-        <ul class="price-list">
-          <li><span>✓</span> Full empty-unit clean</li>
-          <li><span>✓</span> Inside all appliances</li>
-          <li><span>✓</span> Walls & baseboards</li>
-          <li><span>✓</span> Closets & cabinets</li>
-        </ul>
-        <a href="#booking" class="price-cta">Book This →</a>
-      </div>
-    </div>
-
-    <!-- AIRBNB / SHORT-TERM PLAN -->
-    <div id="plan-airbnb" class="price-grid" style="display:none;">
-      <div class="reveal price-card" data-plan="airbnb" data-size="studio">
-        <p class="price-label">Studio / 1BR</p>
-        <p class="price-num">$140</p>
-        <p class="price-dur">approx. 1.5–2.5 hrs</p>
-        <ul class="price-list">
-          <li><span>✓</span> Guest-ready turnover</li>
-          <li><span>✓</span> Linens changed</li>
-          <li><span>✓</span> Kitchen & bathroom reset</li>
-          <li><span>✓</span> Restock essentials</li>
-        </ul>
-        <a href="#booking" class="price-cta">Book This →</a>
-      </div>
-      <div class="reveal price-card price-card-featured" data-plan="airbnb" data-size="2br">
-        <span class="price-badge">Most Popular</span>
-        <p class="price-label" style="color:var(--sky-light);">2 Bedroom</p>
-        <p class="price-num" style="color:#fff;">$185</p>
-        <p class="price-dur" style="color:var(--sky-mid);">approx. 2.5–3.5 hrs</p>
-        <ul class="price-list price-list-dark">
-          <li><span>✓</span> Guest-ready turnover</li>
-          <li><span>✓</span> Linens changed</li>
-          <li><span>✓</span> Kitchen & bathroom reset</li>
-          <li><span>✓</span> Restock essentials</li>
-        </ul>
-        <a href="#booking" class="price-cta price-cta-light">Book This →</a>
-      </div>
-      <div class="reveal price-card" data-plan="airbnb" data-size="3br">
-        <p class="price-label">3 Bedroom</p>
-        <p class="price-num">$230</p>
-        <p class="price-dur">approx. 3–4.5 hrs</p>
-        <ul class="price-list">
-          <li><span>✓</span> Guest-ready turnover</li>
-          <li><span>✓</span> Linens changed</li>
-          <li><span>✓</span> Kitchen & bathroom reset</li>
-          <li><span>✓</span> Restock essentials</li>
-        </ul>
-        <a href="#booking" class="price-cta">Book This →</a>
-      </div>
-      <div class="reveal price-card" data-plan="airbnb" data-size="4br">
-        <p class="price-label">4+ Bedroom</p>
-        <p class="price-num">$280+</p>
-        <p class="price-dur">approx. 4–6 hrs</p>
-        <ul class="price-list">
-          <li><span>✓</span> Guest-ready turnover</li>
-          <li><span>✓</span> Linens changed</li>
-          <li><span>✓</span> Kitchen & bathroom reset</li>
-          <li><span>✓</span> Restock essentials</li>
-        </ul>
-        <a href="#booking" class="price-cta">Book This →</a>
-      </div>
-    </div>
-
-    <!-- POST-CONSTRUCTION PLAN -->
-    <div id="plan-postconstruct" class="price-grid" style="display:none;">
-      <div class="reveal price-card" data-plan="postconstruct" data-size="studio">
-        <p class="price-label">Studio / 1BR</p>
-        <p class="price-num">$410</p>
-        <p class="price-dur">approx. 4–5 hrs</p>
-        <ul class="price-list">
-          <li><span>✓</span> Construction dust removal</li>
-          <li><span>✓</span> Window & frame wipe-down</li>
-          <li><span>✓</span> Floor debris & scrub</li>
-          <li><span>✓</span> Cabinet & surface clean</li>
-        </ul>
-        <a href="#booking" class="price-cta">Book This →</a>
-      </div>
-      <div class="reveal price-card price-card-featured" data-plan="postconstruct" data-size="2br">
-        <span class="price-badge">Most Popular</span>
-        <p class="price-label" style="color:var(--sky-light);">2 Bedroom</p>
-        <p class="price-num" style="color:#fff;">$535</p>
-        <p class="price-dur" style="color:var(--sky-mid);">approx. 5–7 hrs</p>
-        <ul class="price-list price-list-dark">
-          <li><span>✓</span> Construction dust removal</li>
-          <li><span>✓</span> Window & frame wipe-down</li>
-          <li><span>✓</span> Floor debris & scrub</li>
-          <li><span>✓</span> Cabinet & surface clean</li>
-        </ul>
-        <a href="#booking" class="price-cta price-cta-light">Book This →</a>
-      </div>
-      <div class="reveal price-card" data-plan="postconstruct" data-size="3br">
-        <p class="price-label">3 Bedroom</p>
-        <p class="price-num">$660</p>
-        <p class="price-dur">approx. 6–8 hrs</p>
-        <ul class="price-list">
-          <li><span>✓</span> Construction dust removal</li>
-          <li><span>✓</span> Window & frame wipe-down</li>
-          <li><span>✓</span> Floor debris & scrub</li>
-          <li><span>✓</span> Cabinet & surface clean</li>
-        </ul>
-        <a href="#booking" class="price-cta">Book This →</a>
-      </div>
-      <div class="reveal price-card" data-plan="postconstruct" data-size="4br">
-        <p class="price-label">4+ Bedroom</p>
-        <p class="price-num">$810+</p>
-        <p class="price-dur">approx. 7–10 hrs</p>
-        <ul class="price-list">
-          <li><span>✓</span> Construction dust removal</li>
-          <li><span>✓</span> Window & frame wipe-down</li>
-          <li><span>✓</span> Floor debris & scrub</li>
-          <li><span>✓</span> Cabinet & surface clean</li>
-        </ul>
-        <a href="#booking" class="price-cta">Book This →</a>
-      </div>
-    </div>
-
-    <!-- Link to What We Clean -->
-    <div class="reveal" style="margin-top:2rem; text-align:center;">
-      <a href="#what-we-clean" style="display:inline-flex;align-items:center;gap:.5rem;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.82rem;color:var(--sky);text-decoration:none;border:1.5px solid rgba(14,165,233,.3);border-radius:999px;padding:.55rem 1.4rem;transition:background .15s,border-color .15s;" onmouseover="this.style.background='var(--sky-pale)';this.style.borderColor='var(--sky)'" onmouseout="this.style.background='';this.style.borderColor='rgba(14,165,233,.3)'">
-        ✓ See exactly what we clean — 140+ tasks covered
-      </a>
-    </div>
-
-    <!-- Recurring Discounts -->
-    <div class="reveal" style="margin-top:2.5rem;">
+    <!-- Quote Request Form -->
+    <div id="quote-form" class="reveal" style="margin-top:2rem;">
       <div style="text-align:center; margin-bottom:1.5rem;">
-        <span class="section-label">Save More</span>
-        <h3 style="font-family:'Montserrat',sans-serif; font-weight:900; color:var(--navy); font-size:1.5rem; margin-top:.35rem; letter-spacing:-.02em;">Recurring Cleaning Discounts</h3>
-        <p style="font-size:.88rem; color:var(--text-muted); margin:.5rem auto 0; max-width:500px; line-height:1.6;">Book regular cleanings and lock in lower rates. Prices below are per visit, based on your currently selected service &amp; size.</p>
+        <h3 style="font-family:'Montserrat',sans-serif; font-weight:900; color:var(--navy); font-size:1.5rem; letter-spacing:-.02em;">Get Your Custom Quote</h3>
+        <p style="font-size:.88rem; color:var(--text-muted); margin:.4rem auto 0; max-width:460px; line-height:1.65;">We'll send a flat, personalized quote within 2 hours. No pressure, no credit card required.</p>
       </div>
-      <div class="rec-grid">
-        <div class="reveal rec-card">
-          <p class="rec-freq">One-Time</p>
-          <p class="rec-price" id="rec-onetime">—</p>
-          <p class="rec-save">standard rate</p>
-          <div style="height:1.4rem;"></div>
-          <a href="#booking" class="rec-btn">Book Now →</a>
-        </div>
-        <div class="reveal rec-card">
-          <p class="rec-freq">Monthly</p>
-          <p class="rec-price" id="rec-monthly">—</p>
-          <p class="rec-save">per visit</p>
-          <span class="rec-savings-tag">Save 15%</span>
-          <a href="#booking" class="rec-btn">Book Monthly →</a>
-        </div>
-        <div class="reveal rec-card rec-card-pop">
-          <span class="rec-badge-s">Best Value</span>
-          <p class="rec-freq" style="color:var(--sky-light);">Bi-Weekly</p>
-          <p class="rec-price rec-price-light" id="rec-biweekly">—</p>
-          <p class="rec-save rec-save-light">per visit</p>
-          <span class="rec-savings-tag rec-savings-tag-light">Save 20%</span>
-          <a href="#booking" class="rec-btn rec-btn-light">Book Bi-Weekly →</a>
-        </div>
-        <div class="reveal rec-card">
-          <p class="rec-freq">Weekly</p>
-          <p class="rec-price" id="rec-weekly">—</p>
-          <p class="rec-save">per visit</p>
-          <span class="rec-savings-tag">Save 20%</span>
-          <div style="display:flex; align-items:center; gap:.4rem; justify-content:center; margin:.6rem 0 .85rem; background:rgba(14,165,233,.1); border:1px solid rgba(14,165,233,.25); border-radius:8px; padding:.4rem .75rem;">
-            <span style="font-size:.85rem;">🎁</span>
-            <span style="font-size:.74rem; font-weight:700; color:var(--sky);">1 Free Add-On Every Visit</span>
+
+      <div style="background:#fff; border-radius:20px; box-shadow:0 4px 32px rgba(12,35,64,.09); overflow:hidden; max-width:680px; margin:0 auto;">
+
+        <!-- Form header bar -->
+        <div style="background:linear-gradient(135deg,var(--navy),#0f3d6e); padding:1.25rem 2rem; display:flex; align-items:center; gap:.75rem;">
+          <div style="width:36px; height:36px; border-radius:50%; background:var(--sky); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
           </div>
-          <a href="#booking" class="rec-btn">Book Weekly →</a>
+          <div>
+            <p style="font-family:'Montserrat',sans-serif; font-weight:800; color:#fff; font-size:.95rem; margin:0;">Request a Free Quote</p>
+            <p style="font-size:.76rem; color:#bfdbfe; margin:0;">We respond within 2 hours · No obligation</p>
+          </div>
+        </div>
+
+        <form action="https://formsubmit.co/michel.uzhca@icloud.com" method="POST" style="padding:1.75rem 2rem;" onsubmit="handleQuoteSubmit(event, this)">
+          <input type="hidden" name="_subject" value="New Quote Request — Second City Scrubbers" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_next" value="https://secondcityscrubbers.com/#quote-form" />
+
+          <!-- Row 1: Name + Phone -->
+          <div class="qform-row" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem;">
+            <div>
+              <label style="display:block; font-family:'Montserrat',sans-serif; font-weight:700; font-size:.76rem; color:var(--navy); text-transform:uppercase; letter-spacing:.08em; margin-bottom:.4rem;">Your Name *</label>
+              <input name="name" type="text" required placeholder="Jane Smith"
+                style="width:100%; padding:.7rem 1rem; border:1.5px solid #e2e8f0; border-radius:10px; font-family:'Inter',sans-serif; font-size:.9rem; color:var(--navy); outline:none; transition:border-color .2s;"
+                onfocus="this.style.borderColor='var(--sky)'" onblur="this.style.borderColor='#e2e8f0'" />
+            </div>
+            <div>
+              <label style="display:block; font-family:'Montserrat',sans-serif; font-weight:700; font-size:.76rem; color:var(--navy); text-transform:uppercase; letter-spacing:.08em; margin-bottom:.4rem;">Phone Number *</label>
+              <input name="phone" type="tel" required placeholder="(312) 555-0100"
+                style="width:100%; padding:.7rem 1rem; border:1.5px solid #e2e8f0; border-radius:10px; font-family:'Inter',sans-serif; font-size:.9rem; color:var(--navy); outline:none; transition:border-color .2s;"
+                onfocus="this.style.borderColor='var(--sky)'" onblur="this.style.borderColor='#e2e8f0'" />
+            </div>
+          </div>
+
+          <!-- Row 2: Email -->
+          <div style="margin-bottom:1rem;">
+            <label style="display:block; font-family:'Montserrat',sans-serif; font-weight:700; font-size:.76rem; color:var(--navy); text-transform:uppercase; letter-spacing:.08em; margin-bottom:.4rem;">Email Address *</label>
+            <input name="email" type="email" required placeholder="jane@email.com"
+              style="width:100%; padding:.7rem 1rem; border:1.5px solid #e2e8f0; border-radius:10px; font-family:'Inter',sans-serif; font-size:.9rem; color:var(--navy); outline:none; transition:border-color .2s;"
+              onfocus="this.style.borderColor='var(--sky)'" onblur="this.style.borderColor='#e2e8f0'" />
+          </div>
+
+          <!-- Row 3: Service + Bedrooms -->
+          <div class="qform-row" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem;">
+            <div>
+              <label style="display:block; font-family:'Montserrat',sans-serif; font-weight:700; font-size:.76rem; color:var(--navy); text-transform:uppercase; letter-spacing:.08em; margin-bottom:.4rem;">Service Type *</label>
+              <select name="service_type" required
+                style="width:100%; padding:.7rem 1rem; border:1.5px solid #e2e8f0; border-radius:10px; font-family:'Inter',sans-serif; font-size:.9rem; color:var(--navy); background:#fff; outline:none; transition:border-color .2s; appearance:none; background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%230c2340' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E\"); background-repeat:no-repeat; background-position:right 1rem center;"
+                onfocus="this.style.borderColor='var(--sky)'" onblur="this.style.borderColor='#e2e8f0'">
+                <option value="">Select a service…</option>
+                <option value="Standard Clean">Standard Clean</option>
+                <option value="Deep Clean">Deep Clean</option>
+                <option value="Move-In / Move-Out">Move-In / Move-Out</option>
+                <option value="Airbnb / Short-Term Rental">Airbnb / Short-Term Rental</option>
+                <option value="Post-Construction">Post-Construction</option>
+                <option value="Commercial / Office">Commercial / Office</option>
+              </select>
+            </div>
+            <div>
+              <label style="display:block; font-family:'Montserrat',sans-serif; font-weight:700; font-size:.76rem; color:var(--navy); text-transform:uppercase; letter-spacing:.08em; margin-bottom:.4rem;">Home Size</label>
+              <select name="home_size"
+                style="width:100%; padding:.7rem 1rem; border:1.5px solid #e2e8f0; border-radius:10px; font-family:'Inter',sans-serif; font-size:.9rem; color:var(--navy); background:#fff; outline:none; transition:border-color .2s; appearance:none; background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%230c2340' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E\"); background-repeat:no-repeat; background-position:right 1rem center;"
+                onfocus="this.style.borderColor='var(--sky)'" onblur="this.style.borderColor='#e2e8f0'">
+                <option value="">Select size…</option>
+                <option value="Studio / 1 Bedroom">Studio / 1 Bedroom</option>
+                <option value="2 Bedrooms">2 Bedrooms</option>
+                <option value="3 Bedrooms">3 Bedrooms</option>
+                <option value="4+ Bedrooms">4+ Bedrooms</option>
+                <option value="Commercial Space">Commercial Space</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Row 4: Preferred Date -->
+          <div style="margin-bottom:1rem;">
+            <label style="display:block; font-family:'Montserrat',sans-serif; font-weight:700; font-size:.76rem; color:var(--navy); text-transform:uppercase; letter-spacing:.08em; margin-bottom:.4rem;">Preferred Date</label>
+            <input name="preferred_date" type="date"
+              style="width:100%; padding:.7rem 1rem; border:1.5px solid #e2e8f0; border-radius:10px; font-family:'Inter',sans-serif; font-size:.9rem; color:var(--navy); outline:none; transition:border-color .2s;"
+              onfocus="this.style.borderColor='var(--sky)'" onblur="this.style.borderColor='#e2e8f0'" />
+          </div>
+
+          <!-- Row 5: Notes -->
+          <div style="margin-bottom:1.5rem;">
+            <label style="display:block; font-family:'Montserrat',sans-serif; font-weight:700; font-size:.76rem; color:var(--navy); text-transform:uppercase; letter-spacing:.08em; margin-bottom:.4rem;">Additional Notes</label>
+            <textarea name="notes" rows="3" placeholder="Pets, special areas, add-ons (oven, fridge, laundry), access instructions…"
+              style="width:100%; padding:.7rem 1rem; border:1.5px solid #e2e8f0; border-radius:10px; font-family:'Inter',sans-serif; font-size:.9rem; color:var(--navy); outline:none; resize:vertical; transition:border-color .2s; line-height:1.6;"
+              onfocus="this.style.borderColor='var(--sky)'" onblur="this.style.borderColor='#e2e8f0'"></textarea>
+          </div>
+
+          <!-- Submit -->
+          <button type="submit" id="quote-submit-btn"
+            style="width:100%; background:var(--sky); color:#fff; font-family:'Montserrat',sans-serif; font-weight:800; font-size:1rem; letter-spacing:.04em; padding:1rem 2rem; border-radius:12px; border:none; cursor:pointer; transition:background .18s, transform .15s; display:flex; align-items:center; justify-content:center; gap:.6rem;"
+            onmouseover="this.style.background='#0284c7';this.style.transform='translateY(-1px)'" onmouseout="this.style.background='var(--sky)';this.style.transform='translateY(0)'">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Send My Quote Request
+          </button>
+
+          <!-- Trust line -->
+          <p style="text-align:center; font-size:.76rem; color:#94a3b8; margin-top:.85rem; line-height:1.6;">
+            🔒 Your info is private &nbsp;·&nbsp; 📅 Response within 2 hours &nbsp;·&nbsp; 💰 No credit card required
+          </p>
+
+          <!-- Success message (hidden by default) -->
+          <div id="quote-success" style="display:none; text-align:center; padding:1.5rem; background:#f0fdf4; border:1.5px solid #bbf7d0; border-radius:12px; margin-top:1rem;">
+            <div style="font-size:2rem; margin-bottom:.5rem;">✅</div>
+            <p style="font-family:'Montserrat',sans-serif; font-weight:800; color:#15803d; font-size:1rem; margin-bottom:.25rem;">Quote Request Sent!</p>
+            <p style="font-size:.85rem; color:#4a7096; line-height:1.6;">We'll reach out within 2 hours with your custom quote. Check your email or phone for our message.</p>
+          </div>
+        </form>
+      </div>
+
+      <!-- Bottom trust badges -->
+      <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:1.5rem; margin-top:1.75rem;">
+        <div style="display:flex; align-items:center; gap:.5rem; font-size:.8rem; color:var(--text-muted);">
+          <span style="color:#16a34a; font-size:1rem;">✓</span> Pay after the clean
+        </div>
+        <div style="display:flex; align-items:center; gap:.5rem; font-size:.8rem; color:var(--text-muted);">
+          <span style="color:#16a34a; font-size:1rem;">✓</span> Flat rates, no hidden fees
+        </div>
+        <div style="display:flex; align-items:center; gap:.5rem; font-size:.8rem; color:var(--text-muted);">
+          <span style="color:#16a34a; font-size:1rem;">✓</span> Confirmed in 2 hrs
+        </div>
+        <div style="display:flex; align-items:center; gap:.5rem; font-size:.8rem; color:var(--text-muted);">
+          <span style="color:#16a34a; font-size:1rem;">✓</span> Serving all Chicago neighborhoods
         </div>
       </div>
-      <p style="text-align:center; font-size:.75rem; color:var(--text-muted); margin-top:1rem;">Recurring rates locked in for 6 months. Cancel or pause anytime with 48 hrs notice.</p>
     </div>
 
-    <!-- Add-ons note -->
-    <div class="reveal" style="margin-top:2rem; display:flex; align-items:center; gap:.75rem; background:var(--sky-ghost); border:1px solid rgba(14,165,233,.15); border-radius:14px; padding:1rem 1.5rem;">
-      <span style="font-size:1.5rem; flex-shrink:0;">✦</span>
-      <p style="font-size:.85rem; color:var(--text-body); line-height:1.6;"><strong style="color:var(--navy);">Add-on services available upon request</strong> — including fridge & oven interior, laundry, dishes, and more. Just mention it when booking and we'll include a custom quote.</p>
-    </div>
-
-    <!-- Commercial -->
-    <div class="reveal" style="margin-top:1.25rem; background:linear-gradient(135deg,var(--navy),#0f4c7a); border-radius:20px; padding:2rem 2.5rem; display:flex; align-items:center; justify-content:space-between; gap:1.5rem; flex-wrap:wrap;">
-      <div>
-        <p style="font-family:'Montserrat',sans-serif; font-weight:800; color:var(--sky-light); font-size:.75rem; text-transform:uppercase; letter-spacing:.1em; margin-bottom:.4rem;">Commercial & Large Projects</p>
-        <h3 style="font-family:'Montserrat',sans-serif; font-weight:800; color:#fff; font-size:1.2rem; margin-bottom:.5rem;">Offices, Warehouses & Big Spaces</h3>
-        <p style="font-size:.85rem; color:#bfdbfe; line-height:1.6; max-width:500px;">We handle commercial cleaning for offices, warehouses, retail spaces, restaurants, and large-scale projects across Chicago. Custom pricing and volume discounts available — contact us for a tailored quote.</p>
-      </div>
-      <a href="#contact" style="flex-shrink:0; background:var(--sky); color:#fff; font-family:'Montserrat',sans-serif; font-weight:800; font-size:.88rem; padding:.85rem 1.75rem; border-radius:12px; text-decoration:none; white-space:nowrap; transition:background .2s, transform .15s;" onmouseover="this.style.background='var(--sky-light)';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='var(--sky)';this.style.transform='translateY(0)'">Get a Commercial Quote →</a>
-    </div>
-
-    <p style="text-align:center; font-size:.76rem; color:var(--text-muted); margin-top:1.5rem;">Prices based on 2026 Chicago market rates. Final quote confirmed before any charge. No credit card required to book.</p>
   </div>
 </section>
+
+<script>
+function handleQuoteSubmit(e, form) {
+  const btn = document.getElementById('quote-submit-btn');
+  const success = document.getElementById('quote-success');
+  btn.disabled = true;
+  btn.innerHTML = '⏳ Sending…';
+  // Let FormSubmit handle the actual POST; show optimistic UI
+  setTimeout(() => {
+    form.style.display = 'none';
+    success.style.display = 'block';
+  }, 800);
+}
+</script>
 
 <!-- ====== CTA BAND ====== -->
 
@@ -4080,16 +3946,6 @@
 
     <div class="reveal" style="background:#fff; border-radius:24px; padding:2.5rem; box-shadow:0 8px 40px rgba(12,35,64,.1);">
 
-      <!-- Price Estimator Badge -->
-      <div id="est-box" style="background:linear-gradient(135deg,var(--navy),#0f4c7a); border-radius:14px; padding:1.1rem 1.5rem; margin-bottom:2rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:.75rem;">
-        <div>
-          <p style="font-family:'Montserrat',sans-serif; font-weight:800; color:var(--sky-light); font-size:.7rem; text-transform:uppercase; letter-spacing:.1em; margin-bottom:.15rem;">Estimated Price</p>
-          <p id="est-price" style="font-family:'Bebas Neue',sans-serif; font-size:2.5rem; color:#fff; line-height:1;">Select options below</p>
-        </div>
-        <div id="est-discount-badge" style="display:none; background:rgba(250,204,21,.15); border:1px solid rgba(250,204,21,.4); border-radius:10px; padding:.5rem 1rem;">
-          <p style="font-family:'Montserrat',sans-serif; font-weight:800; color:#fbbf24; font-size:.78rem;">15% Discount Applied ✓</p>
-        </div>
-      </div>
 
       <!-- Step progress bar -->
       <div id="step-bar" style="display:flex; align-items:center; gap:0; margin-bottom:2rem;">
@@ -4107,7 +3963,6 @@
 
       <form id="booking-form" onsubmit="handleBooking(event)">
         <input type="hidden" name="_subject" value="New Booking Request — Second City Scrubbers" />
-        <input type="hidden" id="book-est-hidden" name="estimated_price" value="" />
 
         <!-- ── STEP 1: Service ── -->
         <div id="bstep-1" class="bstep">
@@ -4148,7 +4003,7 @@
               </div>
             </div>
             <!-- hidden select keeps form submission intact -->
-            <select name="service_type" id="book-service" onchange="updateEstimate();refreshRecurring()" style="display:none;" aria-hidden="true">
+            <select name="service_type" id="book-service" style="display:none;" aria-hidden="true">
               <option value="standard">Standard Clean</option>
               <option value="deep">Deep Clean</option>
               <option value="moveinout">Move-In / Move-Out</option>
@@ -4179,7 +4034,7 @@
                 <span class="qtile-label">4+ Bedrooms</span>
               </div>
             </div>
-            <select name="home_size" id="book-size" onchange="updateEstimate();refreshRecurring()" style="display:none;" aria-hidden="true">
+            <select name="home_size" id="book-size" style="display:none;" aria-hidden="true">
               <option value="studio">Studio / 1 Bedroom</option>
               <option value="2br">2 Bedrooms</option>
               <option value="3br">3 Bedrooms</option>
@@ -4189,11 +4044,11 @@
 
           <div class="form-group">
             <label>How often?</label>
-            <select name="booking_frequency" id="book-frequency" onchange="updateEstimate()">
+            <select name="booking_frequency" id="book-frequency">
               <option value="One-Time">One-Time</option>
-              <option value="Monthly (10% off)">Monthly — Save 10%</option>
-              <option value="Bi-Weekly (15% off)">Bi-Weekly — Save 15%</option>
-              <option value="Weekly (15% off + free add-on)">Weekly — Save 15% + Free Add-On</option>
+              <option value="Monthly">Monthly</option>
+              <option value="Bi-Weekly">Bi-Weekly</option>
+              <option value="Weekly">Weekly</option>
             </select>
           </div>
           <!-- Add-ons -->
@@ -4297,19 +4152,19 @@
             <label>Discount Eligibility <span style="font-weight:400; color:var(--text-muted);">(10% off — select if applicable)</span></label>
             <div style="display:flex; gap:1.25rem; flex-wrap:wrap; margin-top:.5rem;">
               <label style="display:flex; align-items:center; gap:.5rem; cursor:pointer; font-weight:500; font-size:.88rem; color:var(--text-body);">
-                <input type="checkbox" name="discount" value="Expecting Mother" id="disc-pregnant" onchange="updateEstimate()" style="width:16px;height:16px;accent-color:var(--sky);cursor:pointer;" />
+                <input type="checkbox" name="discount" value="Expecting Mother" id="disc-pregnant" style="width:16px;height:16px;accent-color:var(--sky);cursor:pointer;" />
                 🤰 Expecting Mother
               </label>
               <label style="display:flex; align-items:center; gap:.5rem; cursor:pointer; font-weight:500; font-size:.88rem; color:var(--text-body);">
-                <input type="checkbox" name="discount" value="Senior (65+)" id="disc-senior" onchange="updateEstimate()" style="width:16px;height:16px;accent-color:var(--sky);cursor:pointer;" />
+                <input type="checkbox" name="discount" value="Senior (65+)" id="disc-senior" style="width:16px;height:16px;accent-color:var(--sky);cursor:pointer;" />
                 👴 Senior (65+)
               </label>
               <label style="display:flex; align-items:center; gap:.5rem; cursor:pointer; font-weight:500; font-size:.88rem; color:var(--text-body);">
-                <input type="checkbox" name="discount" value="Veteran" id="disc-veteran" onchange="updateEstimate()" style="width:16px;height:16px;accent-color:var(--sky);cursor:pointer;" />
+                <input type="checkbox" name="discount" value="Veteran" id="disc-veteran" style="width:16px;height:16px;accent-color:var(--sky);cursor:pointer;" />
                 🎖️ Veteran
               </label>
               <label style="display:flex; align-items:center; gap:.5rem; cursor:pointer; font-weight:500; font-size:.88rem; color:var(--text-body);">
-                <input type="checkbox" name="discount" value="First Responder" id="disc-firstresponder" onchange="updateEstimate()" style="width:16px;height:16px;accent-color:var(--sky);cursor:pointer;" />
+                <input type="checkbox" name="discount" value="First Responder" id="disc-firstresponder" style="width:16px;height:16px;accent-color:var(--sky);cursor:pointer;" />
                 🚒 First Responder
               </label>
             </div>
