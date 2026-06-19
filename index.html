@@ -3961,8 +3961,11 @@ function handleQuoteSubmit(e, form) {
         <span class="step-lbl" id="slbl-3" style="text-align:right;">Confirm</span>
       </div>
 
-      <form id="booking-form" onsubmit="handleBooking(event)">
+      <form id="booking-form" action="https://formsubmit.co/michel@secondcityscrubbers.com" method="POST">
         <input type="hidden" name="_subject" value="New Booking Request — Second City Scrubbers" />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="_next" value="https://secondcityscrubbers.com/thank-you.html" />
 
         <!-- ── STEP 1: Service ── -->
         <div id="bstep-1" class="bstep">
