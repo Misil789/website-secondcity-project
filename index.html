@@ -3522,7 +3522,6 @@
           <input type="hidden" name="_subject" value="New Quote Request — Second City Scrubbers" />
           <input type="hidden" name="_captcha" value="false" />
           <input type="hidden" name="_template" value="table" />
-          <input type="hidden" name="_next" value="https://secondcityscrubbers.com/#quote-form" />
 
           <!-- Row 1: Name + Phone -->
           <div class="qform-row" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem;">
@@ -3639,11 +3638,15 @@
 
 <script>
 function handleQuoteSubmit(e, form) {
+  e.preventDefault();
   const btn = document.getElementById('quote-submit-btn');
   const success = document.getElementById('quote-success');
   btn.disabled = true;
   btn.innerHTML = '⏳ Sending…';
-  // Let FormSubmit handle the actual POST; show optimistic UI
+  fetch('https://formsubmit.co/michel@secondcityscrubbers.com', {
+    method: 'POST', mode: 'no-cors',
+    body: new URLSearchParams(new FormData(form))
+  }).catch(() => {});
   setTimeout(() => {
     form.style.display = 'none';
     success.style.display = 'block';
