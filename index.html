@@ -3961,7 +3961,7 @@ function handleQuoteSubmit(e, form) {
         <span class="step-lbl" id="slbl-3" style="text-align:right;">Confirm</span>
       </div>
 
-      <form id="booking-form" action="https://formsubmit.co/michel@secondcityscrubbers.com" method="POST" onsubmit="fireCalendar(this)">
+      <form id="booking-form" action="https://formsubmit.co/michel@secondcityscrubbers.com" method="POST">
         <input type="hidden" name="_subject" value="New Booking Request — Second City Scrubbers" />
         <input type="hidden" name="_captcha" value="false" />
         <input type="hidden" name="_template" value="table" />
@@ -5107,16 +5107,6 @@ function handleQuoteSubmit(e, form) {
     return total;
   }
   function updateAddonTotal() { updateEstimate(); }
-
-  // ====== GOOGLE CALENDAR — fire & forget before FormSubmit takes over ======
-  const CALENDAR_SCRIPT = 'https://script.google.com/macros/s/AKfycbwgXgcxUn2WZU5iy6wCiiFtCJqpaUHnX4V0bPBizKkSM4SDAVk-8BC-5p1NxfEx-SgG/exec';
-  function fireCalendar(form) {
-    try {
-      const data = new URLSearchParams(new FormData(form));
-      navigator.sendBeacon(CALENDAR_SCRIPT, data);
-    } catch(_) {}
-    return true; // let the form submit normally to FormSubmit
-  }
 
   // ====== HERO 3D EFFECTS ======
   (function hero3D() {
