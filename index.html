@@ -3961,11 +3961,8 @@ function handleQuoteSubmit(e, form) {
         <span class="step-lbl" id="slbl-3" style="text-align:right;">Confirm</span>
       </div>
 
-      <form id="booking-form" action="https://formsubmit.co/michel@secondcityscrubbers.com" method="POST" onsubmit="handleBooking(event)">
+      <form id="booking-form" onsubmit="handleBooking(event)">
         <input type="hidden" name="_subject" value="New Booking Request — Second City Scrubbers" />
-        <input type="hidden" name="_captcha" value="false" />
-        <input type="hidden" name="_template" value="table" />
-        <input type="hidden" name="_next" value="https://secondcityscrubbers.com/#booking" />
 
         <!-- ── STEP 1: Service ── -->
         <div id="bstep-1" class="bstep">
@@ -5060,11 +5057,31 @@ function handleQuoteSubmit(e, form) {
   // ====== BOOKING FORM SUBMIT ======
   const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwd3BuIwxXz305_qfgNO7AjJL-sSKdt1L-FW0FiVqJMjB30VBEHWR1aHMwA-kwimil-ew/exec';
 
-  function handleBooking(e) {
-    const btn = document.getElementById('book-submit');
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxVwgs1WjGQK1fUnWHPtoY8x95NAXtrP1KGbfMDqVpTOZQ5k2muqmGjrVqGPGhwGzfo/exec';
+
+  async function handleBooking(e) {
+    e.preventDefault();
+    const form = document.getElementById('booking-form');
+    const btn  = document.getElementById('book-submit');
     btn.textContent = 'Sending…';
     btn.disabled = true;
-    // Let the form POST naturally to FormSubmit — no fetch needed
+    try {
+      const res = await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        body: new URLSearchParams(new FormData(form))
+      });
+      const json = await res.json().catch(() => ({ ok: true }));
+      if (json.ok !== false) {
+        form.style.display = 'none';
+        document.getElementById('booking-success').style.display = 'block';
+      } else {
+        throw new Error(json.error || 'Unknown error');
+      }
+    } catch {
+      btn.textContent = 'Confirm Booking →';
+      btn.disabled = false;
+      alert('Something went wrong. Please try again or call (872) 240-6619.');
+    }
   }
 
   async function handleSubmit(e) {
