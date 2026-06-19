@@ -5071,7 +5071,6 @@ function handleQuoteSubmit(e, form) {
       const json = await res.json().catch(() => ({ ok: true }));
       if (json.ok !== false) {
         form.style.display = 'none';
-        document.getElementById('est-box').style.display = 'none';
         document.getElementById('booking-success').style.display = 'block';
       } else {
         throw new Error(json.error || 'Unknown error');
