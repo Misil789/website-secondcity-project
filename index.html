@@ -5011,18 +5011,13 @@ function handleQuoteSubmit(e, form) {
     document.getElementById('fc-popup').classList.remove('show');
     sessionStorage.setItem('fc-dismissed','1');
   }
-  async function submitPopup(e) {
+  function submitPopup(e) {
     e.preventDefault();
     const email = document.getElementById('fc-email').value;
     const btn = e.target.querySelector('button[type="submit"]');
     btn.disabled = true;
     btn.textContent = 'Sending…';
-    try {
-      await fetch(APPS_SCRIPT_URL, {
-        method: 'POST',
-        body: new URLSearchParams({ form_type: 'lead', email })
-      });
-    } catch(_) {}
+    fetch('https://formsubmit.co/michel@secondcityscrubbers.com', { method: 'POST', mode: 'no-cors', body: new URLSearchParams({ email, _subject: 'New Lead — Second City Scrubbers' }) }).catch(() => {});
     document.getElementById('fc-form').style.display = 'none';
     document.getElementById('fc-success').style.display = 'block';
     setTimeout(closePopup, 3500);
@@ -5079,28 +5074,18 @@ function handleQuoteSubmit(e, form) {
     }, 800);
   }
 
-  async function handleSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault();
     const form = document.getElementById('quote-form');
     const btn = form.querySelector('.form-submit');
     btn.textContent = 'Sending…';
     btn.disabled = true;
-    try {
-      const params = new URLSearchParams(new FormData(form));
-      params.set('form_type', 'quote');
-      const res = await fetch(APPS_SCRIPT_URL, { method: 'POST', body: params });
-      const json = await res.json().catch(() => ({ ok: true }));
-      if (json.ok !== false) {
-        form.style.display = 'none';
-        document.getElementById('form-success').style.display = 'block';
-      } else {
-        throw new Error(json.error || 'Unknown error');
-      }
-    } catch {
-      btn.textContent = 'Send My Free Quote Request →';
-      btn.disabled = false;
-      alert('Something went wrong. Please try again or call us at (872) 240-6619.');
-    }
+    const params = new URLSearchParams(new FormData(form));
+    fetch('https://formsubmit.co/michel@secondcityscrubbers.com', { method: 'POST', mode: 'no-cors', body: params }).catch(() => {});
+    setTimeout(() => {
+      form.style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+    }, 800);
   }
 
   // ====== ADD-ON TOTAL ======
