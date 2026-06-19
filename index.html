@@ -5057,7 +5057,7 @@ function handleQuoteSubmit(e, form) {
   // ====== BOOKING FORM SUBMIT ======
   const CALENDAR_SCRIPT = 'https://script.google.com/macros/s/AKfycbxVwgs1WjGQK1fUnWHPtoY8x95NAXtrP1KGbfMDqVpTOZQ5k2muqmGjrVqGPGhwGzfo/exec';
 
-  async function handleBooking(e) {
+  function handleBooking(e) {
     e.preventDefault();
     const form = document.getElementById('booking-form');
     const btn  = document.getElementById('book-submit');
@@ -5069,23 +5069,14 @@ function handleQuoteSubmit(e, form) {
     // Fire to Google Apps Script for calendar (no-cors — fire & forget)
     fetch(CALENDAR_SCRIPT, { method: 'POST', mode: 'no-cors', body: params }).catch(() => {});
 
-    // Send email via FormSubmit reliably
-    try {
-      const fsRes = await fetch('https://formsubmit.co/ajax/michel@secondcityscrubbers.com', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({
-          _subject: 'New Booking Request — Second City Scrubbers',
-          ...Object.fromEntries(params)
-        })
-      });
+    // Fire to FormSubmit for email (no-cors — fire & forget)
+    fetch('https://formsubmit.co/michel@secondcityscrubbers.com', { method: 'POST', mode: 'no-cors', body: params }).catch(() => {});
+
+    // Show success immediately — don't wait on network
+    setTimeout(() => {
       form.style.display = 'none';
       document.getElementById('booking-success').style.display = 'block';
-    } catch {
-      btn.textContent = 'Confirm Booking →';
-      btn.disabled = false;
-      alert('Something went wrong. Please try again or call (872) 240-6619.');
-    }
+    }, 800);
   }
 
   async function handleSubmit(e) {
