@@ -5055,9 +5055,7 @@ function handleQuoteSubmit(e, form) {
   }
 
   // ====== BOOKING FORM SUBMIT ======
-  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwd3BuIwxXz305_qfgNO7AjJL-sSKdt1L-FW0FiVqJMjB30VBEHWR1aHMwA-kwimil-ew/exec';
-
-  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxVwgs1WjGQK1fUnWHPtoY8x95NAXtrP1KGbfMDqVpTOZQ5k2muqmGjrVqGPGhwGzfo/exec';
+  const CALENDAR_SCRIPT = 'https://script.google.com/macros/s/AKfycbxVwgs1WjGQK1fUnWHPtoY8x95NAXtrP1KGbfMDqVpTOZQ5k2muqmGjrVqGPGhwGzfo/exec';
 
   async function handleBooking(e) {
     e.preventDefault();
@@ -5065,18 +5063,24 @@ function handleQuoteSubmit(e, form) {
     const btn  = document.getElementById('book-submit');
     btn.textContent = 'Sending…';
     btn.disabled = true;
+
+    const params = new URLSearchParams(new FormData(form));
+
+    // Fire to Google Apps Script for calendar (no-cors — fire & forget)
+    fetch(CALENDAR_SCRIPT, { method: 'POST', mode: 'no-cors', body: params }).catch(() => {});
+
+    // Send email via FormSubmit reliably
     try {
-      const res = await fetch(APPS_SCRIPT_URL, {
+      const fsRes = await fetch('https://formsubmit.co/ajax/michel@secondcityscrubbers.com', {
         method: 'POST',
-        body: new URLSearchParams(new FormData(form))
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          _subject: 'New Booking Request — Second City Scrubbers',
+          ...Object.fromEntries(params)
+        })
       });
-      const json = await res.json().catch(() => ({ ok: true }));
-      if (json.ok !== false) {
-        form.style.display = 'none';
-        document.getElementById('booking-success').style.display = 'block';
-      } else {
-        throw new Error(json.error || 'Unknown error');
-      }
+      form.style.display = 'none';
+      document.getElementById('booking-success').style.display = 'block';
     } catch {
       btn.textContent = 'Confirm Booking →';
       btn.disabled = false;
