@@ -4249,105 +4249,71 @@ function handleQuoteSubmit(e, form) {
 <section id="contact" style="scroll-margin-top:80px;" class="section-pad contact-bg">
   <div class="section-inner">
     <span class="section-label">Get In Touch</span>
-    <h2 class="section-title">Get Your Free Quote</h2>
-    <p class="section-sub">No pressure. No commitment. Just an honest price for a spotless home.</p>
-    <div class="contact-grid">
-      <div class="contact-info">
-        <h3>We're Local. We're Reliable.</h3>
-        <p>Based in Chicago, we serve the city and surrounding suburbs. Reach out anytime — we respond within 24 hours.</p>
-        <div class="contact-detail">
-          <div class="contact-detail-icon">
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.09 9.81 19.79 19.79 0 01.07 1.18 2 2 0 012.06.01h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
-          </div>
-          <span>(872) 240-6619</span>
+    <h2 class="section-title">We're Local. We're Reliable.</h2>
+    <p class="section-sub">Based in Chicago — we serve the city and surrounding suburbs. Reach out any way you prefer.</p>
+
+    <!-- Contact cards -->
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1.25rem; margin:2.5rem 0;">
+      <a href="tel:8722406619" style="text-decoration:none; background:#fff; border:1.5px solid rgba(14,165,233,.18); border-radius:18px; padding:1.75rem 1.5rem; display:flex; flex-direction:column; align-items:center; gap:.75rem; text-align:center; transition:transform .2s,box-shadow .2s,border-color .2s;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 28px rgba(12,35,64,.1)';this.style.borderColor='var(--sky)'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='rgba(14,165,233,.18)'">
+        <div style="width:48px;height:48px;background:linear-gradient(135deg,var(--sky),#0284c7);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+          <svg width="20" height="20" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.09 9.81 19.79 19.79 0 01.07 1.18 2 2 0 012.06.01h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
         </div>
-        <div class="contact-detail">
-          <div class="contact-detail-icon">
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          </div>
-          <span>michel@secondcityscrubbers.com</span>
+        <div>
+          <p style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:.8rem;color:var(--sky);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.25rem;">Call or Text</p>
+          <p style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.15rem;color:var(--navy);">(872) 240-6619</p>
+          <p style="font-size:.78rem;color:var(--text-muted);margin-top:.2rem;">7 days a week</p>
         </div>
-        <div class="contact-detail">
-          <div class="contact-detail-icon">
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          </div>
-          <span>Chicago, IL &amp; Surrounding Suburbs</span>
+      </a>
+      <a href="mailto:michel@secondcityscrubbers.com" style="text-decoration:none; background:#fff; border:1.5px solid rgba(14,165,233,.18); border-radius:18px; padding:1.75rem 1.5rem; display:flex; flex-direction:column; align-items:center; gap:.75rem; text-align:center; transition:transform .2s,box-shadow .2s,border-color .2s;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 28px rgba(12,35,64,.1)';this.style.borderColor='var(--sky)'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='rgba(14,165,233,.18)'">
+        <div style="width:48px;height:48px;background:linear-gradient(135deg,var(--sky),#0284c7);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+          <svg width="20" height="20" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         </div>
-        <!-- Service area suburbs -->
-        <div style="margin-top:1.5rem; background:rgba(14,165,233,.06); border:1px solid rgba(14,165,233,.18); border-radius:16px; padding:1.25rem 1.5rem;">
-          <p style="font-family:'Montserrat',sans-serif; font-size:.75rem; font-weight:800; text-transform:uppercase; letter-spacing:.1em; color:var(--sky); margin-bottom:.85rem;">Areas We Serve</p>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:.35rem .75rem;">
-            <span style="font-size:.82rem; color:var(--text-body);">✦ Evanston</span>
-            <span style="font-size:.82rem; color:var(--text-body);">✦ Skokie</span>
-            <span style="font-size:.82rem; color:var(--text-body);">✦ Oak Park</span>
-            <span style="font-size:.82rem; color:var(--text-body);">✦ Berwyn</span>
-            <span style="font-size:.82rem; color:var(--text-body);">✦ Cicero</span>
-            <span style="font-size:.82rem; color:var(--text-body);">✦ Schaumburg</span>
-            <span style="font-size:.82rem; color:var(--text-body);">✦ Naperville</span>
-            <span style="font-size:.82rem; color:var(--text-body);">✦ Elmhurst</span>
-            <span style="font-size:.82rem; color:var(--text-body);">✦ Arlington Heights</span>
-            <span style="font-size:.82rem; color:var(--text-body);">✦ Des Plaines</span>
-            <span style="font-size:.82rem; color:var(--text-body);">✦ Park Ridge</span>
-            <span style="font-size:.82rem; color:var(--text-body);">✦ Niles</span>
-            <span style="font-size:.82rem; color:var(--text-body);">✦ Mount Prospect</span>
-            <span style="font-size:.82rem; color:var(--text-body);">✦ Palatine</span>
-            <span style="font-size:.82rem; color:var(--text-body);">✦ Downers Grove</span>
-            <span style="font-size:.82rem; color:var(--text-body);">✦ Lombard</span>
-            <span style="font-size:.82rem; color:var(--text-body);">✦ Oak Lawn</span>
-            <span style="font-size:.82rem; color:var(--text-body);">✦ Orland Park</span>
-            <span style="font-size:.82rem; color:var(--text-body);">✦ Tinley Park</span>
-            <span style="font-size:.82rem; color:var(--text-body);">✦ Calumet City</span>
-            <span style="font-size:.82rem; color:var(--text-body);">✦ Hoffman Estates</span>
-            <span style="font-size:.82rem; color:var(--text-body);">✦ Elk Grove Village</span>
-          </div>
-          <p style="font-size:.78rem; color:var(--text-muted); margin-top:.85rem;">Don't see your area? <a href="#contact" style="color:var(--sky); font-weight:600;">Ask us</a> — we may still cover it.</p>
+        <div>
+          <p style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:.8rem;color:var(--sky);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.25rem;">Email Us</p>
+          <p style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:.95rem;color:var(--navy);">michel@secondcity<br/>scrubbers.com</p>
+          <p style="font-size:.78rem;color:var(--text-muted);margin-top:.2rem;">Reply within 2 hours</p>
         </div>
+      </a>
+      <a href="#pricing" style="text-decoration:none; background:linear-gradient(135deg,var(--navy),#0f3d6e); border-radius:18px; padding:1.75rem 1.5rem; display:flex; flex-direction:column; align-items:center; gap:.75rem; text-align:center; transition:transform .2s,box-shadow .2s;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 28px rgba(12,35,64,.25)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        <div style="width:48px;height:48px;background:var(--sky);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+          <svg width="20" height="20" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        </div>
+        <div>
+          <p style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:.8rem;color:#7dd3fc;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.25rem;">Free Quote</p>
+          <p style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.05rem;color:#fff;">Get a Custom Quote</p>
+          <p style="font-size:.78rem;color:#bfdbfe;margin-top:.2rem;">No credit card required</p>
+        </div>
+      </a>
+    </div>
+
+    <!-- Service area -->
+    <div style="background:rgba(14,165,233,.06); border:1px solid rgba(14,165,233,.18); border-radius:16px; padding:1.5rem 2rem; max-width:700px; margin:0 auto;">
+      <p style="font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--sky);margin-bottom:1rem;text-align:center;">Areas We Serve</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.35rem .75rem;">
+        <span style="font-size:.82rem;color:var(--text-body);">✦ Evanston</span>
+        <span style="font-size:.82rem;color:var(--text-body);">✦ Skokie</span>
+        <span style="font-size:.82rem;color:var(--text-body);">✦ Oak Park</span>
+        <span style="font-size:.82rem;color:var(--text-body);">✦ Berwyn</span>
+        <span style="font-size:.82rem;color:var(--text-body);">✦ Cicero</span>
+        <span style="font-size:.82rem;color:var(--text-body);">✦ Schaumburg</span>
+        <span style="font-size:.82rem;color:var(--text-body);">✦ Naperville</span>
+        <span style="font-size:.82rem;color:var(--text-body);">✦ Elmhurst</span>
+        <span style="font-size:.82rem;color:var(--text-body);">✦ Arlington Heights</span>
+        <span style="font-size:.82rem;color:var(--text-body);">✦ Des Plaines</span>
+        <span style="font-size:.82rem;color:var(--text-body);">✦ Park Ridge</span>
+        <span style="font-size:.82rem;color:var(--text-body);">✦ Niles</span>
+        <span style="font-size:.82rem;color:var(--text-body);">✦ Mount Prospect</span>
+        <span style="font-size:.82rem;color:var(--text-body);">✦ Palatine</span>
+        <span style="font-size:.82rem;color:var(--text-body);">✦ Downers Grove</span>
+        <span style="font-size:.82rem;color:var(--text-body);">✦ Lombard</span>
+        <span style="font-size:.82rem;color:var(--text-body);">✦ Oak Lawn</span>
+        <span style="font-size:.82rem;color:var(--text-body);">✦ Orland Park</span>
+        <span style="font-size:.82rem;color:var(--text-body);">✦ Tinley Park</span>
+        <span style="font-size:.82rem;color:var(--text-body);">✦ Calumet City</span>
+        <span style="font-size:.82rem;color:var(--text-body);">✦ Hoffman Estates</span>
+        <span style="font-size:.82rem;color:var(--text-body);">✦ Elk Grove Village</span>
       </div>
-      <div class="contact-form">
-        <form id="quote-form" onsubmit="handleSubmit(event)">
-          <div class="form-row">
-            <div class="form-group">
-              <label>First Name</label>
-              <input type="text" name="first_name" placeholder="Jane" required />
-            </div>
-            <div class="form-group">
-              <label>Last Name</label>
-              <input type="text" name="last_name" placeholder="Smith" required />
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Email Address</label>
-            <input type="email" name="email" placeholder="jane@example.com" required />
-          </div>
-          <div class="form-group">
-            <label>Phone Number</label>
-            <input type="tel" name="phone" placeholder="(312) 000-0000" />
-          </div>
-          <div class="form-group">
-            <label>Service Type</label>
-            <select name="service_type">
-              <option>Residential Cleaning</option>
-              <option>Deep Cleaning</option>
-              <option>Move-In / Move-Out</option>
-              <option>Commercial Cleaning</option>
-              <option>Airbnb / Short-Term Rental</option>
-              <option>Post-Construction</option>
-              <option>Window Cleaning</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Tell Us About Your Space</label>
-            <textarea rows="3" name="message" placeholder="Size of home, special requests, preferred dates..."></textarea>
-          </div>
-          <button type="submit" class="form-submit">Send My Free Quote Request →</button>
-        </form>
-        <div id="form-success">
-          <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
-          <h3>We got your request!</h3>
-          <p>A member of our Chicago team will be in touch within 24 hours with your free quote.</p>
-        </div>
-      </div>
+      <p style="font-size:.78rem;color:var(--text-muted);margin-top:.85rem;text-align:center;">Don't see your area? <a href="tel:8722406619" style="color:var(--sky);font-weight:600;">Give us a call</a> — we may still cover it.</p>
     </div>
   </div>
 </section>
