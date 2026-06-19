@@ -3379,6 +3379,8 @@
   .svc-grid  { grid-template-columns:1fr !important; }
   .disc-grid { grid-template-columns:1fr !important; }
   .qform-row { grid-template-columns:1fr !important; }
+  .svc-grid > div { padding:.9rem 1rem !important; }
+  #pricing { padding:2.5rem 1rem !important; }
 }
 @media(min-width:701px) and (max-width:980px){
   .svc-grid  { grid-template-columns:repeat(2,1fr) !important; }
@@ -3386,7 +3388,7 @@
 }
 </style>
 
-<section id="pricing" style="background:#fff; padding:4rem 1.5rem; border-top:4px solid #0c2340;">
+<section id="pricing" style="scroll-margin-top:80px;" style="background:#fff; padding:4rem 1.5rem; border-top:4px solid #0c2340;">
   <div style="max-width:1100px; margin:0 auto;">
     <div class="reveal" style="text-align:center; margin-bottom:2.5rem;">
       <span class="section-label">Free Quote</span>
@@ -3673,7 +3675,7 @@ function handleQuoteSubmit(e, form) {
 
 <!-- ====== FAQ ====== -->
 
-<section id="faq" style="background:linear-gradient(160deg,#e8f7fd 0%,#f0fbff 50%,#e0f5fc 100%); padding:5rem 2rem;">
+<section id="faq" style="scroll-margin-top:80px;" style="background:linear-gradient(160deg,#e8f7fd 0%,#f0fbff 50%,#e0f5fc 100%); padding:5rem 2rem;">
   <div style="max-width:780px; margin:0 auto;">
     <div class="reveal" style="text-align:center; margin-bottom:3rem;">
       <span class="section-label">Got Questions?</span>
@@ -3934,7 +3936,7 @@ function handleQuoteSubmit(e, form) {
 
 <!-- ====== BOOKING ====== -->
 
-<section id="booking" style="background:linear-gradient(135deg,#0c2340 0%,#0e3a6e 50%,#0c2340 100%); padding:5rem 2rem; border-top:1px solid rgba(14,165,233,.2); position:relative; overflow:hidden;">
+<section id="booking" style="scroll-margin-top:80px;" style="background:linear-gradient(135deg,#0c2340 0%,#0e3a6e 50%,#0c2340 100%); padding:5rem 2rem; border-top:1px solid rgba(14,165,233,.2); position:relative; overflow:hidden;">
   <div style="position:absolute;top:-120px;right:-120px;width:400px;height:400px;background:radial-gradient(circle,rgba(14,165,233,.18) 0%,transparent 70%);border-radius:50%;pointer-events:none;"></div>
   <div style="position:absolute;bottom:-80px;left:-80px;width:320px;height:320px;background:radial-gradient(circle,rgba(0,176,221,.15) 0%,transparent 70%);border-radius:50%;pointer-events:none;"></div>
   <div style="max-width:800px; margin:0 auto; position:relative; z-index:1;">
@@ -4049,29 +4051,29 @@ function handleQuoteSubmit(e, form) {
             <label>How often?</label>
             <select name="booking_frequency" id="book-frequency">
               <option value="One-Time">One-Time</option>
-              <option value="Monthly">Monthly</option>
-              <option value="Bi-Weekly">Bi-Weekly</option>
-              <option value="Weekly">Weekly</option>
+              <option value="Monthly">Monthly — Save ~10%</option>
+              <option value="Bi-Weekly">Bi-Weekly — Save ~15%</option>
+              <option value="Weekly">Weekly — Save ~15% + Free Add-On</option>
             </select>
           </div>
           <!-- Add-ons -->
           <div class="form-group" style="margin-top:1.5rem;">
-            <label style="margin-bottom:.65rem;">Add-ons <span style="font-weight:400;color:var(--text-muted);">(optional — added to your total)</span></label>
+            <label style="margin-bottom:.65rem;">Add-ons <span style="font-weight:400;color:var(--text-muted);">(optional — mention any extras)</span></label>
             <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.65rem;" id="addon-grid">
               <label class="addon-tile">
-                <input type="checkbox" name="addon" value="Inside Oven (+$45)" onchange="updateAddonTotal()"> <span class="addon-icon">🔥</span> <span class="addon-name">Inside Oven</span> <span class="addon-price">+$45</span>
+                <input type="checkbox" name="addon" value="Inside Oven"> <span class="addon-icon">🔥</span> <span class="addon-name">Inside Oven</span>
               </label>
               <label class="addon-tile">
-                <input type="checkbox" name="addon" value="Inside Fridge (+$35)" onchange="updateAddonTotal()"> <span class="addon-icon">🧊</span> <span class="addon-name">Inside Fridge</span> <span class="addon-price">+$35</span>
+                <input type="checkbox" name="addon" value="Inside Fridge"> <span class="addon-icon">🧊</span> <span class="addon-name">Inside Fridge</span>
               </label>
               <label class="addon-tile">
-                <input type="checkbox" name="addon" value="Interior Windows (+$55)" onchange="updateAddonTotal()"> <span class="addon-icon">🪟</span> <span class="addon-name">Interior Windows</span> <span class="addon-price">+$55</span>
+                <input type="checkbox" name="addon" value="Interior Windows"> <span class="addon-icon">🪟</span> <span class="addon-name">Interior Windows</span>
               </label>
               <label class="addon-tile">
-                <input type="checkbox" name="addon" value="Laundry Fold (+$40)" onchange="updateAddonTotal()"> <span class="addon-icon">👕</span> <span class="addon-name">Laundry Fold</span> <span class="addon-price">+$40</span>
+                <input type="checkbox" name="addon" value="Laundry Fold"> <span class="addon-icon">👕</span> <span class="addon-name">Laundry Fold</span>
               </label>
               <label class="addon-tile">
-                <input type="checkbox" name="addon" value="Inside Cabinets (+$45)" onchange="updateAddonTotal()"> <span class="addon-icon">🗄️</span> <span class="addon-name">Inside Cabinets</span> <span class="addon-price">+$45</span>
+                <input type="checkbox" name="addon" value="Inside Cabinets"> <span class="addon-icon">🗄️</span> <span class="addon-name">Inside Cabinets</span>
               </label>
             </div>
           </div>
@@ -4241,7 +4243,7 @@ function handleQuoteSubmit(e, form) {
 </section>
 
 <!-- ====== CONTACT ====== -->
-<section id="contact" class="section-pad contact-bg">
+<section id="contact" style="scroll-margin-top:80px;" class="section-pad contact-bg">
   <div class="section-inner">
     <span class="section-label">Get In Touch</span>
     <h2 class="section-title">Get Your Free Quote</h2>
