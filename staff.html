@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Staff Tools — Second City Scrubbers</title>
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #f0f4f8; color: #0c2340; min-height: 100vh; }
+
+    .top-bar {
+      background: #0c2340;
+      padding: 1rem 1.5rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .top-bar img { width: 44px; height: 44px; border-radius: 50%; }
+    .top-bar-text h1 { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: .1em; color: #7dd3fc; line-height: 1; }
+    .top-bar-text p  { font-size: .72rem; color: rgba(255,255,255,.45); margin-top: .1rem; }
+
+    .page { max-width: 640px; margin: 0 auto; padding: 2rem 1.25rem; }
+
+    .greeting {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 1.35rem;
+      color: #0c2340;
+      margin-bottom: .25rem;
+    }
+    .date-line { font-size: .82rem; color: #64748b; margin-bottom: 2rem; }
+
+    .section-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: .68rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #94a3b8;
+      margin-bottom: .75rem;
+    }
+
+    .tool-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .85rem;
+      margin-bottom: 2rem;
+    }
+
+    .tool-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 1.25rem 1.1rem;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: .6rem;
+      box-shadow: 0 2px 12px rgba(12,35,64,.07);
+      border: 1.5px solid transparent;
+      transition: transform .18s, box-shadow .18s, border-color .18s;
+    }
+    .tool-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(12,35,64,.12); border-color: #0ea5e9; }
+
+    .tool-icon {
+      width: 46px; height: 46px;
+      border-radius: 13px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+    }
+    .tool-card h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: .88rem;
+      color: #0c2340;
+      line-height: 1.25;
+    }
+    .tool-card p {
+      font-size: .75rem;
+      color: #64748b;
+      line-height: 1.5;
+    }
+    .tool-tag {
+      display: inline-block;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: .6rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: .18rem .55rem;
+      border-radius: 999px;
+      margin-top: auto;
+    }
+
+    /* icon bg colors */
+    .ic-blue   { background: #e0f2fe; }
+    .ic-navy   { background: #dbeafe; }
+    .ic-green  { background: #dcfce7; }
+    .ic-amber  { background: #fef9c3; }
+    .ic-purple { background: #f3e8ff; }
+    .ic-red    { background: #fee2e2; }
+
+    /* tag colors */
+    .tg-blue   { background: #e0f2fe; color: #0369a1; }
+    .tg-green  { background: #dcfce7; color: #15803d; }
+    .tg-amber  { background: #fef3c7; color: #92400e; }
+    .tg-purple { background: #f3e8ff; color: #7e22ce; }
+
+    .quick-stats {
+      background: #0c2340;
+      border-radius: 18px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .stat { flex: 1; min-width: 100px; }
+    .stat-val { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: #7dd3fc; line-height: 1; }
+    .stat-label { font-size: .7rem; color: rgba(255,255,255,.5); margin-top: .15rem; font-weight: 600; }
+
+    .tip-box {
+      background: linear-gradient(135deg, #0ea5e9, #0284c7);
+      border-radius: 16px;
+      padding: 1.1rem 1.25rem;
+      color: #fff;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: flex-start;
+      gap: .75rem;
+    }
+    .tip-box .bulb { font-size: 1.5rem; flex-shrink: 0; }
+    .tip-box h4 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: .88rem; margin-bottom: .25rem; }
+    .tip-box p  { font-size: .78rem; color: rgba(255,255,255,.85); line-height: 1.6; }
+
+    footer-note {
+      display: block;
+      text-align: center;
+      font-size: .72rem;
+      color: #94a3b8;
+      padding: 1rem 0 2rem;
+    }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <img src="logo.png" alt="SCS" />
+  <div class="top-bar-text">
+    <h1>Staff Tools</h1>
+    <p>Second City Scrubbers · Internal</p>
+  </div>
+</div>
+
+<div class="page">
+
+  <h2 class="greeting" id="greeting">Good morning, Michel 👋</h2>
+  <p class="date-line" id="dateline"></p>
+
+  <!-- Quick links -->
+  <p class="section-title">Your Tools</p>
+  <div class="tool-grid">
+
+    <a href="post-clean-receipt.html" class="tool-card">
+      <div class="tool-icon ic-blue">✅</div>
+      <h3>Post-Clean Receipt</h3>
+      <p>Send a summary to customers after the clean via email or text.</p>
+      <span class="tool-tag tg-blue">After Clean</span>
+    </a>
+
+    <a href="invoice.html" class="tool-card">
+      <div class="tool-icon ic-green">🧾</div>
+      <h3>Invoice Generator</h3>
+      <p>Create and send a branded invoice with your signature.</p>
+      <span class="tool-tag tg-green">Billing</span>
+    </a>
+
+    <a href="checklist-master.html" class="tool-card">
+      <div class="tool-icon ic-amber">📋</div>
+      <h3>Cleaning Checklist</h3>
+      <p>Full room-by-room checklist. Print or use on your phone.</p>
+      <span class="tool-tag tg-amber">During Clean</span>
+    </a>
+
+    <a href="quote.html" class="tool-card">
+      <div class="tool-icon ic-purple">💬</div>
+      <h3>Quote Builder</h3>
+      <p>Build a quick custom quote to send to potential customers.</p>
+      <span class="tool-tag tg-purple">Sales</span>
+    </a>
+
+    <a href="contract.html" class="tool-card">
+      <div class="tool-icon ic-navy">📝</div>
+      <h3>Service Contract</h3>
+      <p>Send a digital contract for recurring clients to sign.</p>
+      <span class="tool-tag tg-blue">Legal</span>
+    </a>
+
+    <a href="email-signature.html" class="tool-card">
+      <div class="tool-icon ic-red">✉️</div>
+      <h3>Email Signature</h3>
+      <p>Copy your branded signature to paste into Gmail.</p>
+      <span class="tool-tag tg-blue">Branding</span>
+    </a>
+
+  </div>
+
+  <!-- Tip of the day -->
+  <div class="tip-box">
+    <div class="bulb">💡</div>
+    <div>
+      <h4>Pro Tip — Send the receipt before you leave</h4>
+      <p>Customers who receive a receipt immediately after their clean are 3× more likely to rebook within 30 days. It only takes 60 seconds with the Post-Clean Receipt tool.</p>
+    </div>
+  </div>
+
+  <!-- Quick links to live site -->
+  <p class="section-title">Quick Links</p>
+  <div class="tool-grid">
+    <a href="https://secondcityscrubbers.com" target="_blank" class="tool-card">
+      <div class="tool-icon ic-blue">🌐</div>
+      <h3>Live Website</h3>
+      <p>View secondcityscrubbers.com as your customers see it.</p>
+    </a>
+    <a href="https://secondcityscrubbers.com/#booking" target="_blank" class="tool-card">
+      <div class="tool-icon ic-green">📅</div>
+      <h3>Booking Form</h3>
+      <p>Share this link with customers to book a clean instantly.</p>
+    </a>
+  </div>
+
+  <footer-note>🔒 Staff only · secondcityscrubbers.com/staff</footer-note>
+</div>
+
+<script>
+  const greet = document.getElementById('greeting');
+  const dl    = document.getElementById('dateline');
+  const h     = new Date().getHours();
+  const tod   = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
+  greet.textContent = tod + ', Michel 👋';
+  dl.textContent    = new Date().toLocaleDateString('en-US', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+</script>
+
+</body>
+</html>

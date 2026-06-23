@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Post-Clean Booklet — Second City Scrubbers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #0c2340;
+      --sky:    #0ea5e9;
+      --red:    #dc2626;
+      --light:  #f0f8ff;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #e8ecf0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      padding: 2rem;
+    }
+
+    .print-hint {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .78rem;
+      font-weight: 700;
+      color: #64748b;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    /* ─── BOOKLET SHEET ────────────────────────────────────── */
+    /* Single 8.5×11" sheet, landscape → fold in half → 4 panels */
+    .sheet {
+      width: 11in;
+      height: 8.5in;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: #fff;
+      box-shadow: 0 8px 40px rgba(0,0,0,.18);
+      position: relative;
+    }
+
+    /* Fold guide line */
+    .sheet::after {
+      content: '';
+      position: absolute;
+      left: 50%; top: 0; bottom: 0;
+      width: 1px;
+      border-left: 1.5px dashed rgba(0,0,0,.12);
+      pointer-events: none;
+    }
+
+    /* ─── PANEL BASE ── */
+    .panel { position: relative; overflow: hidden; }
+
+    /* ════════════════════════════════════════
+       PANEL A — BACK COVER (left when flat)
+       ════════════════════════════════════════ */
+    .panel-back {
+      background: var(--navy);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: .7in .55in;
+      gap: 0;
+      text-align: center;
+      color: #fff;
+    }
+
+    .panel-back::before {
+      content: '';
+      position: absolute;
+      top: -80px; left: -80px;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(14,165,233,.22) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .panel-back::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; right: -60px;
+      width: 260px; height: 260px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(14,165,233,.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .back-logo {
+      width: 70px; height: 70px;
+      border-radius: 50%;
+      border: 3px solid rgba(14,165,233,.5);
+      box-shadow: 0 0 0 6px rgba(14,165,233,.12);
+      margin-bottom: 1rem;
+      position: relative; z-index: 1;
+    }
+
+    .back-brand {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.45rem;
+      letter-spacing: .12em;
+      color: #7dd3fc;
+      margin-bottom: 2rem;
+      position: relative; z-index: 1;
+    }
+
+    .divider { width: 48px; height: 2px; background: var(--sky); border-radius: 2px; margin: 0 auto 2rem; }
+
+    .contact-block {
+      display: flex;
+      flex-direction: column;
+      gap: .65rem;
+      margin-bottom: 2rem;
+      position: relative; z-index: 1;
+    }
+
+    .contact-row {
+      display: flex;
+      align-items: center;
+      gap: .55rem;
+      font-size: .82rem;
+      color: rgba(255,255,255,.85);
+    }
+    .contact-row .icon {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: rgba(14,165,233,.2);
+      border: 1px solid rgba(14,165,233,.35);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .75rem;
+      flex-shrink: 0;
+    }
+    .contact-row strong { color: #fff; font-weight: 700; }
+
+    .review-box {
+      background: rgba(14,165,233,.12);
+      border: 1.5px solid rgba(14,165,233,.3);
+      border-radius: 14px;
+      padding: .85rem 1.1rem;
+      max-width: 3.2in;
+      position: relative; z-index: 1;
+    }
+    .review-box p {
+      font-size: .76rem;
+      color: #bfdbfe;
+      line-height: 1.65;
+    }
+    .review-box strong { color: #fff; font-size: .82rem; }
+    .stars { color: #fbbf24; font-size: 1.05rem; margin-bottom: .35rem; letter-spacing: .05em; }
+
+    .back-tag {
+      position: absolute;
+      bottom: .45in;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .62rem;
+      font-weight: 600;
+      color: rgba(255,255,255,.3);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      z-index: 1;
+    }
+
+
+    /* ════════════════════════════════════════
+       PANEL B — FRONT COVER (right when flat)
+       ════════════════════════════════════════ */
+    .panel-front {
+      background: linear-gradient(145deg, #0c2340 0%, #0a3e6e 55%, #0c4a82 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: .6in .5in;
+      text-align: center;
+      color: #fff;
+    }
+
+    .front-badge {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: .65rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: #7dd3fc;
+      background: rgba(14,165,233,.15);
+      border: 1px solid rgba(14,165,233,.3);
+      padding: .28rem .85rem;
+      border-radius: 999px;
+      margin-bottom: 1.25rem;
+    }
+
+    .front-logo {
+      width: 88px; height: 88px;
+      border-radius: 50%;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 0 0 8px rgba(14,165,233,.15), 0 0 0 16px rgba(14,165,233,.07);
+    }
+
+    .front-headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.2rem;
+      letter-spacing: .06em;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: .4rem;
+    }
+    .front-headline .accent { color: #7dd3fc; }
+
+    .front-sub {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: .78rem;
+      color: rgba(255,255,255,.65);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 1.6rem;
+    }
+
+    .front-divider {
+      width: 60px; height: 3px;
+      background: linear-gradient(90deg, var(--sky), #7dd3fc);
+      border-radius: 3px;
+      margin: 0 auto 1.6rem;
+    }
+
+    .front-promise {
+      font-size: .84rem;
+      color: rgba(255,255,255,.78);
+      line-height: 1.75;
+      max-width: 3in;
+      font-style: italic;
+      margin-bottom: 1.8rem;
+    }
+
+    .front-date-block {
+      background: rgba(255,255,255,.08);
+      border: 1.5px solid rgba(255,255,255,.15);
+      border-radius: 12px;
+      padding: .75rem 1.25rem;
+      width: 100%;
+      max-width: 3.2in;
+      text-align: left;
+    }
+    .front-date-block label {
+      display: block;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: .62rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #7dd3fc;
+      margin-bottom: .4rem;
+    }
+    .fill-line {
+      display: block;
+      height: 1px;
+      background: rgba(255,255,255,.3);
+      margin-bottom: .7rem;
+    }
+    .fill-line:last-child { margin-bottom: 0; }
+
+    .front-brand-name {
+      position: absolute;
+      bottom: .45in;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: .18em;
+      color: rgba(255,255,255,.25);
+    }
+
+
+    /* ════════════════════════════════════════
+       INTERIOR — 2nd sheet (pages 2 & 3)
+       ════════════════════════════════════════ */
+    .sheet-inside {
+      width: 11in;
+      height: 8.5in;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: #fff;
+      box-shadow: 0 8px 40px rgba(0,0,0,.18);
+      position: relative;
+    }
+
+    .sheet-inside::after {
+      content: '';
+      position: absolute;
+      left: 50%; top: 0; bottom: 0;
+      width: 1px;
+      border-left: 1.5px dashed rgba(0,0,0,.12);
+      pointer-events: none;
+    }
+
+    /* ─── PANEL C — Inside Left ── */
+    .panel-inside-left {
+      background: var(--light);
+      padding: .6in .52in .5in;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .section-head {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: .08em;
+      color: var(--navy);
+      margin-bottom: .18rem;
+    }
+    .section-label {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: .58rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-bottom: .28rem;
+      display: block;
+    }
+    .section-rule { width: 36px; height: 2.5px; background: var(--sky); border-radius: 2px; margin-bottom: .7rem; }
+
+    /* Cleaned rooms checklist */
+    .room-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .22rem .5rem;
+      margin-bottom: .75rem;
+    }
+
+    .room-item {
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      font-size: .78rem;
+      color: #334155;
+      font-weight: 500;
+    }
+    .room-item .cb {
+      width: 14px; height: 14px;
+      border: 1.5px solid #94a3b8;
+      border-radius: 3px;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .room-item.checked .cb {
+      background: var(--sky);
+      border-color: var(--sky);
+      color: #fff;
+      font-size: .62rem;
+    }
+
+    .notes-area {
+      background: #fff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 10px;
+      padding: .5rem .65rem;
+      margin-bottom: .75rem;
+    }
+    .notes-area .notes-label {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: .6rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #94a3b8;
+      margin-bottom: .4rem;
+      display: block;
+    }
+    .notes-line {
+      height: 1px;
+      background: #e2e8f0;
+      margin-bottom: .4rem;
+    }
+    .notes-line:last-child { margin-bottom: 0; }
+
+    /* Tips */
+    .tips-section { margin-top: .55rem; }
+
+    .tip-item {
+      display: flex;
+      gap: .45rem;
+      align-items: flex-start;
+      margin-bottom: .38rem;
+    }
+    .tip-icon {
+      font-size: .9rem;
+      flex-shrink: 0;
+      margin-top: .02rem;
+    }
+    .tip-text {
+      font-size: .75rem;
+      color: #475569;
+      line-height: 1.55;
+    }
+    .tip-text strong { color: var(--navy); }
+
+
+    /* ─── PANEL D — Inside Right ── */
+    .panel-inside-right {
+      background: #fff;
+      padding: .6in .52in .5in;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* Services */
+    .service-list {
+      display: flex;
+      flex-direction: column;
+      gap: .3rem;
+      margin-bottom: .75rem;
+    }
+    .service-row {
+      display: flex;
+      align-items: flex-start;
+      gap: .5rem;
+      padding: .38rem .5rem;
+      border-radius: 8px;
+      border: 1px solid #f1f5f9;
+    }
+    .service-row:nth-child(odd) { background: #f8fafc; }
+    .service-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--sky);
+      flex-shrink: 0;
+      margin-top: .2rem;
+    }
+    .service-row p {
+      font-size: .76rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: .05rem;
+    }
+    .service-row span {
+      font-size: .68rem;
+      color: #64748b;
+      line-height: 1.45;
+    }
+
+    /* Refer box */
+    .refer-box {
+      background: linear-gradient(135deg, #0c2340, #0a3e6e);
+      border-radius: 14px;
+      padding: .7rem .85rem;
+      color: #fff;
+      margin-bottom: .65rem;
+    }
+    .refer-box .refer-head {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.15rem;
+      letter-spacing: .06em;
+      color: #7dd3fc;
+      margin-bottom: .2rem;
+    }
+    .refer-box p {
+      font-size: .74rem;
+      color: rgba(255,255,255,.8);
+      line-height: 1.6;
+    }
+    .refer-box strong { color: #fff; }
+
+    /* Booking CTA */
+    .book-cta {
+      background: var(--sky);
+      border-radius: 12px;
+      padding: .65rem .85rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: .5rem;
+    }
+    .book-cta p {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: .82rem;
+      color: #fff;
+      line-height: 1.35;
+    }
+    .book-cta span {
+      font-size: .7rem;
+      font-weight: 600;
+      color: rgba(255,255,255,.85);
+    }
+    .book-arrow {
+      font-size: 1.4rem;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+
+    /* ════════════════════════════════════════
+       PRINT STYLES
+       ════════════════════════════════════════ */
+    @media print {
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+      body {
+        background: #fff;
+        padding: 0;
+        gap: 0;
+        display: block;
+      }
+
+      .print-hint { display: none; }
+
+      .sheet, .sheet-inside {
+        box-shadow: none;
+        margin: 0;
+        page-break-after: always;
+        break-after: page;
+      }
+      .sheet-inside { page-break-after: auto; break-after: auto; }
+
+      @page {
+        size: 11in 8.5in landscape;
+        margin: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<p class="print-hint">📄 Print Tip: File → Print → Layout: Landscape → Paper: Letter. Print both sheets double-sided, fold in half.</p>
+
+<!-- ══════════════════════════════════════════════
+     SHEET 1 — Outside (Back Cover + Front Cover)
+     ══════════════════════════════════════════════ -->
+<div class="sheet">
+
+  <!-- PANEL A: Back Cover (left when flat, becomes true back after folding) -->
+  <div class="panel panel-back">
+    <img src="logo.png" alt="Second City Scrubbers" class="back-logo" />
+    <div class="back-brand">Second City Scrubbers</div>
+    <div class="divider"></div>
+
+    <div class="contact-block">
+      <div class="contact-row">
+        <div class="icon">📞</div>
+        <div><strong>(872) 240-6619</strong><br/><span style="font-size:.72rem;color:rgba(255,255,255,.55);">Call or text, 7 days a week</span></div>
+      </div>
+      <div class="contact-row">
+        <div class="icon">✉</div>
+        <div><strong>michel@secondcityscrubbers.com</strong></div>
+      </div>
+      <div class="contact-row">
+        <div class="icon">🌐</div>
+        <div><strong>secondcityscrubbers.com</strong></div>
+      </div>
+      <div class="contact-row">
+        <div class="icon">📍</div>
+        <div>Chicago, IL &mdash; All Neighborhoods</div>
+      </div>
+    </div>
+
+    <div class="review-box">
+      <div class="stars">★★★★★</div>
+      <strong>Loved your clean? Tell the world.</strong>
+      <p style="margin-top:.35rem;">Leave us a quick Google review — it takes 60 seconds and means everything to a small business. Search <strong>"Second City Scrubbers"</strong> on Google.</p>
+    </div>
+
+    <span class="back-tag">Chicago's Cleaning Professionals</span>
+  </div>
+
+  <!-- PANEL B: Front Cover (right when flat, becomes front after folding) -->
+  <div class="panel panel-front">
+    <div class="front-badge">Your Home is Spotless</div>
+    <img src="logo.png" alt="Second City Scrubbers" class="front-logo" />
+    <h1 class="front-headline">THANK<br/><span class="accent">YOU</span></h1>
+    <p class="front-sub">Second City Scrubbers · Chicago, IL</p>
+    <div class="front-divider"></div>
+    <p class="front-promise">"We treat every home like it's our own — and we don't leave until it shows."</p>
+
+    <div class="front-date-block">
+      <label>Cleaned on &nbsp;/&nbsp; Cleaned by</label>
+      <span class="fill-line"></span>
+      <span class="fill-line"></span>
+    </div>
+
+    <span class="front-brand-name">SECOND CITY SCRUBBERS</span>
+  </div>
+
+</div><!-- /sheet 1 -->
+
+
+<!-- ══════════════════════════════════════════════
+     SHEET 2 — Inside (panels C + D)
+     ══════════════════════════════════════════════ -->
+<div class="sheet-inside">
+
+  <!-- PANEL C: Inside Left — What We Cleaned + Tips -->
+  <div class="panel panel-inside-left">
+
+    <span class="section-label">Today's Clean</span>
+    <h2 class="section-head">What We Cleaned</h2>
+    <div class="section-rule"></div>
+
+    <div class="room-grid">
+      <div class="room-item">
+        <div class="cb">✓</div> Kitchen
+      </div>
+      <div class="room-item">
+        <div class="cb">✓</div> Living Room
+      </div>
+      <div class="room-item">
+        <div class="cb">✓</div> Primary Bedroom
+      </div>
+      <div class="room-item">
+        <div class="cb">✓</div> Bedroom 2
+      </div>
+      <div class="room-item">
+        <div class="cb">✓</div> Bathroom(s)
+      </div>
+      <div class="room-item">
+        <div class="cb">✓</div> Hallways
+      </div>
+      <div class="room-item">
+        <div class="cb">✓</div> Dining Room
+      </div>
+      <div class="room-item">
+        <div class="cb">✓</div> Home Office
+      </div>
+      <div class="room-item">
+        <div class="cb"></div> Basement
+      </div>
+      <div class="room-item">
+        <div class="cb"></div> Laundry Room
+      </div>
+      <div class="room-item">
+        <div class="cb"></div> Inside Oven
+      </div>
+      <div class="room-item">
+        <div class="cb"></div> Inside Fridge
+      </div>
+    </div>
+
+    <div class="notes-area">
+      <span class="notes-label">Cleaner's Notes</span>
+      <div class="notes-line"></div>
+      <div class="notes-line"></div>
+      <div class="notes-line"></div>
+    </div>
+
+    <!-- Tips -->
+    <div class="tips-section">
+      <span class="section-label">Keep It Clean</span>
+      <h2 class="section-head" style="font-size:1.15rem;">Quick Maintenance Tips</h2>
+      <div class="section-rule"></div>
+
+      <div class="tip-item">
+        <span class="tip-icon">🧹</span>
+        <p class="tip-text"><strong>Daily:</strong> Wipe kitchen counters after cooking — it takes 30 seconds and prevents buildup.</p>
+      </div>
+      <div class="tip-item">
+        <span class="tip-icon">🛁</span>
+        <p class="tip-text"><strong>After showers:</strong> Squeegee or wipe down glass to prevent soap scum and hard water spots.</p>
+      </div>
+      <div class="tip-item">
+        <span class="tip-icon">🗑️</span>
+        <p class="tip-text"><strong>Weekly:</strong> Empty all trash cans before odors develop. Change bed sheets every 7–10 days.</p>
+      </div>
+      <div class="tip-item">
+        <span class="tip-icon">🌬️</span>
+        <p class="tip-text"><strong>Air quality:</strong> Open windows for 10 min daily. Replace HVAC filters every 90 days.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PANEL D: Inside Right — Services + Refer + Book Again -->
+  <div class="panel panel-inside-right">
+
+    <span class="section-label">What We Offer</span>
+    <h2 class="section-head">Our Services</h2>
+    <div class="section-rule"></div>
+
+    <div class="service-list">
+      <div class="service-row">
+        <div class="service-dot"></div>
+        <div>
+          <p>Standard Clean</p>
+          <span>Regular weekly, bi-weekly, or monthly maintenance for any home.</span>
+        </div>
+      </div>
+      <div class="service-row">
+        <div class="service-dot"></div>
+        <div>
+          <p>Deep Clean</p>
+          <span>Top-to-bottom scrub — baseboards, inside appliances, every corner.</span>
+        </div>
+      </div>
+      <div class="service-row">
+        <div class="service-dot"></div>
+        <div>
+          <p>Move-In / Move-Out</p>
+          <span>Full clean so you start fresh — or leave a spotless place behind.</span>
+        </div>
+      </div>
+      <div class="service-row">
+        <div class="service-dot"></div>
+        <div>
+          <p>Airbnb & Short-Term Rental</p>
+          <span>Fast turnovers between guests. We sync with your calendar.</span>
+        </div>
+      </div>
+      <div class="service-row">
+        <div class="service-dot"></div>
+        <div>
+          <p>Post-Construction</p>
+          <span>Dust, debris, and construction residue removed completely.</span>
+        </div>
+      </div>
+      <div class="service-row">
+        <div class="service-dot"></div>
+        <div>
+          <p>Commercial & Office</p>
+          <span>Morning, evening, or weekend service for businesses.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="refer-box">
+      <div class="refer-head">🎁 Refer a Friend — Get $20 Off</div>
+      <p>Know someone who needs a clean? Send them our way. When they book their first clean, <strong>you both save $20</strong>. Just have them mention your name when booking.</p>
+    </div>
+
+    <div class="book-cta">
+      <div>
+        <p>Ready to Book Your Next Clean?</p>
+        <span>secondcityscrubbers.com &nbsp;·&nbsp; (872) 240-6619</span>
+      </div>
+      <div class="book-arrow">→</div>
+    </div>
+
+  </div>
+
+</div><!-- /sheet 2 -->
+
+</body>
+</html>

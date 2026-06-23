@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Send Post-Clean Receipt — Second City Scrubbers</title>
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #0c2340; --sky: #0ea5e9; --sky-pale: #e0f2fe;
+      --green: #16a34a; --red: #dc2626;
+    }
+    body { font-family: 'Inter', sans-serif; background: #f0f4f8; color: var(--navy); min-height: 100vh; }
+
+    /* ── Header ── */
+    .top-bar {
+      background: var(--navy);
+      padding: .85rem 2rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .top-bar img { width: 40px; height: 40px; border-radius: 50%; }
+    .top-bar span { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: .1em; color: #7dd3fc; }
+
+    /* ── Layout ── */
+    .layout {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.75rem;
+      align-items: start;
+    }
+    @media(max-width: 740px) {
+      .layout { grid-template-columns: 1fr; padding: 1rem; }
+      .card { padding: 1.25rem; }
+      .field-row { grid-template-columns: 1fr; }
+      .preview-header { margin: -1.25rem -1.25rem 1.25rem; }
+    }
+
+    /* ── Cards ── */
+    .card {
+      background: #fff;
+      border-radius: 18px;
+      padding: 1.75rem;
+      box-shadow: 0 2px 20px rgba(12,35,64,.08);
+    }
+    .card-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 1rem;
+      color: var(--navy);
+      margin-bottom: 1.25rem;
+      display: flex; align-items: center; gap: .5rem;
+    }
+    .card-title svg { color: var(--sky); }
+
+    /* ── Form fields ── */
+    .field { margin-bottom: 1rem; }
+    .field label {
+      display: block;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: .72rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #64748b;
+      margin-bottom: .4rem;
+    }
+    .field input, .field select, .field textarea {
+      width: 100%;
+      padding: .65rem .9rem;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 10px;
+      font-family: 'Inter', sans-serif;
+      font-size: .9rem;
+      color: var(--navy);
+      background: #f8fafc;
+      transition: border-color .18s, box-shadow .18s;
+      outline: none;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      border-color: var(--sky);
+      box-shadow: 0 0 0 3px rgba(14,165,233,.12);
+      background: #fff;
+    }
+    .field textarea { resize: vertical; min-height: 72px; line-height: 1.6; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+
+    /* ── Service type pills ── */
+    .svc-pills { display: flex; gap: .5rem; flex-wrap: wrap; }
+    .svc-pill {
+      padding: .4rem 1rem;
+      border-radius: 999px;
+      border: 1.5px solid #e2e8f0;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: .78rem;
+      cursor: pointer;
+      transition: all .18s;
+      color: #64748b;
+      background: #f8fafc;
+      user-select: none;
+    }
+    .svc-pill.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+
+    /* ── Room checkboxes ── */
+    .room-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .35rem .75rem;
+      margin-bottom: .75rem;
+    }
+    .room-cb {
+      display: flex; align-items: center; gap: .5rem;
+      cursor: pointer; user-select: none;
+      padding: .3rem .4rem;
+      border-radius: 7px;
+      transition: background .15s;
+    }
+    .room-cb:hover { background: var(--sky-pale); }
+    .room-cb input[type=checkbox] { display: none; }
+    .room-cb .box {
+      width: 18px; height: 18px;
+      border: 2px solid #cbd5e1;
+      border-radius: 5px;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: all .18s;
+    }
+    .room-cb input:checked + .box {
+      background: var(--sky);
+      border-color: var(--sky);
+    }
+    .room-cb input:checked + .box::after {
+      content: '';
+      display: block;
+      width: 5px; height: 9px;
+      border: 2px solid #fff;
+      border-top: none; border-left: none;
+      transform: rotate(45deg) translateY(-1px);
+    }
+    .room-cb span { font-size: .84rem; color: var(--navy); font-weight: 500; }
+
+    /* ── Generate button ── */
+    .gen-btn {
+      width: 100%;
+      background: var(--navy);
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: .9rem;
+      letter-spacing: .05em;
+      padding: .9rem;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background .2s, transform .15s;
+      margin-top: .5rem;
+    }
+    .gen-btn:hover { background: var(--sky); transform: translateY(-1px); }
+
+    /* ── Preview card ── */
+    #preview-card { display: none; }
+    #preview-card.visible { display: block; }
+
+    .preview-header {
+      background: linear-gradient(135deg, var(--navy), #0a3e6e);
+      border-radius: 14px 14px 0 0;
+      padding: 1.5rem;
+      text-align: center;
+      color: #fff;
+      margin: -1.75rem -1.75rem 1.5rem;
+    }
+    .preview-header img { width: 56px; height: 56px; border-radius: 50%; margin-bottom: .75rem; border: 3px solid rgba(14,165,233,.4); }
+    .preview-header h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: .06em;
+      color: #7dd3fc;
+      margin-bottom: .2rem;
+    }
+    .preview-header p { font-size: .82rem; color: rgba(255,255,255,.7); }
+
+    .preview-section { margin-bottom: 1.25rem; }
+    .preview-section h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: .7rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-bottom: .6rem;
+      padding-bottom: .4rem;
+      border-bottom: 1.5px solid var(--sky-pale);
+    }
+
+    .preview-row {
+      display: flex; justify-content: space-between;
+      font-size: .84rem;
+      padding: .3rem 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .preview-row:last-child { border-bottom: none; }
+    .preview-row span:first-child { color: #64748b; }
+    .preview-row span:last-child { font-weight: 600; color: var(--navy); text-align: right; max-width: 60%; }
+
+    .rooms-done {
+      display: flex; flex-wrap: wrap; gap: .35rem;
+    }
+    .room-pill {
+      background: var(--sky-pale);
+      color: var(--navy);
+      font-size: .75rem;
+      font-weight: 700;
+      padding: .25rem .65rem;
+      border-radius: 999px;
+      border: 1px solid rgba(14,165,233,.2);
+    }
+
+    .preview-notes {
+      background: #f8fafc;
+      border-radius: 10px;
+      padding: .75rem;
+      font-size: .82rem;
+      color: #475569;
+      line-height: 1.65;
+      font-style: italic;
+    }
+
+    .preview-offers {
+      background: linear-gradient(135deg, #0c2340, #0a3e6e);
+      border-radius: 12px;
+      padding: 1rem 1.1rem;
+      color: #fff;
+      margin-bottom: 1.25rem;
+    }
+    .preview-offers p { font-size: .78rem; color: rgba(255,255,255,.8); line-height: 1.65; }
+    .preview-offers strong { color: #7dd3fc; }
+
+    /* ── Send buttons ── */
+    .send-btns { display: flex; flex-direction: column; gap: .75rem; }
+    .send-btn {
+      display: flex; align-items: center; justify-content: center; gap: .65rem;
+      padding: .85rem 1.25rem;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: .88rem;
+      text-decoration: none;
+      transition: transform .15s, box-shadow .2s;
+    }
+    .send-btn:hover { transform: translateY(-1px); }
+    .btn-email {
+      background: var(--sky);
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(14,165,233,.35);
+    }
+    .btn-email:hover { box-shadow: 0 6px 24px rgba(14,165,233,.5); }
+    .btn-sms {
+      background: var(--green);
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(22,163,74,.3);
+    }
+    .btn-sms:hover { box-shadow: 0 6px 24px rgba(22,163,74,.45); }
+    .btn-copy {
+      background: #f1f5f9;
+      color: var(--navy);
+      border: 1.5px solid #e2e8f0;
+    }
+    .btn-copy:hover { background: #e2e8f0; }
+
+    .sent-tag {
+      display: none;
+      text-align: center;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .8rem;
+      font-weight: 700;
+      color: var(--green);
+      margin-top: .5rem;
+    }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <img src="logo.png" alt="SCS" />
+  <span>Second City Scrubbers</span>
+  <span style="font-size:.78rem;color:rgba(255,255,255,.45);margin-left:.5rem;font-family:'Inter',sans-serif;">Post-Clean Receipt</span>
+</div>
+
+<div class="layout">
+
+  <!-- ── LEFT: Fill-Out Form ── -->
+  <div class="card">
+    <div class="card-title">
+      <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      Fill Out Receipt
+    </div>
+
+    <!-- Customer info -->
+    <div class="field-row">
+      <div class="field">
+        <label>Customer Name</label>
+        <input type="text" id="f-name" placeholder="Jane Smith" />
+      </div>
+      <div class="field">
+        <label>Date Cleaned</label>
+        <input type="date" id="f-date" />
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label>Customer Email</label>
+        <input type="email" id="f-email" placeholder="jane@email.com" />
+      </div>
+      <div class="field">
+        <label>Customer Phone</label>
+        <input type="tel" id="f-phone" placeholder="(312) 555-0000" />
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label>Address Cleaned</label>
+        <input type="text" id="f-address" placeholder="123 Main St, Chicago" />
+      </div>
+      <div class="field">
+        <label>Cleaner Name</label>
+        <input type="text" id="f-cleaner" placeholder="Your name" />
+      </div>
+    </div>
+
+    <!-- Service type -->
+    <div class="field">
+      <label>Service Type</label>
+      <div class="svc-pills" id="svc-pills">
+        <div class="svc-pill active" data-val="Standard Clean" onclick="selectSvc(this)">Standard Clean</div>
+        <div class="svc-pill" data-val="Deep Clean" onclick="selectSvc(this)">Deep Clean</div>
+        <div class="svc-pill" data-val="Move-In / Move-Out" onclick="selectSvc(this)">Move-In / Move-Out</div>
+        <div class="svc-pill" data-val="Airbnb Turnover" onclick="selectSvc(this)">Airbnb Turnover</div>
+        <div class="svc-pill" data-val="Post-Construction" onclick="selectSvc(this)">Post-Construction</div>
+      </div>
+    </div>
+
+    <!-- Rooms cleaned -->
+    <div class="field">
+      <label>Rooms Cleaned</label>
+      <div class="room-grid" id="room-grid">
+        <label class="room-cb"><input type="checkbox" value="Kitchen" checked /><div class="box"></div><span>Kitchen</span></label>
+        <label class="room-cb"><input type="checkbox" value="Living Room" checked /><div class="box"></div><span>Living Room</span></label>
+        <label class="room-cb"><input type="checkbox" value="Primary Bedroom" checked /><div class="box"></div><span>Primary Bedroom</span></label>
+        <label class="room-cb"><input type="checkbox" value="Bedroom 2" /><div class="box"></div><span>Bedroom 2</span></label>
+        <label class="room-cb"><input type="checkbox" value="Bedroom 3" /><div class="box"></div><span>Bedroom 3</span></label>
+        <label class="room-cb"><input type="checkbox" value="Bathroom(s)" checked /><div class="box"></div><span>Bathroom(s)</span></label>
+        <label class="room-cb"><input type="checkbox" value="Dining Room" /><div class="box"></div><span>Dining Room</span></label>
+        <label class="room-cb"><input type="checkbox" value="Home Office" /><div class="box"></div><span>Home Office</span></label>
+        <label class="room-cb"><input type="checkbox" value="Hallways" checked /><div class="box"></div><span>Hallways</span></label>
+        <label class="room-cb"><input type="checkbox" value="Laundry Room" /><div class="box"></div><span>Laundry Room</span></label>
+        <label class="room-cb"><input type="checkbox" value="Basement" /><div class="box"></div><span>Basement</span></label>
+        <label class="room-cb"><input type="checkbox" value="Inside Oven" /><div class="box"></div><span>Inside Oven</span></label>
+        <label class="room-cb"><input type="checkbox" value="Inside Fridge" /><div class="box"></div><span>Inside Fridge</span></label>
+        <label class="room-cb"><input type="checkbox" value="Inside Cabinets" /><div class="box"></div><span>Inside Cabinets</span></label>
+        <label class="room-cb"><input type="checkbox" value="Windows" /><div class="box"></div><span>Windows</span></label>
+        <label class="room-cb"><input type="checkbox" value="Balcony / Patio" /><div class="box"></div><span>Balcony / Patio</span></label>
+      </div>
+    </div>
+
+    <!-- Notes -->
+    <div class="field">
+      <label>Cleaner's Notes (optional)</label>
+      <textarea id="f-notes" placeholder="e.g. Pet hair in bedroom, left extra product under sink, recommend deep clean next visit…"></textarea>
+    </div>
+
+    <button class="gen-btn" onclick="generateReceipt()">✓ &nbsp;Generate Receipt</button>
+  </div>
+
+  <!-- ── RIGHT: Preview + Send ── -->
+  <div>
+    <!-- Placeholder before generating -->
+    <div class="card" id="placeholder-card" style="text-align:center; padding: 3rem 2rem; color:#94a3b8;">
+      <div style="font-size:2.5rem; margin-bottom:1rem;">📋</div>
+      <p style="font-family:'Montserrat',sans-serif; font-weight:700; font-size:.9rem; margin-bottom:.5rem; color:#64748b;">Receipt Preview</p>
+      <p style="font-size:.82rem; line-height:1.65;">Fill out the form and click <strong style="color:var(--navy);">Generate Receipt</strong> — a preview will appear here, then you can send it directly to the customer.</p>
+    </div>
+
+    <!-- Generated receipt preview -->
+    <div class="card" id="preview-card">
+
+      <div class="preview-header">
+        <img src="logo.png" alt="SCS" />
+        <h2>Clean Complete ✓</h2>
+        <p id="prev-subhead">Second City Scrubbers · Chicago, IL</p>
+      </div>
+
+      <!-- Details -->
+      <div class="preview-section">
+        <h3>Job Details</h3>
+        <div class="preview-row"><span>Customer</span><span id="prev-name">—</span></div>
+        <div class="preview-row"><span>Address</span><span id="prev-address">—</span></div>
+        <div class="preview-row"><span>Date</span><span id="prev-date">—</span></div>
+        <div class="preview-row"><span>Service</span><span id="prev-svc">—</span></div>
+        <div class="preview-row"><span>Cleaner</span><span id="prev-cleaner">—</span></div>
+      </div>
+
+      <!-- Rooms -->
+      <div class="preview-section">
+        <h3>Rooms Cleaned</h3>
+        <div class="rooms-done" id="prev-rooms"></div>
+      </div>
+
+      <!-- Notes -->
+      <div class="preview-section" id="prev-notes-section" style="display:none;">
+        <h3>Cleaner's Notes</h3>
+        <div class="preview-notes" id="prev-notes"></div>
+      </div>
+
+      <!-- Offers -->
+      <div class="preview-offers">
+        <strong>🎁 Refer a Friend — You Both Save $20</strong>
+        <p style="margin-top:.35rem;">Have a friend, neighbor, or coworker who needs a clean? When they book and mention your name, you both get <strong>$20 off</strong> your next clean.</p>
+      </div>
+
+      <!-- Send buttons -->
+      <div class="send-btns">
+        <a id="btn-email" href="#" class="send-btn btn-email" onclick="return false;">
+          <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Send via Email
+        </a>
+        <a id="btn-sms" href="#" class="send-btn btn-sms" onclick="return false;">
+          <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          Send via Text (SMS)
+        </a>
+        <button class="send-btn btn-copy" onclick="copyReceipt()">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          Copy Text to Clipboard
+        </button>
+        <div class="sent-tag" id="copy-tag">✓ Copied to clipboard!</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Set today's date
+  document.getElementById('f-date').valueAsDate = new Date();
+
+  function selectSvc(el) {
+    document.querySelectorAll('.svc-pill').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  function getCheckedRooms() {
+    return [...document.querySelectorAll('#room-grid input:checked')].map(cb => cb.value);
+  }
+
+  function formatDate(val) {
+    if (!val) return '';
+    const d = new Date(val + 'T12:00:00');
+    return d.toLocaleDateString('en-US', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+  }
+
+  function getSvcType() {
+    const active = document.querySelector('.svc-pill.active');
+    return active ? active.dataset.val : 'Standard Clean';
+  }
+
+  function buildEmailBody(name, address, date, svc, cleaner, rooms, notes) {
+    const roomList = rooms.join(', ');
+    return `Hi ${name || 'there'},
+
+Your cleaning with Second City Scrubbers is complete! Here's your summary:
+
+────────────────────────
+  CLEAN COMPLETE ✓
+  Second City Scrubbers
+────────────────────────
+
+📅 Date:     ${date}
+🏠 Address:  ${address || 'On file'}
+🧹 Service:  ${svc}
+👤 Cleaner:  ${cleaner || 'Second City Scrubbers Team'}
+
+ROOMS CLEANED:
+${rooms.map(r => '  ✓ ' + r).join('\n')}
+${notes ? '\nCLEANER\'S NOTES:\n  ' + notes : ''}
+
+────────────────────────
+🎁 REFER A FRIEND — YOU BOTH SAVE $20
+Know someone who needs a clean? Have them mention your name when booking and you both get $20 off!
+────────────────────────
+
+Ready to book your next clean? We'd love to see you again.
+
+📞 (872) 240-6619
+🌐 secondcityscrubbers.com
+✉  michel@secondcityscrubbers.com
+
+Pay after the clean · Flat rates · Confirmed in 2 hrs
+
+— Second City Scrubbers Team
+Chicago's Cleaning Professionals`;
+  }
+
+  function buildSMSBody(name, date, svc, rooms, cleaner) {
+    const shortDate = date ? new Date(date + 'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'}) : 'today';
+    const roomCount = rooms.length;
+    return `Hi ${name || 'there'}! ✅ Your ${svc} is complete (${shortDate}). We cleaned ${roomCount} area${roomCount !== 1 ? 's' : ''}: ${rooms.join(', ')}.\n\n🎁 Refer a friend & you both save $20!\n\nBook again: secondcityscrubbers.com or (872) 240-6619\n— Second City Scrubbers`;
+  }
+
+  function generateReceipt() {
+    const name    = document.getElementById('f-name').value.trim();
+    const date    = document.getElementById('f-date').value;
+    const email   = document.getElementById('f-email').value.trim();
+    const phone   = document.getElementById('f-phone').value.trim();
+    const address = document.getElementById('f-address').value.trim();
+    const cleaner = document.getElementById('f-cleaner').value.trim();
+    const notes   = document.getElementById('f-notes').value.trim();
+    const svc     = getSvcType();
+    const rooms   = getCheckedRooms();
+
+    // Update preview
+    document.getElementById('prev-name').textContent    = name || '—';
+    document.getElementById('prev-address').textContent = address || '—';
+    document.getElementById('prev-date').textContent    = formatDate(date) || '—';
+    document.getElementById('prev-svc').textContent     = svc;
+    document.getElementById('prev-cleaner').textContent = cleaner || 'Second City Scrubbers Team';
+    document.getElementById('prev-subhead').textContent = date ? formatDate(date) + ' · Chicago, IL' : 'Second City Scrubbers · Chicago, IL';
+
+    // Rooms
+    const rDiv = document.getElementById('prev-rooms');
+    rDiv.innerHTML = rooms.length
+      ? rooms.map(r => `<span class="room-pill">✓ ${r}</span>`).join('')
+      : '<span style="color:#94a3b8;font-size:.8rem;">No rooms selected</span>';
+
+    // Notes
+    if (notes) {
+      document.getElementById('prev-notes').textContent = notes;
+      document.getElementById('prev-notes-section').style.display = 'block';
+    } else {
+      document.getElementById('prev-notes-section').style.display = 'none';
+    }
+
+    // Email button
+    const emailBody = buildEmailBody(name, address, formatDate(date), svc, cleaner, rooms, notes);
+    const subject   = encodeURIComponent('Your Clean is Complete ✓ — Second City Scrubbers');
+    const body      = encodeURIComponent(emailBody);
+    const mailtoHref = `mailto:${encodeURIComponent(email)}?subject=${subject}&body=${body}`;
+    const emailBtn = document.getElementById('btn-email');
+    emailBtn.href = mailtoHref;
+    emailBtn.onclick = null;
+
+    // SMS button
+    const smsText = buildSMSBody(name, date, svc, rooms, cleaner);
+    const cleanPhone = phone.replace(/\D/g, '');
+    const smsHref = `sms:${cleanPhone ? '+1' + cleanPhone : ''}${cleanPhone ? '&' : '?'}body=${encodeURIComponent(smsText)}`;
+    const smsBtn = document.getElementById('btn-sms');
+    smsBtn.href = smsHref;
+    smsBtn.onclick = null;
+
+    // Show preview, hide placeholder
+    document.getElementById('placeholder-card').style.display = 'none';
+    const preview = document.getElementById('preview-card');
+    preview.classList.add('visible');
+    preview.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  function copyReceipt() {
+    const name    = document.getElementById('f-name').value.trim();
+    const date    = document.getElementById('f-date').value;
+    const address = document.getElementById('f-address').value.trim();
+    const cleaner = document.getElementById('f-cleaner').value.trim();
+    const notes   = document.getElementById('f-notes').value.trim();
+    const svc     = getSvcType();
+    const rooms   = getCheckedRooms();
+    const text    = buildEmailBody(name, address, formatDate(date), svc, cleaner, rooms, notes);
+    navigator.clipboard.writeText(text).then(() => {
+      const tag = document.getElementById('copy-tag');
+      tag.style.display = 'block';
+      setTimeout(() => { tag.style.display = 'none'; }, 3000);
+    });
+  }
+</script>
+
+</body>
+</html>
