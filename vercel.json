@@ -4,6 +4,12 @@
     { "src": "**/*.{html,png,jpg,jpeg,PNG,JPG,svg,ico,webp,css,js}", "use": "@vercel/static" }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "/$1" }
+    { "src": "/staff",              "dest": "/staff.html" },
+    { "src": "/post-clean-receipt", "dest": "/post-clean-receipt.html" },
+    { "src": "/post-clean-booklet", "dest": "/post-clean-booklet.html" },
+    { "src": "/invoice",            "dest": "/invoice.html" },
+    { "src": "/quote",              "dest": "/quote.html" },
+    { "src": "/contract",           "dest": "/contract.html" },
+    { "src": "/(.*)",               "dest": "/$1" }
   ]
 }
