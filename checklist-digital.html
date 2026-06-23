@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Digital Checklist — Second City Scrubbers</title>
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy:#0c2340; --sky:#0ea5e9; --green:#16a34a;
+      --sky-pale:#e0f2fe; --green-pale:#dcfce7;
+    }
+    html, body { overflow-x: hidden; }
+    body { font-family:'Inter',sans-serif; background:#f0f4f8; min-height:100vh; padding-bottom:6rem; }
+
+    /* ── Top bar ── */
+    .top-bar { background:var(--navy); padding:.85rem 1.25rem; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; }
+    .top-bar-left { display:flex; align-items:center; gap:.75rem; }
+    .top-bar img { width:38px; height:38px; border-radius:50%; }
+    .top-bar h1 { font-family:'Bebas Neue',sans-serif; font-size:1.25rem; letter-spacing:.08em; color:#7dd3fc; }
+    .top-bar p  { font-size:.68rem; color:rgba(255,255,255,.45); }
+
+    /* Overall progress */
+    .overall-prog { background:var(--navy); padding:.5rem 1.25rem 1rem; }
+    .prog-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:.4rem; }
+    .prog-label { font-size:.72rem; color:rgba(255,255,255,.6); font-weight:600; }
+    .prog-count { font-family:'Montserrat',sans-serif; font-weight:800; font-size:.8rem; color:#7dd3fc; }
+    .prog-track { height:6px; background:rgba(255,255,255,.12); border-radius:999px; overflow:hidden; }
+    .prog-fill  { height:100%; background:linear-gradient(90deg,var(--sky),#38bdf8); border-radius:999px; transition:width .3s ease; }
+
+    /* ── Job Info ── */
+    .job-card { background:#fff; margin:1rem; border-radius:16px; padding:1.25rem; box-shadow:0 2px 12px rgba(12,35,64,.07); }
+    .job-card-title { font-family:'Montserrat',sans-serif; font-weight:800; font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; color:var(--sky); margin-bottom:.85rem; }
+    .field-row { display:grid; grid-template-columns:1fr 1fr; gap:.65rem; }
+    .field { display:flex; flex-direction:column; gap:.3rem; }
+    .field label { font-size:.68rem; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:.06em; }
+    .field input, .field select {
+      padding:.6rem .8rem; border:1.5px solid #e2e8f0; border-radius:10px;
+      font-family:'Inter',sans-serif; font-size:.88rem; color:var(--navy);
+      background:#f8fafc; outline:none; transition:border-color .18s;
+    }
+    .field input:focus, .field select:focus { border-color:var(--sky); background:#fff; }
+
+    /* ── Mode toggle ── */
+    .mode-toggle { display:flex; gap:.5rem; margin:0 1rem .25rem; }
+    .mode-btn {
+      flex:1; padding:.65rem; border-radius:12px; border:2px solid #e2e8f0;
+      font-family:'Montserrat',sans-serif; font-weight:800; font-size:.82rem;
+      cursor:pointer; background:#fff; color:#64748b; transition:all .18s;
+      text-align:center;
+    }
+    .mode-btn.active { background:var(--navy); color:#fff; border-color:var(--navy); }
+
+    /* ── Room sections ── */
+    .room-section { margin:0 1rem .75rem; }
+    .room-header {
+      background:var(--navy); color:#fff; border-radius:12px 12px 0 0;
+      padding:.7rem 1rem; display:flex; align-items:center; justify-content:space-between;
+      cursor:pointer; user-select:none;
+    }
+    .room-header-left { display:flex; align-items:center; gap:.6rem; }
+    .room-icon { font-size:1.1rem; }
+    .room-name { font-family:'Montserrat',sans-serif; font-weight:800; font-size:.88rem; }
+    .room-prog-pill {
+      font-family:'Montserrat',sans-serif; font-weight:800; font-size:.68rem;
+      padding:.2rem .65rem; border-radius:999px; background:rgba(255,255,255,.15);
+      color:#fff; transition:background .2s;
+    }
+    .room-prog-pill.done { background:var(--green); }
+    .room-chevron { font-size:.9rem; transition:transform .25s; color:rgba(255,255,255,.5); }
+    .room-section.open .room-chevron { transform:rotate(180deg); }
+
+    .room-body { border:1.5px solid #e2e8f0; border-top:none; border-radius:0 0 12px 12px; background:#fff; overflow:hidden; display:none; }
+    .room-section.open .room-body { display:block; }
+
+    /* Room progress bar */
+    .room-prog-bar { height:3px; background:#f1f5f9; }
+    .room-prog-bar-fill { height:100%; background:linear-gradient(90deg,var(--green),#4ade80); transition:width .3s; }
+
+    /* Checklist items */
+    .check-item {
+      display:flex; align-items:center; gap:.85rem;
+      padding:.75rem 1rem; border-bottom:1px solid #f1f5f9;
+      cursor:pointer; user-select:none; transition:background .15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .check-item:last-child { border-bottom:none; }
+    .check-item:active { background:#f8fafc; }
+    .check-item.deep { background:#f0f9ff; }
+    .check-item.deep .item-text { color:#0369a1; }
+
+    .check-box {
+      width:24px; height:24px; border-radius:7px;
+      border:2px solid #cbd5e1; background:#fff;
+      flex-shrink:0; display:flex; align-items:center; justify-content:center;
+      transition:all .18s cubic-bezier(.34,1.56,.64,1);
+    }
+    .check-item.checked .check-box {
+      background:var(--green); border-color:var(--green);
+      transform:scale(1.1);
+    }
+    .check-item.checked.deep .check-box { background:var(--sky); border-color:var(--sky); }
+    .checkmark { display:none; color:#fff; }
+    .check-item.checked .checkmark { display:block; }
+    .checkmark svg { display:block; }
+
+    .item-text { font-size:.84rem; color:var(--navy); line-height:1.4; flex:1; }
+    .check-item.checked .item-text { text-decoration:line-through; color:#94a3b8; }
+
+    .deep-divider {
+      display:flex; align-items:center; gap:.5rem;
+      padding:.45rem 1rem; background:#e0f2fe;
+      border-top:1.5px dashed rgba(14,165,233,.3);
+      border-bottom:1px solid #e0f2fe;
+    }
+    .deep-label { font-family:'Montserrat',sans-serif; font-weight:800; font-size:.6rem; letter-spacing:.1em; text-transform:uppercase; color:var(--sky); }
+    .deep-badge { background:var(--sky); color:#fff; font-size:.58rem; font-weight:800; padding:.1rem .45rem; border-radius:4px; }
+
+    /* ── Sticky bottom finish bar ── */
+    .finish-bar {
+      position:fixed; bottom:0; left:0; right:0;
+      background:#fff; border-top:2px solid #e2e8f0;
+      padding:.85rem 1.25rem; display:flex; gap:.75rem; align-items:center;
+      box-shadow:0 -4px 20px rgba(12,35,64,.1);
+      z-index:99;
+    }
+    .reset-btn {
+      padding:.7rem 1rem; border-radius:12px; border:1.5px solid #e2e8f0;
+      font-family:'Montserrat',sans-serif; font-weight:700; font-size:.78rem;
+      color:#64748b; background:#fff; cursor:pointer; white-space:nowrap;
+    }
+    .finish-btn {
+      flex:1; padding:.8rem; border-radius:12px; border:none;
+      background:var(--green); color:#fff;
+      font-family:'Montserrat',sans-serif; font-weight:900; font-size:.92rem;
+      cursor:pointer; transition:background .18s, transform .15s;
+      box-shadow:0 4px 14px rgba(22,163,74,.35);
+    }
+    .finish-btn:hover { background:#15803d; transform:translateY(-1px); }
+    .finish-btn:disabled { background:#94a3b8; box-shadow:none; cursor:not-allowed; transform:none; }
+
+    /* ── Complete modal ── */
+    .modal-overlay {
+      display:none; position:fixed; inset:0;
+      background:rgba(12,35,64,.6); z-index:200;
+      align-items:flex-end; justify-content:center;
+    }
+    .modal-overlay.open { display:flex; }
+    .modal {
+      background:#fff; border-radius:24px 24px 0 0;
+      padding:1.75rem 1.5rem 2rem; width:100%; max-width:520px;
+      max-height:85vh; overflow-y:auto;
+    }
+    .modal h2 { font-family:'Bebas Neue',sans-serif; font-size:1.8rem; letter-spacing:.05em; color:var(--navy); margin-bottom:.35rem; }
+    .modal p  { font-size:.84rem; color:#64748b; line-height:1.65; margin-bottom:1.25rem; }
+    .modal-rooms { display:flex; flex-wrap:wrap; gap:.35rem; margin-bottom:1.25rem; }
+    .modal-pill { background:var(--green-pale); color:var(--green); font-size:.78rem; font-weight:700; padding:.28rem .7rem; border-radius:999px; }
+    .modal-btn {
+      display:flex; align-items:center; justify-content:center; gap:.6rem;
+      width:100%; padding:.9rem; border-radius:14px; border:none;
+      font-family:'Montserrat',sans-serif; font-weight:800; font-size:.9rem;
+      cursor:pointer; text-decoration:none; margin-bottom:.6rem;
+      transition:transform .15s;
+    }
+    .modal-btn:hover { transform:translateY(-1px); }
+    .modal-btn-primary { background:var(--sky); color:#fff; box-shadow:0 4px 16px rgba(14,165,233,.35); }
+    .modal-btn-outline { background:#f8fafc; color:var(--navy); border:1.5px solid #e2e8f0 !important; }
+    .modal-close { color:#94a3b8; font-size:.82rem; text-align:center; display:block; margin-top:.5rem; cursor:pointer; background:none; border:none; width:100%; }
+  </style>
+</head>
+<body>
+
+<!-- Top bar -->
+<div class="top-bar">
+  <div class="top-bar-left">
+    <img src="logo.png" alt="SCS" />
+    <div>
+      <h1>Cleaning Checklist</h1>
+      <p id="top-date"></p>
+    </div>
+  </div>
+  <a href="staff.html" style="color:rgba(255,255,255,.45);font-size:.75rem;text-decoration:none;">← Staff</a>
+</div>
+
+<!-- Overall progress -->
+<div class="overall-prog">
+  <div class="prog-row">
+    <span class="prog-label">Overall Progress</span>
+    <span class="prog-count" id="overall-count">0 / 0 items</span>
+  </div>
+  <div class="prog-track"><div class="prog-fill" id="overall-fill" style="width:0%"></div></div>
+</div>
+
+<!-- Job Info -->
+<div class="job-card">
+  <div class="job-card-title">Job Details</div>
+  <div class="field-row" style="margin-bottom:.65rem;">
+    <div class="field">
+      <label>Customer Name</label>
+      <input type="text" id="j-name" placeholder="Jane Smith" oninput="saveJob()" />
+    </div>
+    <div class="field">
+      <label>Date</label>
+      <input type="date" id="j-date" oninput="saveJob()" />
+    </div>
+  </div>
+  <div class="field-row">
+    <div class="field">
+      <label>Address</label>
+      <input type="text" id="j-address" placeholder="123 Main St" oninput="saveJob()" />
+    </div>
+    <div class="field">
+      <label>Service Type</label>
+      <select id="j-svc" onchange="saveJob(); applyMode();">
+        <option value="Standard Clean">Standard Clean</option>
+        <option value="Deep Clean">Deep Clean</option>
+        <option value="Move-In / Move-Out">Move-In / Move-Out</option>
+        <option value="Airbnb Turnover">Airbnb Turnover</option>
+        <option value="Post-Construction">Post-Construction</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- Mode toggle -->
+<div class="mode-toggle">
+  <button class="mode-btn active" id="btn-std"  onclick="setMode('standard')">✓ Standard Clean</button>
+  <button class="mode-btn"        id="btn-deep" onclick="setMode('deep')">+ Deep Clean</button>
+</div>
+
+<!-- Rooms will be injected here -->
+<div id="rooms-container"></div>
+
+<!-- Finish bar -->
+<div class="finish-bar">
+  <button class="reset-btn" onclick="confirmReset()">↺ Reset</button>
+  <button class="finish-btn" id="finish-btn" onclick="openFinish()">✓ &nbsp;Mark Job Complete</button>
+</div>
+
+<!-- Completion modal -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <h2>🎉 Job Complete!</h2>
+    <p id="modal-summary">Great work! Here's what was cleaned:</p>
+    <div class="modal-rooms" id="modal-rooms"></div>
+    <a id="modal-receipt-btn" href="post-clean-receipt.html" class="modal-btn modal-btn-primary">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Send Receipt to Customer
+    </a>
+    <button class="modal-btn modal-btn-outline" onclick="confirmReset(); closeModal();">
+      Start New Job
+    </button>
+    <button class="modal-close" onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+<script>
+const ROOMS = [
+  { id:'kitchen', icon:'🍳', name:'Kitchen', items:[
+    {t:'Countertops wiped & sanitized'},
+    {t:'Sink scrubbed & polished'},
+    {t:'Stovetop cleaned'},
+    {t:'Microwave inside & outside'},
+    {t:'Cabinet fronts wiped'},
+    {t:'Cabinet knobs sanitized'},
+    {t:'Small appliances wiped'},
+    {t:'Refrigerator exterior'},
+    {t:'Dishwasher exterior'},
+    {t:'Kitchen table & chairs'},
+    {t:'Trash can cleaned & relined'},
+    {t:'Floor swept & mopped'},
+    {t:'Light fixtures dusted'},
+    {t:'Cobwebs cleared'},
+    {t:'Stovetop knobs removed & cleaned', deep:true},
+    {t:'Inside microwave deep cleaned', deep:true},
+    {t:'Garbage disposal cleaned', deep:true},
+    {t:'Inside oven cleaned', deep:true},
+    {t:'Inside refrigerator cleaned', deep:true},
+    {t:'Inside cabinets wiped', deep:true},
+    {t:'Backsplash scrubbed', deep:true},
+  ]},
+  { id:'bathrooms', icon:'🚿', name:'Bathroom(s)', items:[
+    {t:'Toilet scrubbed inside & out'},
+    {t:'Sink & faucet cleaned'},
+    {t:'Mirror wiped streak-free'},
+    {t:'Countertop sanitized'},
+    {t:'Shower/tub cleaned'},
+    {t:'Tile & grout scrubbed'},
+    {t:'Cabinet fronts wiped'},
+    {t:'Trash emptied & relined'},
+    {t:'Floor mopped'},
+    {t:'Towel bars wiped'},
+    {t:'Showerhead descaled', deep:true},
+    {t:'Grout deep scrubbed', deep:true},
+    {t:'Behind toilet cleaned', deep:true},
+    {t:'Exhaust fan dusted', deep:true},
+  ]},
+  { id:'bedrooms', icon:'🛏️', name:'Bedroom(s)', items:[
+    {t:'Dust all surfaces'},
+    {t:'Nightstands wiped'},
+    {t:'Mirrors cleaned'},
+    {t:'Vacuum floors & rugs'},
+    {t:'Under bed vacuumed'},
+    {t:'Ceiling fan dusted'},
+    {t:'Windowsills wiped'},
+    {t:'Light switches cleaned'},
+    {t:'Trash emptied'},
+    {t:'Inside closet vacuumed', deep:true},
+    {t:'Baseboards wiped', deep:true},
+    {t:'Door frames wiped', deep:true},
+  ]},
+  { id:'living', icon:'🛋️', name:'Living Room', items:[
+    {t:'Dust all surfaces & shelves'},
+    {t:'TV & electronics wiped'},
+    {t:'Couch cushions vacuumed'},
+    {t:'Floors vacuumed'},
+    {t:'Floors mopped (if hard floor)'},
+    {t:'Windowsills wiped'},
+    {t:'Light switches & outlets'},
+    {t:'Ceiling fan dusted'},
+    {t:'Baseboards wiped', deep:true},
+    {t:'Under furniture vacuumed', deep:true},
+    {t:'Window blinds dusted', deep:true},
+  ]},
+  { id:'hallways', icon:'🚪', name:'Hallways & Entryway', items:[
+    {t:'Floors vacuumed/swept'},
+    {t:'Floors mopped'},
+    {t:'Dust light fixtures'},
+    {t:'Wipe door handles'},
+    {t:'Wipe baseboards', deep:true},
+    {t:'Closet vacuumed', deep:true},
+  ]},
+  { id:'office', icon:'💼', name:'Home Office', items:[
+    {t:'Desk wiped down'},
+    {t:'Monitor & keyboard dusted'},
+    {t:'Shelves dusted'},
+    {t:'Floor vacuumed'},
+    {t:'Trash emptied'},
+    {t:'Baseboards wiped', deep:true},
+  ]},
+  { id:'laundry', icon:'🧺', name:'Laundry Room', items:[
+    {t:'Washer exterior wiped'},
+    {t:'Dryer exterior wiped'},
+    {t:'Lint trap cleaned'},
+    {t:'Floor swept & mopped'},
+    {t:'Shelf dusted'},
+    {t:'Inside washer drum cleaned', deep:true},
+  ]},
+];
+
+let mode = 'standard'; // 'standard' or 'deep'
+let checked = {}; // { 'kitchen-0': true, ... }
+
+function storageKey() { return 'scs-checklist-v2'; }
+
+function save() {
+  localStorage.setItem(storageKey(), JSON.stringify({ checked, mode }));
+}
+
+function load() {
+  try {
+    const d = JSON.parse(localStorage.getItem(storageKey()) || '{}');
+    checked = d.checked || {};
+    mode    = d.mode    || 'standard';
+  } catch(e) { checked = {}; mode = 'standard'; }
+}
+
+function saveJob() {
+  const job = {
+    name:    document.getElementById('j-name').value,
+    date:    document.getElementById('j-date').value,
+    address: document.getElementById('j-address').value,
+    svc:     document.getElementById('j-svc').value,
+  };
+  localStorage.setItem('scs-job', JSON.stringify(job));
+}
+
+function loadJob() {
+  try {
+    const j = JSON.parse(localStorage.getItem('scs-job') || '{}');
+    if (j.name)    document.getElementById('j-name').value    = j.name;
+    if (j.date)    document.getElementById('j-date').value    = j.date;
+    if (j.address) document.getElementById('j-address').value = j.address;
+    if (j.svc)     document.getElementById('j-svc').value     = j.svc;
+  } catch(e) {}
+}
+
+function setMode(m) {
+  mode = m;
+  document.getElementById('btn-std').classList.toggle('active',  m === 'standard');
+  document.getElementById('btn-deep').classList.toggle('active', m === 'deep');
+  applyMode();
+  save();
+}
+
+function applyMode() {
+  const svc = document.getElementById('j-svc').value;
+  const isDeep = mode === 'deep' || svc.toLowerCase().includes('deep') || svc.toLowerCase().includes('move') || svc.toLowerCase().includes('construction');
+  document.querySelectorAll('.check-item.deep').forEach(el => {
+    el.style.display = isDeep ? 'flex' : 'none';
+  });
+  document.querySelectorAll('.deep-divider').forEach(el => {
+    el.style.display = isDeep ? 'flex' : 'none';
+  });
+  if (isDeep && mode !== 'deep') {
+    mode = 'deep';
+    document.getElementById('btn-deep').classList.add('active');
+    document.getElementById('btn-std').classList.remove('active');
+  }
+  updateAll();
+}
+
+function buildRooms() {
+  const container = document.getElementById('rooms-container');
+  container.innerHTML = '';
+
+  ROOMS.forEach(room => {
+    const sec = document.createElement('div');
+    sec.className = 'room-section open';
+    sec.id = 'room-' + room.id;
+
+    const stdItems  = room.items.filter(i => !i.deep);
+    const deepItems = room.items.filter(i => i.deep);
+
+    let itemsHTML = stdItems.map((item, idx) => {
+      const key = room.id + '-' + idx;
+      const isCk = !!checked[key];
+      return `<div class="check-item${isCk?' checked':''}" onclick="toggle('${key}',this)">
+        <div class="check-box">
+          <span class="checkmark"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
+        </div>
+        <span class="item-text">${item.t}</span>
+      </div>`;
+    }).join('');
+
+    if (deepItems.length) {
+      itemsHTML += `<div class="deep-divider">
+        <span class="deep-badge">DEEP</span>
+        <span class="deep-label">Deep Clean Extras</span>
+      </div>`;
+      deepItems.forEach((item, idx) => {
+        const key = room.id + '-deep-' + idx;
+        const isCk = !!checked[key];
+        itemsHTML += `<div class="check-item deep${isCk?' checked':''}" onclick="toggle('${key}',this)">
+          <div class="check-box">
+            <span class="checkmark"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
+          </div>
+          <span class="item-text">${item.t}</span>
+        </div>`;
+      });
+    }
+
+    sec.innerHTML = `
+      <div class="room-header" onclick="toggleRoom('${room.id}')">
+        <div class="room-header-left">
+          <span class="room-icon">${room.icon}</span>
+          <span class="room-name">${room.name}</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:.5rem;">
+          <span class="room-prog-pill" id="pill-${room.id}">0/${stdItems.length}</span>
+          <span class="room-chevron">▾</span>
+        </div>
+      </div>
+      <div class="room-body">
+        <div class="room-prog-bar"><div class="room-prog-bar-fill" id="bar-${room.id}" style="width:0%"></div></div>
+        ${itemsHTML}
+      </div>`;
+
+    container.appendChild(sec);
+  });
+
+  applyMode();
+}
+
+function toggle(key, el) {
+  checked[key] = !checked[key];
+  el.classList.toggle('checked', checked[key]);
+  save();
+  updateAll();
+}
+
+function toggleRoom(id) {
+  document.getElementById('room-' + id).classList.toggle('open');
+}
+
+function updateAll() {
+  let total = 0, done = 0;
+  const isDeep = mode === 'deep' || document.getElementById('j-svc').value.toLowerCase().includes('deep');
+
+  ROOMS.forEach(room => {
+    const stdItems  = room.items.filter(i => !i.deep);
+    const deepItems = isDeep ? room.items.filter(i => i.deep) : [];
+    const roomTotal = stdItems.length + deepItems.length;
+
+    let roomDone = 0;
+    stdItems.forEach((_, i) => { if (checked[room.id + '-' + i]) roomDone++; });
+    if (isDeep) deepItems.forEach((_, i) => { if (checked[room.id + '-deep-' + i]) roomDone++; });
+
+    total += roomTotal;
+    done  += roomDone;
+
+    const pct = roomTotal ? Math.round(roomDone / roomTotal * 100) : 0;
+    const pill = document.getElementById('pill-' + room.id);
+    const bar  = document.getElementById('bar-'  + room.id);
+    if (pill) { pill.textContent = roomDone + '/' + roomTotal; pill.classList.toggle('done', roomDone === roomTotal && roomTotal > 0); }
+    if (bar)  bar.style.width = pct + '%';
+  });
+
+  document.getElementById('overall-count').textContent = done + ' / ' + total + ' items';
+  document.getElementById('overall-fill').style.width  = (total ? Math.round(done/total*100) : 0) + '%';
+  document.getElementById('finish-btn').disabled = done === 0;
+}
+
+function openFinish() {
+  const name    = document.getElementById('j-name').value.trim();
+  const address = document.getElementById('j-address').value.trim();
+  const date    = document.getElementById('j-date').value;
+  const svc     = document.getElementById('j-svc').value;
+
+  // Which rooms had any items checked?
+  const cleanedRooms = ROOMS
+    .filter(room => room.items.some((item, i) => {
+      const key = item.deep ? room.id+'-deep-'+room.items.filter(x=>x.deep).indexOf(item) : room.id+'-'+i;
+      return checked[key];
+    }))
+    .map(r => r.name);
+
+  document.getElementById('modal-summary').textContent =
+    (name ? name + "'s" : 'The') + ' home is clean! Here\'s what was completed:';
+  document.getElementById('modal-rooms').innerHTML =
+    cleanedRooms.map(r => `<span class="modal-pill">✓ ${r}</span>`).join('');
+
+  // Build receipt link
+  const params = new URLSearchParams();
+  if (name)    params.set('name', name);
+  if (date)    params.set('date', date);
+  if (address) params.set('address', address);
+  if (svc)     params.set('svc', svc);
+  params.set('rooms', cleanedRooms.join(','));
+  document.getElementById('modal-receipt-btn').href =
+    'post-clean-receipt.html?' + params.toString();
+
+  document.getElementById('modal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+}
+
+function confirmReset() {
+  if (!confirm('Reset checklist? This will clear all checkmarks for this job.')) return;
+  checked = {};
+  save();
+  buildRooms();
+  updateAll();
+}
+
+// Init
+(function(){
+  const now = new Date();
+  document.getElementById('top-date').textContent =
+    now.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+  document.getElementById('j-date').valueAsDate = now;
+
+  load();
+  loadJob();
+  buildRooms();
+  updateAll();
+
+  // Sync service select → mode
+  document.getElementById('j-svc').addEventListener('change', applyMode);
+})();
+</script>
+</body>
+</html>
