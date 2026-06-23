@@ -5,6 +5,7 @@
   ],
   "routes": [
     { "src": "/staff",              "dest": "/staff.html" },
+    { "src": "/receipt-view",       "dest": "/receipt-view.html" },
     { "src": "/post-clean-receipt", "dest": "/post-clean-receipt.html" },
     { "src": "/post-clean-booklet", "dest": "/post-clean-booklet.html" },
     { "src": "/invoice",            "dest": "/invoice.html" },

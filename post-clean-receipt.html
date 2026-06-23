@@ -437,11 +437,11 @@
           <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
           Send via Text (SMS)
         </a>
-        <button class="send-btn btn-copy" onclick="copyReceipt()">
+        <button class="send-btn btn-copy" id="btn-copy">
           <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-          Copy Text to Clipboard
+          Copy Receipt Link
         </button>
-        <div class="sent-tag" id="copy-tag">✓ Copied to clipboard!</div>
+        <div class="sent-tag" id="copy-tag">✓ Link copied! Paste it anywhere.</div>
       </div>
 
     </div>
@@ -473,47 +473,17 @@
     return active ? active.dataset.val : 'Standard Clean';
   }
 
-  function buildEmailBody(name, address, date, svc, cleaner, rooms, notes) {
-    const roomList = rooms.join(', ');
-    return `Hi ${name || 'there'},
-
-Your cleaning with Second City Scrubbers is complete! Here's your summary:
-
-────────────────────────
-  CLEAN COMPLETE ✓
-  Second City Scrubbers
-────────────────────────
-
-📅 Date:     ${date}
-🏠 Address:  ${address || 'On file'}
-🧹 Service:  ${svc}
-👤 Cleaner:  ${cleaner || 'Second City Scrubbers Team'}
-
-ROOMS CLEANED:
-${rooms.map(r => '  ✓ ' + r).join('\n')}
-${notes ? '\nCLEANER\'S NOTES:\n  ' + notes : ''}
-
-────────────────────────
-🎁 REFER A FRIEND — YOU BOTH SAVE $20
-Know someone who needs a clean? Have them mention your name when booking and you both get $20 off!
-────────────────────────
-
-Ready to book your next clean? We'd love to see you again.
-
-📞 (872) 240-6619
-🌐 secondcityscrubbers.com
-✉  michel@secondcityscrubbers.com
-
-Pay after the clean · Flat rates · Confirmed in 2 hrs
-
-— Second City Scrubbers Team
-Chicago's Cleaning Professionals`;
-  }
-
-  function buildSMSBody(name, date, svc, rooms, cleaner) {
-    const shortDate = date ? new Date(date + 'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'}) : 'today';
-    const roomCount = rooms.length;
-    return `Hi ${name || 'there'}! ✅ Your ${svc} is complete (${shortDate}). We cleaned ${roomCount} area${roomCount !== 1 ? 's' : ''}: ${rooms.join(', ')}.\n\n🎁 Refer a friend & you both save $20!\n\nBook again: secondcityscrubbers.com or (872) 240-6619\n— Second City Scrubbers`;
+  function buildReceiptURL(name, date, address, svc, cleaner, rooms, notes) {
+    const base = 'https://secondcityscrubbers.com/receipt-view';
+    const p = new URLSearchParams();
+    if (name)    p.set('name',    name);
+    if (date)    p.set('date',    date);
+    if (address) p.set('address', address);
+    if (svc)     p.set('svc',     svc);
+    if (cleaner) p.set('cleaner', cleaner);
+    if (rooms.length) p.set('rooms', rooms.join(','));
+    if (notes)   p.set('notes',   notes);
+    return base + '?' + p.toString();
   }
 
   function generateReceipt() {
@@ -526,6 +496,9 @@ Chicago's Cleaning Professionals`;
     const notes   = document.getElementById('f-notes').value.trim();
     const svc     = getSvcType();
     const rooms   = getCheckedRooms();
+
+    // Build the shareable receipt link
+    const receiptURL = buildReceiptURL(name, date, address, svc, cleaner, rooms, notes);
 
     // Update preview
     document.getElementById('prev-name').textContent    = name || '—';
@@ -549,22 +522,24 @@ Chicago's Cleaning Professionals`;
       document.getElementById('prev-notes-section').style.display = 'none';
     }
 
-    // Email button
-    const emailBody = buildEmailBody(name, address, formatDate(date), svc, cleaner, rooms, notes);
-    const subject   = encodeURIComponent('Your Clean is Complete ✓ — Second City Scrubbers');
-    const body      = encodeURIComponent(emailBody);
-    const mailtoHref = `mailto:${encodeURIComponent(email)}?subject=${subject}&body=${body}`;
+    // Email: send the link so customer sees full branded receipt
+    const emailSubject = encodeURIComponent('Your Clean is Complete ✓ — Second City Scrubbers');
+    const emailBody    = encodeURIComponent(
+      `Hi ${name || 'there'},\n\nYour ${svc} with Second City Scrubbers is complete!\n\nView your receipt here:\n${receiptURL}\n\n🎁 Refer a friend and you both save $20 — just have them mention your name when booking.\n\nReady to book again? secondcityscrubbers.com or (872) 240-6619\n\n— Second City Scrubbers Team`
+    );
     const emailBtn = document.getElementById('btn-email');
-    emailBtn.href = mailtoHref;
-    emailBtn.onclick = null;
+    emailBtn.href     = `mailto:${encodeURIComponent(email)}?subject=${emailSubject}&body=${emailBody}`;
+    emailBtn.onclick  = null;
 
-    // SMS button
-    const smsText = buildSMSBody(name, date, svc, rooms, cleaner);
+    // SMS: send the link
+    const smsBody  = encodeURIComponent(`Hi ${name || 'there'}! ✅ Your ${svc} is complete. View your receipt here:\n${receiptURL}\n\n🎁 Refer a friend & you both save $20!\n— Second City Scrubbers`);
     const cleanPhone = phone.replace(/\D/g, '');
-    const smsHref = `sms:${cleanPhone ? '+1' + cleanPhone : ''}${cleanPhone ? '&' : '?'}body=${encodeURIComponent(smsText)}`;
-    const smsBtn = document.getElementById('btn-sms');
-    smsBtn.href = smsHref;
+    const smsBtn   = document.getElementById('btn-sms');
+    smsBtn.href    = `sms:${cleanPhone ? '+1' + cleanPhone : ''}${cleanPhone ? '&' : '?'}body=${smsBody}`;
     smsBtn.onclick = null;
+
+    // Copy link button
+    document.getElementById('btn-copy').onclick = () => copyLink(receiptURL);
 
     // Show preview, hide placeholder
     document.getElementById('placeholder-card').style.display = 'none';
@@ -573,16 +548,8 @@ Chicago's Cleaning Professionals`;
     preview.scrollIntoView({behavior:'smooth', block:'start'});
   }
 
-  function copyReceipt() {
-    const name    = document.getElementById('f-name').value.trim();
-    const date    = document.getElementById('f-date').value;
-    const address = document.getElementById('f-address').value.trim();
-    const cleaner = document.getElementById('f-cleaner').value.trim();
-    const notes   = document.getElementById('f-notes').value.trim();
-    const svc     = getSvcType();
-    const rooms   = getCheckedRooms();
-    const text    = buildEmailBody(name, address, formatDate(date), svc, cleaner, rooms, notes);
-    navigator.clipboard.writeText(text).then(() => {
+  function copyLink(url) {
+    navigator.clipboard.writeText(url).then(() => {
       const tag = document.getElementById('copy-tag');
       tag.style.display = 'block';
       setTimeout(() => { tag.style.display = 'none'; }, 3000);
