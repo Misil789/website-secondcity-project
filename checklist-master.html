@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cleaning Checklist — Second City Scrubbers</title>
+<style>
+  :root {
+    --navy:  #0c2340;
+    --sky:   #0ea5e9;
+    --green: #10b981;
+    --gray1: #f8fafc;
+    --gray2: #e2e8f0;
+    --gray3: #94a3b8;
+    --text:  #1e293b;
+    --deep-bg: #eff9ff;
+    --deep-bd: rgba(14,165,233,.25);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', 'Segoe UI', Arial, sans-serif; font-size: 10pt; color: var(--text); background: #f1f5f9; line-height: 1.4; }
+
+  .print-bar { background: var(--navy); color: #fff; padding: 10px 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; border-radius: 10px; }
+  .print-btn { background: var(--sky); color: #fff; border: none; border-radius: 7px; padding: 8px 20px; font-size: .82rem; font-weight: 700; cursor: pointer; }
+  .print-btn:hover { background: #0284c7; }
+
+  .page-wrap { max-width: 820px; margin: 0 auto; padding: 0 20px 60px; }
+  .doc { background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 40px rgba(12,35,64,.1); }
+
+  /* Header */
+  .doc-header { background: var(--navy); padding: 16px 26px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .header-left { display: flex; align-items: center; gap: 11px; }
+  .doc-logo { width: 44px; height: 44px; object-fit: contain; background: rgba(255,255,255,.09); border-radius: 8px; padding: 4px; }
+  .doc-title { font-family: 'Bebas Neue', 'Arial Narrow', Arial, sans-serif; font-size: 1.5rem; letter-spacing: .04em; color: #fff; line-height: 1; }
+  .doc-sub { font-size: .6rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: var(--sky); margin-top: 2px; }
+  .header-right { text-align: right; color: rgba(255,255,255,.65); font-size: .67rem; line-height: 1.8; }
+  .header-right strong { color: #fff; }
+
+  /* Info strip */
+  .info-strip { background: var(--gray1); border-bottom: 1.5px solid var(--gray2); padding: 9px 26px; display: grid; grid-template-columns: 2fr 1fr 1.5fr 1fr 1fr 1fr; gap: 8px 14px; }
+  .info-field label { display: block; font-size: .55rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--gray3); margin-bottom: 3px; }
+  .info-field .line { border-bottom: 1.5px solid var(--gray2); min-height: 17px; }
+
+  /* Meta bar */
+  .meta-bar { background: #fff; border-bottom: 1.5px solid var(--gray2); padding: 7px 26px; display: flex; flex-wrap: wrap; gap: 12px 22px; align-items: flex-start; }
+  .meta-group { display: flex; flex-direction: column; gap: 3px; }
+  .meta-label { font-size: .55rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--gray3); }
+  .meta-opts { display: flex; gap: 9px; flex-wrap: wrap; }
+  .meta-opt { display: flex; align-items: center; gap: 5px; font-size: .7rem; color: var(--text); }
+  .meta-box { width: 12px; height: 12px; border-radius: 3px; border: 1.5px solid var(--gray3); background: #fff; flex-shrink: 0; }
+
+  /* Legend */
+  .legend { padding: 5px 26px; border-bottom: 1.5px solid var(--gray2); display: flex; align-items: center; gap: 14px; font-size: .65rem; color: var(--gray3); background: #fff; }
+  .leg-item { display: flex; align-items: center; gap: 5px; }
+  .leg-box { width: 11px; height: 11px; border-radius: 3px; border: 1.5px solid; flex-shrink: 0; }
+  .leg-std  { border-color: var(--green); background: rgba(16,185,129,.1); }
+  .leg-deep { border-color: var(--sky); background: var(--deep-bg); }
+
+  /* Doc body */
+  .doc-body { padding: 14px 26px 18px; }
+
+  /* Room */
+  .room { margin-bottom: 12px; page-break-inside: avoid; }
+  .room-head { background: var(--navy); color: #fff; border-radius: 7px 7px 0 0; padding: 5px 12px; font-size: .7rem; font-weight: 900; text-transform: uppercase; letter-spacing: .07em; display: flex; align-items: center; gap: 6px; }
+  .room-count { margin-left: auto; font-size: .57rem; background: rgba(255,255,255,.15); border-radius: 999px; padding: 1px 7px; font-weight: 700; }
+  .room-body { border: 1.5px solid var(--gray2); border-top: none; border-radius: 0 0 7px 7px; overflow: hidden; }
+
+  /* Items */
+  .items-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .item { display: flex; align-items: flex-start; gap: 7px; padding: 5px 10px; border-bottom: 1px solid var(--gray2); font-size: .71rem; color: var(--text); line-height: 1.3; }
+  .items-grid .item:last-child { border-bottom: none; }
+  .cb { width: 12px; height: 12px; border-radius: 3px; border: 1.5px solid var(--green); background: rgba(16,185,129,.06); flex-shrink: 0; margin-top: 1px; }
+  .item.deep { background: var(--deep-bg); }
+  .item.deep .cb { border-color: var(--sky); background: rgba(14,165,233,.1); }
+  .item.deep .item-text { color: #0369a1; }
+  .deep-sep { grid-column: 1/-1; display: flex; align-items: center; gap: 7px; padding: 4px 10px; background: var(--deep-bg); border-top: 1.5px dashed var(--deep-bd); border-bottom: 1px solid var(--gray2); font-size: .58rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--sky); }
+  .deep-badge { background: var(--sky); color: #fff; font-size: .51rem; font-weight: 800; border-radius: 4px; padding: 1px 5px; }
+
+  /* Post section */
+  .post-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+  .post-box { border: 1.5px solid var(--gray2); border-radius: 7px; padding: 8px 11px; }
+  .post-label { font-size: .57rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--gray3); margin-bottom: 6px; }
+  .write-lines { display: flex; flex-direction: column; gap: 7px; }
+  .write-line { border-bottom: 1.5px solid var(--gray2); min-height: 16px; }
+
+  /* Satisfaction */
+  .sat-row { display: flex; align-items: center; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+  .sat-lbl { font-size: .62rem; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; color: var(--gray3); }
+  .sat-stars { display: flex; gap: 3px; }
+  .sat-star { width: 21px; height: 21px; border-radius: 50%; border: 1.5px solid var(--gray2); display: flex; align-items: center; justify-content: center; font-size: .67rem; font-weight: 800; color: var(--gray3); }
+  .sat-note { font-size: .59rem; color: var(--gray3); }
+
+  /* Signatures */
+  .sig-block { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
+  .sig-field label { font-size: .55rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--gray3); display: block; margin-bottom: 13px; }
+  .sig-line { border-bottom: 1.5px solid var(--gray2); }
+
+  /* Referral */
+  .referral { margin-top: 12px; background: var(--navy); color: #fff; border-radius: 8px; padding: 9px 13px; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+  .ref-text { font-size: .7rem; line-height: 1.5; }
+  .ref-text strong { font-size: .76rem; display: block; }
+  .ref-badge { background: var(--sky); color: #fff; border-radius: 6px; padding: 5px 13px; font-size: .74rem; font-weight: 800; white-space: nowrap; text-align: center; }
+  .ref-badge small { display: block; font-size: .6rem; opacity: .85; }
+
+  /* Footer */
+  .doc-footer { margin-top: 10px; border-top: 1.5px solid var(--gray2); padding-top: 7px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 5px; font-size: .61rem; color: var(--gray3); }
+  .doc-footer strong { color: var(--navy); }
+
+  @media print {
+    body { background: #fff; font-size: 6.5pt; }
+    .print-bar { display: none !important; }
+    .page-wrap { padding: 0; max-width: 100%; }
+    .doc { box-shadow: none; border-radius: 0; }
+    .doc-header { padding: 10px 18px; border-radius: 0; }
+    .doc-body { padding: 8px 18px 12px; }
+    .info-strip, .meta-bar, .legend { padding-left: 18px; padding-right: 18px; }
+    .info-strip { padding-top: 7px; padding-bottom: 7px; }
+    .meta-bar { padding-top: 5px; padding-bottom: 5px; gap: 9px 18px; }
+    .legend { padding-top: 4px; padding-bottom: 4px; }
+    .room { margin-bottom: 7px; }
+    .room-head { padding: 4px 10px; font-size: .65rem; }
+    .item { padding: 2px 7px; font-size: .62rem; }
+    .deep-sep { padding: 3px 7px; font-size: .54rem; }
+    .post-row { margin-top: 8px; gap: 8px; }
+    .post-box { padding: 6px 9px; }
+    .sat-row { margin-top: 7px; }
+    .sig-block { margin-top: 8px; }
+    .referral { margin-top: 8px; padding: 7px 11px; }
+    .doc-footer { margin-top: 7px; padding-top: 5px; }
+  }
+  @page { size: letter; margin: 0.35in 0.35in; }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="print-bar">
+  <span style="font-size:.75rem;opacity:.75;">Employee Checklist — Standard &amp; Deep Clean · Print or Save as PDF</span>
+  <button class="print-btn" onclick="window.print()">🖨 Print / Save PDF</button>
+</div>
+
+<div class="page-wrap"><div class="doc">
+
+  <div class="doc-header">
+    <div class="header-left">
+      <img class="doc-logo" src="A_logo_for_%22Second_City_Scrubbers,%22_a_cleaning_com.png" alt="" onerror="this.style.display='none'">
+      <div>
+        <div class="doc-title">Cleaning Checklist</div>
+        <div class="doc-sub">Employee Copy — Standard &amp; Deep Clean</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <strong>Second City Scrubbers</strong><br>
+      Chicago, IL · (872) 240-6619<br>
+      secondcityscrubbers.com
+    </div>
+  </div>
+
+  <div class="info-strip">
+    <div class="info-field"><label>Client Name</label><div class="line"></div></div>
+    <div class="info-field"><label>Date</label><div class="line"></div></div>
+    <div class="info-field"><label>Cleaner / Team</label><div class="line"></div></div>
+    <div class="info-field"><label>Time In</label><div class="line"></div></div>
+    <div class="info-field"><label>Time Out</label><div class="line"></div></div>
+    <div class="info-field"><label>Next Cleaning</label><div class="line"></div></div>
+  </div>
+
+  <div class="meta-bar">
+    <div class="meta-group">
+      <div class="meta-label">Service Type</div>
+      <div class="meta-opts">
+        <label class="meta-opt"><div class="meta-box"></div> Standard</label>
+        <label class="meta-opt"><div class="meta-box"></div> Deep Clean</label>
+        <label class="meta-opt"><div class="meta-box"></div> Move-In/Out</label>
+        <label class="meta-opt"><div class="meta-box"></div> Post-Construction</label>
+        <label class="meta-opt"><div class="meta-box"></div> Airbnb</label>
+      </div>
+    </div>
+    <div class="meta-group">
+      <div class="meta-label">Condition on Arrival</div>
+      <div class="meta-opts">
+        <label class="meta-opt"><div class="meta-box"></div> Light</label>
+        <label class="meta-opt"><div class="meta-box"></div> Standard</label>
+        <label class="meta-opt"><div class="meta-box"></div> Heavy</label>
+      </div>
+    </div>
+    <div class="meta-group">
+      <div class="meta-label">Photos Taken</div>
+      <div class="meta-opts">
+        <label class="meta-opt"><div class="meta-box"></div> Before</label>
+        <label class="meta-opt"><div class="meta-box"></div> After</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <span style="font-size:.58rem;font-weight:800;color:var(--text);text-transform:uppercase;letter-spacing:.08em;">Legend:</span>
+    <div class="leg-item"><div class="leg-box leg-std"></div> Standard — always complete</div>
+    <div class="leg-item"><div class="leg-box leg-deep"></div> Deep Clean extras — complete for Deep / Move-In / Post-Construction</div>
+  </div>
+
+  <div class="doc-body">
+
+    <!-- KITCHEN -->
+    <div class="room">
+      <div class="room-head">🍳 Kitchen <span class="room-count">19 std · 12 deep</span></div>
+      <div class="room-body"><div class="items-grid">
+        <div class="item"><div class="cb"></div><span class="item-text">Countertops &amp; backsplash wiped &amp; sanitized</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Sink, faucet &amp; drain scrubbed &amp; polished</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Stovetop &amp; drip pans cleaned</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Microwave — inside &amp; outside</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Cabinet &amp; drawer fronts wiped</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Cabinet knobs &amp; handles sanitized</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Small appliances wiped (toaster, coffee maker)</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Refrigerator exterior cleaned &amp; polished</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Dishwasher exterior wiped</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Stovetop knobs removed &amp; cleaned underneath</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Garbage disposal cleaned &amp; deodorized</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Sponge holder &amp; dish rack sanitized</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Pantry door exterior wiped</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Kitchen table &amp; chairs wiped down</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Trash can exterior wiped &amp; deodorized</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Light fixture &amp; overhead fan dusted</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Cobwebs cleared from corners</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Floors swept &amp; mopped</span></div>
+        <div class="item" style="grid-column:1/-1"><div class="cb"></div><span class="item-text">Trash emptied &amp; bag replaced</span></div>
+        <div class="deep-sep"><span class="deep-badge">Deep Clean</span> Complete for Deep / Move-In / Post-Construction</div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Oven interior degreased &amp; deep cleaned</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Inside refrigerator cleaned &amp; deodorized</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Inside all cabinets &amp; drawers wiped</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Range hood &amp; filter degreased</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Behind &amp; under refrigerator vacuumed</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Refrigerator coils dusted &amp; cleared</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Inside freezer wiped &amp; deodorized</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Drip pans removed, soaked &amp; scrubbed</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Backsplash grout scrubbed &amp; descaled</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Under-sink cabinet wiped &amp; deodorized</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Window above sink cleaned inside</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Baseboards &amp; toe-kicks scrubbed</span></div>
+      </div></div>
+    </div>
+
+    <!-- BATHROOMS -->
+    <div class="room">
+      <div class="room-head">🚿 Bathrooms <span class="room-count">17 std · 11 deep</span></div>
+      <div class="room-body"><div class="items-grid">
+        <div class="item"><div class="cb"></div><span class="item-text">Toilet bowl scrubbed with disinfectant</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Toilet seat, lid &amp; exterior base sanitized</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Toilet handle, tank top &amp; sides wiped</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Sink, faucet &amp; handles scrubbed</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Mirror wiped streak-free</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Shower walls &amp; tub scrubbed</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Shower door/curtain wiped &amp; squeegeed</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Showerhead descaled &amp; polished</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Countertops &amp; vanity sanitized</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Soap dish, dispensers &amp; holders cleaned</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Toothbrush holder sanitized</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Toilet brush holder sanitized</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Towel bars &amp; toilet paper holder wiped</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Behind door &amp; door frame wiped</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Shower floor mat shaken out &amp; wiped</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Floors washed &amp; disinfected</span></div>
+        <div class="item" style="grid-column:1/-1"><div class="cb"></div><span class="item-text">Trash emptied &amp; bag replaced</span></div>
+        <div class="deep-sep"><span class="deep-badge">Deep Clean</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Tile grout scrubbed &amp; treated</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Soap scum fully removed (shower &amp; tub)</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Shower door tracks deep cleaned</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Exhaust fan grill removed &amp; cleaned</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Behind &amp; under toilet scrubbed</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Toilet tank rim &amp; hinges detailed</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Caulk lines scrubbed</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Drain cover removed &amp; cleaned</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Medicine cabinet interior wiped</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Cabinet interiors wiped &amp; organized</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Baseboards fully scrubbed</span></div>
+      </div></div>
+    </div>
+
+    <!-- BEDROOMS -->
+    <div class="room">
+      <div class="room-head">🛏 Bedrooms <span class="room-count">13 std · 13 deep</span></div>
+      <div class="room-body"><div class="items-grid">
+        <div class="item"><div class="cb"></div><span class="item-text">All surfaces dusted (nightstands, dressers, shelves)</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Ceiling fan blades dusted</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Headboard &amp; bed frame dusted &amp; wiped</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Mirrors &amp; glass cleaned streak-free</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Lamp shades &amp; lamp bases dusted</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Picture frames &amp; wall decor dusted</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Light switch plates &amp; doorknobs sanitized</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Outlet &amp; USB port covers wiped</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Closet door exterior wiped</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Floors vacuumed &amp; mopped/swept</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Rugs vacuumed (both sides if area rug)</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Bed made (linens provided by client)</span></div>
+        <div class="item" style="grid-column:1/-1"><div class="cb"></div><span class="item-text">Trash emptied &amp; bag replaced</span></div>
+        <div class="deep-sep"><span class="deep-badge">Deep Clean</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Under-bed area vacuumed</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Furniture moved &amp; vacuumed/mopped behind</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Baseboards wiped top &amp; sides</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Window blinds each slat dusted</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Window sills &amp; tracks wiped</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Inside closets vacuumed &amp; shelves wiped</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Mattress vacuumed (top &amp; sides)</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Mattress sprayed with disinfectant</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Mattress rotated (if under 50 lbs)</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Pillow covers &amp; protectors laundered</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Children's toys wiped &amp; sanitized</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Ceiling corners cobweb removal</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Doors &amp; door frames wiped top to bottom</span></div>
+      </div></div>
+    </div>
+
+    <!-- LIVING AREAS -->
+    <div class="room">
+      <div class="room-head">🛋 Living Areas <span class="room-count">20 std · 15 deep</span></div>
+      <div class="room-body"><div class="items-grid">
+        <div class="item"><div class="cb"></div><span class="item-text">All surfaces dusted (tables, shelves, ledges, mantels)</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Ceiling fan blades dusted</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">High dusting — ceiling corners &amp; crown molding</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">TV screen &amp; electronics dusted</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Remote controls &amp; game controllers sanitized</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Plant leaves wiped &amp; dusted</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Entertainment center cables dusted</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Couch &amp; chair cushions fluffed &amp; arranged</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Throw blankets folded &amp; arranged</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Picture frames &amp; wall decor dusted</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Light switch plates &amp; doorknobs sanitized</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Window sills &amp; ledges wiped</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Floors vacuumed &amp; mopped/swept</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Area rugs vacuumed</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Kids' play area tidied &amp; surfaces sanitized</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">High chair &amp; booster seat wiped &amp; sanitized</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Pet feeding area wiped &amp; sanitized</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Pet bowls wiped down (exterior)</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Pet hair removed from floors &amp; furniture</span></div>
+        <div class="item" style="grid-column:1/-1"><div class="cb"></div><span class="item-text">Trash emptied &amp; bag replaced</span></div>
+        <div class="deep-sep"><span class="deep-badge">Deep Clean</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Toys &amp; play equipment wiped &amp; disinfected</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Pet bed vacuumed &amp; surface wiped</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Pet crate exterior wiped &amp; deodorized</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Behind &amp; under all furniture vacuumed</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Baseboards scrubbed top &amp; sides</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Window blinds each slat dusted</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Interior window glass cleaned</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Upholstery vacuumed (sofas &amp; chairs)</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Air vents &amp; registers cleaned</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Light fixtures &amp; lamp shades wiped</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Drapes &amp; curtains vacuumed</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Bookshelves organized &amp; dusted between books</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Fireplace mantel &amp; surround detailed</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Sliding door tracks cleaned</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Ceiling fan globe covers &amp; bulbs wiped</span></div>
+      </div></div>
+    </div>
+
+    <!-- DINING ROOM -->
+    <div class="room">
+      <div class="room-head">🍽 Dining Room <span class="room-count">12 std · 7 deep</span></div>
+      <div class="room-body"><div class="items-grid">
+        <div class="item"><div class="cb"></div><span class="item-text">Dining table surface wiped &amp; sanitized</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">All chair seats, backs &amp; legs wiped down</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Chandelier / light fixture dusted</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Sideboard / buffet surface wiped</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">China cabinet exterior dusted &amp; glass wiped</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Centerpiece &amp; table decor dusted</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Window sills dusted &amp; wiped</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Light switch &amp; outlet covers sanitized</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Baseboards dusted</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Floors swept, vacuumed &amp; mopped</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Trash emptied &amp; bag replaced</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Door frames &amp; handles wiped</span></div>
+        <div class="deep-sep"><span class="deep-badge">Deep Clean</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Table legs &amp; underside wiped</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Chair crevices &amp; joints detailed</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">China cabinet interior shelves wiped</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Chandelier crystals / globes hand-cleaned</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Blinds / curtain tops vacuumed</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Baseboards scrubbed</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Floor edges &amp; corners detailed</span></div>
+      </div></div>
+    </div>
+
+    <!-- THROUGHOUT -->
+    <div class="room">
+      <div class="room-head">✨ Throughout the Home <span class="room-count">20 std · 14 deep</span></div>
+      <div class="room-body"><div class="items-grid">
+        <div class="item"><div class="cb"></div><span class="item-text">All floors vacuumed, swept &amp; mopped</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">All trash emptied &amp; bags replaced</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">All mirrors wiped streak-free</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">All door handles, knobs &amp; locks sanitized</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Light switch plates wiped &amp; sanitized</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Outlet &amp; switch covers sanitized</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Staircase vacuumed &amp; handrail wiped</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Interior doors &amp; door frames wiped</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Entryway &amp; hallways cleaned</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Door mat shaken out &amp; wiped</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Boot tray cleaned &amp; dried</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Coat hooks &amp; rack wiped</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">High dusting — ceiling corners &amp; cobwebs</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Smoke &amp; CO detector exterior dusted</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Thermostat wiped &amp; sanitized</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Air purifier filter exterior wiped</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">All garbage cans throughout sanitized</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Light bulbs dusted (when cool)</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Window sills wiped throughout</span></div>
+        <div class="item" style="grid-column:1/-1"><div class="cb"></div><span class="item-text">General tidying &amp; straightening</span></div>
+        <div class="deep-sep"><span class="deep-badge">Deep Clean</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">All baseboards top &amp; sides scrubbed</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">All interior window glass cleaned</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">All window sills &amp; tracks wiped</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">All blinds &amp; shutters detailed</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Air vents &amp; registers vacuumed &amp; wiped</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Wall scuffs &amp; marks spot-cleaned</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">All ceiling fans detailed (globes &amp; blades)</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Door hinges &amp; frames wiped</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Inside all closets vacuumed &amp; shelves wiped</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Laundry room appliances detailed</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Dryer lint trap housing vacuumed</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Washer drum wiped &amp; filter checked</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Light fixture covers removed &amp; cleaned</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Garage entry area swept &amp; mat cleaned</span></div>
+      </div></div>
+    </div>
+
+    <!-- HOME OFFICE -->
+    <div class="room">
+      <div class="room-head">🖥 Home Office <span class="room-count">13 std · 7 deep</span></div>
+      <div class="room-body"><div class="items-grid">
+        <div class="item"><div class="cb"></div><span class="item-text">Desk surface &amp; edges wiped &amp; sanitized</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Keyboard &amp; mouse sanitized</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Monitor screen wiped streak-free</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Phone &amp; headset/earbuds sanitized</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Desk lamp &amp; base wiped</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Chair arms, back &amp; base wiped down</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Printer &amp; scanner exterior wiped</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Shelves &amp; bookcase surfaces dusted</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Picture frames &amp; decor dusted</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Light switch &amp; doorknob sanitized</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Cable &amp; cord area dusted</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Floors vacuumed &amp; mopped/swept</span></div>
+        <div class="item" style="grid-column:1/-1"><div class="cb"></div><span class="item-text">Trash emptied &amp; bag replaced</span></div>
+        <div class="deep-sep"><span class="deep-badge">Deep Clean</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Whiteboard cleaned &amp; erased</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Bookshelves dusted between books</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Under desk vacuumed &amp; wiped</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Chair wheels &amp; casters cleaned</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Window sills &amp; blinds wiped</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Baseboards scrubbed</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Air vent above desk cleaned</span></div>
+      </div></div>
+    </div>
+
+    <!-- Post section -->
+    <div class="post-row">
+      <div class="post-box">
+        <div class="post-label">⚠ Could Not Complete / Exceptions</div>
+        <div class="write-lines"><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div></div>
+      </div>
+      <div class="post-box">
+        <div class="post-label">📝 Notes / Special Requests</div>
+        <div class="write-lines"><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div></div>
+      </div>
+    </div>
+
+    <div class="sat-row">
+      <span class="sat-lbl">Satisfaction:</span>
+      <span class="sat-note">Overall</span>
+      <div class="sat-stars"><div class="sat-star">1</div><div class="sat-star">2</div><div class="sat-star">3</div><div class="sat-star">4</div><div class="sat-star">5</div></div>
+      <span class="sat-note">· Kitchen</span>
+      <div class="sat-stars"><div class="sat-star">1</div><div class="sat-star">2</div><div class="sat-star">3</div><div class="sat-star">4</div><div class="sat-star">5</div></div>
+      <span class="sat-note">· Bathrooms</span>
+      <div class="sat-stars"><div class="sat-star">1</div><div class="sat-star">2</div><div class="sat-star">3</div><div class="sat-star">4</div><div class="sat-star">5</div></div>
+      <span class="sat-note" style="margin-left:4px;">1=Poor · 5=Excellent</span>
+    </div>
+
+    <div class="sig-block">
+      <div class="sig-field"><label>Cleaner Signature &amp; Date</label><div class="sig-line"></div></div>
+      <div class="sig-field"><label>Client Sign-Off &amp; Date (optional)</label><div class="sig-line"></div></div>
+    </div>
+
+    <div class="referral">
+      <div class="ref-text">
+        <strong>Love your clean? Tell a friend! 🏙</strong>
+        Refer someone to Second City Scrubbers and you both get <strong>$20 off</strong> your next booking — just have them mention your name.
+      </div>
+      <div class="ref-badge">$20 OFF<small>you &amp; your friend</small></div>
+    </div>
+
+    <div class="doc-footer">
+      <div><strong>Second City Scrubbers</strong> · Chicago, IL · (872) 240-6619 · secondcityscrubbers.com</div>
+      <div>Thank you for your trust ✦</div>
+    </div>
+
+  </div>
+</div></div>
+</body>
+</html>

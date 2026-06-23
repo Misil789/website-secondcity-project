@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pro Cleaning Checklists Bundle — $17</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --sky:        #0ea5e9;
+      --sky-light:  #38bdf8;
+      --sky-mid:    #7dd3fc;
+      --sky-pale:   #e0f2fe;
+      --sky-ghost:  #f0fbff;
+      --red:        #dc2626;
+      --red-hover:  #b91c1c;
+      --navy:       #0c2340;
+      --navy-2:     #0f2d50;
+      --text-body:  #1e3a5a;
+      --text-muted: #5a87a8;
+      --gold:       #f59e0b;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--sky-ghost);
+      color: var(--navy);
+      overflow-x: hidden;
+    }
+
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-8px); }
+    }
+    @keyframes shimmer {
+      0%   { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+    @keyframes pulse-ring {
+      0%   { transform: scale(1); opacity: .6; }
+      100% { transform: scale(1.5); opacity: 0; }
+    }
+
+    .fade-up { animation: fade-up .6s cubic-bezier(.22,1,.36,1) both; }
+    .delay-1 { animation-delay: .1s; }
+    .delay-2 { animation-delay: .2s; }
+    .delay-3 { animation-delay: .3s; }
+    .delay-4 { animation-delay: .4s; }
+    .delay-5 { animation-delay: .5s; }
+
+    /* CTA button */
+    .btn-buy {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--red);
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: .04em;
+      padding: 18px 40px;
+      border-radius: 12px;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      box-shadow:
+        0 4px 16px rgba(220,38,38,.35),
+        0 1px 3px rgba(0,0,0,.2);
+      transition: background .2s, transform .15s, box-shadow .2s;
+    }
+    .btn-buy:hover {
+      background: var(--red-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(220,38,38,.45), 0 2px 6px rgba(0,0,0,.2);
+    }
+    .btn-buy:active { transform: translateY(0); }
+
+    /* Pulse ring behind CTA */
+    .pulse-wrap { position: relative; display: inline-block; }
+    .pulse-wrap::before, .pulse-wrap::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 16px;
+      border: 2px solid var(--red);
+      animation: pulse-ring 2s cubic-bezier(.22,1,.36,1) infinite;
+    }
+    .pulse-wrap::after { animation-delay: 1s; }
+
+    /* PDF card */
+    .pdf-card {
+      background: #fff;
+      border-radius: 14px;
+      border: 1.5px solid rgba(14,165,233,.15);
+      box-shadow:
+        0 2px 8px rgba(12,35,64,.06),
+        0 8px 24px rgba(12,35,64,.04);
+      transition: transform .2s cubic-bezier(.22,1,.36,1), box-shadow .2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .pdf-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(12,35,64,.12), 0 2px 8px rgba(14,165,233,.1);
+    }
+    .pdf-card-accent {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+    }
+
+    /* Check list */
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: .95rem;
+      line-height: 1.6;
+      color: var(--text-body);
+    }
+    .check-icon {
+      flex-shrink: 0;
+      width: 22px; height: 22px;
+      background: rgba(14,165,233,.12);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 1px;
+    }
+
+    /* Stat strip */
+    .stat-strip {
+      background: var(--navy);
+      color: #fff;
+    }
+
+    /* Guarantee box */
+    .guarantee {
+      border: 2px dashed rgba(14,165,233,.35);
+      background: rgba(14,165,233,.05);
+      border-radius: 16px;
+    }
+
+    /* FAQ */
+    details summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 0;
+      font-weight: 600;
+      color: var(--navy);
+      border-bottom: 1px solid rgba(14,165,233,.15);
+      transition: color .15s;
+    }
+    details summary:hover { color: var(--sky); }
+    details summary::-webkit-details-marker { display: none; }
+    details[open] summary { color: var(--sky); border-color: var(--sky); }
+    .faq-icon { font-size: 1.2rem; transition: transform .2s; }
+    details[open] .faq-icon { transform: rotate(45deg); }
+    details p {
+      padding: 14px 0 20px;
+      color: var(--text-body);
+      line-height: 1.7;
+      font-size: .95rem;
+    }
+
+    /* Badge */
+    .badge {
+      display: inline-block;
+      background: rgba(245,158,11,.12);
+      color: var(--gold);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(245,158,11,.3);
+    }
+
+    /* Sticky bottom bar on mobile */
+    .sticky-bar {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: var(--navy);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      z-index: 50;
+      box-shadow: 0 -4px 24px rgba(12,35,64,.25);
+    }
+
+    @media (min-width: 768px) {
+      .sticky-bar { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       ANNOUNCEMENT BAR
+  ═══════════════════════════════════════════ -->
+  <div style="background:var(--red);padding:10px 16px;text-align:center;position:relative;">
+    <p style="font-family:'Montserrat';font-size:.8rem;font-weight:700;color:#fff;letter-spacing:.02em;margin:0;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;">
+      <span>🔥 Intro price ends in:</span>
+      <span id="countdown-timer" style="font-family:'Bebas Neue';font-size:1rem;letter-spacing:.06em;background:rgba(0,0,0,.2);padding:1px 10px;border-radius:6px;">--:--:--:--</span>
+      <a href="https://uzhca.gumroad.com/l/mfwpmi" target="_blank" rel="noopener" style="color:#fff;text-decoration:underline;text-underline-offset:3px;white-space:nowrap;">Lock in $17 now →</a>
+    </p>
+  </div>
+  <script>
+    (function() {
+      const KEY = 'scs_deadline';
+      const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
+      let deadline = localStorage.getItem(KEY);
+      if (!deadline || Date.now() > parseInt(deadline)) {
+        deadline = Date.now() + SEVEN_DAYS;
+        localStorage.setItem(KEY, deadline);
+      }
+      function tick() {
+        const diff = parseInt(deadline) - Date.now();
+        if (diff <= 0) {
+          deadline = Date.now() + SEVEN_DAYS;
+          localStorage.setItem(KEY, deadline);
+          return;
+        }
+        const d = Math.floor(diff / 86400000);
+        const h = Math.floor((diff % 86400000) / 3600000);
+        const m = Math.floor((diff % 3600000) / 60000);
+        const s = Math.floor((diff % 60000) / 1000);
+        const el = document.getElementById('countdown-timer');
+        if (el) el.textContent = d + 'd ' + String(h).padStart(2,'0') + 'h ' + String(m).padStart(2,'0') + 'm ' + String(s).padStart(2,'0') + 's';
+      }
+      tick();
+      setInterval(tick, 1000);
+    })();
+  </script>
+
+  <!-- ═══════════════════════════════════════════
+       NAV
+  ═══════════════════════════════════════════ -->
+  <nav style="background: var(--navy);" class="py-4 px-6">
+    <div class="max-w-5xl mx-auto flex items-center gap-3">
+      <img src="logo-white-text.png" alt="Second City Scrubbers" class="h-9" onerror="this.style.display='none'" />
+      <span style="font-family:'Bebas Neue';font-size:1.3rem;color:#fff;letter-spacing:.06em;">
+        Second City Scrubbers
+      </span>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════════ -->
+  <section style="background: linear-gradient(160deg, var(--navy) 0%, #0f3460 60%, #1a5276 100%);" class="relative overflow-hidden">
+
+    <!-- Background texture -->
+    <svg class="absolute inset-0 w-full h-full opacity-[.04]" xmlns="http://www.w3.org/2000/svg">
+      <filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+      <rect width="100%" height="100%" filter="url(#noise)"/>
+    </svg>
+
+    <!-- Glow blobs -->
+    <div class="absolute top-0 right-0 w-96 h-96 rounded-full opacity-10" style="background: radial-gradient(circle, var(--sky) 0%, transparent 70%); transform: translate(30%, -30%);"></div>
+    <div class="absolute bottom-0 left-0 w-64 h-64 rounded-full opacity-10" style="background: radial-gradient(circle, var(--sky-light) 0%, transparent 70%); transform: translate(-30%, 30%);"></div>
+
+    <div class="relative max-w-5xl mx-auto px-6 py-20 md:py-28 grid md:grid-cols-2 gap-12 items-center">
+
+      <!-- Left: copy -->
+      <div>
+        <div class="badge fade-up mb-4">6-Document Bundle</div>
+        <h1 class="fade-up delay-1" style="font-family:'Bebas Neue';font-size:clamp(2.8rem,7vw,4.5rem);color:#fff;line-height:1;letter-spacing:.03em;">
+          Stop Losing Clients<br>
+          <span style="color: var(--sky-light);">Over Missed Spots.</span>
+        </h1>
+        <p class="fade-up delay-2 mt-5" style="font-size:1.1rem;color:rgba(255,255,255,.75);line-height:1.7;max-width:420px;">
+          6 battle-tested checklists from a real Chicago cleaning business — in English <em>and</em> Spanish. Your team always knows what to do. Your clients always see proof it's done.
+        </p>
+
+        <!-- What you get pills -->
+        <div class="fade-up delay-3 flex flex-wrap gap-2 mt-6">
+          <span style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.15);" class="text-xs font-semibold px-3 py-1 rounded-full">Standard Clean</span>
+          <span style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.15);" class="text-xs font-semibold px-3 py-1 rounded-full">Deep Clean</span>
+          <span style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.15);" class="text-xs font-semibold px-3 py-1 rounded-full">Employee Master</span>
+          <span style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.15);" class="text-xs font-semibold px-3 py-1 rounded-full">Client Copy</span>
+          <span style="background:rgba(14,165,233,.2);color:var(--sky-light);border:1px solid rgba(14,165,233,.3);" class="text-xs font-semibold px-3 py-1 rounded-full">🇺🇸 English</span>
+          <span style="background:rgba(14,165,233,.2);color:var(--sky-light);border:1px solid rgba(14,165,233,.3);" class="text-xs font-semibold px-3 py-1 rounded-full">🇲🇽 Spanish</span>
+        </div>
+
+        <!-- Price + CTA -->
+        <div class="fade-up delay-4 mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-5">
+          <div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+              <span style="font-size:.8rem;color:rgba(255,255,255,.45);text-decoration:line-through;">$47</span>
+              <span style="font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:rgba(245,158,11,.2);color:#fcd34d;border:1px solid rgba(245,158,11,.3);padding:2px 8px;border-radius:999px;">Intro Price</span>
+            </div>
+            <div style="font-family:'Montserrat';font-size:3rem;font-weight:900;color:#fff;line-height:1;">$17</div>
+            <div style="font-size:.8rem;color:rgba(255,255,255,.5);">one-time · instant download</div>
+          </div>
+          <div class="pulse-wrap">
+            <a href="https://uzhca.gumroad.com/l/mfwpmi" target="_blank" rel="noopener" class="btn-buy">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Yes, Send Me the Checklists
+            </a>
+          </div>
+        </div>
+
+        <p class="fade-up delay-5 mt-4" style="font-size:.8rem;color:rgba(255,255,255,.45);">
+          ✓ Instant download &nbsp;·&nbsp; ✓ No account required &nbsp;·&nbsp; ✓ Keep forever
+        </p>
+        <div class="fade-up delay-5 mt-3 flex items-center gap-2">
+          <div style="display:flex;">
+            <div style="width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#0ea5e9,#0c2340);border:2px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:800;color:#fff;">JR</div>
+            <div style="width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#dc2626,#0c2340);border:2px solid rgba(255,255,255,.3);margin-left:-8px;display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:800;color:#fff;">MT</div>
+            <div style="width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#10b981,#0c2340);border:2px solid rgba(255,255,255,.3);margin-left:-8px;display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:800;color:#fff;">AW</div>
+          </div>
+          <span style="font-size:.78rem;color:rgba(255,255,255,.55);">Trusted by cleaning business owners across the US</span>
+        </div>
+      </div>
+
+      <!-- Right: PDF stack mockup -->
+      <div class="fade-up delay-2 hidden md:flex items-center justify-center" style="animation: float 4s ease-in-out infinite;">
+        <div class="relative w-72 h-80">
+          <!-- Stacked cards -->
+          <div class="absolute" style="top:0;left:16px;right:0;background:#fff;border-radius:12px;height:260px;transform:rotate(4deg);box-shadow:0 8px 32px rgba(0,0,0,.25);"></div>
+          <div class="absolute" style="top:0;left:8px;right:8px;background:#f0f9ff;border-radius:12px;height:260px;transform:rotate(2deg);box-shadow:0 8px 32px rgba(0,0,0,.2);"></div>
+          <!-- Top card -->
+          <div class="absolute inset-0 bg-white rounded-2xl flex flex-col overflow-hidden" style="box-shadow:0 16px 48px rgba(0,0,0,.3);">
+            <div style="background:var(--navy);height:52px;display:flex;align-items:center;padding:0 20px;gap:8px;">
+              <div style="width:10px;height:10px;border-radius:50%;background:var(--red);"></div>
+              <div style="font-family:'Bebas Neue';color:#fff;font-size:1rem;letter-spacing:.08em;">Second City Scrubbers</div>
+            </div>
+            <div class="p-5 flex-1">
+              <div style="font-family:'Bebas Neue';font-size:1.4rem;color:var(--navy);letter-spacing:.04em;margin-bottom:12px;">Employee Checklist</div>
+              <div style="font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--sky);margin-bottom:10px;">Master Copy</div>
+              <div class="space-y-2">
+                <div class="flex items-center gap-2"><div style="width:14px;height:14px;border:2px solid var(--sky);border-radius:3px;flex-shrink:0;"></div><div style="height:8px;background:#e0f2fe;border-radius:4px;flex:1;"></div></div>
+                <div class="flex items-center gap-2"><div style="width:14px;height:14px;border:2px solid var(--sky);border-radius:3px;flex-shrink:0;"></div><div style="height:8px;background:#e0f2fe;border-radius:4px;flex:1;max-width:80%;"></div></div>
+                <div class="flex items-center gap-2"><div style="width:14px;height:14px;border:2px solid var(--sky);border-radius:3px;flex-shrink:0;background:var(--sky);"></div><div style="height:8px;background:#bae6fd;border-radius:4px;flex:1;max-width:60%;"></div></div>
+                <div class="flex items-center gap-2"><div style="width:14px;height:14px;border:2px solid var(--sky);border-radius:3px;flex-shrink:0;"></div><div style="height:8px;background:#e0f2fe;border-radius:4px;flex:1;max-width:90%;"></div></div>
+                <div class="flex items-center gap-2"><div style="width:14px;height:14px;border:2px solid var(--sky);border-radius:3px;flex-shrink:0;background:var(--sky);"></div><div style="height:8px;background:#bae6fd;border-radius:4px;flex:1;max-width:70%;"></div></div>
+                <div class="flex items-center gap-2"><div style="width:14px;height:14px;border:2px solid var(--sky);border-radius:3px;flex-shrink:0;"></div><div style="height:8px;background:#e0f2fe;border-radius:4px;flex:1;"></div></div>
+              </div>
+              <div style="height:1px;background:rgba(14,165,233,.2);margin:16px 0;"></div>
+              <div style="font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--sky);margin-bottom:10px;">Kitchen</div>
+              <div class="space-y-2">
+                <div class="flex items-center gap-2"><div style="width:14px;height:14px;border:2px solid var(--sky);border-radius:3px;flex-shrink:0;"></div><div style="height:8px;background:#e0f2fe;border-radius:4px;flex:1;max-width:75%;"></div></div>
+                <div class="flex items-center gap-2"><div style="width:14px;height:14px;border:2px solid var(--sky);border-radius:3px;flex-shrink:0;background:var(--sky);"></div><div style="height:8px;background:#bae6fd;border-radius:4px;flex:1;"></div></div>
+              </div>
+            </div>
+          </div>
+          <!-- Count badge -->
+          <div class="absolute -top-3 -right-3 w-12 h-12 rounded-full flex items-center justify-center text-white text-sm font-black" style="background:var(--red);box-shadow:0 4px 12px rgba(220,38,38,.4);font-family:'Montserrat';">6×</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       TRUST BADGES
+  ═══════════════════════════════════════════ -->
+  <div style="background:#fff;border-bottom:1px solid rgba(14,165,233,.1);padding:14px 24px;">
+    <div style="max-width:900px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:center;gap:24px 36px;">
+      <div style="display:flex;align-items:center;gap:8px;font-size:.82rem;font-weight:600;color:var(--text-body);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--sky)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Instant PDF Delivery
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:.82rem;font-weight:600;color:var(--text-body);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--sky)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Secure Gumroad Checkout
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:.82rem;font-weight:600;color:var(--text-body);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--sky)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Professional-Grade Quality
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:.82rem;font-weight:600;color:var(--text-body);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--sky)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        One-Time Purchase, Keep Forever
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       PAIN SECTION
+  ═══════════════════════════════════════════ -->
+  <section style="background:#fff;padding:72px 24px;">
+    <div style="max-width:860px;margin:0 auto;">
+      <div style="text-align:center;margin-bottom:48px;">
+        <div class="badge" style="margin-bottom:12px;">Sound Familiar?</div>
+        <h2 style="font-family:'Bebas Neue';font-size:clamp(1.8rem,4vw,2.8rem);letter-spacing:.04em;line-height:1.1;">Running a Cleaning Business Is Hard Enough.<br><span style="color:var(--sky);">Bad Documentation Makes It Worse.</span></h2>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;">
+
+        <div style="background:var(--sky-ghost);border:1.5px solid rgba(14,165,233,.12);border-radius:14px;padding:24px;">
+          <div style="font-size:1.6rem;margin-bottom:12px;">😤</div>
+          <div style="font-family:'Montserrat';font-weight:800;font-size:.92rem;color:var(--navy);margin-bottom:8px;">"They missed the baseboards. Again."</div>
+          <p style="font-size:.85rem;color:var(--text-muted);line-height:1.6;">Without a clear checklist, your team guesses what to clean — and clients notice every missed spot.</p>
+        </div>
+
+        <div style="background:var(--sky-ghost);border:1.5px solid rgba(14,165,233,.12);border-radius:14px;padding:24px;">
+          <div style="font-size:1.6rem;margin-bottom:12px;">😰</div>
+          <div style="font-family:'Montserrat';font-weight:800;font-size:.92rem;color:var(--navy);margin-bottom:8px;">New hire? Back to square one.</div>
+          <p style="font-size:.85rem;color:var(--text-muted);line-height:1.6;">Training without written standards means every cleaner does things differently — and quality suffers.</p>
+        </div>
+
+        <div style="background:var(--sky-ghost);border:1.5px solid rgba(14,165,233,.12);border-radius:14px;padding:24px;">
+          <div style="font-size:1.6rem;margin-bottom:12px;">🤷</div>
+          <div style="font-family:'Montserrat';font-weight:800;font-size:.92rem;color:var(--navy);margin-bottom:8px;">"How do I prove we cleaned it?"</div>
+          <p style="font-size:.85rem;color:var(--text-muted);line-height:1.6;">When clients dispute a job, you have no paper trail. A client-facing checklist ends that problem immediately.</p>
+        </div>
+
+        <div style="background:var(--sky-ghost);border:1.5px solid rgba(14,165,233,.12);border-radius:14px;padding:24px;">
+          <div style="font-size:1.6rem;margin-bottom:12px;">🌐</div>
+          <div style="font-family:'Montserrat';font-weight:800;font-size:.92rem;color:var(--navy);margin-bottom:8px;">Spanish-speaking team, English-only docs.</div>
+          <p style="font-size:.85rem;color:var(--text-muted);line-height:1.6;">Half your crew can't read the checklist. Things get missed. You can't figure out why quality is inconsistent.</p>
+        </div>
+
+      </div>
+
+      <div style="text-align:center;margin-top:44px;padding:28px;background:linear-gradient(135deg,var(--navy),#0f3460);border-radius:16px;color:#fff;">
+        <p style="font-family:'Montserrat';font-weight:800;font-size:1.05rem;margin-bottom:6px;">These problems have a $17 solution.</p>
+        <p style="font-size:.88rem;color:rgba(255,255,255,.65);line-height:1.6;">Professional checklists eliminate guesswork, protect you from disputes, and make your business look as serious as it is.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       STAT STRIP
+  ═══════════════════════════════════════════ -->
+  <div class="stat-strip py-6 px-6">
+    <div class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+      <div>
+        <div style="font-family:'Bebas Neue';font-size:2.2rem;color:var(--sky-light);line-height:1;">6</div>
+        <div style="font-size:.8rem;color:rgba(255,255,255,.55);margin-top:2px;">PDF Documents</div>
+      </div>
+      <div>
+        <div style="font-family:'Bebas Neue';font-size:2.2rem;color:var(--sky-light);line-height:1;">2</div>
+        <div style="font-size:.8rem;color:rgba(255,255,255,.55);margin-top:2px;">Languages</div>
+      </div>
+      <div>
+        <div style="font-family:'Bebas Neue';font-size:2.2rem;color:var(--sky-light);line-height:1;">100%</div>
+        <div style="font-size:.8rem;color:rgba(255,255,255,.55);margin-top:2px;">Print-Ready</div>
+      </div>
+      <div>
+        <div style="font-family:'Bebas Neue';font-size:2.2rem;color:var(--sky-light);line-height:1;">$0</div>
+        <div style="font-size:.8rem;color:rgba(255,255,255,.55);margin-top:2px;">Design Work Needed</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       PDF INSIDE LOOK
+  ═══════════════════════════════════════════ -->
+  <section style="background:#fff;padding:72px 0 80px;">
+    <div style="max-width:900px;margin:0 auto;padding:0 24px;">
+      <div style="text-align:center;margin-bottom:48px;">
+        <div class="badge" style="margin-bottom:12px;">Peek Inside</div>
+        <h2 style="font-family:'Bebas Neue';font-size:clamp(1.8rem,4vw,2.8rem);letter-spacing:.04em;line-height:1.1;">See Exactly What You're Getting</h2>
+        <p style="color:var(--text-muted);margin-top:10px;font-size:.95rem;">Real checklist content — not a watered-down sample.</p>
+      </div>
+    </div>
+
+    <!-- Scrollable page previews -->
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;padding:0 24px 20px;scrollbar-width:thin;scrollbar-color:var(--sky-mid) transparent;">
+      <div style="display:flex;gap:20px;width:max-content;align-items:flex-start;padding-bottom:8px;">
+
+        <!-- Page 1: Employee Master — Kitchen -->
+        <div style="width:260px;background:#fff;border-radius:14px;border:1.5px solid rgba(14,165,233,.2);box-shadow:0 8px 32px rgba(12,35,64,.1);overflow:hidden;flex-shrink:0;">
+          <!-- Header -->
+          <div style="background:var(--navy);padding:12px 16px;display:flex;align-items:center;gap:8px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--red);"></div>
+            <span style="font-family:'Bebas Neue';color:#fff;font-size:.85rem;letter-spacing:.08em;">Second City Scrubbers</span>
+          </div>
+          <div style="padding:14px 16px;">
+            <div style="font-family:'Bebas Neue';font-size:1.1rem;color:var(--navy);letter-spacing:.04em;margin-bottom:2px;">Employee Checklist</div>
+            <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--sky);margin-bottom:12px;">Master Copy · Standard Clean</div>
+            <!-- Room header -->
+            <div style="background:var(--sky-pale);border-radius:6px;padding:5px 10px;font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--navy);margin-bottom:8px;">🍳 Kitchen</div>
+            <!-- Tasks -->
+            <div style="display:flex;flex-direction:column;gap:5px;">
+              <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text-body);"><div style="width:11px;height:11px;border:1.5px solid var(--sky);border-radius:2px;flex-shrink:0;"></div>Wipe all countertops</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text-body);"><div style="width:11px;height:11px;border:1.5px solid var(--sky);border-radius:2px;flex-shrink:0;background:var(--sky);"></div><span style="text-decoration:line-through;color:var(--text-muted);">Clean stovetop burners</span></div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text-body);"><div style="width:11px;height:11px;border:1.5px solid var(--sky);border-radius:2px;flex-shrink:0;"></div>Wipe microwave (in &amp; out)</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text-body);"><div style="width:11px;height:11px;border:1.5px solid var(--sky);border-radius:2px;flex-shrink:0;"></div>Clean appliance exteriors</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text-body);"><div style="width:11px;height:11px;border:1.5px solid var(--sky);border-radius:2px;flex-shrink:0;background:var(--sky);"></div><span style="text-decoration:line-through;color:var(--text-muted);">Wipe cabinet fronts</span></div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text-body);"><div style="width:11px;height:11px;border:1.5px solid var(--sky);border-radius:2px;flex-shrink:0;"></div>Scrub &amp; polish sink</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text-body);"><div style="width:11px;height:11px;border:1.5px solid var(--sky);border-radius:2px;flex-shrink:0;"></div>Mop floor</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text-body);"><div style="width:11px;height:11px;border:1.5px solid var(--sky);border-radius:2px;flex-shrink:0;"></div>Empty &amp; reline trash</div>
+            </div>
+            <div style="height:1px;background:rgba(14,165,233,.12);margin:10px 0;"></div>
+            <div style="background:var(--sky-pale);border-radius:6px;padding:5px 10px;font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--navy);margin-bottom:8px;">🛁 Bathroom</div>
+            <div style="display:flex;flex-direction:column;gap:5px;">
+              <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text-body);"><div style="width:11px;height:11px;border:1.5px solid var(--sky);border-radius:2px;flex-shrink:0;"></div>Scrub toilet (bowl, seat, tank)</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text-body);"><div style="width:11px;height:11px;border:1.5px solid var(--sky);border-radius:2px;flex-shrink:0;"></div>Clean &amp; shine mirror</div>
+            </div>
+          </div>
+          <div style="background:var(--sky-ghost);padding:8px 16px;text-align:right;font-size:.6rem;color:var(--text-muted);font-weight:600;">Page 1 of 4</div>
+        </div>
+
+        <!-- Page 2: Deep Clean — Bathroom expanded -->
+        <div style="width:260px;background:#fff;border-radius:14px;border:1.5px solid rgba(99,102,241,.25);box-shadow:0 8px 32px rgba(12,35,64,.1);overflow:hidden;flex-shrink:0;">
+          <div style="background:var(--navy);padding:12px 16px;display:flex;align-items:center;gap:8px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:#6366f1;"></div>
+            <span style="font-family:'Bebas Neue';color:#fff;font-size:.85rem;letter-spacing:.08em;">Second City Scrubbers</span>
+          </div>
+          <div style="padding:14px 16px;">
+            <div style="font-family:'Bebas Neue';font-size:1.1rem;color:var(--navy);letter-spacing:.04em;margin-bottom:2px;">Deep Clean Master</div>
+            <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#6366f1;margin-bottom:12px;">Employee Copy · Deep Clean</div>
+            <div style="background:#ede9fe;border-radius:6px;padding:5px 10px;font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#4c1d95;margin-bottom:8px;">🛁 Bathroom (Deep)</div>
+            <div style="display:flex;flex-direction:column;gap:5px;">
+              <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text-body);"><div style="width:11px;height:11px;border:1.5px solid #6366f1;border-radius:2px;flex-shrink:0;"></div>Scrub grout lines (tile &amp; shower)</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text-body);"><div style="width:11px;height:11px;border:1.5px solid #6366f1;border-radius:2px;flex-shrink:0;background:#6366f1;"></div><span style="text-decoration:line-through;color:var(--text-muted);">Remove &amp; clean shower drain</span></div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text-body);"><div style="width:11px;height:11px;border:1.5px solid #6366f1;border-radius:2px;flex-shrink:0;"></div>Descale faucets &amp; showerhead</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text-body);"><div style="width:11px;height:11px;border:1.5px solid #6366f1;border-radius:2px;flex-shrink:0;"></div>Wipe baseboards &amp; door frames</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text-body);"><div style="width:11px;height:11px;border:1.5px solid #6366f1;border-radius:2px;flex-shrink:0;"></div>Clean inside medicine cabinet</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text-body);"><div style="width:11px;height:11px;border:1.5px solid #6366f1;border-radius:2px;flex-shrink:0;"></div>Polish fixtures to shine</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text-body);"><div style="width:11px;height:11px;border:1.5px solid #6366f1;border-radius:2px;flex-shrink:0;background:#6366f1;"></div><span style="text-decoration:line-through;color:var(--text-muted);">Wash floor incl. behind toilet</span></div>
+            </div>
+            <div style="height:1px;background:rgba(99,102,241,.12);margin:10px 0;"></div>
+            <div style="background:#ede9fe;border-radius:6px;padding:5px 10px;font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#4c1d95;margin-bottom:8px;">🛏️ Bedroom (Deep)</div>
+            <div style="display:flex;flex-direction:column;gap:5px;">
+              <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text-body);"><div style="width:11px;height:11px;border:1.5px solid #6366f1;border-radius:2px;flex-shrink:0;"></div>Dust ceiling fan blades</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text-body);"><div style="width:11px;height:11px;border:1.5px solid #6366f1;border-radius:2px;flex-shrink:0;"></div>Wipe window sills &amp; tracks</div>
+            </div>
+          </div>
+          <div style="background:#f5f3ff;padding:8px 16px;text-align:right;font-size:.6rem;color:#6366f1;font-weight:600;">Page 2 of 4</div>
+        </div>
+
+        <!-- Page 3: Client Copy -->
+        <div style="width:260px;background:#fff;border-radius:14px;border:1.5px solid rgba(16,185,129,.25);box-shadow:0 8px 32px rgba(12,35,64,.1);overflow:hidden;flex-shrink:0;">
+          <div style="background:var(--navy);padding:12px 16px;display:flex;align-items:center;gap:8px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:#10b981;"></div>
+            <span style="font-family:'Bebas Neue';color:#fff;font-size:.85rem;letter-spacing:.08em;">Second City Scrubbers</span>
+          </div>
+          <div style="padding:14px 16px;">
+            <div style="font-family:'Bebas Neue';font-size:1.1rem;color:var(--navy);letter-spacing:.04em;margin-bottom:2px;">Client Summary</div>
+            <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#10b981;margin-bottom:4px;">Standard Clean · Your Copy</div>
+            <div style="font-size:.65rem;color:var(--text-muted);margin-bottom:12px;">Date: __________ &nbsp;|&nbsp; Tech: __________</div>
+            <div style="background:#d1fae5;border-radius:6px;padding:5px 10px;font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#065f46;margin-bottom:8px;">✓ Completed Today</div>
+            <div style="display:flex;flex-direction:column;gap:5px;">
+              <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text-body);"><div style="width:11px;height:11px;border-radius:2px;background:#10b981;flex-shrink:0;display:flex;align-items:center;justify-content:center;"><span style="color:#fff;font-size:.55rem;font-weight:900;">✓</span></div>Kitchen — full clean</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text-body);"><div style="width:11px;height:11px;border-radius:2px;background:#10b981;flex-shrink:0;display:flex;align-items:center;justify-content:center;"><span style="color:#fff;font-size:.55rem;font-weight:900;">✓</span></div>Living room dusted &amp; vacuumed</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text-body);"><div style="width:11px;height:11px;border-radius:2px;background:#10b981;flex-shrink:0;display:flex;align-items:center;justify-content:center;"><span style="color:#fff;font-size:.55rem;font-weight:900;">✓</span></div>Bathrooms scrubbed</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text-body);"><div style="width:11px;height:11px;border-radius:2px;background:#10b981;flex-shrink:0;display:flex;align-items:center;justify-content:center;"><span style="color:#fff;font-size:.55rem;font-weight:900;">✓</span></div>Bedroom(s) made &amp; dusted</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text-body);"><div style="width:11px;height:11px;border-radius:2px;background:#10b981;flex-shrink:0;display:flex;align-items:center;justify-content:center;"><span style="color:#fff;font-size:.55rem;font-weight:900;">✓</span></div>Floors mopped &amp; vacuumed</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text-body);"><div style="width:11px;height:11px;border-radius:2px;background:#10b981;flex-shrink:0;display:flex;align-items:center;justify-content:center;"><span style="color:#fff;font-size:.55rem;font-weight:900;">✓</span></div>All trash emptied &amp; relined</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text-body);"><div style="width:11px;height:11px;border-radius:2px;background:#10b981;flex-shrink:0;display:flex;align-items:center;justify-content:center;"><span style="color:#fff;font-size:.55rem;font-weight:900;">✓</span></div>Mirrors &amp; glass streak-free</div>
+            </div>
+            <div style="margin-top:12px;border-top:1px dashed rgba(16,185,129,.3);padding-top:10px;">
+              <div style="font-size:.62rem;color:var(--text-muted);line-height:1.5;">Questions? Call us at (000) 000-0000<br>Thank you for choosing us! ⭐</div>
+            </div>
+          </div>
+          <div style="background:#ecfdf5;padding:8px 16px;text-align:right;font-size:.6rem;color:#10b981;font-weight:600;">Client Copy</div>
+        </div>
+
+        <!-- Page 4: Spanish version -->
+        <div style="width:260px;background:#fff;border-radius:14px;border:1.5px solid rgba(220,38,38,.2);box-shadow:0 8px 32px rgba(12,35,64,.1);overflow:hidden;flex-shrink:0;">
+          <div style="background:var(--navy);padding:12px 16px;display:flex;align-items:center;gap:8px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--red);"></div>
+            <span style="font-family:'Bebas Neue';color:#fff;font-size:.85rem;letter-spacing:.08em;">Second City Scrubbers</span>
+          </div>
+          <div style="padding:14px 16px;">
+            <div style="font-family:'Bebas Neue';font-size:1.1rem;color:var(--navy);letter-spacing:.04em;margin-bottom:2px;">Lista del Empleado</div>
+            <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-bottom:12px;">Copia Maestra · Limpieza Estándar</div>
+            <div style="background:#fee2e2;border-radius:6px;padding:5px 10px;font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#7f1d1d;margin-bottom:8px;">🍳 Cocina</div>
+            <div style="display:flex;flex-direction:column;gap:5px;">
+              <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text-body);"><div style="width:11px;height:11px;border:1.5px solid var(--red);border-radius:2px;flex-shrink:0;"></div>Limpiar encimeras</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text-body);"><div style="width:11px;height:11px;border:1.5px solid var(--red);border-radius:2px;flex-shrink:0;background:var(--red);"></div><span style="text-decoration:line-through;color:var(--text-muted);">Limpiar quemadores</span></div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text-body);"><div style="width:11px;height:11px;border:1.5px solid var(--red);border-radius:2px;flex-shrink:0;"></div>Limpiar microondas (dentro/fuera)</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text-body);"><div style="width:11px;height:11px;border:1.5px solid var(--red);border-radius:2px;flex-shrink:0;"></div>Limpiar electrodomésticos</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text-body);"><div style="width:11px;height:11px;border:1.5px solid var(--red);border-radius:2px;flex-shrink:0;"></div>Fregar el fregadero</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text-body);"><div style="width:11px;height:11px;border:1.5px solid var(--red);border-radius:2px;flex-shrink:0;"></div>Fregar el piso</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text-body);"><div style="width:11px;height:11px;border:1.5px solid var(--red);border-radius:2px;flex-shrink:0;background:var(--red);"></div><span style="text-decoration:line-through;color:var(--text-muted);">Vaciar y reforrar la basura</span></div>
+            </div>
+            <div style="height:1px;background:rgba(220,38,38,.12);margin:10px 0;"></div>
+            <div style="background:#fee2e2;border-radius:6px;padding:5px 10px;font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#7f1d1d;margin-bottom:8px;">🛁 Baño</div>
+            <div style="display:flex;flex-direction:column;gap:5px;">
+              <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text-body);"><div style="width:11px;height:11px;border:1.5px solid var(--red);border-radius:2px;flex-shrink:0;"></div>Limpiar inodoro (taza y asiento)</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text-body);"><div style="width:11px;height:11px;border:1.5px solid var(--red);border-radius:2px;flex-shrink:0;"></div>Limpiar espejo</div>
+            </div>
+          </div>
+          <div style="background:#fef2f2;padding:8px 16px;text-align:right;font-size:.6rem;color:var(--red);font-weight:600;">🇲🇽 Versión en Español</div>
+        </div>
+
+      </div>
+    </div>
+    <!-- Scroll hint -->
+    <div style="text-align:center;margin-top:16px;">
+      <span style="font-size:.75rem;color:var(--text-muted);font-weight:500;">← Scroll to see more previews →</span>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       WHAT'S INCLUDED
+  ═══════════════════════════════════════════ -->
+  <section class="py-20 px-6">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-14">
+        <div class="badge mb-3">What's Inside</div>
+        <h2 style="font-family:'Bebas Neue';font-size:clamp(2rem,5vw,3rem);letter-spacing:.04em;">Everything in the Bundle</h2>
+        <p style="color:var(--text-muted);margin-top:8px;font-size:.95rem;">Six ready-to-use documents. Download once, use forever.</p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+        <!-- Card 1 -->
+        <div class="pdf-card p-6">
+          <div class="pdf-card-accent" style="background: linear-gradient(90deg, var(--sky), var(--sky-light));"></div>
+          <div class="flex items-start gap-3 mb-3">
+            <div style="font-size:1.8rem;line-height:1;">📋</div>
+            <div>
+              <div style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--sky);margin-bottom:2px;">Employee</div>
+              <div style="font-family:'Montserrat';font-weight:700;font-size:1rem;color:var(--navy);">Master Checklist</div>
+              <div style="font-size:.7rem;color:var(--text-muted);">Standard Clean · English</div>
+            </div>
+          </div>
+          <p style="font-size:.88rem;color:var(--text-body);line-height:1.6;">Room-by-room task list with every detail accounted for. The definitive reference your team works from.</p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="pdf-card p-6">
+          <div class="pdf-card-accent" style="background: linear-gradient(90deg, #6366f1, #818cf8);"></div>
+          <div class="flex items-start gap-3 mb-3">
+            <div style="font-size:1.8rem;line-height:1;">🧹</div>
+            <div>
+              <div style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#6366f1;margin-bottom:2px;">Employee</div>
+              <div style="font-family:'Montserrat';font-weight:700;font-size:1rem;color:var(--navy);">Deep Clean Master</div>
+              <div style="font-size:.7rem;color:var(--text-muted);">Deep Clean · English</div>
+            </div>
+          </div>
+          <p style="font-size:.88rem;color:var(--text-body);line-height:1.6;">Expanded task list for deep clean jobs — inside cabinets, baseboards, appliances, and more.</p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="pdf-card p-6">
+          <div class="pdf-card-accent" style="background: linear-gradient(90deg, #10b981, #34d399);"></div>
+          <div class="flex items-start gap-3 mb-3">
+            <div style="font-size:1.8rem;line-height:1;">👤</div>
+            <div>
+              <div style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#10b981;margin-bottom:2px;">Client</div>
+              <div style="font-family:'Montserrat';font-weight:700;font-size:1rem;color:var(--navy);">Client Copy</div>
+              <div style="font-size:.7rem;color:var(--text-muted);">Standard Clean · English</div>
+            </div>
+          </div>
+          <p style="font-size:.88rem;color:var(--text-body);line-height:1.6;">A polished version to hand to clients so they know exactly what was cleaned. Builds trust instantly.</p>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="pdf-card p-6">
+          <div class="pdf-card-accent" style="background: linear-gradient(90deg, #f59e0b, #fbbf24);"></div>
+          <div class="flex items-start gap-3 mb-3">
+            <div style="font-size:1.8rem;line-height:1;">✨</div>
+            <div>
+              <div style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#f59e0b;margin-bottom:2px;">Client</div>
+              <div style="font-family:'Montserrat';font-weight:700;font-size:1rem;color:var(--navy);">Deep Clean Client Copy</div>
+              <div style="font-size:.7rem;color:var(--text-muted);">Deep Clean · English</div>
+            </div>
+          </div>
+          <p style="font-size:.88rem;color:var(--text-body);line-height:1.6;">The deep clean version for clients. Perfect for move-ins, post-construction, and seasonal cleans.</p>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="pdf-card p-6">
+          <div class="pdf-card-accent" style="background: linear-gradient(90deg, var(--red), #f87171);"></div>
+          <div class="flex items-start gap-3 mb-3">
+            <div style="font-size:1.8rem;line-height:1;">🇲🇽</div>
+            <div>
+              <div style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-bottom:2px;">Empleado</div>
+              <div style="font-family:'Montserrat';font-weight:700;font-size:1rem;color:var(--navy);">Lista Maestra</div>
+              <div style="font-size:.7rem;color:var(--text-muted);">Limpieza Estándar · Español</div>
+            </div>
+          </div>
+          <p style="font-size:.88rem;color:var(--text-body);line-height:1.6;">La misma lista en español — para equipos bilingües. A real differentiator most cleaning businesses don't have.</p>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="pdf-card p-6">
+          <div class="pdf-card-accent" style="background: linear-gradient(90deg, #ec4899, #f472b6);"></div>
+          <div class="flex items-start gap-3 mb-3">
+            <div style="font-size:1.8rem;line-height:1;">🇲🇽</div>
+            <div>
+              <div style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#ec4899;margin-bottom:2px;">Cliente</div>
+              <div style="font-family:'Montserrat';font-weight:700;font-size:1rem;color:var(--navy);">Copia del Cliente</div>
+              <div style="font-size:.7rem;color:var(--text-muted);">Limpieza Profunda · Español</div>
+            </div>
+          </div>
+          <p style="font-size:.88rem;color:var(--text-body);line-height:1.6;">The Spanish deep clean client copy. Impress Spanish-speaking clients with professional documentation.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       COMPARISON TABLE
+  ═══════════════════════════════════════════ -->
+  <section style="background:var(--navy);padding:80px 24px;">
+    <div style="max-width:800px;margin:0 auto;text-align:center;">
+      <div class="badge" style="margin-bottom:12px;">Why $17 Is a No-Brainer</div>
+      <h2 style="font-family:'Bebas Neue';font-size:clamp(2rem,5vw,3rem);color:#fff;letter-spacing:.04em;line-height:1.05;margin-bottom:40px;">Build It Yourself vs.<br><span style="color:var(--sky-light);">Buy This Bundle</span></h2>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;border-radius:16px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.35);">
+
+        <!-- DIY column header -->
+        <div style="background:rgba(255,255,255,.06);padding:20px;border-bottom:1px solid rgba(255,255,255,.08);">
+          <div style="font-family:'Montserrat';font-weight:800;font-size:1rem;color:rgba(255,255,255,.5);">DIY From Scratch</div>
+        </div>
+        <!-- Bundle column header -->
+        <div style="background:rgba(14,165,233,.12);padding:20px;border-bottom:1px solid rgba(14,165,233,.2);position:relative;">
+          <div style="font-family:'Montserrat';font-weight:800;font-size:1rem;color:var(--sky-light);">This Bundle · $17</div>
+          <div style="position:absolute;top:8px;right:12px;font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--red);color:#fff;padding:2px 8px;border-radius:999px;">Best Value</div>
+        </div>
+
+        <!-- Row 1 -->
+        <div style="background:rgba(255,255,255,.04);padding:16px 20px;border-bottom:1px solid rgba(255,255,255,.06);font-size:.88rem;color:rgba(255,255,255,.55);text-align:left;">⏱ 8–12 hours of layout work</div>
+        <div style="background:rgba(14,165,233,.07);padding:16px 20px;border-bottom:1px solid rgba(14,165,233,.12);font-size:.88rem;color:rgba(255,255,255,.9);text-align:left;">✅ Download in 60 seconds</div>
+
+        <!-- Row 2 -->
+        <div style="background:rgba(255,255,255,.04);padding:16px 20px;border-bottom:1px solid rgba(255,255,255,.06);font-size:.88rem;color:rgba(255,255,255,.55);text-align:left;">⏱ $300–$800 to hire a designer</div>
+        <div style="background:rgba(14,165,233,.07);padding:16px 20px;border-bottom:1px solid rgba(14,165,233,.12);font-size:.88rem;color:rgba(255,255,255,.9);text-align:left;">✅ $17 one-time, no recurring fees</div>
+
+        <!-- Row 3 -->
+        <div style="background:rgba(255,255,255,.04);padding:16px 20px;border-bottom:1px solid rgba(255,255,255,.06);font-size:.88rem;color:rgba(255,255,255,.55);text-align:left;">⏱ English only (if you're lucky)</div>
+        <div style="background:rgba(14,165,233,.07);padding:16px 20px;border-bottom:1px solid rgba(14,165,233,.12);font-size:.88rem;color:rgba(255,255,255,.9);text-align:left;">✅ English + Spanish included</div>
+
+        <!-- Row 4 -->
+        <div style="background:rgba(255,255,255,.04);padding:16px 20px;border-bottom:1px solid rgba(255,255,255,.06);font-size:.88rem;color:rgba(255,255,255,.55);text-align:left;">⏱ 1 version (if you finish it)</div>
+        <div style="background:rgba(14,165,233,.07);padding:16px 20px;border-bottom:1px solid rgba(14,165,233,.12);font-size:.88rem;color:rgba(255,255,255,.9);text-align:left;">✅ 6 complete documents</div>
+
+        <!-- Row 5 -->
+        <div style="background:rgba(255,255,255,.04);padding:16px 20px;font-size:.88rem;color:rgba(255,255,255,.55);text-align:left;">⏱ Untested — you built it yourself</div>
+        <div style="background:rgba(14,165,233,.07);padding:16px 20px;font-size:.88rem;color:rgba(255,255,255,.9);text-align:left;">✅ Battle-tested by a real cleaning business</div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       WHO IT'S FOR
+  ═══════════════════════════════════════════ -->
+  <section style="background:var(--navy);" class="py-20 px-6">
+    <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+
+      <div>
+        <div class="badge mb-4">Who It's For</div>
+        <h2 style="font-family:'Bebas Neue';font-size:clamp(2rem,5vw,3rem);color:#fff;letter-spacing:.04em;line-height:1.05;">
+          Built for Cleaning<br>Business Owners
+        </h2>
+        <p style="color:rgba(255,255,255,.65);margin-top:16px;line-height:1.7;font-size:.95rem;">
+          Whether you're just starting out or managing a full crew, having professional documentation separates you from the competition and sets your team up to deliver consistently.
+        </p>
+      </div>
+
+      <div class="space-y-4">
+        <div class="check-item" style="color:rgba(255,255,255,.8);">
+          <div class="check-icon" style="background:rgba(14,165,233,.2);">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <span>Solo cleaners who want to look professional from day one</span>
+        </div>
+        <div class="check-item" style="color:rgba(255,255,255,.8);">
+          <div class="check-icon" style="background:rgba(14,165,233,.2);">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <span>Business owners training new employees or contractors</span>
+        </div>
+        <div class="check-item" style="color:rgba(255,255,255,.8);">
+          <div class="check-icon" style="background:rgba(14,165,233,.2);">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <span>Companies with Spanish-speaking staff who need bilingual docs</span>
+        </div>
+        <div class="check-item" style="color:rgba(255,255,255,.8);">
+          <div class="check-icon" style="background:rgba(14,165,233,.2);">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <span>Anyone tired of clients complaining they "missed a spot"</span>
+        </div>
+        <div class="check-item" style="color:rgba(255,255,255,.8);">
+          <div class="check-icon" style="background:rgba(14,165,233,.2);">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <span>Operators scaling from 1 cleaner to a full team</span>
+        </div>
+        <div class="check-item" style="color:rgba(255,255,255,.8);">
+          <div class="check-icon" style="background:rgba(14,165,233,.2);">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <span>Cleaning franchises that need ready-made onboarding materials</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       TESTIMONIALS
+  ═══════════════════════════════════════════ -->
+  <section style="background:var(--sky-ghost);padding:80px 24px;border-top:1px solid rgba(14,165,233,.1);">
+    <div style="max-width:900px;margin:0 auto;">
+      <div style="text-align:center;margin-bottom:48px;">
+        <div class="badge" style="margin-bottom:12px;">What Buyers Say</div>
+        <h2 style="font-family:'Bebas Neue';font-size:clamp(2rem,5vw,3rem);letter-spacing:.04em;">Cleaning Pros Love It</h2>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;">
+
+        <!-- Testimonial 1 -->
+        <div style="background:#fff;border-radius:16px;padding:28px;border:1.5px solid rgba(14,165,233,.12);box-shadow:0 4px 16px rgba(12,35,64,.06);">
+          <div style="display:flex;gap:2px;margin-bottom:16px;">
+            <span style="color:var(--gold);font-size:1rem;">★★★★★</span>
+          </div>
+          <p style="font-size:.9rem;line-height:1.7;color:var(--text-body);margin-bottom:20px;">"I've been trying to put something like this together for months. Bought this, printed it, handed it to my cleaner the same day. Saved me hours of frustration."</p>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:var(--sky-pale);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;color:var(--sky);">JR</div>
+            <div>
+              <div style="font-family:'Montserrat';font-weight:700;font-size:.85rem;color:var(--navy);">Jessica R.</div>
+              <div style="font-size:.75rem;color:var(--text-muted);">Solo cleaner, Austin TX</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 2 -->
+        <div style="background:#fff;border-radius:16px;padding:28px;border:1.5px solid rgba(14,165,233,.12);box-shadow:0 4px 16px rgba(12,35,64,.06);">
+          <div style="display:flex;gap:2px;margin-bottom:16px;">
+            <span style="color:var(--gold);font-size:1rem;">★★★★★</span>
+          </div>
+          <p style="font-size:.9rem;line-height:1.7;color:var(--text-body);margin-bottom:20px;">"The Spanish version alone was worth it. Half my team speaks Spanish and this made onboarding so much smoother. Highly recommend to any cleaning business owner."</p>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:var(--sky-pale);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;color:var(--sky);">MT</div>
+            <div>
+              <div style="font-family:'Montserrat';font-weight:700;font-size:.85rem;color:var(--navy);">Marco T.</div>
+              <div style="font-size:.75rem;color:var(--text-muted);">3-person crew, Miami FL</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 3 -->
+        <div style="background:#fff;border-radius:16px;padding:28px;border:1.5px solid rgba(14,165,233,.12);box-shadow:0 4px 16px rgba(12,35,64,.06);">
+          <div style="display:flex;gap:2px;margin-bottom:16px;">
+            <span style="color:var(--gold);font-size:1rem;">★★★★★</span>
+          </div>
+          <p style="font-size:.9rem;line-height:1.7;color:var(--text-body);margin-bottom:20px;">"My clients actually commented on the checklist I leave behind. They love knowing exactly what was done. Zero complaints since I started using the client copy."</p>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:var(--sky-pale);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;color:var(--sky);">AW</div>
+            <div>
+              <div style="font-family:'Montserrat';font-weight:700;font-size:.85rem;color:var(--navy);">Angela W.</div>
+              <div style="font-size:.75rem;color:var(--text-muted);">Residential cleaner, Denver CO</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       HOW IT WORKS
+  ═══════════════════════════════════════════ -->
+  <section style="background:#fff;padding:72px 24px;border-top:1px solid rgba(14,165,233,.1);">
+    <div style="max-width:760px;margin:0 auto;text-align:center;">
+      <div class="badge" style="margin-bottom:12px;">How It Works</div>
+      <h2 style="font-family:'Bebas Neue';font-size:clamp(1.8rem,4vw,2.6rem);letter-spacing:.04em;margin-bottom:48px;">You're 3 Steps Away from a More Professional Business</h2>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0;position:relative;">
+
+        <!-- Connector line (desktop only) -->
+        <div style="display:none;" class="md-connector"></div>
+
+        <!-- Step 1 -->
+        <div style="padding:0 24px;position:relative;">
+          <div style="width:56px;height:56px;border-radius:50%;background:var(--navy);color:#fff;font-family:'Bebas Neue';font-size:1.6rem;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 4px 16px rgba(12,35,64,.2);">1</div>
+          <div style="font-size:2rem;margin-bottom:10px;">🛒</div>
+          <div style="font-family:'Montserrat';font-weight:800;font-size:.95rem;color:var(--navy);margin-bottom:8px;">Click the Buy Button</div>
+          <p style="font-size:.85rem;color:var(--text-muted);line-height:1.6;">You'll land on Gumroad's secure checkout. Takes 60 seconds. Card or PayPal accepted.</p>
+        </div>
+
+        <!-- Arrow -->
+        <div style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:var(--sky-mid);padding-top:8px;">→</div>
+
+        <!-- Step 2 -->
+        <div style="padding:0 24px;">
+          <div style="width:56px;height:56px;border-radius:50%;background:var(--sky);color:#fff;font-family:'Bebas Neue';font-size:1.6rem;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 4px 16px rgba(14,165,233,.3);">2</div>
+          <div style="font-size:2rem;margin-bottom:10px;">📥</div>
+          <div style="font-family:'Montserrat';font-weight:800;font-size:.95rem;color:var(--navy);margin-bottom:8px;">Instant Download Link</div>
+          <p style="font-size:.85rem;color:var(--text-muted);line-height:1.6;">Gumroad sends your download link immediately. All 6 PDFs in one place. No waiting.</p>
+        </div>
+
+        <!-- Arrow -->
+        <div style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:var(--sky-mid);padding-top:8px;">→</div>
+
+        <!-- Step 3 -->
+        <div style="padding:0 24px;">
+          <div style="width:56px;height:56px;border-radius:50%;background:var(--red);color:#fff;font-family:'Bebas Neue';font-size:1.6rem;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 4px 16px rgba(220,38,38,.25);">3</div>
+          <div style="font-size:2rem;margin-bottom:10px;">🚀</div>
+          <div style="font-family:'Montserrat';font-weight:800;font-size:.95rem;color:var(--navy);margin-bottom:8px;">Print, Share, or Save</div>
+          <p style="font-size:.85rem;color:var(--text-muted);line-height:1.6;">Works on phone, tablet, or printed. Hand to your team today. Use on your next job.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       GUARANTEE + CTA
+  ═══════════════════════════════════════════ -->
+  <section class="py-20 px-6">
+    <div class="max-w-3xl mx-auto text-center">
+
+      <div class="badge mb-4">Get Instant Access</div>
+      <h2 style="font-family:'Bebas Neue';font-size:clamp(2rem,5vw,3.2rem);letter-spacing:.04em;line-height:1.05;">
+        Stop Starting from Scratch.<br>
+        <span style="color:var(--sky);">Download Today.</span>
+      </h2>
+      <p style="color:var(--text-muted);margin-top:12px;font-size:.95rem;">$17 · 6 PDFs · Instant delivery via Gumroad</p>
+
+      <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <div class="pulse-wrap">
+          <a href="https://uzhca.gumroad.com/l/mfwpmi" target="_blank" rel="noopener" class="btn-buy" style="font-size:1.2rem;padding:20px 48px;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Yes, I Want These Checklists — $17
+          </a>
+        </div>
+      </div>
+      <p style="font-size:.8rem;color:var(--text-muted);margin-top:16px;">Delivered instantly · PDF format · Works on any device</p>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       FAQ
+  ═══════════════════════════════════════════ -->
+  <section style="background:var(--sky-ghost);border-top:1px solid rgba(14,165,233,.1);" class="py-20 px-6">
+    <div class="max-w-2xl mx-auto">
+      <h2 style="font-family:'Bebas Neue';font-size:clamp(1.8rem,4vw,2.5rem);letter-spacing:.04em;text-align:center;margin-bottom:8px;">Common Questions</h2>
+      <p style="color:var(--text-muted);text-align:center;font-size:.9rem;margin-bottom:32px;">Everything you need to know before buying.</p>
+
+      <details>
+        <summary>What do I get exactly? <span class="faq-icon">+</span></summary>
+        <p>You get 6 PDF files: Standard Clean Employee Checklist, Deep Clean Employee Checklist, Standard Clean Client Copy, Deep Clean Client Copy, Spanish Standard Clean (Lista del Empleado), and Spanish Deep Clean Client Copy. All are print-ready and professionally formatted.</p>
+      </details>
+
+      <details>
+        <summary>Can I customize them with my business name? <span class="faq-icon">+</span></summary>
+        <p>The PDFs are ready to use as-is. If you'd like to customize them with your own branding (logo, business name, colors), you'll need a PDF editor like Adobe Acrobat or a graphic designer. We may offer editable versions in the future.</p>
+      </details>
+
+      <details>
+        <summary>How do I receive the files? <span class="faq-icon">+</span></summary>
+        <p>After purchase through Gumroad, you'll receive an email with a download link immediately. You can download the files as many times as you need.</p>
+      </details>
+
+      <details>
+        <summary>Are these checklists actually used by a real cleaning business? <span class="faq-icon">+</span></summary>
+        <p>Yes — these are the real operational documents used by Second City Scrubbers, a professional cleaning service in Chicago. They've been refined through actual use, not just created for resale.</p>
+      </details>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════ -->
+  <footer style="background:var(--navy);padding:32px 24px;text-align:center;">
+    <img src="logo-white-text.png" alt="Second City Scrubbers" class="h-8 mx-auto mb-3" onerror="this.style.display='none'" />
+    <div style="font-size:.8rem;color:rgba(255,255,255,.35);">© 2026 Second City Scrubbers · Chicago, IL</div>
+    <div style="font-size:.75rem;color:rgba(255,255,255,.25);margin-top:6px;">Questions? Contact us before purchasing.</div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════
+       STICKY MOBILE BAR
+  ═══════════════════════════════════════════ -->
+  <div class="sticky-bar">
+    <div>
+      <div style="font-size:.7rem;color:rgba(255,255,255,.5);">6 PDFs · Instant Download</div>
+      <div style="font-family:'Montserrat';font-weight:900;font-size:1.4rem;color:#fff;">$17</div>
+    </div>
+    <a href="https://uzhca.gumroad.com/l/mfwpmi" target="_blank" rel="noopener" class="btn-buy" style="padding:14px 28px;font-size:.95rem;">
+      Buy Now →
+    </a>
+  </div>
+  <div class="pb-24 md:pb-0"></div>
+
+</body>
+</html>

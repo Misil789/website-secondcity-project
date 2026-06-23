@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lista de Limpieza — Second City Scrubbers</title>
+<style>
+  :root {
+    --navy:  #0c2340;
+    --sky:   #0ea5e9;
+    --green: #10b981;
+    --gray1: #f8fafc;
+    --gray2: #e2e8f0;
+    --gray3: #94a3b8;
+    --text:  #1e293b;
+    --deep-bg: #eff9ff;
+    --deep-bd: rgba(14,165,233,.25);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', 'Segoe UI', Arial, sans-serif; font-size: 10pt; color: var(--text); background: #f1f5f9; line-height: 1.4; }
+
+  .print-bar { background: var(--navy); color: #fff; padding: 10px 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; border-radius: 10px; }
+  .print-btn { background: var(--sky); color: #fff; border: none; border-radius: 7px; padding: 8px 20px; font-size: .82rem; font-weight: 700; cursor: pointer; }
+  .print-btn:hover { background: #0284c7; }
+
+  .page-wrap { max-width: 820px; margin: 0 auto; padding: 0 20px 60px; }
+  .doc { background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 40px rgba(12,35,64,.1); }
+
+  .doc-header { background: var(--navy); padding: 16px 26px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .header-left { display: flex; align-items: center; gap: 11px; }
+  .doc-logo { width: 44px; height: 44px; object-fit: contain; background: rgba(255,255,255,.09); border-radius: 8px; padding: 4px; }
+  .doc-title { font-family: 'Bebas Neue', 'Arial Narrow', Arial, sans-serif; font-size: 1.5rem; letter-spacing: .04em; color: #fff; line-height: 1; }
+  .doc-sub { font-size: .6rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: var(--sky); margin-top: 2px; }
+  .header-right { text-align: right; color: rgba(255,255,255,.65); font-size: .67rem; line-height: 1.8; }
+  .header-right strong { color: #fff; }
+
+  .info-strip { background: var(--gray1); border-bottom: 1.5px solid var(--gray2); padding: 9px 26px; display: grid; grid-template-columns: 2fr 1fr 1.5fr 1fr 1fr 1fr; gap: 8px 14px; }
+  .info-field label { display: block; font-size: .55rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--gray3); margin-bottom: 3px; }
+  .info-field .line { border-bottom: 1.5px solid var(--gray2); min-height: 17px; }
+
+  .meta-bar { background: #fff; border-bottom: 1.5px solid var(--gray2); padding: 7px 26px; display: flex; flex-wrap: wrap; gap: 12px 22px; align-items: flex-start; }
+  .meta-group { display: flex; flex-direction: column; gap: 3px; }
+  .meta-label { font-size: .55rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--gray3); }
+  .meta-opts { display: flex; gap: 9px; flex-wrap: wrap; }
+  .meta-opt { display: flex; align-items: center; gap: 5px; font-size: .7rem; color: var(--text); }
+  .meta-box { width: 12px; height: 12px; border-radius: 3px; border: 1.5px solid var(--gray3); background: #fff; flex-shrink: 0; }
+
+  .legend { padding: 5px 26px; border-bottom: 1.5px solid var(--gray2); display: flex; align-items: center; gap: 14px; font-size: .65rem; color: var(--gray3); background: #fff; }
+  .leg-item { display: flex; align-items: center; gap: 5px; }
+  .leg-box { width: 11px; height: 11px; border-radius: 3px; border: 1.5px solid; flex-shrink: 0; }
+  .leg-std  { border-color: var(--green); background: rgba(16,185,129,.1); }
+  .leg-deep { border-color: var(--sky); background: var(--deep-bg); }
+
+  .doc-body { padding: 14px 26px 18px; }
+
+  .room { margin-bottom: 12px; page-break-inside: avoid; }
+  .room-head { background: var(--navy); color: #fff; border-radius: 7px 7px 0 0; padding: 5px 12px; font-size: .7rem; font-weight: 900; text-transform: uppercase; letter-spacing: .07em; display: flex; align-items: center; gap: 6px; }
+  .room-count { margin-left: auto; font-size: .57rem; background: rgba(255,255,255,.15); border-radius: 999px; padding: 1px 7px; font-weight: 700; }
+  .room-body { border: 1.5px solid var(--gray2); border-top: none; border-radius: 0 0 7px 7px; overflow: hidden; }
+
+  .items-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .item { display: flex; align-items: flex-start; gap: 7px; padding: 5px 10px; border-bottom: 1px solid var(--gray2); font-size: .71rem; color: var(--text); line-height: 1.3; }
+  .items-grid .item:last-child { border-bottom: none; }
+  .cb { width: 12px; height: 12px; border-radius: 3px; border: 1.5px solid var(--green); background: rgba(16,185,129,.06); flex-shrink: 0; margin-top: 1px; }
+  .item.deep { background: var(--deep-bg); }
+  .item.deep .cb { border-color: var(--sky); background: rgba(14,165,233,.1); }
+  .item.deep .item-text { color: #0369a1; }
+  .deep-sep { grid-column: 1/-1; display: flex; align-items: center; gap: 7px; padding: 4px 10px; background: var(--deep-bg); border-top: 1.5px dashed var(--deep-bd); border-bottom: 1px solid var(--gray2); font-size: .58rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--sky); }
+  .deep-badge { background: var(--sky); color: #fff; font-size: .51rem; font-weight: 800; border-radius: 4px; padding: 1px 5px; }
+
+  .post-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+  .post-box { border: 1.5px solid var(--gray2); border-radius: 7px; padding: 8px 11px; }
+  .post-label { font-size: .57rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--gray3); margin-bottom: 6px; }
+  .write-lines { display: flex; flex-direction: column; gap: 7px; }
+  .write-line { border-bottom: 1.5px solid var(--gray2); min-height: 16px; }
+
+  .sat-row { display: flex; align-items: center; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+  .sat-lbl { font-size: .62rem; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; color: var(--gray3); }
+  .sat-stars { display: flex; gap: 3px; }
+  .sat-star { width: 21px; height: 21px; border-radius: 50%; border: 1.5px solid var(--gray2); display: flex; align-items: center; justify-content: center; font-size: .67rem; font-weight: 800; color: var(--gray3); }
+  .sat-note { font-size: .59rem; color: var(--gray3); }
+
+  .sig-block { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
+  .sig-field label { font-size: .55rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--gray3); display: block; margin-bottom: 13px; }
+  .sig-line { border-bottom: 1.5px solid var(--gray2); }
+
+  .referral { margin-top: 12px; background: var(--navy); color: #fff; border-radius: 8px; padding: 9px 13px; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+  .ref-text { font-size: .7rem; line-height: 1.5; }
+  .ref-text strong { font-size: .76rem; display: block; }
+  .ref-badge { background: var(--sky); color: #fff; border-radius: 6px; padding: 5px 13px; font-size: .74rem; font-weight: 800; white-space: nowrap; text-align: center; }
+  .ref-badge small { display: block; font-size: .6rem; opacity: .85; }
+
+  .doc-footer { margin-top: 10px; border-top: 1.5px solid var(--gray2); padding-top: 7px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 5px; font-size: .61rem; color: var(--gray3); }
+  .doc-footer strong { color: var(--navy); }
+
+  @media print {
+    body { background: #fff; font-size: 6.5pt; }
+    .print-bar { display: none !important; }
+    .page-wrap { padding: 0; max-width: 100%; }
+    .doc { box-shadow: none; border-radius: 0; }
+    .doc-header { padding: 10px 18px; border-radius: 0; }
+    .doc-body { padding: 8px 18px 12px; }
+    .info-strip, .meta-bar, .legend { padding-left: 18px; padding-right: 18px; }
+    .info-strip { padding-top: 7px; padding-bottom: 7px; }
+    .meta-bar { padding-top: 5px; padding-bottom: 5px; gap: 9px 18px; }
+    .legend { padding-top: 4px; padding-bottom: 4px; }
+    .room { margin-bottom: 7px; }
+    .room-head { padding: 4px 10px; font-size: .65rem; }
+    .item { padding: 2px 7px; font-size: .62rem; }
+    .deep-sep { padding: 3px 7px; font-size: .54rem; }
+    .post-row { margin-top: 8px; gap: 8px; }
+    .post-box { padding: 6px 9px; }
+    .sat-row { margin-top: 7px; }
+    .sig-block { margin-top: 8px; }
+    .referral { margin-top: 8px; padding: 7px 11px; }
+    .doc-footer { margin-top: 7px; padding-top: 5px; }
+  }
+  @page { size: letter; margin: 0.35in 0.35in; }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="print-bar">
+  <span style="font-size:.75rem;opacity:.75;">Lista del Empleado — Limpieza Estándar y Profunda · Imprimir o Guardar como PDF</span>
+  <button class="print-btn" onclick="window.print()">🖨 Imprimir / Guardar PDF</button>
+</div>
+
+<div class="page-wrap"><div class="doc">
+
+  <div class="doc-header">
+    <div class="header-left">
+      <img class="doc-logo" src="A_logo_for_%22Second_City_Scrubbers,%22_a_cleaning_com.png" alt="" onerror="this.style.display='none'">
+      <div>
+        <div class="doc-title">Lista de Limpieza</div>
+        <div class="doc-sub">Copia del Empleado — Estándar y Profunda</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <strong>Second City Scrubbers</strong><br>
+      Chicago, IL · (872) 240-6619<br>
+      secondcityscrubbers.com
+    </div>
+  </div>
+
+  <div class="info-strip">
+    <div class="info-field"><label>Nombre del Cliente</label><div class="line"></div></div>
+    <div class="info-field"><label>Fecha</label><div class="line"></div></div>
+    <div class="info-field"><label>Limpiador / Equipo</label><div class="line"></div></div>
+    <div class="info-field"><label>Hora Entrada</label><div class="line"></div></div>
+    <div class="info-field"><label>Hora Salida</label><div class="line"></div></div>
+    <div class="info-field"><label>Próxima Limpieza</label><div class="line"></div></div>
+  </div>
+
+  <div class="meta-bar">
+    <div class="meta-group">
+      <div class="meta-label">Tipo de Servicio</div>
+      <div class="meta-opts">
+        <label class="meta-opt"><div class="meta-box"></div> Estándar</label>
+        <label class="meta-opt"><div class="meta-box"></div> Profunda</label>
+        <label class="meta-opt"><div class="meta-box"></div> Mudanza</label>
+        <label class="meta-opt"><div class="meta-box"></div> Post-Construcción</label>
+        <label class="meta-opt"><div class="meta-box"></div> Airbnb</label>
+      </div>
+    </div>
+    <div class="meta-group">
+      <div class="meta-label">Condición al Llegar</div>
+      <div class="meta-opts">
+        <label class="meta-opt"><div class="meta-box"></div> Leve</label>
+        <label class="meta-opt"><div class="meta-box"></div> Normal</label>
+        <label class="meta-opt"><div class="meta-box"></div> Pesada</label>
+      </div>
+    </div>
+    <div class="meta-group">
+      <div class="meta-label">Fotos Tomadas</div>
+      <div class="meta-opts">
+        <label class="meta-opt"><div class="meta-box"></div> Antes</label>
+        <label class="meta-opt"><div class="meta-box"></div> Después</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <span style="font-size:.58rem;font-weight:800;color:var(--text);text-transform:uppercase;letter-spacing:.08em;">Leyenda:</span>
+    <div class="leg-item"><div class="leg-box leg-std"></div> Estándar — siempre completar</div>
+    <div class="leg-item"><div class="leg-box leg-deep"></div> Extras Profunda — para Profunda / Mudanza / Post-Construcción</div>
+  </div>
+
+  <div class="doc-body">
+
+    <!-- COCINA -->
+    <div class="room">
+      <div class="room-head">🍳 Cocina <span class="room-count">19 est · 12 prof</span></div>
+      <div class="room-body"><div class="items-grid">
+        <div class="item"><div class="cb"></div><span class="item-text">Encimeras y salpicadero limpiados y sanitizados</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Fregadero, llave y desagüe tallados y pulidos</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Estufa y bandejas de goteo limpias</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Microondas — interior y exterior</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Frentes de gabinetes y cajones limpios</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Manijas y jaladores de gabinetes sanitizados</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Electrodomésticos pequeños limpios (tostadora, cafetera)</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Exterior del refrigerador limpio y pulido</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Exterior del lavavajillas limpio</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Perillas de estufa quitadas y limpiadas por debajo</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Triturador de basura limpio y desodorizado</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Portaesponjas y escurreplatos sanitizados</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Exterior de puerta de despensa limpio</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Mesa y sillas de cocina limpias</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Exterior del bote de basura limpio y desodorizado</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Luminaria y ventilador del techo desempolvados</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Telarañas quitadas de las esquinas</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Pisos barridos y trapeados</span></div>
+        <div class="item" style="grid-column:1/-1"><div class="cb"></div><span class="item-text">Basura vaciada y bolsa reemplazada</span></div>
+        <div class="deep-sep"><span class="deep-badge">Profunda</span> Completar para Profunda / Mudanza / Post-Construcción</div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Interior del horno desengrasado y limpiado a fondo</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Interior del refrigerador limpio y desodorizado</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Interior de todos los gabinetes y cajones limpio</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Campana extractora y filtro desengrasados</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Detrás y debajo del refrigerador aspirado</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Bobinas del refrigerador desempolvadas y despejadas</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Interior del congelador limpio y desodorizado</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Bandejas de goteo quitadas, remojadas y talladas</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Grout del salpicadero tallado y descalcificado</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Gabinete bajo el fregadero limpio y desodorizado</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Ventana sobre el fregadero limpiada por dentro</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Rodapiés y zócalos tallados</span></div>
+      </div></div>
+    </div>
+
+    <!-- BAÑOS -->
+    <div class="room">
+      <div class="room-head">🚿 Baños <span class="room-count">17 est · 11 prof</span></div>
+      <div class="room-body"><div class="items-grid">
+        <div class="item"><div class="cb"></div><span class="item-text">Taza del inodoro tallada con desinfectante</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Asiento, tapa y base exterior del inodoro sanitizados</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Manija, tapa del tanque y lados del inodoro limpios</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Lavabo, llave y manijas tallados</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Espejo limpio sin rayas</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Paredes de ducha y tina talladas</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Puerta/cortina de ducha limpia y secada</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Cabezal de ducha descalcificado y pulido</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Encimeras y tocador sanitizados</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Jabonera, dispensadores y soportes limpios</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Portacepillos sanitizado</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Portacepillo del inodoro sanitizado</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Toalleros y portarrollo limpios</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Detrás de la puerta y marco limpio</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Tapete del baño sacudido y limpio</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Piso lavado y desinfectado</span></div>
+        <div class="item" style="grid-column:1/-1"><div class="cb"></div><span class="item-text">Basura vaciada y bolsa reemplazada</span></div>
+        <div class="deep-sep"><span class="deep-badge">Profunda</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Grout de azulejos tallado y tratado</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Residuo de jabón completamente removido (ducha y tina)</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Rieles de puerta de ducha limpiados a fondo</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Rejilla del ventilador de baño quitada y limpiada</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Detrás y debajo del inodoro tallado</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Borde del tanque y bisagras del inodoro detallados</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Líneas de sellador talladas</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Tapa del desagüe quitada y limpiada</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Interior del botiquín limpio</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Interiores de gabinetes limpios y organizados</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Rodapiés completamente tallados</span></div>
+      </div></div>
+    </div>
+
+    <!-- RECÁMARAS -->
+    <div class="room">
+      <div class="room-head">🛏 Recámaras <span class="room-count">13 est · 13 prof</span></div>
+      <div class="room-body"><div class="items-grid">
+        <div class="item"><div class="cb"></div><span class="item-text">Todas las superficies desempolvadas (burós, cómodas, repisas)</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Aspas del ventilador de techo desempolvadas</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Cabecera y marco de cama desempolvados y limpios</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Espejos y cristales limpios sin rayas</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Pantallas y bases de lámparas desempolvadas</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Marcos de fotos y decoración mural desempolvados</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Interruptores y picaportes sanitizados</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Cubiertas de contactos y puertos USB limpias</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Exterior de puerta del clóset limpio</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Pisos aspirados y trapeados/barridos</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Tapetes aspirados (ambos lados si es tapete de área)</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Cama tendida (ropa de cama del cliente)</span></div>
+        <div class="item" style="grid-column:1/-1"><div class="cb"></div><span class="item-text">Basura vaciada y bolsa reemplazada</span></div>
+        <div class="deep-sep"><span class="deep-badge">Profunda</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Área debajo de la cama aspirada</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Muebles movidos y aspirado/trapeado detrás</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Rodapiés limpios por arriba y por los lados</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Persianas — cada tablilla desempolvada</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Alféizares y rieles de ventana limpios</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Interior de clósets aspirado y repisas limpias</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Colchón aspirado (arriba y los lados)</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Colchón rociado con desinfectante</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Colchón volteado (si pesa menos de 50 lbs)</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Fundas y protectores de almohada lavados</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Juguetes de niños limpios y sanitizados</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Telarañas quitadas de esquinas del techo</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Puertas y marcos limpios de arriba a abajo</span></div>
+      </div></div>
+    </div>
+
+    <!-- SALA / ÁREAS COMUNES -->
+    <div class="room">
+      <div class="room-head">🛋 Sala / Áreas Comunes <span class="room-count">20 est · 15 prof</span></div>
+      <div class="room-body"><div class="items-grid">
+        <div class="item"><div class="cb"></div><span class="item-text">Todas las superficies desempolvadas (mesas, repisas, bordes, repisas de chimenea)</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Aspas del ventilador de techo desempolvadas</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Desempolvado alto — esquinas del techo y molduras</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Pantalla de TV y electrónicos desempolvados</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Controles remotos y mandos de juego sanitizados</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Hojas de plantas limpias y desempolvadas</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Cables del centro de entretenimiento desempolvados</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Cojines del sofá y sillas esponjados y acomodados</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Cobijas dobladas y acomodadas</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Marcos de fotos y decoración mural desempolvados</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Interruptores y picaportes sanitizados</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Alféizares y repisas de ventana limpios</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Pisos aspirados y trapeados/barridos</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Tapetes de área aspirados</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Área de juegos de niños ordenada y sanitizada</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Silla alta y asiento elevador limpios y sanitizados</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Área de alimentación de mascotas limpia y sanitizada</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Tazones de mascotas limpios (exterior)</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Pelo de mascotas removido de pisos y muebles</span></div>
+        <div class="item" style="grid-column:1/-1"><div class="cb"></div><span class="item-text">Basura vaciada y bolsa reemplazada</span></div>
+        <div class="deep-sep"><span class="deep-badge">Profunda</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Juguetes y equipo de juego limpios y desinfectados</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Cama de mascota aspirada y superficie limpia</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Exterior de jaula de mascota limpio y desodorizado</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Detrás y debajo de todos los muebles aspirado</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Rodapiés tallados por arriba y por los lados</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Persianas — cada tablilla desempolvada</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Cristal interior de ventanas limpio</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Tapicería aspirada (sofás y sillas)</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Rejillas de ventilación y registros limpios</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Luminarias y pantallas de lámparas limpias</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Cortinas y drapeados aspirados</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Libreros organizados y desempolvados entre libros</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Repisa de chimenea y alrededores detallados</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Rieles de puerta corrediza limpios</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Cubiertas del globo del ventilador y focos limpios</span></div>
+      </div></div>
+    </div>
+
+    <!-- COMEDOR -->
+    <div class="room">
+      <div class="room-head">🍽 Comedor <span class="room-count">12 est · 7 prof</span></div>
+      <div class="room-body"><div class="items-grid">
+        <div class="item"><div class="cb"></div><span class="item-text">Superficie de la mesa del comedor limpia y sanitizada</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Asientos, respaldos y patas de todas las sillas limpios</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Araña / luminaria desempolvada</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Superficie del aparador / bufet limpia</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Exterior del chinero desempolvado y cristal limpio</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Centro de mesa y decoración desempolvados</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Alféizares de ventana desempolvados y limpios</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Interruptores y cubiertas de contactos sanitizados</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Rodapiés desempolvados</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Pisos barridos, aspirados y trapeados</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Basura vaciada y bolsa reemplazada</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Marcos de puertas y manijas limpios</span></div>
+        <div class="deep-sep"><span class="deep-badge">Profunda</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Patas y parte inferior de la mesa limpios</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Ranuras y uniones de sillas detalladas</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Repisas interiores del chinero limpias</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Cristales / globos de la araña limpiados a mano</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Persianas / parte superior de cortinas aspiradas</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Rodapiés tallados</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Bordes y esquinas del piso detallados</span></div>
+      </div></div>
+    </div>
+
+    <!-- EN TODO EL HOGAR -->
+    <div class="room">
+      <div class="room-head">✨ En Todo el Hogar <span class="room-count">20 est · 14 prof</span></div>
+      <div class="room-body"><div class="items-grid">
+        <div class="item"><div class="cb"></div><span class="item-text">Todos los pisos aspirados, barridos y trapeados</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Toda la basura vaciada y bolsas reemplazadas</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Todos los espejos limpios sin rayas</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Todas las manijas, picaportes y cerraduras sanitizadas</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Placas de interruptores limpias y sanitizadas</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Cubiertas de contactos e interruptores sanitizadas</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Escalera aspirada y pasamanos limpio</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Puertas interiores y marcos limpios</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Entrada y pasillos limpios</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Tapete de entrada sacudido y limpio</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Charola de botas limpia y seca</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Ganchos y perchero limpios</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Desempolvado alto — esquinas del techo y telarañas</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Exterior de detectores de humo y CO desempolvado</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Termostato limpio y sanitizado</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Exterior del filtro del purificador de aire limpio</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Todos los botes de basura sanitizados</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Focos desempolvados (cuando estén fríos)</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Alféizares de ventanas limpios en todo el hogar</span></div>
+        <div class="item" style="grid-column:1/-1"><div class="cb"></div><span class="item-text">Orden general y acomodo</span></div>
+        <div class="deep-sep"><span class="deep-badge">Profunda</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Todos los rodapiés tallados por arriba y por los lados</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Todo el cristal interior de ventanas limpio</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Todos los alféizares y rieles de ventanas limpios</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Todas las persianas y postigos detallados</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Rejillas de ventilación y registros aspirados y limpios</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Rayones y marcas en paredes limpiados</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Todos los ventiladores de techo detallados (globos y aspas)</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Bisagras y marcos de puertas limpios</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Interior de todos los clósets aspirado y repisas limpias</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Electrodomésticos del cuarto de lavado detallados</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Caja del filtro de pelusa de la secadora aspirada</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Tambor de lavadora limpio y filtro revisado</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Cubiertas de luminarias quitadas y limpias</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Área de entrada al garaje barrida y tapete limpio</span></div>
+      </div></div>
+    </div>
+
+    <!-- OFICINA EN CASA -->
+    <div class="room">
+      <div class="room-head">🖥 Oficina en Casa <span class="room-count">13 est · 7 prof</span></div>
+      <div class="room-body"><div class="items-grid">
+        <div class="item"><div class="cb"></div><span class="item-text">Superficie y bordes del escritorio limpios y sanitizados</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Teclado y mouse sanitizados</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Pantalla del monitor limpia sin rayas</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Teléfono y auriculares sanitizados</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Lámpara de escritorio y base limpias</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Brazos, respaldo y base de la silla limpios</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Exterior de impresora y escáner limpios</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Repisas y superficie del librero desempolvadas</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Marcos de fotos y decoración desempolvados</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Interruptor y picaporte sanitizados</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Área de cables y cords desempolvada</span></div>
+        <div class="item"><div class="cb"></div><span class="item-text">Pisos aspirados y trapeados/barridos</span></div>
+        <div class="item" style="grid-column:1/-1"><div class="cb"></div><span class="item-text">Basura vaciada y bolsa reemplazada</span></div>
+        <div class="deep-sep"><span class="deep-badge">Profunda</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Pizarrón blanco limpio y borrado</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Libreros desempolvados entre libros</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Debajo del escritorio aspirado y limpio</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Ruedas y rodines de la silla limpios</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Alféizares y persianas limpios</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Rodapiés tallados</span></div>
+        <div class="item deep"><div class="cb"></div><span class="item-text">Rejilla de ventilación sobre el escritorio limpia</span></div>
+      </div></div>
+    </div>
+
+    <!-- Sección post -->
+    <div class="post-row">
+      <div class="post-box">
+        <div class="post-label">⚠ No Pudo Completarse / Excepciones</div>
+        <div class="write-lines"><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div></div>
+      </div>
+      <div class="post-box">
+        <div class="post-label">📝 Notas / Solicitudes Especiales</div>
+        <div class="write-lines"><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div></div>
+      </div>
+    </div>
+
+    <div class="sat-row">
+      <span class="sat-lbl">Satisfacción:</span>
+      <span class="sat-note">General</span>
+      <div class="sat-stars"><div class="sat-star">1</div><div class="sat-star">2</div><div class="sat-star">3</div><div class="sat-star">4</div><div class="sat-star">5</div></div>
+      <span class="sat-note">· Cocina</span>
+      <div class="sat-stars"><div class="sat-star">1</div><div class="sat-star">2</div><div class="sat-star">3</div><div class="sat-star">4</div><div class="sat-star">5</div></div>
+      <span class="sat-note">· Baños</span>
+      <div class="sat-stars"><div class="sat-star">1</div><div class="sat-star">2</div><div class="sat-star">3</div><div class="sat-star">4</div><div class="sat-star">5</div></div>
+      <span class="sat-note" style="margin-left:4px;">1=Malo · 5=Excelente</span>
+    </div>
+
+    <div class="sig-block">
+      <div class="sig-field"><label>Firma del Limpiador y Fecha</label><div class="sig-line"></div></div>
+      <div class="sig-field"><label>Firma del Cliente y Fecha (opcional)</label><div class="sig-line"></div></div>
+    </div>
+
+    <div class="referral">
+      <div class="ref-text">
+        <strong>¿Te encantó tu limpieza? ¡Cuéntale a un amigo! 🏙</strong>
+        Refiere a alguien a Second City Scrubbers y ambos reciben <strong>$20 de descuento</strong> en su próxima reservación — solo que mencionen tu nombre.
+      </div>
+      <div class="ref-badge">$20 DESC.<small>tú y tu amigo</small></div>
+    </div>
+
+    <div class="doc-footer">
+      <div><strong>Second City Scrubbers</strong> · Chicago, IL · (872) 240-6619 · secondcityscrubbers.com</div>
+      <div>Gracias por tu confianza ✦</div>
+    </div>
+
+  </div>
+</div></div>
+</body>
+</html>
