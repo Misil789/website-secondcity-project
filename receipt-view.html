@@ -11,203 +11,136 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root { --navy:#0c2340; --sky:#0ea5e9; --sky-pale:#e0f2fe; }
+    :root { --navy:#0c2340; --sky:#0ea5e9; --sky-pale:#e0f2fe; --green:#16a34a; --gold:#f59e0b; }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #f0f4f8;
-      min-height: 100vh;
-      padding-bottom: 3rem;
-    }
+    body { font-family:'Inter',sans-serif; background:#f0f4f8; min-height:100vh; padding-bottom:3rem; }
 
-    /* ── Hero header ── */
+    /* ── Hero ── */
     .hero {
-      background: linear-gradient(145deg, #0c2340 0%, #0a3e6e 55%, #0c4a82 100%);
+      background: linear-gradient(145deg,#0c2340 0%,#0a3e6e 55%,#0c4a82 100%);
       padding: 2.5rem 1.5rem 3.5rem;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
+      text-align: center; position: relative; overflow: hidden;
     }
-    .hero::before {
-      content: '';
-      position: absolute; top: -80px; left: -80px;
-      width: 300px; height: 300px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(14,165,233,.2) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .hero::after {
-      content: '';
-      position: absolute; bottom: -60px; right: -60px;
-      width: 240px; height: 240px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(14,165,233,.15) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .hero img {
-      width: 72px; height: 72px; border-radius: 50%;
-      border: 3px solid rgba(14,165,233,.45);
-      box-shadow: 0 0 0 8px rgba(14,165,233,.12);
-      margin-bottom: 1rem;
-      position: relative; z-index: 1;
-    }
-    .hero-check {
-      display: inline-flex; align-items: center; justify-content: center;
-      width: 52px; height: 52px; border-radius: 50%;
-      background: #16a34a;
-      box-shadow: 0 0 0 8px rgba(22,163,74,.2);
-      margin-bottom: 1rem;
-      position: relative; z-index: 1;
-    }
-    .hero-check svg { color: #fff; }
-    .hero h1 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.6rem;
-      letter-spacing: .06em;
-      color: #7dd3fc;
-      line-height: 1;
-      margin-bottom: .35rem;
-      position: relative; z-index: 1;
-    }
-    .hero p {
-      font-size: .85rem;
-      color: rgba(255,255,255,.65);
-      position: relative; z-index: 1;
-    }
+    .hero::before { content:''; position:absolute; top:-80px; left:-80px; width:300px; height:300px; border-radius:50%; background:radial-gradient(circle,rgba(14,165,233,.2) 0%,transparent 70%); pointer-events:none; }
+    .hero::after  { content:''; position:absolute; bottom:-60px; right:-60px; width:240px; height:240px; border-radius:50%; background:radial-gradient(circle,rgba(14,165,233,.15) 0%,transparent 70%); pointer-events:none; }
+    .hero img { width:72px; height:72px; border-radius:50%; border:3px solid rgba(14,165,233,.45); box-shadow:0 0 0 8px rgba(14,165,233,.12); margin-bottom:1rem; position:relative; z-index:1; }
+    .hero h1 { font-family:'Bebas Neue',sans-serif; font-size:2.6rem; letter-spacing:.06em; color:#7dd3fc; line-height:1; margin-bottom:.35rem; position:relative; z-index:1; }
+    .hero p  { font-size:.85rem; color:rgba(255,255,255,.65); position:relative; z-index:1; }
 
-    /* Wave */
-    .wave { display: block; line-height: 0; margin-top: -1px; }
-    .wave svg { width: 100%; height: 40px; display: block; }
+    .wave { display:block; line-height:0; margin-top:-1px; }
+    .wave svg { width:100%; height:40px; display:block; }
 
-    /* ── Card ── */
+    /* ── Cards ── */
     .card {
-      background: #fff;
-      border-radius: 20px;
-      padding: 1.5rem;
-      box-shadow: 0 2px 20px rgba(12,35,64,.07);
-      margin: 0 1rem 1rem;
-      max-width: 520px;
-      margin-left: auto; margin-right: auto;
+      background:#fff; border-radius:20px; padding:1.5rem;
+      box-shadow:0 2px 20px rgba(12,35,64,.07);
+      max-width:520px; margin:0 auto 1rem; padding-left:1rem; padding-right:1rem;
     }
+    @media(min-width:540px){ .card { padding:1.5rem; } }
 
     .card-label {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 800;
-      font-size: .65rem;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--sky);
-      margin-bottom: .75rem;
-      padding-bottom: .6rem;
-      border-bottom: 1.5px solid var(--sky-pale);
-      display: block;
+      font-family:'Montserrat',sans-serif; font-weight:800; font-size:.65rem;
+      letter-spacing:.12em; text-transform:uppercase; color:var(--sky);
+      margin-bottom:.75rem; padding-bottom:.6rem;
+      border-bottom:1.5px solid var(--sky-pale); display:block;
     }
 
     /* Detail rows */
-    .detail-row {
-      display: flex;
-      align-items: flex-start;
-      gap: .75rem;
-      padding: .6rem 0;
-      border-bottom: 1px solid #f1f5f9;
-    }
-    .detail-row:last-child { border-bottom: none; padding-bottom: 0; }
-    .detail-icon {
-      width: 32px; height: 32px; border-radius: 9px;
-      background: var(--sky-pale);
-      display: flex; align-items: center; justify-content: center;
-      font-size: .95rem;
-      flex-shrink: 0;
-    }
-    .detail-col label {
-      display: block;
-      font-size: .68rem;
-      font-weight: 700;
-      color: #94a3b8;
-      text-transform: uppercase;
-      letter-spacing: .06em;
-      margin-bottom: .1rem;
-    }
-    .detail-col span {
-      font-size: .88rem;
-      font-weight: 600;
-      color: var(--navy);
-    }
+    .detail-row { display:flex; align-items:flex-start; gap:.75rem; padding:.6rem 0; border-bottom:1px solid #f1f5f9; }
+    .detail-row:last-child { border-bottom:none; padding-bottom:0; }
+    .detail-icon { width:32px; height:32px; border-radius:9px; background:var(--sky-pale); display:flex; align-items:center; justify-content:center; font-size:.95rem; flex-shrink:0; }
+    .detail-col label { display:block; font-size:.68rem; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:.06em; margin-bottom:.1rem; }
+    .detail-col span  { font-size:.88rem; font-weight:600; color:var(--navy); }
 
     /* Rooms */
-    .rooms-wrap { display: flex; flex-wrap: wrap; gap: .4rem; }
-    .room-pill {
-      background: var(--sky-pale);
-      color: #0369a1;
-      font-size: .78rem;
-      font-weight: 700;
-      padding: .3rem .75rem;
-      border-radius: 999px;
-      border: 1px solid rgba(14,165,233,.2);
-    }
-    .room-pill::before { content: '✓ '; }
+    .rooms-wrap { display:flex; flex-wrap:wrap; gap:.4rem; }
+    .room-pill { background:var(--sky-pale); color:#0369a1; font-size:.78rem; font-weight:700; padding:.3rem .75rem; border-radius:999px; border:1px solid rgba(14,165,233,.2); }
+    .room-pill::before { content:'✓ '; }
 
     /* Notes */
-    .notes-box {
-      background: #f8fafc;
-      border-radius: 12px;
-      padding: .85rem 1rem;
-      font-size: .84rem;
-      color: #475569;
-      line-height: 1.7;
-      font-style: italic;
-      border-left: 3px solid var(--sky);
-    }
+    .notes-box { background:#f8fafc; border-radius:12px; padding:.85rem 1rem; font-size:.84rem; color:#475569; line-height:1.7; font-style:italic; border-left:3px solid var(--sky); }
 
-    /* Refer box */
-    .refer-card {
-      background: linear-gradient(135deg, #0c2340, #0a3e6e);
-      border-radius: 20px;
-      padding: 1.5rem;
-      color: #fff;
-      max-width: 520px;
-      margin: 0 auto 1rem;
+    /* ── ⭐ RATING WIDGET ── */
+    .rating-card { background:#fff; border-radius:20px; padding:1.5rem; max-width:520px; margin:0 auto 1rem; text-align:center; box-shadow:0 2px 20px rgba(12,35,64,.07); }
+    .rating-card h3 { font-family:'Montserrat',sans-serif; font-weight:900; font-size:1rem; color:var(--navy); margin-bottom:.35rem; }
+    .rating-card p  { font-size:.8rem; color:#64748b; margin-bottom:1.1rem; }
+    .stars-row { display:flex; justify-content:center; gap:.35rem; margin-bottom:1rem; }
+    .star-btn {
+      font-size:2.2rem; cursor:pointer; color:#d1d5db;
+      transition:color .15s, transform .15s;
+      background:none; border:none; padding:.1rem;
+      line-height:1;
     }
-    .refer-card h3 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.6rem;
-      letter-spacing: .06em;
-      color: #7dd3fc;
-      margin-bottom: .4rem;
-    }
-    .refer-card p { font-size: .82rem; color: rgba(255,255,255,.8); line-height: 1.7; }
-    .refer-card strong { color: #fff; }
+    .star-btn:hover, .star-btn.lit { color:var(--gold); transform:scale(1.15); }
 
-    /* CTA buttons */
-    .cta-wrap {
-      max-width: 520px;
-      margin: 0 auto;
-      padding: 0 1rem;
-      display: flex;
-      flex-direction: column;
-      gap: .75rem;
+    /* 5-star outcome → Google Review */
+    #five-star-cta { display:none; }
+    #five-star-cta a {
+      display:flex; align-items:center; justify-content:center; gap:.6rem;
+      background:var(--gold); color:#fff;
+      font-family:'Montserrat',sans-serif; font-weight:800; font-size:.9rem;
+      padding:.85rem 1.5rem; border-radius:14px; text-decoration:none;
+      box-shadow:0 4px 18px rgba(245,158,11,.4);
+      transition:transform .15s, box-shadow .2s;
     }
-    .cta-btn {
-      display: flex; align-items: center; justify-content: center; gap: .6rem;
-      padding: .9rem 1.5rem;
-      border-radius: 14px;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 800;
-      font-size: .9rem;
-      text-decoration: none;
-      transition: transform .15s, box-shadow .2s;
+    #five-star-cta a:hover { transform:translateY(-1px); box-shadow:0 6px 24px rgba(245,158,11,.55); }
+
+    /* Under 5 → feedback */
+    #feedback-form { display:none; text-align:left; }
+    #feedback-form p { font-size:.82rem; color:#475569; margin-bottom:.6rem; line-height:1.6; }
+    #feedback-form textarea {
+      width:100%; padding:.65rem .85rem; border:1.5px solid #e2e8f0; border-radius:10px;
+      font-family:'Inter',sans-serif; font-size:.88rem; color:var(--navy);
+      resize:vertical; min-height:80px; outline:none; margin-bottom:.65rem;
+      transition:border-color .18s;
     }
-    .cta-btn:hover { transform: translateY(-1px); }
-    .cta-primary { background: var(--sky); color: #fff; box-shadow: 0 4px 18px rgba(14,165,233,.35); }
-    .cta-outline  { background: #fff; color: var(--navy); border: 1.5px solid #e2e8f0; }
+    #feedback-form textarea:focus { border-color:var(--sky); box-shadow:0 0 0 3px rgba(14,165,233,.1); }
+    #feedback-send {
+      background:var(--navy); color:#fff;
+      font-family:'Montserrat',sans-serif; font-weight:800; font-size:.85rem;
+      padding:.7rem 1.5rem; border:none; border-radius:10px; cursor:pointer;
+      transition:background .18s;
+    }
+    #feedback-send:hover { background:var(--sky); }
+    #feedback-thanks { display:none; color:var(--green); font-weight:700; font-size:.85rem; margin-top:.5rem; }
+
+    .rating-done { display:none; color:var(--green); font-weight:700; font-size:.88rem; margin-top:.35rem; }
+
+    /* ── 💰 TIP CARD ── */
+    .tip-card {
+      background: linear-gradient(135deg,#064e3b,#065f46);
+      border-radius:20px; padding:1.5rem;
+      max-width:520px; margin:0 auto 1rem; color:#fff;
+    }
+    .tip-card h3 { font-family:'Bebas Neue',sans-serif; font-size:1.5rem; letter-spacing:.05em; color:#6ee7b7; margin-bottom:.3rem; }
+    .tip-card p  { font-size:.8rem; color:rgba(255,255,255,.8); line-height:1.6; margin-bottom:1rem; }
+    .tip-btns { display:grid; grid-template-columns:1fr 1fr; gap:.6rem; }
+    .tip-amt {
+      background:rgba(255,255,255,.12); border:1.5px solid rgba(255,255,255,.2);
+      color:#fff; font-family:'Montserrat',sans-serif; font-weight:800; font-size:.92rem;
+      padding:.65rem; border-radius:12px; text-decoration:none;
+      text-align:center; transition:background .18s, border-color .18s;
+    }
+    .tip-amt:hover { background:rgba(255,255,255,.22); border-color:rgba(255,255,255,.5); }
+    .tip-note { font-size:.7rem; color:rgba(255,255,255,.5); text-align:center; margin-top:.6rem; }
+
+    /* ── Refer ── */
+    .refer-card { background:linear-gradient(135deg,#0c2340,#0a3e6e); border-radius:20px; padding:1.5rem; color:#fff; max-width:520px; margin:0 auto 1rem; }
+    .refer-card h3 { font-family:'Bebas Neue',sans-serif; font-size:1.6rem; letter-spacing:.06em; color:#7dd3fc; margin-bottom:.4rem; }
+    .refer-card p  { font-size:.82rem; color:rgba(255,255,255,.8); line-height:1.7; }
+    .refer-card strong { color:#fff; }
+
+    /* ── CTAs ── */
+    .cta-wrap { max-width:520px; margin:0 auto; padding:0 1rem; display:flex; flex-direction:column; gap:.75rem; }
+    .cta-btn { display:flex; align-items:center; justify-content:center; gap:.6rem; padding:.9rem 1.5rem; border-radius:14px; font-family:'Montserrat',sans-serif; font-weight:800; font-size:.9rem; text-decoration:none; transition:transform .15s, box-shadow .2s; }
+    .cta-btn:hover { transform:translateY(-1px); }
+    .cta-primary { background:var(--sky); color:#fff; box-shadow:0 4px 18px rgba(14,165,233,.35); }
+    .cta-outline  { background:#fff; color:var(--navy); border:1.5px solid #e2e8f0; }
+    .cta-insta    { background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045); color:#fff; box-shadow:0 4px 18px rgba(131,58,180,.35); }
 
     /* Footer */
-    .receipt-footer {
-      text-align: center;
-      padding: 1.5rem 1rem 0;
-      font-size: .75rem;
-      color: #94a3b8;
-      line-height: 1.8;
-    }
-    .receipt-footer strong { color: #64748b; }
+    .receipt-footer { text-align:center; padding:1.5rem 1rem 0; font-size:.75rem; color:#94a3b8; line-height:1.8; }
+    .receipt-footer strong { color:#64748b; }
   </style>
 </head>
 <body>
@@ -215,13 +148,43 @@
 <!-- Hero -->
 <div class="hero">
   <img src="https://secondcityscrubbers.com/logo.png" alt="Second City Scrubbers" />
-  <h1 id="hero-title">Clean Complete ✓</h1>
+  <h1>Clean Complete ✓</h1>
   <p id="hero-sub">Second City Scrubbers · Chicago, IL</p>
 </div>
 <div class="wave">
   <svg viewBox="0 0 1440 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0,20 C360,40 1080,0 1440,20 L1440,40 L0,40 Z" fill="#f0f4f8"/>
   </svg>
+</div>
+
+<!-- ⭐ Rate Your Clean -->
+<div class="rating-card">
+  <h3>How did we do?</h3>
+  <p>Your feedback means everything to a small business.</p>
+  <div class="stars-row" id="stars-row">
+    <button class="star-btn" data-val="1" onclick="rateTap(1)">★</button>
+    <button class="star-btn" data-val="2" onclick="rateTap(2)">★</button>
+    <button class="star-btn" data-val="3" onclick="rateTap(3)">★</button>
+    <button class="star-btn" data-val="4" onclick="rateTap(4)">★</button>
+    <button class="star-btn" data-val="5" onclick="rateTap(5)">★</button>
+  </div>
+
+  <!-- 5 stars: Google Review CTA -->
+  <div id="five-star-cta">
+    <a href="https://www.google.com/search?q=Second+City+Scrubbers+Chicago" target="_blank" rel="noopener">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
+      Leave Us a Google Review ⭐
+    </a>
+    <p style="font-size:.72rem;color:#64748b;margin-top:.6rem;">Takes 60 seconds — search "Second City Scrubbers" on Google and tap ⭐ Write a review.</p>
+  </div>
+
+  <!-- Under 5: feedback form -->
+  <div id="feedback-form">
+    <p>We're sorry it wasn't perfect! What could we do better? We'll make it right.</p>
+    <textarea id="feedback-text" placeholder="Tell us what happened and we'll follow up with you…"></textarea>
+    <button id="feedback-send" onclick="sendFeedback()">Send Feedback →</button>
+    <div id="feedback-thanks">✓ Thank you — Michel will follow up with you shortly.</div>
+  </div>
 </div>
 
 <!-- Job Details -->
@@ -255,23 +218,40 @@
   <div class="rooms-wrap" id="d-rooms"></div>
 </div>
 
-<!-- Notes (only if present) -->
+<!-- Cleaner's Notes -->
 <div class="card" id="notes-card" style="display:none;">
   <span class="card-label">Cleaner's Notes</span>
   <div class="notes-box" id="d-notes"></div>
 </div>
 
-<!-- Refer -->
-<div class="refer-card" style="margin: 0 1rem 1rem;">
+<!-- 💰 Tip Your Cleaner -->
+<div class="tip-card" style="margin:0 1rem 1rem;">
+  <h3>💚 Leave a Tip</h3>
+  <p>If your cleaner went above and beyond, show them some love. 100% goes directly to your cleaner.</p>
+  <div class="tip-btns">
+    <a href="https://venmo.com/SecondCityScrubbers" target="_blank" class="tip-amt">$5 Tip</a>
+    <a href="https://venmo.com/SecondCityScrubbers" target="_blank" class="tip-amt">$10 Tip</a>
+    <a href="https://venmo.com/SecondCityScrubbers" target="_blank" class="tip-amt">$15 Tip</a>
+    <a href="https://venmo.com/SecondCityScrubbers" target="_blank" class="tip-amt">Custom</a>
+  </div>
+  <p class="tip-note">via Venmo · @SecondCityScrubbers</p>
+</div>
+
+<!-- 🎁 Refer -->
+<div class="refer-card" style="margin:0 1rem 1rem;">
   <h3>🎁 Refer a Friend — You Both Save $20</h3>
   <p>Know someone who needs a clean? Have them mention <strong>your name</strong> when booking with us and you <strong>both get $20 off</strong> your next clean. No limit!</p>
 </div>
 
 <!-- CTAs -->
 <div class="cta-wrap">
-  <a href="https://secondcityscrubbers.com/#booking" class="cta-btn cta-primary">
+  <a id="book-again-btn" href="https://secondcityscrubbers.com/#booking" class="cta-btn cta-primary">
     <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
     Book Your Next Clean
+  </a>
+  <a href="https://www.instagram.com/" target="_blank" class="cta-btn cta-insta" id="insta-btn">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+    Share Your Clean on Instagram
   </a>
   <a href="tel:8722406619" class="cta-btn cta-outline">
     <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2A19.79 19.79 0 0112 18.85a19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
@@ -286,14 +266,10 @@
 </div>
 
 <script>
-  function getParam(key) {
-    return decodeURIComponent(new URLSearchParams(window.location.search).get(key) || '');
-  }
-
-  function formatDate(val) {
-    if (!val) return '';
-    const d = new Date(val + 'T12:00:00');
-    return d.toLocaleDateString('en-US', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+  function getParam(k) { return decodeURIComponent(new URLSearchParams(window.location.search).get(k) || ''); }
+  function formatDate(v) {
+    if (!v) return '';
+    return new Date(v + 'T12:00:00').toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
   }
 
   const name    = getParam('name');
@@ -310,21 +286,48 @@
   if (date)    document.getElementById('d-date').textContent    = formatDate(date);
   if (svc)     document.getElementById('d-svc').textContent     = svc;
   if (cleaner) document.getElementById('d-cleaner').textContent = cleaner;
-
-  if (date && name) {
-    document.getElementById('hero-sub').textContent = formatDate(date) + ' · Chicago, IL';
-  }
+  if (date && name) document.getElementById('hero-sub').textContent = formatDate(date) + ' · Chicago, IL';
 
   if (rooms) {
-    const rDiv = document.getElementById('d-rooms');
-    rDiv.innerHTML = rooms.split(',').map(r => `<span class="room-pill">${r.trim()}</span>`).join('');
+    document.getElementById('d-rooms').innerHTML =
+      rooms.split(',').map(r => `<span class="room-pill">${r.trim()}</span>`).join('');
   }
-
   if (notes) {
     document.getElementById('d-notes').textContent = notes;
     document.getElementById('notes-card').style.display = 'block';
   }
-</script>
 
+  // Pre-fill book again link with same service
+  if (svc) {
+    document.getElementById('book-again-btn').href =
+      'https://secondcityscrubbers.com/#booking?svc=' + encodeURIComponent(svc);
+  }
+
+  // Instagram share text
+  document.getElementById('insta-btn').href =
+    'https://www.instagram.com/';
+
+  /* ── Star rating ── */
+  let selectedRating = 0;
+  function rateTap(val) {
+    selectedRating = val;
+    document.querySelectorAll('.star-btn').forEach(s => {
+      s.classList.toggle('lit', parseInt(s.dataset.val) <= val);
+    });
+    document.getElementById('five-star-cta').style.display  = val === 5 ? 'block' : 'none';
+    document.getElementById('feedback-form').style.display  = val > 0 && val < 5 ? 'block' : 'none';
+  }
+
+  /* ── Feedback send (mailto Michel) ── */
+  function sendFeedback() {
+    const txt = document.getElementById('feedback-text').value.trim();
+    if (!txt) return;
+    const subject = encodeURIComponent('⚠️ Post-Clean Feedback (' + selectedRating + '★) — ' + (name || 'Customer'));
+    const body    = encodeURIComponent('Customer: ' + (name || '—') + '\nDate: ' + (formatDate(date) || '—') + '\nService: ' + (svc || '—') + '\nRating: ' + selectedRating + ' stars\n\nFeedback:\n' + txt);
+    window.location.href = 'mailto:michel@secondcityscrubbers.com?subject=' + subject + '&body=' + body;
+    document.getElementById('feedback-thanks').style.display = 'block';
+    document.getElementById('feedback-send').style.display   = 'none';
+  }
+</script>
 </body>
 </html>
