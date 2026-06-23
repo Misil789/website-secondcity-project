@@ -114,6 +114,7 @@
     }
     .tip-card h3 { font-family:'Bebas Neue',sans-serif; font-size:1.5rem; letter-spacing:.05em; color:#6ee7b7; margin-bottom:.3rem; }
     .tip-card p  { font-size:.8rem; color:rgba(255,255,255,.8); line-height:1.6; margin-bottom:1rem; }
+    .tip-method-label { font-size:.65rem; font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:rgba(255,255,255,.5); margin:1rem 0 .4rem; }
     .tip-btns { display:grid; grid-template-columns:1fr 1fr; gap:.6rem; }
     .tip-amt {
       background:rgba(255,255,255,.12); border:1.5px solid rgba(255,255,255,.2);
@@ -122,6 +123,18 @@
       text-align:center; transition:background .18s, border-color .18s;
     }
     .tip-amt:hover { background:rgba(255,255,255,.22); border-color:rgba(255,255,255,.5); }
+    .tip-zelle {
+      display:flex; align-items:center; justify-content:center; gap:.5rem;
+      background:rgba(111,66,193,.25); border:1.5px solid rgba(111,66,193,.5);
+      color:#fff; font-family:'Montserrat',sans-serif; font-weight:800; font-size:.88rem;
+      padding:.7rem 1rem; border-radius:12px; text-decoration:none;
+      transition:background .18s, border-color .18s; width:100%;
+    }
+    .tip-zelle:hover { background:rgba(111,66,193,.4); border-color:rgba(111,66,193,.8); }
+    .tip-zelle-number { font-size:.72rem; font-weight:600; color:rgba(255,255,255,.6); text-align:center; margin-top:.35rem; }
+    .tip-divider { display:flex; align-items:center; gap:.6rem; margin:.85rem 0 .5rem; }
+    .tip-divider span { font-size:.65rem; color:rgba(255,255,255,.35); font-family:'Montserrat',sans-serif; white-space:nowrap; }
+    .tip-divider::before, .tip-divider::after { content:''; flex:1; height:1px; background:rgba(255,255,255,.12); }
     .tip-note { font-size:.7rem; color:rgba(255,255,255,.5); text-align:center; margin-top:.6rem; }
 
     /* ── Refer ── */
@@ -235,13 +248,21 @@
 <div class="tip-card" style="margin:0 1rem 1rem;">
   <h3>💚 Leave a Tip</h3>
   <p>If your cleaner went above and beyond, show them some love. 100% goes directly to your cleaner.</p>
+  <p class="tip-method-label">Venmo</p>
   <div class="tip-btns">
     <a href="https://venmo.com/SecondCityScrubbers" target="_blank" class="tip-amt">$5 Tip</a>
     <a href="https://venmo.com/SecondCityScrubbers" target="_blank" class="tip-amt">$10 Tip</a>
     <a href="https://venmo.com/SecondCityScrubbers" target="_blank" class="tip-amt">$15 Tip</a>
     <a href="https://venmo.com/SecondCityScrubbers" target="_blank" class="tip-amt">Custom</a>
   </div>
-  <p class="tip-note">via Venmo · @SecondCityScrubbers</p>
+  <p class="tip-note">@SecondCityScrubbers</p>
+  <div class="tip-divider"><span>or</span></div>
+  <p class="tip-method-label" style="margin-top:0">Zelle</p>
+  <a href="https://enroll.zellepay.com/qr-codes?data=ewogICJuYW1lIiA6ICJTY2VuZCBNb25leSIsCiAgImFjdGlvbiIgOiAicGF5bWVudCIsCiAgInRva2VuIiA6ICI4NzIyNDA2NjE5Igp9" target="_blank" class="tip-zelle">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h13l-9 12h13" stroke="#a78bfa" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Send via Zelle
+  </a>
+  <p class="tip-zelle-number">Open your bank app → Zelle → send to (872) 240-6619</p>
 </div>
 
 <!-- 🎁 Refer -->
