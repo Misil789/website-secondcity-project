@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>Second City Scrubbers — Flyer</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background:#cbd5e1;
+    display:flex; flex-direction:column; justify-content:center; align-items:center;
+    min-height:100vh; padding:40px 20px;
+    font-family:'Montserrat',sans-serif;
+  }
+
+  /* 4×6 at 96dpi = 384×576px on screen */
+  .flyer {
+    width:384px; height:576px;
+    background:#0c2340;
+    position:relative;
+    overflow:hidden;
+    display:flex; flex-direction:column;
+    box-shadow:0 24px 60px rgba(0,0,0,.45);
+    flex-shrink:0;
+  }
+
+  .bg-glow {
+    position:absolute; inset:0; z-index:0;
+    background:
+      radial-gradient(ellipse 140% 55% at 50% -5%, rgba(14,165,233,.3) 0%, transparent 65%),
+      radial-gradient(ellipse 70% 45% at 110% 100%, rgba(14,165,233,.14) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at -15% 80%, rgba(14,165,233,.1) 0%, transparent 55%);
+  }
+
+  .stripe {
+    position:absolute; z-index:1;
+    width:600px; height:2px;
+    background:linear-gradient(90deg, transparent 5%, rgba(14,165,233,.6) 40%, rgba(14,165,233,.6) 60%, transparent 95%);
+    top:42%; left:-108px;
+    transform:rotate(-7deg);
+  }
+  .stripe2 {
+    position:absolute; z-index:1;
+    width:600px; height:1px;
+    background:linear-gradient(90deg, transparent 5%, rgba(14,165,233,.25) 40%, rgba(14,165,233,.25) 60%, transparent 95%);
+    top:44%; left:-108px;
+    transform:rotate(-7deg);
+  }
+
+  /* TOP */
+  .top {
+    position:relative; z-index:2;
+    padding:18px 24px 6px;
+    display:flex; flex-direction:column; align-items:center;
+  }
+  .logo-wrap img { height:46px; filter:drop-shadow(0 2px 8px rgba(14,165,233,.5)); }
+  .tagline {
+    font-size:6px; font-weight:700; letter-spacing:.2em;
+    color:rgba(255,255,255,.45); text-transform:uppercase; margin-top:6px;
+  }
+
+  /* HEADLINE */
+  .headline-block {
+    position:relative; z-index:2;
+    text-align:center; padding:6px 20px 4px;
+  }
+  .hl-eyebrow {
+    font-size:6.5px; font-weight:800; letter-spacing:.22em;
+    color:#38bdf8; text-transform:uppercase; margin-bottom:4px;
+  }
+  .hl-main {
+    font-family:'Bebas Neue',sans-serif;
+    font-size:56px; line-height:.9;
+    color:#fff; letter-spacing:.02em;
+    text-shadow:0 4px 20px rgba(0,0,0,.5);
+  }
+  .hl-main span { color:#0ea5e9; }
+  .hl-sub {
+    font-size:8px; font-weight:600; color:rgba(255,255,255,.65);
+    margin-top:8px; line-height:1.55;
+  }
+
+  /* OFFER */
+  .offer-wrap {
+    position:relative; z-index:2;
+    padding:10px 20px 6px;
+  }
+  .offer-badge {
+    background:linear-gradient(135deg,#0ea5e9 0%,#0369a1 100%);
+    border-radius:14px; padding:12px 20px 10px;
+    text-align:center;
+    box-shadow:0 8px 28px rgba(14,165,233,.55), 0 2px 8px rgba(0,0,0,.25);
+    position:relative; overflow:hidden;
+  }
+  .offer-badge::before {
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(160deg,rgba(255,255,255,.18) 0%, transparent 55%);
+  }
+  .offer-amount {
+    font-family:'Bebas Neue',sans-serif;
+    font-size:58px; color:#fff; line-height:1;
+    letter-spacing:.04em;
+    text-shadow:0 2px 10px rgba(0,0,0,.25);
+    white-space:nowrap;
+  }
+  .offer-desc {
+    font-size:8px; font-weight:800; letter-spacing:.14em;
+    color:rgba(255,255,255,.95); text-transform:uppercase; margin-top:1px;
+  }
+  .offer-fine {
+    font-size:6px; font-weight:600; color:rgba(255,255,255,.65);
+    margin-top:4px; letter-spacing:.08em; text-transform:uppercase;
+  }
+
+  /* SERVICES */
+  .services {
+    position:relative; z-index:2;
+    display:flex; justify-content:center; gap:6px;
+    padding:8px 16px 4px; flex-wrap:wrap;
+  }
+  .svc-pill {
+    background:rgba(255,255,255,.07);
+    border:1px solid rgba(255,255,255,.13);
+    border-radius:50px; padding:3px 10px;
+    font-size:6px; font-weight:700;
+    color:rgba(255,255,255,.65);
+    letter-spacing:.07em; text-transform:uppercase;
+    white-space:nowrap;
+  }
+
+  /* TRUST */
+  .trust {
+    position:relative; z-index:2;
+    display:flex; justify-content:center; gap:18px;
+    padding:6px 16px 6px;
+  }
+  .trust-item { text-align:center; }
+  .trust-icon { font-size:13px; line-height:1; }
+  .trust-label {
+    font-size:5.5px; font-weight:700; color:rgba(255,255,255,.45);
+    text-transform:uppercase; letter-spacing:.08em; margin-top:2px;
+  }
+
+  /* CTA BOTTOM */
+  .cta-block {
+    position:relative; z-index:2;
+    margin-top:auto;
+    background:rgba(0,0,0,.38);
+    border-top:1px solid rgba(14,165,233,.2);
+    padding:12px 24px 14px;
+    display:flex; flex-direction:column; align-items:center; gap:3px;
+  }
+  .cta-label {
+    font-size:6px; font-weight:700; letter-spacing:.2em;
+    color:#38bdf8; text-transform:uppercase;
+  }
+  .cta-phone {
+    font-family:'Bebas Neue',sans-serif;
+    font-size:32px; color:#fff; letter-spacing:.06em; line-height:1.1;
+  }
+  .cta-web {
+    font-size:6.5px; font-weight:600; color:rgba(255,255,255,.5);
+    letter-spacing:.1em; text-transform:uppercase;
+  }
+  .cta-location {
+    font-size:5.5px; font-weight:700; color:rgba(255,255,255,.3);
+    letter-spacing:.12em; text-transform:uppercase; margin-top:2px;
+  }
+
+  @media print {
+    @page { size:4in 6in; margin:0; }
+    body { background:none; padding:0; min-height:unset; }
+    .flyer { width:4in; height:6in; box-shadow:none; }
+    .print-hint { display:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="flyer">
+  <div class="bg-glow"></div>
+  <div class="stripe"></div>
+  <div class="stripe2"></div>
+
+  <div class="top">
+    <div class="logo-wrap">
+      <img src="logo-white-text.png" alt="Second City Scrubbers"/>
+    </div>
+    <div class="tagline">Chicago's Trusted Home Cleaning</div>
+  </div>
+
+  <div class="headline-block">
+    <div class="hl-eyebrow">Professional Home Cleaning</div>
+    <div class="hl-main">A <span>Cleaner</span><br>Home.<br>Guaranteed.</div>
+    <div class="hl-sub">Reliable, thorough &amp; detail-obsessed.<br>We treat your home like our own.</div>
+  </div>
+
+  <div class="offer-wrap">
+    <div class="offer-badge">
+      <div class="offer-amount">$20 OFF</div>
+      <div class="offer-desc">Your First Cleaning</div>
+      <div class="offer-fine">Mention this flyer when booking</div>
+    </div>
+  </div>
+
+  <div class="services">
+    <div class="svc-pill">Standard Clean</div>
+    <div class="svc-pill">Deep Clean</div>
+    <div class="svc-pill">Move In/Out</div>
+    <div class="svc-pill">Recurring</div>
+    <div class="svc-pill">Airbnb</div>
+  </div>
+
+  <div class="trust">
+    <div class="trust-item">
+      <div class="trust-icon">⭐</div>
+      <div class="trust-label">5-Star Rated</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">🔒</div>
+      <div class="trust-label">Insured</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">✅</div>
+      <div class="trust-label">Vetted Staff</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">🌿</div>
+      <div class="trust-label">Eco Friendly</div>
+    </div>
+  </div>
+
+  <div class="cta-block">
+    <div class="cta-label">Book Your Clean Today</div>
+    <div class="cta-phone">(872) 240-6619</div>
+    <div class="cta-web">secondcityscrubbers.com</div>
+    <div class="cta-location">Serving Chicago &amp; Surrounding Suburbs</div>
+  </div>
+</div>
+
+<p style="margin-top:20px;text-align:center;font-family:'Montserrat',sans-serif;font-size:12px;color:#64748b;">
+  <strong style="color:#0c2340">To print:</strong> File → Print → Paper size: 4×6 · No margins · Portrait
+</p>
+
+</body>
+</html>
